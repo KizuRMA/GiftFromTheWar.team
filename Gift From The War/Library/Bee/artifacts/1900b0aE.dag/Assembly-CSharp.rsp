@@ -117,7 +117,6 @@
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
--r:"C:/Git Hub/Gift_From_The_War.team/Gift From The War/Library/PackageCache/com.unity.cinemachine@2.8.4/Runtime/ThirdParty/clipper_library.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.1f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.1f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.1f1/Editor/Data/Managed/UnityEngine/UnityEditor.DiagnosticsModule.dll"
@@ -321,8 +320,6 @@
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.1f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.XDocument.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.1f1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.1f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/Cinemachine.ref.dll"
--r:"Library/Bee/artifacts/1900b0aE.dag/com.unity.cinemachine.editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.Editor.ref.dll"
@@ -333,13 +330,20 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/camera/cameraMove.cs"
-"Assets/enemy/bat/batMove.cs"
+"Assets/enemy/bat/Script/BaseState.cs"
+"Assets/enemy/bat/Script/BatController.cs"
+"Assets/enemy/bat/Script/batMove.cs"
+"Assets/enemy/bat/Script/CollisionDetector.cs"
+"Assets/enemy/bat/Script/DeadState.cs"
+"Assets/enemy/bat/Script/DeleteScript.cs"
+"Assets/enemy/bat/Script/DestructionScript.cs"
+"Assets/enemy/bat/Script/UltraSound.cs"
+"Assets/enemy/bat/Script/UltraSoundBeam.cs"
+"Assets/enemy/bat/Script/WingFoldState.cs"
 "Assets/enemy/boss/bossMove.cs"
+"Assets/enterFinish.cs"
 "Assets/player/FPSController.cs"
-"Assets/player/MoveObject.cs"
 "Assets/Rantan/rantanMove.cs"
-"Assets/Rantan/rantanWallTouch.cs"
 -langversion:9.0
 
 /deterministic
