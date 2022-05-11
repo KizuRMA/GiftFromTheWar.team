@@ -38,7 +38,7 @@ public class WingFoldState : BaseState
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
-        //GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
+        GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
 
         ultrasound = GetComponent<UltraSound>();
         ultrasound.Init();
@@ -103,6 +103,8 @@ public class WingFoldState : BaseState
         Ray _ray = new Ray(transform.position, Vector3.down);
         RaycastHit _raycastHit;
         bool _rayHit = Physics.Raycast(_ray, out _raycastHit);
+
+        Debug.Log(_raycastHit.collider.gameObject);
 
         //レイがオブジェクトに当たっている場合
         if (_rayHit == true)
