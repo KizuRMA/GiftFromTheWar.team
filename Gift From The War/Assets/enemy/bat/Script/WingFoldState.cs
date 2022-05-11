@@ -38,7 +38,7 @@ public class WingFoldState : BaseState
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
-        GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
+        //GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
 
         ultrasound = GetComponent<UltraSound>();
         ultrasound.Init();
@@ -70,6 +70,9 @@ public class WingFoldState : BaseState
     // Update is called once per frame
     public override void Update()
     {
+
+        //Debug.Log(ascendingSpeed);
+
         //‘Ì‚ð‰ñ“]‚³‚¹‚éˆ—
         if (myController.forwardAngle >= 90)
         {
@@ -106,7 +109,7 @@ public class WingFoldState : BaseState
         {
             //Œ»Ý‚Ì‚‚³‚ð‹L˜^‚µ‚Ä‚¨‚­
             myController.hight = _raycastHit.distance;
-            //Debug.Log(myController.hight);
+            Debug.Log(myController.hight);
         }
     }
 
@@ -116,6 +119,7 @@ public class WingFoldState : BaseState
 
         //ƒ^[ƒQƒbƒg‚Æ‚µ‚Ä‚¢‚éÀ•W‚Ü‚Å‚Ì‹——£‚ð’²‚×‚é
         float _targetDis = Vector3.Distance(transform.position, targetPos);
+        //Debug.Log(_targetDis);
 
         //“Vˆä‚Æ‚Ì‹——£‚ªˆÚ“®—Ê‚æ‚è‚à‘å‚«‚¢A‚Ü‚½‚Í‹t‚³‚Ü‚É‚È‚Á‚Ä‚¢‚È‚¢ê‡
         if (_targetDis >= ascendingSpeed || myController.forwardAngle < 180.0f)
@@ -174,7 +178,6 @@ public class WingFoldState : BaseState
                 amountChangeAngX = myController.forwardAngle - 20.0f;
                 Animator animator = GetComponent<Animator>();
                 animator.SetInteger("trans", 2);
-                Debug.Log(amountChangeAngX);
                 ultrasound.Init();
                 return;
             }

@@ -16,13 +16,13 @@ public class playerHundLadder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(touchLadderFlg);
+        //Debug.Log(touchLadderFlg);
 
         MoveLadderBefore();
 
@@ -51,7 +51,7 @@ public class playerHundLadder : MonoBehaviour
 
     private void MoveLadderBefore()
     {
-        
+
     }
 
     private void ClimbLadder()
