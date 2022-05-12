@@ -8,6 +8,7 @@ public class WingFoldState : BaseState
     enum e_Action
     {
         none,
+        search,
         sticking,
         leave,
     }
@@ -32,13 +33,13 @@ public class WingFoldState : BaseState
     {
         rotateY = transform.eulerAngles.y;
         nextAnime = false;
-        nowAction = e_Action.sticking;
+        nowAction = e_Action.search;
         untilLaunch = 0;
 
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
-        GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
+        //GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
 
         ultrasound = GetComponent<UltraSound>();
         ultrasound.Init();
@@ -70,6 +71,7 @@ public class WingFoldState : BaseState
     // Update is called once per frame
     public override void Update()
     {
+
         //体を回転させる処理
         if (myController.forwardAngle >= 90)
         {
@@ -83,10 +85,15 @@ public class WingFoldState : BaseState
         //現在のアクション状態毎に関数を実行する
         switch (nowAction)
         {
+            //張り付いた状態
             case e_Action.none:
                 ActionNone();
                 break;
-            //張り付き状態の時
+            //張り付く場所を探す
+            case e_Action.search:
+                ActionSearch();
+                break;
+            //張り付きにいく状態の時
             case e_Action.sticking:
                 ActionSticking();
                 break;
@@ -101,12 +108,14 @@ public class WingFoldState : BaseState
         RaycastHit _raycastHit;
         bool _rayHit = Physics.Raycast(_ray, out _raycastHit);
 
+        Debug.Log(_raycastHit.collider.gameObject);
+
         //レイがオブジェクトに当たっている場合
         if (_rayHit == true)
         {
             //現在の高さを記録しておく
             myController.hight = _raycastHit.distance;
-            //Debug.Log(myController.hight);
+            Debug.Log(myController.hight);
         }
     }
 
@@ -174,7 +183,6 @@ public class WingFoldState : BaseState
                 amountChangeAngX = myController.forwardAngle - 20.0f;
                 Animator animator = GetComponent<Animator>();
                 animator.SetInteger("trans", 2);
-                Debug.Log(amountChangeAngX);
                 ultrasound.Init();
                 return;
             }
@@ -186,6 +194,11 @@ public class WingFoldState : BaseState
             ultrasound.Init();
             untilLaunch = Time.time;
         }
+    }
+
+    private void ActionSearch()
+    {
+
     }
 
     private void ActionLeave()
