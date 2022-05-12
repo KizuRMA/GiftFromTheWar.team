@@ -8,6 +8,7 @@ public class WingFoldState : BaseState
     enum e_Action
     {
         none,
+        search,
         sticking,
         leave,
     }
@@ -32,13 +33,13 @@ public class WingFoldState : BaseState
     {
         rotateY = transform.eulerAngles.y;
         nextAnime = false;
-        nowAction = e_Action.sticking;
+        nowAction = e_Action.search;
         untilLaunch = 0;
 
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
-        GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
+        //GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
 
         ultrasound = GetComponent<UltraSound>();
         ultrasound.Init();
@@ -71,8 +72,6 @@ public class WingFoldState : BaseState
     public override void Update()
     {
 
-        //Debug.Log(ascendingSpeed);
-
         //体を回転させる処理
         if (myController.forwardAngle >= 90)
         {
@@ -86,10 +85,15 @@ public class WingFoldState : BaseState
         //現在のアクション状態毎に関数を実行する
         switch (nowAction)
         {
+            //張り付いた状態
             case e_Action.none:
                 ActionNone();
                 break;
-            //張り付き状態の時
+            //張り付く場所を探す
+            case e_Action.search:
+                ActionSearch();
+                break;
+            //張り付きにいく状態の時
             case e_Action.sticking:
                 ActionSticking();
                 break;
@@ -121,7 +125,6 @@ public class WingFoldState : BaseState
 
         //ターゲットとしている座標までの距離を調べる
         float _targetDis = Vector3.Distance(transform.position, targetPos);
-        //Debug.Log(_targetDis);
 
         //天井との距離が移動量よりも大きい、または逆さまになっていない場合
         if (_targetDis >= ascendingSpeed || myController.forwardAngle < 180.0f)
@@ -191,6 +194,11 @@ public class WingFoldState : BaseState
             ultrasound.Init();
             untilLaunch = Time.time;
         }
+    }
+
+    private void ActionSearch()
+    {
+
     }
 
     private void ActionLeave()
