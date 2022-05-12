@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class rantanMove : MonoBehaviour
 {
+    [SerializeField] private GameObject player;
     private Transform trans;
     private FPSController fpsC;
     private Transform camTrans;
@@ -22,7 +23,7 @@ public class rantanMove : MonoBehaviour
     {
         trans = GetComponent<Transform>();
         camTrans = GameObject.Find("Main Camera").GetComponent<Transform>();
-        fpsC = GameObject.Find("player").GetComponent<FPSController>();
+        fpsC = player.GetComponent<FPSController>();
         firstQua = trans.localRotation;
         firstPos = trans.localPosition;
     }

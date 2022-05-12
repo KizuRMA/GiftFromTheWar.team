@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class FPSController : MonoBehaviour
 {
+    private CharacterController CC;
+    [SerializeField] private GameObject ladderHund;
+    private playerHundLadder ladder;
+
     private float moveSpeed;
     [SerializeField] private float normalSpeed = 3; // 移動速度
     [SerializeField] private float dashSpeedRaito = 3; //走る速さの倍率
@@ -13,7 +17,6 @@ public class FPSController : MonoBehaviour
     private bool moveFlg = false;
     private bool dashFlg = false;
 
-    private CharacterController CC;
     private Vector3 moveVelocity; // キャラの移動速度情報
     private Vector3 moveVec; // 合成用
 
@@ -30,6 +33,7 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         CC = GetComponent<CharacterController>(); // 毎フレームアクセスするので、負荷を下げるためにキャッシュしておく
+        ladder = ladderHund.GetComponent<playerHundLadder>();
         cameraRot = cam.transform.localRotation;
         characterRot = transform.localRotation;
 
@@ -39,6 +43,14 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateCursorLock();
+
+        if (ladder.GetTouchLadderFlg())
+        {
+            moveFlg = false;
+            return;
+        }
+
         if (turnRaito >= turnSpeed) //180ターンを使っていなかったら
         {
             CameraMove();
@@ -50,8 +62,6 @@ public class FPSController : MonoBehaviour
 
         cam.transform.localRotation = cameraRot;
         transform.localRotation = characterRot;
-
-        UpdateCursorLock();
 
         MoveKey();
         DashJudge();
