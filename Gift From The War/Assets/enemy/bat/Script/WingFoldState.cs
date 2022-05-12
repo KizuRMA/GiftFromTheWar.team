@@ -49,23 +49,6 @@ public class WingFoldState : BaseState
         agent.updateUpAxis = false;
         agent.updateRotation = false;
         agent.updatePosition = false;
-
-        rayPosition = new Vector3(transform.position.x, transform.position.y + myController.hight, transform.position.z);
-        Ray ray = new Ray(rayPosition, Vector3.up);
-
-        //Rayを上に飛ばす
-        if (Physics.Raycast(ray, out hit))
-        {
-            //レイが天井に衝突している場合はターゲット座標に設定する。
-            Vector3 targetVec = Vector3.up * (hit.distance - 0.0f);
-            targetPos = rayPosition + targetVec;
-        }
-        else
-        {
-            BatController batCon = gameObject.GetComponent<BatController>();
-            batCon.ChangeState(GetComponent<batMove>());
-            return;
-        }
     }
 
     // Update is called once per frame
@@ -198,7 +181,30 @@ public class WingFoldState : BaseState
 
     private void ActionSearch()
     {
+        rayPosition = new Vector3(transform.position.x, transform.position.y + myController.hight, transform.position.z);
+        Ray ray = new Ray(rayPosition, Vector3.up);
 
+        //Rayを上に飛ばす
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.tag == "cave")
+            {
+                //レイが天井に衝突している場合はターゲット座標に設定する。
+                Vector3 targetVec = Vector3.up * hit.distance;
+                targetPos = rayPosition + targetVec;
+                nowAction = e_Action.sticking;
+            }
+            else
+            {
+                transform.position += transform.forward.normalized * 0.01f;
+            }
+        }
+        else
+        {
+            BatController batCon = gameObject.GetComponent<BatController>();
+            batCon.ChangeState(GetComponent<batMove>());
+            return;
+        }
     }
 
     private void ActionLeave()
