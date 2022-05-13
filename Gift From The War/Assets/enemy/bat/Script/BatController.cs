@@ -34,4 +34,11 @@ public class BatController : MonoBehaviour
         state = _state;
         state.Start();
     }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
+    }
 }
