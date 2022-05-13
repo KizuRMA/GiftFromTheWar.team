@@ -69,26 +69,26 @@ public class UltraSound : MonoBehaviour
         _targetVec = playerCC.transform.position - _pos;
         float _distance = _targetVec.magnitude;
 
-        //デバッグ用の線を描画
-        var lineRenderer = gameObject.GetComponent<LineRenderer>();
+        ////デバッグ用の線を描画
+        //var lineRenderer = gameObject.GetComponent<LineRenderer>();
 
-        var positions = new Vector3[]
-        {
-            _firePos,
-            _firePos + ((playerCC.transform.position - _firePos).normalized * length),
-        };
+        //var positions = new Vector3[]
+        //{
+        //    _firePos,
+        //    _firePos + ((playerCC.transform.position - _firePos).normalized * length),
+        //};
 
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        //lineRenderer.startWidth = 0.1f;
+        //lineRenderer.endWidth = 0.1f;
 
-        lineRenderer.SetPositions(positions);
+        //lineRenderer.SetPositions(positions);
 
-        //持続時間を計算
-        if (nowTime + duration <= Time.time)
-        {
-            aliveFlg = false;
-            lineRenderer.hideFlags = HideFlags.HideInHierarchy;
-        }
+        ////持続時間を計算
+        //if (nowTime + duration <= Time.time)
+        //{
+        //    aliveFlg = false;
+        //    lineRenderer.hideFlags = HideFlags.HideInHierarchy;
+        //}
 
         //Debug.Log(_distance);
 

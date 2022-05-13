@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class batMove : BaseState
 {
-    private CharacterController playerCC;
+    [SerializeField] GameObject playerCC;
     private CharacterController batCC;
     private NavMeshAgent agent;
     private UltraSoundBeam ultrasound;
@@ -19,7 +19,6 @@ public class batMove : BaseState
     public override void Start()
     {
         ultrasound = null;
-        playerCC = GameObject.Find("player").GetComponent<CharacterController>();
         batCC = GetComponent<CharacterController>();
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
