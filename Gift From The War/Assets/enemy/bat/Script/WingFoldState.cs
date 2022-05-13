@@ -22,6 +22,7 @@ public class WingFoldState : BaseState
     private NavMeshAgent agent;
     private UltraSound ultrasound;
     private bool nextAnime;
+    private bool limitSpaceIn;
     private e_Action nowAction;
     private float rotateY;
     private float untilLaunch;
@@ -33,13 +34,13 @@ public class WingFoldState : BaseState
     {
         rotateY = transform.eulerAngles.y;
         nextAnime = false;
+        limitSpaceIn = false;
         nowAction = e_Action.search;
         untilLaunch = 0;
 
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
-        //GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
 
         ultrasound = GetComponent<UltraSound>();
         ultrasound.Init();
@@ -91,14 +92,14 @@ public class WingFoldState : BaseState
         RaycastHit _raycastHit;
         bool _rayHit = Physics.Raycast(_ray, out _raycastHit);
 
-        Debug.Log(_raycastHit.collider.gameObject);
+        //Debug.Log(_raycastHit.collider.gameObject);
 
         //レイがオブジェクトに当たっている場合
         if (_rayHit == true)
         {
             //現在の高さを記録しておく
             myController.hight = _raycastHit.distance;
-            Debug.Log(myController.hight);
+           // Debug.Log(myController.hight);
         }
     }
 
@@ -128,6 +129,8 @@ public class WingFoldState : BaseState
         //天井との高さが近い場合
         if (_targetDis <= 0.5f)
         {
+            GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
+
             //コウモリが180度回転していない場合
             if (myController.forwardAngle < 180.0f)
             {
@@ -181,7 +184,13 @@ public class WingFoldState : BaseState
 
     private void ActionSearch()
     {
-        rayPosition = new Vector3(transform.position.x, transform.position.y + myController.hight, transform.position.z);
+        if (limitSpaceIn == false)
+        {
+
+        }
+
+        rayPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
         Ray ray = new Ray(rayPosition, Vector3.up);
 
         //Rayを上に飛ばす
@@ -250,4 +259,48 @@ public class WingFoldState : BaseState
         }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        rayPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Ray ray = new Ray(rayPosition, Vector3.up);
+
+        //Rayを上に飛ばす
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.tag == "cave")
+            {
+                //レイが天井に衝突している場合はターゲット座標に設定する。
+                Vector3 targetVec = Vector3.up * hit.distance;
+                targetPos = rayPosition + targetVec;
+            }
+            else
+            {
+                nowAction = e_Action.search;
+            }
+        }
+        else
+        {
+            BatController batCon = gameObject.GetComponent<BatController>();
+            batCon.ChangeState(GetComponent<batMove>());
+            return;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "limitSpace")
+        {
+            nowAction = e_Action.search;
+            limitSpaceIn = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "limitSpace")
+        {
+            nowAction = e_Action.sticking;
+            limitSpaceIn = false;
+        }
+    }
 }

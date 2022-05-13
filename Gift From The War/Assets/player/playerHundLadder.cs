@@ -37,7 +37,7 @@ public class playerHundLadder : MonoBehaviour
         {
             touchLadderFlg = false;
         }
-        Debug.Log(cmaTrans.localRotation.eulerAngles.x);
+        //Debug.Log(cmaTrans.localRotation.eulerAngles.x);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -77,7 +77,7 @@ public class playerHundLadder : MonoBehaviour
             warpDir.Normalize();
             warpDir = warpDir * warpSpeed;
         }
-        
+
         playerCC.Move(warpDir);
     }
 
