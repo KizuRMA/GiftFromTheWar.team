@@ -51,6 +51,9 @@ public class FPSController : MonoBehaviour
             return;
         }
 
+        cameraRot = cam.transform.localRotation;
+        characterRot = transform.localRotation;
+
         if (turnRaito >= turnSpeed) //180ƒ^[ƒ“‚ğg‚Á‚Ä‚¢‚È‚©‚Á‚½‚ç
         {
             CameraMove();
@@ -70,6 +73,10 @@ public class FPSController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (ladder.GetTouchLadderFlg())
+        {
+            return;
+        }
 
         Dash();
 
