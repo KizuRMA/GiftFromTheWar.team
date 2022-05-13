@@ -2781,9 +2781,8 @@ MonoBehaviour:
   playerCC: {fileID: 401655013}
   playerCamera: {fileID: 963194225}
   warpSpeed: 0.0025
+  warpPosMin: 0
   warpRotSpeed: 10
-  warpRotXSpeed: 0.2
-  climbSpeed: 0.9
 --- !u!4 &1468359838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2691984012808516588, guid: 80b7f22b45fa7544196e2480688a91fc, type: 3}
@@ -2815,7 +2814,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498395100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.93, z: 0}
   m_LocalScale: {x: 0.9, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4889,15 +4888,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4d13b12d2db416b42b40e27323ecfb78, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.97
+      value: 2.382
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4d13b12d2db416b42b40e27323ecfb78, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.81212
+      value: -0.173
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4d13b12d2db416b42b40e27323ecfb78, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.03
+      value: -0.08
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4d13b12d2db416b42b40e27323ecfb78, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5009,6 +5008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c974b44bfcc83e44b8cd0c4361d7e50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCC: {fileID: 401655008}
   moveFlg: 1
   playerFromInterval: 1
   ultrasoundCoolTime: 5

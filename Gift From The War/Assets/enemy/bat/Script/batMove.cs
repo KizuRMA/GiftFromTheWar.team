@@ -67,8 +67,12 @@ public class batMove : BaseState
             }
             else
             {
-                //—£‚ê‚Ä‚¢‚éê‡
-                agent.destination = _playerPos;
+                if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
+                {
+                    //—£‚ê‚Ä‚¢‚éê‡
+                    agent.destination = _playerPos;
+                }
+
             }
 
             //’´‰¹”gˆ—
