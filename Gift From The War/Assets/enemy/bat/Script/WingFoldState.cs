@@ -9,6 +9,7 @@ public class WingFoldState : BaseState
     {
         none,
         search,
+        move,
         sticking,
         leave,
     }
@@ -21,8 +22,11 @@ public class WingFoldState : BaseState
     private CharacterController playerCC;
     private NavMeshAgent agent;
     private UltraSound ultrasound;
+    private GameObject childGameObject;
     private bool nextAnime;
-    private bool limitSpaceIn;
+    private bool decisionDir;
+    private bool navmeshOnFlg;
+    private float frame;
     private e_Action nowAction;
     private float rotateY;
     private float untilLaunch;
@@ -34,36 +38,39 @@ public class WingFoldState : BaseState
     {
         rotateY = transform.eulerAngles.y;
         nextAnime = false;
-        limitSpaceIn = false;
-        nowAction = e_Action.search;
+        decisionDir = false;
+        navmeshOnFlg = true;
+        nowAction = e_Action.move;
         untilLaunch = 0;
+        frame = 10;
 
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
+        childGameObject = transform.Find("Capsule").gameObject;
+        childGameObject.GetComponent<CapsuleCollider>().enabled = true;
+        childGameObject.GetComponent<BatCapsuleScript>().Start();
 
         ultrasound = GetComponent<UltraSound>();
         ultrasound.Init();
-
-        //ナビメッシュによるオブジェクトの回転を更新しない
-        agent.isStopped = true;
-        agent.updateUpAxis = false;
-        agent.updateRotation = false;
-        agent.updatePosition = false;
     }
 
     // Update is called once per frame
     public override void Update()
     {
+        bool _navmeshFlg = navmeshOnFlg;
 
-        //体を回転させる処理
-        if (myController.forwardAngle >= 90)
+        if (agent.isStopped == true)
         {
-            transform.eulerAngles = new Vector3(180.0f - myController.forwardAngle, rotateY + 180.0f, 180.0f);
-        }
-        else
-        {
-            transform.eulerAngles = new Vector3(myController.forwardAngle, rotateY, 0);
+            //体を回転させる処理
+            if (myController.forwardAngle >= 90)
+            {
+                transform.eulerAngles = new Vector3(180.0f - myController.forwardAngle, rotateY + 180.0f, 180.0f);
+            }
+            else
+            {
+                transform.eulerAngles = new Vector3(myController.forwardAngle, rotateY, 0);
+            }
         }
 
         //現在のアクション状態毎に関数を実行する
@@ -77,6 +84,9 @@ public class WingFoldState : BaseState
             case e_Action.search:
                 ActionSearch();
                 break;
+            case e_Action.move:
+                ActionMove();
+                break;
             //張り付きにいく状態の時
             case e_Action.sticking:
                 ActionSticking();
@@ -87,19 +97,35 @@ public class WingFoldState : BaseState
                 break;
         }
 
-        //コウモリの座標からワールド座標で下に向いているレイを作る
-        Ray _ray = new Ray(transform.position, Vector3.down);
-        RaycastHit _raycastHit;
-        bool _rayHit = Physics.Raycast(_ray, out _raycastHit);
-
-        //Debug.Log(_raycastHit.collider.gameObject);
-
-        //レイがオブジェクトに当たっている場合
-        if (_rayHit == true)
+        if (agent.isStopped == true)
         {
-            //現在の高さを記録しておく
-            myController.hight = _raycastHit.distance;
-           // Debug.Log(myController.hight);
+            //コウモリの座標からワールド座標で下に向いているレイを作る
+            Ray _ray = new Ray(transform.position, Vector3.down);
+            RaycastHit _raycastHit;
+            bool _rayHit = Physics.Raycast(_ray, out _raycastHit);
+
+            //Debug.Log(_raycastHit.collider.gameObject);
+
+            //レイがオブジェクトに当たっている場合
+            if (_rayHit == true)
+            {
+                //現在の高さを記録しておく
+                myController.hight = _raycastHit.distance;
+                // Debug.Log(myController.hight);
+            }
+        }
+
+        //ナビメッシュに変更が加えられている場合
+        if (_navmeshFlg != navmeshOnFlg)
+        {
+            if (navmeshOnFlg == true)
+            {
+                myController.OnNavMesh();
+            }
+            else
+            {
+                myController.OffNavMesh();
+            }
         }
     }
 
@@ -114,7 +140,7 @@ public class WingFoldState : BaseState
         if (_targetDis >= ascendingSpeed || myController.forwardAngle < 180.0f)
         {
             //上に移動する処理
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, ascendingSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, ascendingSpeed * Time.deltaTime);
             _targetDis = Vector3.Distance(transform.position, targetPos);
         }
         else
@@ -184,11 +210,6 @@ public class WingFoldState : BaseState
 
     private void ActionSearch()
     {
-        if (limitSpaceIn == false)
-        {
-
-        }
-
         rayPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         Ray ray = new Ray(rayPosition, Vector3.up);
@@ -216,6 +237,61 @@ public class WingFoldState : BaseState
         }
     }
 
+    private void ActionMove()
+    {
+        //カプセルコライダーの処理が停止している場合は開始する
+        CapsuleCollider capsule = childGameObject.GetComponent<CapsuleCollider>();
+        if (capsule.enabled == false) capsule.enabled = true;
+
+        rotateY = transform.eulerAngles.y;
+
+        //体を前に傾ける
+        Vector3 _localAngle = transform.localEulerAngles;
+        _localAngle.x = myController.forwardAngle;
+        transform.localEulerAngles = _localAngle;
+
+        myController.AdjustHeight();
+
+        frame--;
+        if (frame > 0)return;
+
+        BatCapsuleScript _batCapsule = childGameObject.GetComponent<BatCapsuleScript>();
+
+        if (_batCapsule.colList.Count <= 0)
+        {
+            nowAction = e_Action.search;
+            navmeshOnFlg = false;
+        }
+        else
+        {
+            //目的地が決まっていない場合
+            if (decisionDir == false)
+            {
+                Vector3 _targetVec = _batCapsule.MoveDirction();
+                _targetVec.Normalize();
+                _targetVec *= 2.0f;
+                _targetVec += transform.position;
+
+                agent.destination = _targetVec;
+                decisionDir = true;
+            }
+
+            Vector3 _myPos = transform.position;
+            Vector3 _targetPos = agent.destination;
+            _myPos.y = 0;
+            _targetPos.y = 0;
+
+            if (Vector3.Distance(_myPos, _targetPos) <= 0.01f)
+            {
+                nowAction = e_Action.search;
+                childGameObject.GetComponent<CapsuleCollider>().enabled = false;
+
+                //ナビメッシュによるオブジェクトの回転を更新しない
+                navmeshOnFlg = false;
+            }
+        }
+    }
+
     private void ActionLeave()
     {
         //翼を広げるアニメーションに変更
@@ -223,13 +299,13 @@ public class WingFoldState : BaseState
         float _nowTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
         //コウモリ移動処理
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, amountChangeDis / 180.0f);
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, amountChangeDis * (Time.deltaTime * 1.5f));
 
         //コウモリの回転処理
         if (myController.forwardAngle > 20.0f)
         {
             //変化する値
-            float _changeAng = (amountChangeAngX / 180.0f);
+            float _changeAng = amountChangeAngX * (Time.deltaTime * 1.5f);
             myController.forwardAngle -= _changeAng;
 
             if (myController.forwardAngle <= 20.0f)
@@ -256,51 +332,6 @@ public class WingFoldState : BaseState
         if (nowAction == e_Action.sticking)
         {
             GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        rayPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        Ray ray = new Ray(rayPosition, Vector3.up);
-
-        //Rayを上に飛ばす
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider.tag == "cave")
-            {
-                //レイが天井に衝突している場合はターゲット座標に設定する。
-                Vector3 targetVec = Vector3.up * hit.distance;
-                targetPos = rayPosition + targetVec;
-            }
-            else
-            {
-                nowAction = e_Action.search;
-            }
-        }
-        else
-        {
-            BatController batCon = gameObject.GetComponent<BatController>();
-            batCon.ChangeState(GetComponent<batMove>());
-            return;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "limitSpace")
-        {
-            nowAction = e_Action.search;
-            limitSpaceIn = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name == "limitSpace")
-        {
-            nowAction = e_Action.sticking;
-            limitSpaceIn = false;
         }
     }
 }
