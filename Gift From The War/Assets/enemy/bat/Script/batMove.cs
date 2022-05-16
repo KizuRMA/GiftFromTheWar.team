@@ -19,6 +19,7 @@ public class batMove : BaseState
         ultrasound = null;
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
+        playerCC = GameObject.Find("player").gameObject;
 
         //’´‰¹”g‚ğ‰Šú‰»
         ultrasound = GetComponent<UltraSoundBeam>();

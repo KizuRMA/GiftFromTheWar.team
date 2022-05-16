@@ -15,7 +15,6 @@ public class BatCapsuleScript : MonoBehaviour
 
     private void Awake()
     {
-        enabled = false;        
     }
 
     // Start is called before the first frame update
@@ -26,7 +25,13 @@ public class BatCapsuleScript : MonoBehaviour
 
     private void Update()
     {
-       
+        //親ゲームオブジェクトのTransform
+        BatController batcon = gameObject.transform.parent.GetComponent<BatController>();
+
+        //体を前に傾ける
+        Vector3 _localAngle = transform.localEulerAngles;
+        _localAngle.x = -(batcon.forwardAngle);
+        transform.localEulerAngles = _localAngle;
     }
 
     // Update is called once per frame
@@ -47,7 +52,7 @@ public class BatCapsuleScript : MonoBehaviour
 
             float dot = Vector3.Dot(Vector3.forward, targetDir[i].targetVec.normalized);
             targetDir[i].degAngle = Mathf.Acos(dot) * Mathf.Rad2Deg;
-            
+
             if (targetDir[i].targetVec.x < 0)
             {
                 targetDir[i].degAngle += 180.0f;
