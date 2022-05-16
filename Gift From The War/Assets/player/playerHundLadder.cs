@@ -9,15 +9,22 @@ public class playerHundLadder : MonoBehaviour
     Transform playerTrans;
     Transform cmaTrans;
 
+    bool touchLadderFlg = false;
+
     Vector3 ladderPos;
     Vector3 ladderRot;
-    Vector3 playerMoveVec;
+    Vector3 ladderEndPos;
+    Quaternion ladderQua;
+
+    bool moveBeforeFlg = false;
+    bool rotXBeforeFlg = false;
+    bool rotYBeforeFlg = false;
 
     [SerializeField] float warpSpeed;
-    [SerializeField] float warpPosMin;
     [SerializeField] float warpRotSpeed;
+    [SerializeField] float warpRotXSpeed;
 
-    bool touchLadderFlg = false;
+    [SerializeField] float climbSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -29,15 +36,33 @@ public class playerHundLadder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveLadderBefore();
+        float playerLocalRotY = playerTrans.rotation.eulerAngles.y;
 
-        ClimbLadder();
-
-        if(Input.GetKeyDown(KeyCode.E))
+        if (playerLocalRotY >= 180.0f)
         {
-            touchLadderFlg = false;
+            playerLocalRotY -= 360.0f;
         }
-        //Debug.Log(cmaTrans.localRotation.eulerAngles.x);
+
+        if (!touchLadderFlg) return;
+
+        if (!MoveBeforeFinishFlg())
+        {
+            MoveLadderBefore();
+        }
+
+        if (MoveBeforeFinishFlg())
+        {
+            ClimbLadder();
+
+            DescendLadder();
+
+            GoUpLadder();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            FinishLadder();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,6 +72,8 @@ public class playerHundLadder : MonoBehaviour
             touchLadderFlg = true;
             ladderPos = other.gameObject.transform.GetChild(2).gameObject.transform.position;
             ladderRot = other.gameObject.transform.GetChild(2).gameObject.transform.eulerAngles;
+            ladderEndPos = other.gameObject.transform.GetChild(3).gameObject.transform.position;
+            ladderQua = other.gameObject.transform.GetChild(2).gameObject.transform.rotation;
         }
     }
 
@@ -60,22 +87,23 @@ public class playerHundLadder : MonoBehaviour
 
     private void MoveLadderBefore()
     {
-        if (touchLadderFlg)
-        {
-            MoveLadderBeforePosition();
+        MoveLadderBeforePosition();
 
-            MoveLadderBeforeRotation();
-        }
+        MoveLadderBeforeRotation();
     }
 
     private void MoveLadderBeforePosition()
     {
-        Vector3 warpDir = ladderPos - transform.position;
+        Vector3 warpDir = ladderPos - playerTrans.position;
         warpDir.y = 0;
-        if (warpDir.magnitude > warpPosMin)
+        if (warpDir.magnitude > warpSpeed)
         {
             warpDir.Normalize();
             warpDir = warpDir * warpSpeed;
+        }
+        else
+        {
+            moveBeforeFlg = true;
         }
 
         playerCC.Move(warpDir);
@@ -83,17 +111,23 @@ public class playerHundLadder : MonoBehaviour
 
     private void MoveLadderBeforeRotation()
     {
-        float playerLocalRotY = playerTrans.localRotation.eulerAngles.y;
+        float playerLocalRotY = playerTrans.rotation.eulerAngles.y;
 
-        if(playerLocalRotY >= 180.0f)
+        if (playerLocalRotY >= 180.0f)
         {
             playerLocalRotY -= 360.0f;
         }
 
+        float ladderRotY = ladderRot.y - 180.0f;
         float playerRotY = playerLocalRotY - (ladderRot.y - 180.0f);
         if (Mathf.Abs(playerRotY) > warpRotSpeed)
         {
-            if(playerLocalRotY > ladderRot.y - 180.0f)
+            float tmp = playerTrans.rotation.eulerAngles.y - ladderRot.y;
+            if (tmp < 0)
+            {
+                tmp += 360.0f;
+            }
+            if (tmp > 180.0f)
             {
                 playerTrans.localRotation *= Quaternion.Euler(new Vector3(0f, -warpRotSpeed, 0f));
             }
@@ -104,10 +138,11 @@ public class playerHundLadder : MonoBehaviour
         }
         else
         {
+            rotYBeforeFlg = true;
             playerTrans.localRotation = Quaternion.Euler(new Vector3(0f, ladderRot.y - 180.0f, 0f));
         }
 
-        float camLocalRotX = cmaTrans.localRotation.eulerAngles.x;
+        float camLocalRotX = cmaTrans.rotation.eulerAngles.x;
 
         if (camLocalRotX >= 180.0f)
         {
@@ -115,29 +150,82 @@ public class playerHundLadder : MonoBehaviour
         }
 
         float playerRotX = camLocalRotX - ladderRot.x;
-        if (Mathf.Abs(playerRotX) > warpRotSpeed)
+        if (Mathf.Abs(playerRotX) > warpRotXSpeed)
         {
             if (camLocalRotX > ladderRot.x)
             {
-                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(-warpRotSpeed, 0f, 0f));
+                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(-warpRotXSpeed, 0f, 0f));
             }
             else
             {
-                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(warpRotSpeed, 0f, 0f));
+                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(warpRotXSpeed, 0f, 0f));
             }
         }
         else
         {
+            rotXBeforeFlg = true;
             cmaTrans.localRotation = Quaternion.Euler(new Vector3(ladderRot.x, 0f, 0f));
         }
+    }
 
-        //playerTrans.localRotation = Quaternion.Euler(new Vector3(0f, ladderRot.y - 180.0f, 0f));
-        //cmaTrans.localRotation = Quaternion.Euler(new Vector3(ladderRot.x, 0f, 0f));
+    private bool MoveBeforeFinishFlg()
+    {
+        if (!moveBeforeFlg) return false;
+        if (!rotXBeforeFlg) return false;
+        if (!rotYBeforeFlg) return false;
+        return true;
+    }
+
+    private void FinishLadder()
+    {
+        touchLadderFlg = false;
+        moveBeforeFlg = false;
+        rotXBeforeFlg = false;
+        rotYBeforeFlg = false;
     }
 
     private void ClimbLadder()
     {
+        Vector3 climbVec = Vector3.zero;
+        Quaternion ladderQuaX = Quaternion.Euler(ladderRot.x, 0, 0);
 
+        if (Input.GetKey(KeyCode.W))
+        {
+            climbVec = ladderQuaX * new Vector3(0, climbSpeed, 0);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            climbVec = ladderQuaX * new Vector3(0, -climbSpeed, 0);
+        }
+
+        playerCC.Move(climbVec * Time.deltaTime);
+    }
+
+    private void DescendLadder()
+    {
+        if (!playerCC.isGrounded) return;
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            FinishLadder();
+        }
+    }
+
+    private void GoUpLadder()
+    {
+        if (playerTrans.position.y < ladderEndPos.y) return;
+
+        Vector3 climbVec = Vector3.zero;
+        Quaternion ladderQuaX = Quaternion.Euler(0, ladderRot.y, 0);
+        if (Input.GetKey(KeyCode.W))
+        {
+            climbVec = ladderQuaX * new Vector3(0, 0, climbSpeed);
+        }
+        playerCC.Move(-climbVec * Time.deltaTime);
+
+        if (!playerCC.isGrounded) return;
+
+        FinishLadder();
     }
 
 
