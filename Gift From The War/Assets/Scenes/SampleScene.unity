@@ -359,7 +359,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &168035774
 Light:
   m_ObjectHideFlags: 0
@@ -2781,8 +2781,9 @@ MonoBehaviour:
   playerCC: {fileID: 401655013}
   playerCamera: {fileID: 963194225}
   warpSpeed: 0.0025
-  warpPosMin: 0
-  warpRotSpeed: 10
+  warpRotSpeed: 0.1
+  warpRotXSpeed: 0.2
+  climbSpeed: 0.9
 --- !u!4 &1468359838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2691984012808516588, guid: 80b7f22b45fa7544196e2480688a91fc, type: 3}
