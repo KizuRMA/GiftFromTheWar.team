@@ -36,14 +36,6 @@ public class playerHundLadder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float playerLocalRotY = playerTrans.rotation.eulerAngles.y;
-
-        if (playerLocalRotY >= 180.0f)
-        {
-            playerLocalRotY -= 360.0f;
-        }
-        //Debug.Log(playerTrans.rotation.eulerAngles.y);
-
         if (!touchLadderFlg) return;
 
         if (!MoveBeforeFinishFlg())
@@ -80,10 +72,7 @@ public class playerHundLadder : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "ladder")
-        {
-            //touchLadderFlg = false;
-        }
+
     }
 
     private void MoveLadderBefore()
@@ -97,16 +86,15 @@ public class playerHundLadder : MonoBehaviour
     {
         Vector3 warpDir = ladderPos - playerTrans.position;
         warpDir.y = 0;
-        if (warpDir.magnitude > warpSpeed)
+        if (Mathf.Abs(warpDir.magnitude) <= warpSpeed)
+        {
+            moveBeforeFlg = true;
+        }
+        else
         {
             warpDir.Normalize();
             warpDir = warpDir * warpSpeed;
         }
-        else
-        {
-            moveBeforeFlg = true;
-        }
-
         playerCC.Move(warpDir);
     }
 
@@ -124,7 +112,7 @@ public class playerHundLadder : MonoBehaviour
         if (Mathf.Abs(playerRotY) > warpRotSpeed)
         {
             float tmp = playerTrans.rotation.eulerAngles.y - ladderRot.y;
-            if(tmp < 0)
+            if (tmp < 0)
             {
                 tmp += 360.0f;
             }
@@ -136,23 +124,12 @@ public class playerHundLadder : MonoBehaviour
             {
                 playerTrans.localRotation *= Quaternion.Euler(new Vector3(0f, warpRotSpeed, 0f));
             }
-            //Debug.Log(ladderRot.y);
         }
         else
         {
             rotYBeforeFlg = true;
             playerTrans.localRotation = Quaternion.Euler(new Vector3(0f, ladderRot.y - 180.0f, 0f));
         }
-
-        //Quaternion ladderQuaY = ladderQua;
-        //ladderQuaY[0] = 0;
-        //ladderQuaY[2] = 0;
-        //playerTrans.rotation = Quaternion.RotateTowards(playerTrans.rotation, ladderQuaY, 5);
-        //if (Mathf.Abs(playerTrans.rotation.eulerAngles.y - ladderQuaY.eulerAngles.y) <= 5)
-        //{
-        //    rotYBeforeFlg = true;
-        //    playerTrans.localRotation = Quaternion.Euler(new Vector3(0f, ladderRot.y - 180.0f, 0f));
-        //}
 
         float camLocalRotX = cmaTrans.rotation.eulerAngles.x;
 
@@ -235,14 +212,25 @@ public class playerHundLadder : MonoBehaviour
         }
         playerCC.Move(-climbVec * Time.deltaTime);
 
-        if (!playerCC.isGrounded) return;
-
-        FinishLadder();
+        Ray ray = new Ray(playerTrans.position, -transform.up);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            if (!(hit.collider.gameObject.tag == "wall")) return;
+            FinishLadder();
+        }
     }
 
 
     public bool GetTouchLadderFlg()
     {
         return touchLadderFlg;
+    }
+
+    public bool ClimbLadderFlg()
+    {
+        if (!touchLadderFlg) return false;
+        if (!MoveBeforeFinishFlg()) return false;
+        return true;
     }
 }

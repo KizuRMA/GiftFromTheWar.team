@@ -43,7 +43,7 @@ public class batMove : BaseState
         //‚‚³‚ğ’²®‚·‚é
         AdjustHeight();
 
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
 
         //ˆÚ“®‚·‚éê‡
         if (moveFlg)
