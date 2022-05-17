@@ -36,13 +36,6 @@ public class playerHundLadder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float playerLocalRotY = playerTrans.rotation.eulerAngles.y;
-
-        if (playerLocalRotY >= 180.0f)
-        {
-            playerLocalRotY -= 360.0f;
-        }
-
         if (!touchLadderFlg) return;
 
         if (!MoveBeforeFinishFlg())
@@ -79,10 +72,7 @@ public class playerHundLadder : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "ladder")
-        {
-            //touchLadderFlg = false;
-        }
+
     }
 
     private void MoveLadderBefore()
@@ -96,16 +86,15 @@ public class playerHundLadder : MonoBehaviour
     {
         Vector3 warpDir = ladderPos - playerTrans.position;
         warpDir.y = 0;
-        if (warpDir.magnitude > warpSpeed)
+        if (Mathf.Abs(warpDir.magnitude) <= warpSpeed)
+        {
+            moveBeforeFlg = true;
+        }
+        else
         {
             warpDir.Normalize();
             warpDir = warpDir * warpSpeed;
         }
-        else
-        {
-            moveBeforeFlg = true;
-        }
-
         playerCC.Move(warpDir);
     }
 
@@ -223,14 +212,25 @@ public class playerHundLadder : MonoBehaviour
         }
         playerCC.Move(-climbVec * Time.deltaTime);
 
-        if (!playerCC.isGrounded) return;
-
-        FinishLadder();
+        Ray ray = new Ray(playerTrans.position, -transform.up);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            if (!(hit.collider.gameObject.tag == "wall")) return;
+            FinishLadder();
+        }
     }
 
 
     public bool GetTouchLadderFlg()
     {
         return touchLadderFlg;
+    }
+
+    public bool ClimbLadderFlg()
+    {
+        if (!touchLadderFlg) return false;
+        if (!MoveBeforeFinishFlg()) return false;
+        return true;
     }
 }

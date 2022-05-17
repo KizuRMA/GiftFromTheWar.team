@@ -29,7 +29,9 @@ public class FPSController : MonoBehaviour
     //角度の制限用
     [SerializeField] float minX = -45f, maxX = 45f;
 
-    // Start is called before the first frame update
+    //重力
+    [SerializeField] float gravity;
+
     void Start()
     {
         CC = GetComponent<CharacterController>(); // 毎フレームアクセスするので、負荷を下げるためにキャッシュしておく
@@ -40,7 +42,6 @@ public class FPSController : MonoBehaviour
         moveSpeed = normalSpeed;
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateCursorLock();
@@ -67,6 +68,7 @@ public class FPSController : MonoBehaviour
         transform.localRotation = characterRot;
 
         MoveKey();
+
         DashJudge();
 
     }
@@ -150,7 +152,7 @@ public class FPSController : MonoBehaviour
         moveVec.Normalize();
         moveVec *= moveSpeed;
 
-        moveVec.y += Physics.gravity.y;
+        moveVec.y += gravity;
     }
 
     public void CameraMove()
