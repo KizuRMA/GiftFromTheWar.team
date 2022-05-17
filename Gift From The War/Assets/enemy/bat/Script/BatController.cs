@@ -96,6 +96,11 @@ public class BatController : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
     }
 
+    public void SimpleAdjustHeight()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
+    }
+
     //ナビメッシュの処理を再開
     public void OffNavMesh()
     {

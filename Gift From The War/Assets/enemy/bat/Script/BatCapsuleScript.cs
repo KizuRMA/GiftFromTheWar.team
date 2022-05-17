@@ -102,7 +102,6 @@ public class BatCapsuleScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         //ß“ûÎ‚¾‚Á‚½ê‡
         if (other.gameObject.tag == "stalactite")
         {
