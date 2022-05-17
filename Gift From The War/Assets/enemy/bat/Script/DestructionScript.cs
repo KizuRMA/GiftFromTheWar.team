@@ -15,6 +15,7 @@ public class DestructionScript : MonoBehaviour
             ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
             ChildObjects[i].AddComponent<Rigidbody>();
             ChildObjects[i].AddComponent<MeshCollider>();
+            ChildObjects[i].AddComponent<NotSeeObjectDelete>();
             ChildObjects[i].GetComponent<MeshCollider>().convex = true;
         }
 
