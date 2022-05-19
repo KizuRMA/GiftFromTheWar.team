@@ -149,7 +149,7 @@ public class WingFoldState : BaseState
         {
             //アクション状態を変更する
             nowAction = e_Action.none;
-            untilLaunch = Time.time;
+            untilLaunch = 0;
             nextAnime = false;
             return;
         }
@@ -181,8 +181,10 @@ public class WingFoldState : BaseState
 
     private void ActionNone()
     {
+        untilLaunch += Time.deltaTime;
+
         //超音波のクールタイムが終了している場合
-        if (untilLaunch + ultrasoundCoolTime <= Time.time)
+        if (untilLaunch - ultrasoundCoolTime > 0)
         {
             //超音波を更新
             bool _hit = ultrasound.Update();
@@ -195,6 +197,11 @@ public class WingFoldState : BaseState
                 targetPos += Vector3.down * 0.8f;
                 amountChangeDis = Vector3.Distance(targetPos, transform.position);
                 amountChangeAngX = myController.forwardAngle - 20.0f;
+
+                //プレイヤーをハウリング状態にする
+                playerCC.GetComponent<playerAbnormalcondition>().AddHowlingAbnormal();
+
+                //アニメーションを切り替える
                 Animator animator = GetComponent<Animator>();
                 animator.SetInteger("trans", 2);
                 ultrasound.Init();
@@ -206,7 +213,7 @@ public class WingFoldState : BaseState
         if (ultrasound.IsAlive() == false)
         {
             ultrasound.Init();
-            untilLaunch = Time.time;
+            untilLaunch = 0;
         }
     }
 
@@ -235,6 +242,14 @@ public class WingFoldState : BaseState
             _targetVec.Normalize();
             _targetVec *= 2.0f;
             _targetVec += transform.position;
+
+            //ナビメッシュないに補完する
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(_targetVec, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                // 位置をNavMesh内に補正
+                _targetVec = hit.position;
+            }
 
             distance = Vector3.Distance(_targetVec, transform.position);
             defaltHight = myController.hight;
