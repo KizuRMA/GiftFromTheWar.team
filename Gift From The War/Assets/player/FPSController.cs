@@ -7,7 +7,8 @@ public class FPSController : MonoBehaviour
 {
     private CharacterController CC;
     [SerializeField] private GameObject ladderHund;
-    private playerHundLadder ladder;
+    [SerializeField] private playerHundLadder ladder;
+    private MoveWindGun moveWindGun;
 
     private float moveSpeed;
     [SerializeField] private float normalSpeed = 3; // 移動速度
@@ -35,7 +36,7 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         CC = GetComponent<CharacterController>(); // 毎フレームアクセスするので、負荷を下げるためにキャッシュしておく
-        ladder = ladderHund.GetComponent<playerHundLadder>();
+        moveWindGun = this.GetComponent<MoveWindGun>();
         cameraRot = cam.transform.localRotation;
         characterRot = transform.localRotation;
 
@@ -84,7 +85,7 @@ public class FPSController : MonoBehaviour
 
         Move();
 
-        CC.Move(moveVec);
+        CC.Move(moveVec* Time.deltaTime);
 
     }
 
@@ -152,7 +153,7 @@ public class FPSController : MonoBehaviour
         moveVec.Normalize();
         moveVec *= moveSpeed;
 
-        moveVec.y += gravity;
+        Gravity();
     }
 
     public void CameraMove()
@@ -209,6 +210,13 @@ public class FPSController : MonoBehaviour
         return q;
     }
 
+    private void Gravity()
+    {
+        if (moveWindGun.GetUpWindGunFlg()) return;
+
+        moveVec.y += gravity;
+    }
+
     //--------------------------------------------------------------------
     //ゲッターセッター
     //--------------------------------------------------------------------
@@ -220,5 +228,10 @@ public class FPSController : MonoBehaviour
     public bool GetDashFlg()
     {
         return dashFlg;
+    }
+
+    public float GetGravity()
+    {
+        return gravity;
     }
 }

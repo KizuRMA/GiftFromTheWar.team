@@ -7,6 +7,7 @@ public class rantanMove : MonoBehaviour
     [SerializeField] private GameObject player;
     private Transform trans;
     private FPSController fpsC;
+    [SerializeField] playerHundLadder playerHund;
     private Transform camTrans;
     private Quaternion firstQua;
     private int upDown = -1;
@@ -37,7 +38,6 @@ public class rantanMove : MonoBehaviour
 
     void rotation()
     {
-
         //カメラのクオータニオン値を取得
         Quaternion _camQua = camTrans.rotation;
 
@@ -80,9 +80,11 @@ public class rantanMove : MonoBehaviour
         }
         else
         {
+            if (playerHund.ClimbLadderFlg()) return;
+
             //自動で戻る処理
             float nowPos = firstPos.y - trans.localPosition.y;
-            if (Mathf.Abs(nowPos) > upDownSpeed) //ほぼ最初のところに戻っていなかったら
+            if (Mathf.Abs(nowPos) > upDownSpeed * Time.deltaTime) //ほぼ最初のところに戻っていなかったら
             {
                 if (nowPos > 0)
                 {
@@ -95,10 +97,12 @@ public class rantanMove : MonoBehaviour
             }
             else
             {
-                posY = nowPos;
                 upDown = -1;
+                trans.localPosition = firstPos;
+                return;
             }
         }
-        trans.localPosition += new Vector3(0.0f, posY, 0.0f);
+
+        trans.localPosition += new Vector3(0.0f, posY, 0.0f) * Time.deltaTime;
     }
 }

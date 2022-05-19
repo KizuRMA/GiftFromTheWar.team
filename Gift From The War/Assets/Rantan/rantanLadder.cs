@@ -20,7 +20,6 @@ public class rantanLadder : MonoBehaviour
         firstPos = trans.localPosition;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerHund.ClimbLadderFlg())
@@ -29,29 +28,32 @@ public class rantanLadder : MonoBehaviour
             return;
         }
 
-        if (finishFlg) return;
         NoTouchLadder();
     }
 
     private void TouchLadder()
     {
+        if (!finishFlg) return;
+
         if (trans.localPosition.y < firstPos.y - maxPosY)
         {
             finishFlg = false;
             return;
         }
 
-        trans.localPosition += new Vector3(0, -upDownSpeed, 0);
+        trans.localPosition += new Vector3(0, -upDownSpeed, 0) * Time.deltaTime;
     }
 
     private void NoTouchLadder()
     {
+        if (finishFlg) return;
+
         if (trans.localPosition.y > firstPos.y)
         {
             finishFlg = true;
             return;
         }
 
-        trans.localPosition += new Vector3(0, upDownSpeed, 0);
+        trans.localPosition += new Vector3(0, upDownSpeed, 0) * Time.deltaTime;
     }
 }

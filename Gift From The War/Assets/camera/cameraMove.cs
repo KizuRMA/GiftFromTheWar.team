@@ -12,13 +12,11 @@ public class cameraMove : MonoBehaviour
     [SerializeField] private float maxPosY;
     [SerializeField] private float dashRaito;
     private FPSController fpsC;
-    private CharacterController playerCC;
 
     // Start is called before the first frame update
     void Start()
     {
         trans = transform;
-        playerCC = GameObject.Find("player").GetComponent<CharacterController>();
         fpsC = GameObject.Find("player").GetComponent<FPSController>();
     }
 
@@ -29,11 +27,11 @@ public class cameraMove : MonoBehaviour
         {
             if (fpsC.GetDashFlg())
             {
-                posY += upDownSpeed * upDown * dashRaito;
+                posY += upDownSpeed * upDown * dashRaito * Time.deltaTime;
             }
             else
             {
-                posY += upDownSpeed * upDown;
+                posY += upDownSpeed * upDown * Time.deltaTime;
             }
             
             if (Mathf.Abs(posY) > Mathf.Abs(maxPosY))
@@ -43,15 +41,15 @@ public class cameraMove : MonoBehaviour
         }
         else
         {
-            if (Mathf.Abs(posY) > upDownSpeed * 1.1f)
+            if (Mathf.Abs(posY) > upDownSpeed * Time.deltaTime)
             {
                 if (posY > 0)
                 {
-                    posY += -upDownSpeed;
+                    posY += -upDownSpeed * Time.deltaTime;
                 }
                 else
                 {
-                    posY += upDownSpeed;
+                    posY += upDownSpeed * Time.deltaTime;
                 }
             }
             else
@@ -61,6 +59,6 @@ public class cameraMove : MonoBehaviour
             }
         }
 
-        trans.position = firstPos + new Vector3(0.0f, posY, 0.0f) + playerCC.transform.position;
+        trans.localPosition = firstPos + new Vector3(0.0f, posY, 0.0f);
     }
 }

@@ -109,7 +109,7 @@ public class playerHundLadder : MonoBehaviour
 
         float ladderRotY = ladderRot.y - 180.0f;
         float playerRotY = playerLocalRotY - (ladderRot.y - 180.0f);
-        if (Mathf.Abs(playerRotY) > warpRotSpeed)
+        if (Mathf.Abs(playerRotY) > warpRotSpeed * Time.deltaTime)
         {
             float tmp = playerTrans.rotation.eulerAngles.y - ladderRot.y;
             if (tmp < 0)
@@ -118,11 +118,11 @@ public class playerHundLadder : MonoBehaviour
             }
             if (tmp > 180.0f)
             {
-                playerTrans.localRotation *= Quaternion.Euler(new Vector3(0f, -warpRotSpeed, 0f));
+                playerTrans.localRotation *= Quaternion.Euler(new Vector3(0f, -warpRotSpeed * Time.deltaTime, 0f));
             }
             else
             {
-                playerTrans.localRotation *= Quaternion.Euler(new Vector3(0f, warpRotSpeed, 0f));
+                playerTrans.localRotation *= Quaternion.Euler(new Vector3(0f, warpRotSpeed * Time.deltaTime, 0f));
             }
         }
         else
@@ -139,15 +139,15 @@ public class playerHundLadder : MonoBehaviour
         }
 
         float playerRotX = camLocalRotX - ladderRot.x;
-        if (Mathf.Abs(playerRotX) > warpRotXSpeed)
+        if (Mathf.Abs(playerRotX) > warpRotXSpeed * Time.deltaTime)
         {
             if (camLocalRotX > ladderRot.x)
             {
-                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(-warpRotXSpeed, 0f, 0f));
+                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(-warpRotXSpeed * Time.deltaTime, 0f, 0f));
             }
             else
             {
-                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(warpRotXSpeed, 0f, 0f));
+                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(warpRotXSpeed * Time.deltaTime, 0f, 0f));
             }
         }
         else
