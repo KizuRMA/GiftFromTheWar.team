@@ -24,7 +24,6 @@ public class DeadState : BaseState
     public override void Start()
     {
        
-      
     }
 
     // Update is called once per frame

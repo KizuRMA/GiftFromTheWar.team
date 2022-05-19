@@ -23,7 +23,7 @@ public class BatController : MonoBehaviour
         hight = defaltHight;
         forwardAngle = defaltForwardAngle;
         //ステートを切り替える
-        ChangeState(GetComponent<batMove>());
+        ChangeState(GetComponent<WingFoldState>());
     }
 
     // Update is called once per frame
@@ -88,7 +88,7 @@ public class BatController : MonoBehaviour
         Vector3 nextPos = new Vector3(transform.position.x, _hight, transform.position.z);
 
         //ナビメッシュのスピードを用いてコウモリの高さを調整する
-        nowPos = Vector3.MoveTowards(nowPos, nextPos, 0.001f);
+        nowPos = Vector3.MoveTowards(nowPos, nextPos, 0.8f * Time.deltaTime);
 
         //次のフレームでは現在のY軸が保存されないため、記録しておく。
         hight = nowPos.y;

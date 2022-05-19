@@ -5,6 +5,7 @@ using UnityEngine;
 public class UltraSoundBeam : MonoBehaviour
 {
     private CharacterController playerCC;
+    private ParticleSystem particle;
     [SerializeField] private float longestLength;
     [SerializeField] private float duration;
     [SerializeField] private float length;
@@ -19,12 +20,16 @@ public class UltraSoundBeam : MonoBehaviour
     private void Awake()
     {
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
+        particle = transform.Find("ultrasoundBeem").gameObject.GetComponent<ParticleSystem>();
+        particle.Stop();
 
         defaultVelocity = velocity;
         defaultLength = length;
         defaultDuration = duration;
         defaultLongestLength = longestLength;
+        nowTime = 0;
         aliveFlg = true;
+
     }
 
     public void Init()
@@ -33,6 +38,8 @@ public class UltraSoundBeam : MonoBehaviour
         length = defaultLength;
         duration = defaultDuration;
         longestLength = defaultLongestLength;
+        nowTime = 0;
+        particle.Stop();
         aliveFlg = true;
     }
 
@@ -42,13 +49,15 @@ public class UltraSoundBeam : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
+    public bool Update()
     {
         //初めて更新関数が実行される時
         if(length <= defaultLength)
         {
-            nowTime = Time.time;
+            particle.Play();
         }
+
+        nowTime += Time.deltaTime;
 
         //超音波ビームを長くする
         length += velocity;
@@ -60,7 +69,26 @@ public class UltraSoundBeam : MonoBehaviour
 
         float dot = Vector3.Dot(transform.forward.normalized,_targetVec.normalized);
 
-        //Debug.Log(Mathf.Acos(dot) * Mathf.Rad2Deg);
+        //デバッグ用の線を描画
+        var lineRenderer = gameObject.GetComponent<LineRenderer>();
+
+        var positions = new Vector3[]
+        {
+            _firePos,
+            _firePos + (transform.forward * length),
+        };
+
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+
+        lineRenderer.SetPositions(positions);
+
+        if (nowTime - duration > 0)
+        {
+            aliveFlg = false;
+            particle.Stop();
+        }
+
         if (Mathf.Acos(dot) * Mathf.Rad2Deg <= 20.0f)
         {
             //プレイヤーの方向に対する超音波の射程距離を出す。
@@ -75,31 +103,11 @@ public class UltraSoundBeam : MonoBehaviour
                 //プレイヤーに向かってレイを発射
                 bool hit = Physics.Raycast(_ray, out _raycastHit, withinRange);
 
-                //Debug.Log(_raycastHit.collider.gameObject);
-                //Debug.Log("超音波が当たった！！");
+                Debug.Log("超音波が当たった！！");
+
+                return true;
             }
         }
-
-        ////デバッグ用の線を描画
-        //var lineRenderer = gameObject.GetComponent<LineRenderer>();
-        ////lineRenderer.hideFlags = HideFlags.None;
-
-        //var positions = new Vector3[]
-        //{
-        //    _firePos,
-        //    _firePos + (transform.forward * length),
-        //};
-
-        //lineRenderer.startWidth = 0.1f;
-        //lineRenderer.endWidth = 0.1f;
-
-        //lineRenderer.SetPositions(positions);
-
-        ////持続時間を計算
-        //if (duration + nowTime <= Time.time)
-        //{
-        //    aliveFlg = false;
-        //    lineRenderer.hideFlags = HideFlags.HideInHierarchy;
-        //}
+        return false;
     }
 }

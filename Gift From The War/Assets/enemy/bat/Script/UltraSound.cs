@@ -16,7 +16,6 @@ public class UltraSound : MonoBehaviour
     private float nowTime;
     private bool aliveFlg;
 
-
     private void Awake()
     {
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
@@ -25,6 +24,7 @@ public class UltraSound : MonoBehaviour
         defaultLength = length;
         defaultDuration = duration;
         defaultLongestLength = longestLength;
+        nowTime = 0;
         aliveFlg = true;
     }
 
@@ -34,6 +34,7 @@ public class UltraSound : MonoBehaviour
         length = defaultLength;
         duration = defaultDuration;
         longestLength = defaultLongestLength;
+        nowTime = 0;
         aliveFlg = true;
     }
 
@@ -45,14 +46,10 @@ public class UltraSound : MonoBehaviour
     // Update is called once per frame
     public bool Update()
     {
-        //初めて更新関数が実行される時
-        if (length <= defaultLength)
-        {
-            nowTime = Time.time;
-        }
+        nowTime += Time.deltaTime;
 
         //超音波を徐々に遠くに飛ばす
-        length += velocity;
+        length += velocity * Time.deltaTime;
         length = Mathf.Min(length, longestLength);
 
         //当たり判定
@@ -69,28 +66,25 @@ public class UltraSound : MonoBehaviour
         _targetVec = playerCC.transform.position - _pos;
         float _distance = _targetVec.magnitude;
 
-        ////デバッグ用の線を描画
-        //var lineRenderer = gameObject.GetComponent<LineRenderer>();
+        //デバッグ用の線を描画
+        var lineRenderer = gameObject.GetComponent<LineRenderer>();
 
-        //var positions = new Vector3[]
-        //{
-        //    _firePos,
-        //    _firePos + ((playerCC.transform.position - _firePos).normalized * length),
-        //};
+        var positions = new Vector3[]
+        {
+            _firePos,
+            _firePos + ((playerCC.transform.position - _firePos).normalized * length),
+        };
 
-        //lineRenderer.startWidth = 0.1f;
-        //lineRenderer.endWidth = 0.1f;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
 
-        //lineRenderer.SetPositions(positions);
+        lineRenderer.SetPositions(positions);
 
-        ////持続時間を計算
-        //if (nowTime + duration <= Time.time)
-        //{
-        //    aliveFlg = false;
-        //    lineRenderer.hideFlags = HideFlags.HideInHierarchy;
-        //}
-
-        //Debug.Log(_distance);
+        //持続時間を計算
+        if (nowTime - duration > 0)
+        {
+            aliveFlg = false;
+        }
 
         //超音波との距離が近い場合
         if (_distance <= 0.4f)
