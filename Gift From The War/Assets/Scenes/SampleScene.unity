@@ -3586,7 +3586,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410199341}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e7d7324f445f3349a5dd20d813b9b40, type: 3}
   m_Name: 
@@ -4698,6 +4698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1798665815}
+  - component: {fileID: 1798665816}
   m_Layer: 0
   m_Name: rock
   m_TagString: Untagged
@@ -4724,6 +4725,22 @@ Transform:
   m_Father: {fileID: 508858443}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1798665816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798665814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &1810473411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6731,6 +6748,14 @@ PrefabInstance:
     - target: {fileID: 475890599468204229, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
       propertyPath: m_Name
       value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 746430043351393570, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
+      propertyPath: m_Height
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 746430043351393570, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
+      propertyPath: m_Center.y
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 746430043379285378, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
       propertyPath: avoidancePriority

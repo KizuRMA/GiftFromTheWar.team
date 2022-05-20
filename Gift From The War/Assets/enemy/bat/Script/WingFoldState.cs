@@ -111,7 +111,9 @@ public class WingFoldState : BaseState
             Ray _ray = new Ray(transform.position, Vector3.down);
             RaycastHit _raycastHit;
 
-            bool _rayHit = Physics.Raycast(_ray, out _raycastHit,1000.0f, layerMask);
+            bool _rayHit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, layerMask);
+
+            Debug.Log(myController.hight);
 
             //レイがオブジェクトに当たっている場合
             if (_rayHit == true)
@@ -335,7 +337,6 @@ public class WingFoldState : BaseState
     {
         //翼を広げるアニメーションに変更
         Animator animator = GetComponent<Animator>();
-        float _nowTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
         //コウモリ移動処理
         transform.position = Vector3.MoveTowards(transform.position, targetPos, amountChangeDis * (Time.deltaTime * 1.5f));
