@@ -14,6 +14,11 @@ public class MoveWindGun : MonoBehaviour
     [SerializeField] float range;
     float disRaitoPower;
 
+    bool groundFlg = false;
+    float airResistance;
+    [SerializeField] float airResistancePower;
+    [SerializeField] float airResistanceMin;
+
     Vector3 power;
     bool upWindFlg = false;
     float gravity;
@@ -36,6 +41,8 @@ public class MoveWindGun : MonoBehaviour
 
     private void KnowViewpoint() //‚Ç‚±‚Þ‚¢‚Ä‚¢‚é‚©
     {
+        if (!Input.GetMouseButton(0)) return;
+
         viewpoint = Quaternion.Euler(cam.transform.localRotation.eulerAngles.x, trans.localRotation.eulerAngles.y, 0);
     }
 
@@ -44,6 +51,25 @@ public class MoveWindGun : MonoBehaviour
         if (!Input.GetMouseButton(0))
         {
             upWindFlg = false;
+
+            if (CC.isGrounded)
+            {
+                groundFlg = true;
+            }
+
+            if (groundFlg)
+            {
+                airResistance -= airResistancePower;
+            }
+
+            if(airResistance < 0)
+            {
+                airResistance = 0;
+                groundFlg = false;
+            }
+
+            power = viewpoint * new Vector3(0, 0, -movePower) * airResistance * Time.deltaTime;
+            CC.Move(power);
             return;
         }
 
@@ -67,6 +93,12 @@ public class MoveWindGun : MonoBehaviour
         if (Physics.Raycast(ray, out hit, range, layerMask))
         {
             disRaitoPower = 1.0f - hit.distance / range + movePowerMin;
+
+            airResistance = disRaitoPower;
+            if (airResistance < airResistanceMin)
+            {
+                airResistance = airResistanceMin;
+            }
         }
         else
         {

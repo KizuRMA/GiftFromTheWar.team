@@ -9,6 +9,7 @@ public class playerHundLadder : MonoBehaviour
     Transform playerTrans;
     Transform cmaTrans;
 
+    bool closeLadderFlg = false;
     bool touchLadderFlg = false;
 
     Vector3 ladderPos;
@@ -36,6 +37,11 @@ public class playerHundLadder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(closeLadderFlg && Input.GetKeyDown(KeyCode.Space))
+        {
+            touchLadderFlg = true;
+        }
+
         if (!touchLadderFlg) return;
 
         if (!MoveBeforeFinishFlg())
@@ -62,7 +68,7 @@ public class playerHundLadder : MonoBehaviour
     {
         if (other.tag == "ladder")
         {
-            touchLadderFlg = true;
+            closeLadderFlg = true;
             ladderPos = other.gameObject.transform.GetChild(2).gameObject.transform.position;
             ladderRot = other.gameObject.transform.GetChild(2).gameObject.transform.eulerAngles;
             ladderEndPos = other.gameObject.transform.GetChild(3).gameObject.transform.position;
@@ -72,7 +78,7 @@ public class playerHundLadder : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
+        closeLadderFlg = false;
     }
 
     private void MoveLadderBefore()
@@ -167,6 +173,7 @@ public class playerHundLadder : MonoBehaviour
 
     private void FinishLadder()
     {
+        closeLadderFlg = false;
         touchLadderFlg = false;
         moveBeforeFlg = false;
         rotXBeforeFlg = false;
@@ -221,6 +228,10 @@ public class playerHundLadder : MonoBehaviour
         }
     }
 
+    public bool GetCloseLadderFlg()
+    {
+        return closeLadderFlg;
+    }
 
     public bool GetTouchLadderFlg()
     {
@@ -229,6 +240,7 @@ public class playerHundLadder : MonoBehaviour
 
     public bool ClimbLadderFlg()
     {
+        if (!closeLadderFlg) return false;
         if (!touchLadderFlg) return false;
         if (!MoveBeforeFinishFlg()) return false;
         return true;
