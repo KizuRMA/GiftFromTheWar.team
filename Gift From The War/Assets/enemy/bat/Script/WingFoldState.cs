@@ -113,7 +113,7 @@ public class WingFoldState : BaseState
 
             bool _rayHit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, layerMask);
 
-            Debug.Log(myController.hight);
+            //Debug.Log(myController.hight);
 
             //レイがオブジェクトに当たっている場合
             if (_rayHit == true)

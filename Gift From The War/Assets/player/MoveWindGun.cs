@@ -69,6 +69,7 @@ public class MoveWindGun : MonoBehaviour
             }
 
             power = viewpoint * new Vector3(0, 0, -movePower) * airResistance * Time.deltaTime;
+            power.y = 0;
             CC.Move(power);
             return;
         }
