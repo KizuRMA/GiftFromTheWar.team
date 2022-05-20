@@ -5,6 +5,13 @@ using UnityEngine.AI;
 
 public class BatController : MonoBehaviour
 {
+    public enum e_State
+    {
+        move,
+        wingFold,
+        attack,
+    }
+
     BaseState state;
     public float hight { get; set; }
     public float forwardAngle { get; set; }
@@ -13,7 +20,9 @@ public class BatController : MonoBehaviour
     private float life;
     [SerializeField] public float defaltHight;
     [SerializeField] public float defaltForwardAngle;
+    [SerializeField] private LayerMask raycastLayerMask;
 
+    public bool IsAttackable => (int)e_State.move == state.CurrentState;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +78,7 @@ public class BatController : MonoBehaviour
     {
         Ray _ray = new Ray(transform.position, Vector3.up);
         RaycastHit _raycastHit;
-        bool _hit = Physics.Raycast(_ray, out _raycastHit);
+        bool _hit = Physics.Raycast(_ray, out _raycastHit,1000.0f, raycastLayerMask);
 
         //ステージの立幅を記録
         float _hight = _raycastHit.distance;

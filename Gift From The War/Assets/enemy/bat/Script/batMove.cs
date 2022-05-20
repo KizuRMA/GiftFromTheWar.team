@@ -37,6 +37,7 @@ public class batMove : BaseState
         ultrasound = GetComponent<UltraSound>();
         ultrasound.Init();
 
+        CurrentState = (int)BatController.e_State.move;
         nowAction = e_Action.move;
         untilLaunch = 0;
 

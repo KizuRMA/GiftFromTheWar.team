@@ -33,7 +33,7 @@ public class UltraSound : MonoBehaviour
         velocity = defaultVelocity;
         length = defaultLength;
         duration = defaultDuration;
-        longestLength = defaultLongestLength;
+        longestLength = 0;
         nowTime = 0;
         aliveFlg = true;
     }
@@ -46,6 +46,10 @@ public class UltraSound : MonoBehaviour
     // Update is called once per frame
     public bool Update()
     {
+        if (longestLength <= 0)
+        {
+            SearchLongestLength();
+        }
         nowTime += Time.deltaTime;
 
         //超音波を徐々に遠くに飛ばす
@@ -94,5 +98,29 @@ public class UltraSound : MonoBehaviour
         }
         //当たっていない
         return false;
+    }
+
+    public void SearchLongestLength()
+    {
+        int layerMask = 1 << 9;
+        Ray _ray = new Ray(transform.position, transform.up);
+        RaycastHit _raycastHit;
+
+        //プレイヤーに向かってレイを発射
+        bool hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, layerMask);
+
+        if (hit == true)
+        {
+            //レイが天井に衝突している場合はターゲット座標に設定する。
+            longestLength = _raycastHit.distance;
+            if (longestLength <= defaultLongestLength)
+            {
+                longestLength = defaultLongestLength;
+            }
+        }
+        else
+        {
+            longestLength = defaultLongestLength;
+        }
     }
 }

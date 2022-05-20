@@ -6,11 +6,17 @@ using UnityEngine.Events;
 public class CollisionDetector : MonoBehaviour
 {
 
+    [SerializeField] private TriggerEvent onTriggerEnter = new TriggerEvent();
     [SerializeField] private TriggerEvent onTriggerStay = new TriggerEvent();
 
     private void OnTriggerStay(Collider other)
     {
         onTriggerStay.Invoke(other);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        onTriggerEnter.Invoke(other);
     }
 
     [Serializable]

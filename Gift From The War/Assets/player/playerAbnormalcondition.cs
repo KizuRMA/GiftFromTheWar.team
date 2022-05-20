@@ -69,7 +69,7 @@ public class playerAbnormalcondition : MonoBehaviour
         ref Abnormal howling = ref abnormal[(int)e_Abnormal.howling];
 
         howling.time = 0;
-        howling.complateCureTime = 5;
+        howling.complateCureTime = 10;
         howling.completeCureFlg = false;
     }
 }

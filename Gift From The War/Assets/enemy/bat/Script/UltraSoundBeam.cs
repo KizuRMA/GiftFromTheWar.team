@@ -29,7 +29,6 @@ public class UltraSoundBeam : MonoBehaviour
         defaultLongestLength = longestLength;
         nowTime = 0;
         aliveFlg = true;
-
     }
 
     public void Init()

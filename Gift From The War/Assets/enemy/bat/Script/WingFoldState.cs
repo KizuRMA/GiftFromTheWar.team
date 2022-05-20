@@ -54,6 +54,8 @@ public class WingFoldState : BaseState
 
         ultrasound = GetComponent<UltraSound>();
         ultrasound.Init();
+
+        CurrentState = (int)BatController.e_State.wingFold;
     }
 
     // Update is called once per frame
@@ -105,9 +107,11 @@ public class WingFoldState : BaseState
         if (agent.isStopped == true)
         {
             //コウモリの座標からワールド座標で下に向いているレイを作る
+            int layerMask = 1 << 9;
             Ray _ray = new Ray(transform.position, Vector3.down);
             RaycastHit _raycastHit;
-            bool _rayHit = Physics.Raycast(_ray, out _raycastHit);
+
+            bool _rayHit = Physics.Raycast(_ray, out _raycastHit,1000.0f, layerMask);
 
             //レイがオブジェクトに当たっている場合
             if (_rayHit == true)
