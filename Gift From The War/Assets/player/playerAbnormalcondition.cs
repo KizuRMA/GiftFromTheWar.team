@@ -17,11 +17,13 @@ public class playerAbnormalcondition : MonoBehaviour
     }
 
     Abnormal[] abnormal = new Abnormal[System.Enum.GetValues(typeof(e_Abnormal)).Length];
+    [SerializeField]public float life { set; get; }
 
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < abnormal.Length; i++)
+        life = 2;
+        for (int i = 0; i < abnormal.Length; i++)
         {
             abnormal[i].time = 0;
             abnormal[i].complateCureTime = 0;
@@ -71,5 +73,13 @@ public class playerAbnormalcondition : MonoBehaviour
         howling.time = 0;
         howling.complateCureTime = 10;
         howling.completeCureFlg = false;
+    }
+
+    public void Damage(int _damage)
+    {
+        if (life < 0) return;
+
+        life -= _damage;
+        if (life > 0) return;
     }
 }
