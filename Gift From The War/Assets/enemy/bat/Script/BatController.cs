@@ -21,12 +21,14 @@ public class BatController : MonoBehaviour
     [SerializeField] public float defaltHight;
     [SerializeField] public float defaltForwardAngle;
     [SerializeField] private LayerMask raycastLayerMask;
+    private CharacterController playerCC;
 
     public bool IsAttackable => (int)e_State.move == state.CurrentState;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerCC = GameObject.Find("player").GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
         life = 1.0f;
         hight = defaltHight;
@@ -74,27 +76,45 @@ public class BatController : MonoBehaviour
     }
 
     //高さを動的に変える処理(ナビメッシュが高さの情報を処理しないため)
+    //※transform.positionにhightが足されていない場合に限る
     public void AdjustHeight()
     {
+        //ナビメッシュの影響でY軸の値が地面の座標になっている
         Ray _ray = new Ray(transform.position, Vector3.up);
         RaycastHit _raycastHit;
         bool _hit = Physics.Raycast(_ray, out _raycastHit,1000.0f, raycastLayerMask);
 
         //ステージの立幅を記録
-        float _hight = _raycastHit.distance;
+        float _maxHight = _raycastHit.distance;
+        float _minHight = _maxHight;
 
         //ステージの縦幅の４割の位置にいるようにする
-        _hight *= 0.4f;
+        _minHight *= 0.4f;
         //コウモリの飛行上限を設定する
-        if (_hight > 0.8f)
+        if (_minHight > 0.8f)
         {
-            _hight = 0.8f;
+            _minHight = 0.8f;
+        }
+
+        float _targetHight = _maxHight;
+
+        //プレイヤーの地面までの距離を取得
+        _ray = new Ray(playerCC.transform.position, Vector3.down);
+        _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
+
+        if (_hit == true)
+        {
+            _targetHight = Mathf.Min(Mathf.Max(_raycastHit.distance,_minHight),_maxHight);
+        }
+        else
+        {
+            _targetHight = _minHight;
         }
 
         //現在のコウモリを高さを含んだ座標
         Vector3 nowPos = new Vector3(transform.position.x, hight, transform.position.z);
         //本来いてほしい座標
-        Vector3 nextPos = new Vector3(transform.position.x, _hight, transform.position.z);
+        Vector3 nextPos = new Vector3(transform.position.x, _targetHight, transform.position.z);
 
         //ナビメッシュのスピードを用いてコウモリの高さを調整する
         nowPos = Vector3.MoveTowards(nowPos, nextPos, 0.8f * Time.deltaTime);
