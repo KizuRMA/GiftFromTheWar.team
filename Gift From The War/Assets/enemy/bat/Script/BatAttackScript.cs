@@ -12,6 +12,12 @@ public class BatAttackScript : BaseState
     private void Awake()
     {
         myController = GetComponent<BatController>();
+        CurrentState = (int)BatController.e_State.attack;
+    }
+
+    public override void Start()
+    {
+        base.Start();
     }
 
     public override void Update()

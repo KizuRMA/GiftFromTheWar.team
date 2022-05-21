@@ -83,6 +83,8 @@ public class batMove : BaseState
             if (agent.velocity.magnitude <= 0.0f)
             {
                 nowAction = e_Action.search;
+                Animator animator = GetComponent<Animator>();
+                animator.SetTrigger("ShakeHead");
             }
         }
         else
@@ -125,7 +127,7 @@ public class batMove : BaseState
 
     private void ActionSearch()
     {
-        nowAction = e_Action.check;
+
     }
 
     private void ActionCheck()
@@ -157,4 +159,10 @@ public class batMove : BaseState
             return;
         }
     }
+
+    public void SearchPlayerAction()
+    {
+        nowAction = e_Action.check;
+    }
+
 }
