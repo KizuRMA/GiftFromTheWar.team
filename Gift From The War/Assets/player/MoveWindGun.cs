@@ -7,6 +7,7 @@ public class MoveWindGun : MonoBehaviour
     CharacterController CC;
     Transform trans;
     [SerializeField] GameObject cam;
+    [SerializeField] playerHundLadder ladder;
     Quaternion viewpoint;
 
     [SerializeField] float movePower;
@@ -17,6 +18,7 @@ public class MoveWindGun : MonoBehaviour
     bool groundFlg = false;
     float airResistance;
     [SerializeField] float airResistancePower;
+    [SerializeField] float airResistanceMax;
     [SerializeField] float airResistanceMin;
 
     Vector3 power;
@@ -34,6 +36,8 @@ public class MoveWindGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ladder.GetTouchLadderFlg()) return;
+
         KnowViewpoint();
 
         Move();
@@ -59,7 +63,7 @@ public class MoveWindGun : MonoBehaviour
 
             if (groundFlg)
             {
-                airResistance -= airResistancePower;
+                airResistance -= airResistancePower * Time.deltaTime;
             }
 
             if(airResistance < 0)
@@ -99,6 +103,11 @@ public class MoveWindGun : MonoBehaviour
             if (airResistance < airResistanceMin)
             {
                 airResistance = airResistanceMin;
+            }
+
+            if(airResistance > airResistanceMax)
+            {
+                airResistance = airResistanceMax;
             }
         }
         else

@@ -64,7 +64,7 @@ public class playerHundLadder : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "ladder")
         {
@@ -92,14 +92,14 @@ public class playerHundLadder : MonoBehaviour
     {
         Vector3 warpDir = ladderPos - playerTrans.position;
         warpDir.y = 0;
-        if (Mathf.Abs(warpDir.magnitude) <= warpSpeed)
+        if (Mathf.Abs(warpDir.magnitude) <= warpSpeed * Time.deltaTime)
         {
             moveBeforeFlg = true;
         }
         else
         {
             warpDir.Normalize();
-            warpDir = warpDir * warpSpeed;
+            warpDir = warpDir * warpSpeed * Time.deltaTime;
         }
         playerCC.Move(warpDir);
     }
@@ -182,8 +182,10 @@ public class playerHundLadder : MonoBehaviour
 
     private void ClimbLadder()
     {
+        if (playerTrans.position.y > ladderEndPos.y) return;
+
         Vector3 climbVec = Vector3.zero;
-        Quaternion ladderQuaX = Quaternion.Euler(ladderRot.x, 0, 0);
+        Quaternion ladderQuaX = Quaternion.Euler(-ladderRot.x, ladderRot.y, 0);
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -219,9 +221,10 @@ public class playerHundLadder : MonoBehaviour
         }
         playerCC.Move(-climbVec * Time.deltaTime);
 
+        int layerMask = 1 << 13;
         Ray ray = new Ray(playerTrans.position, -transform.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
             if (!(hit.collider.gameObject.tag == "wall")) return;
             FinishLadder();

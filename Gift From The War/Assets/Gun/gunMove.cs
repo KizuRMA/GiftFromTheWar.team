@@ -2,61 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rantanMove : MonoBehaviour
+public class gunMove : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     private Transform trans;
     private FPSController fpsC;
     [SerializeField] playerHundLadder playerHund;
-    [SerializeField] private Transform camTrans;
-    private Quaternion firstQua;
-    private int upDown = -1;
+    private int upDown = 1;
     private Vector3 firstPos;
     private float posY = 0;
     [SerializeField] private float upDownSpeed;
     [SerializeField] private float maxPosY;
     [SerializeField] private float dashRaito;
-    [SerializeField] private float upRaito = 0; //è„ÇÃåXÇ´ÇÃï‚ê≥î{ó¶
-    [SerializeField] private float downRaito = 0; //è„ÇÃåXÇ´ÇÃï‚ê≥î{ó¶
 
     // Start is called before the first frame update
     void Start()
     {
         trans = GetComponent<Transform>();
         fpsC = player.GetComponent<FPSController>();
-        firstQua = trans.localRotation;
         firstPos = trans.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rotation();
         tremor();
-    }
-
-    void rotation()
-    {
-        //ÉJÉÅÉâÇÃÉNÉIÅ[É^ÉjÉIÉìílÇéÊìæ
-        Quaternion _camQua = camTrans.rotation;
-
-        float _camEulerAngleX = _camQua.eulerAngles.x;
-
-        //äpìxÇí≤êÆÇ∑ÇÈ
-        if (_camEulerAngleX >= 300.0f)
-        {
-            _camEulerAngleX -= 360.0f;
-            _camEulerAngleX *= upRaito;
-        }
-        else
-        {
-            _camEulerAngleX *= downRaito;
-        }
-
-        _camEulerAngleX *= -1;
-
-        Quaternion _ranQua = Quaternion.AngleAxis(_camEulerAngleX, Vector3.right);
-        trans.localRotation = _ranQua * firstQua;
     }
 
     void tremor()
@@ -96,7 +66,7 @@ public class rantanMove : MonoBehaviour
             }
             else
             {
-                upDown = -1;
+                upDown = 1;
                 trans.localPosition = firstPos;
                 return;
             }
