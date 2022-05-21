@@ -2,96 +2,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UltraSoundBeam : MonoBehaviour
+public class UltraSoundBeam : BaseUltrasound
 {
-    private CharacterController playerCC;
-    private ParticleSystem particle;
-    [SerializeField] private float longestLength;
-    [SerializeField] private float duration;
-    [SerializeField] private float length;
-    [SerializeField] private float velocity;
-    private float defaultVelocity;
-    private float defaultDuration;
-    private float defaultLength;
-    private float defaultLongestLength;
-    private float nowTime;
-    private bool aliveFlg;
+    [SerializeField] private ParticleSystem particle;
+    private float duration;
 
     private void Awake()
     {
-        playerCC = GameObject.Find("player").GetComponent<CharacterController>();
-        particle = transform.Find("ultrasoundBeem").gameObject.GetComponent<ParticleSystem>();
         particle.Stop();
-
-        defaultVelocity = velocity;
-        defaultLength = length;
-        defaultDuration = duration;
-        defaultLongestLength = longestLength;
-        nowTime = 0;
+        velocity = 1;
+        coolDown = 10.0f;
+        time = 0;
+        range = 0.0f;
+        maxRange = 5.0f;
+        duration = 10.0f;
         aliveFlg = true;
     }
 
-    public void Init()
+    public override void Init()
     {
-        velocity = defaultVelocity;
-        length = defaultLength;
-        duration = defaultDuration;
-        longestLength = defaultLongestLength;
-        nowTime = 0;
         particle.Stop();
+        time = 0;
+        range = 0.0f;
         aliveFlg = true;
-    }
-
-    public bool IsAlive()
-    {
-        return aliveFlg;
     }
 
     // Update is called once per frame
-    public bool Update()
+    public override void Update()
     {
         //初めて更新関数が実行される時
-        if(length <= defaultLength)
+        if (range <= 0.0f)
         {
             particle.Play();
         }
 
-        nowTime += Time.deltaTime;
+        time += Time.deltaTime;
 
         //超音波ビームを長くする
-        length += velocity;
-        length = Mathf.Min(length,longestLength);
+        range += velocity * Time.deltaTime;
+        range = Mathf.Min(range, maxRange);
 
-        //当たり判定
-        Vector3 _firePos = transform.position + (transform.up * 0.3f);
-        Vector3 _targetVec = playerCC.transform.position - _firePos;
-
-        float dot = Vector3.Dot(transform.forward.normalized,_targetVec.normalized);
-
-        //デバッグ用の線を描画
-        var lineRenderer = gameObject.GetComponent<LineRenderer>();
-
-        var positions = new Vector3[]
-        {
-            _firePos,
-            _firePos + (transform.forward * length),
-        };
-
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
-
-        lineRenderer.SetPositions(positions);
-
-        if (nowTime - duration > 0)
+        if (time - duration > 0)
         {
             aliveFlg = false;
             particle.Stop();
         }
+    }
+
+    public override bool CheckHit()
+    {
+        //当たり判定
+        Vector3 _firePos = transform.position + (transform.up * 0.3f);
+        Vector3 _targetVec = playerCC.transform.position - _firePos;
+
+        float dot = Vector3.Dot(transform.forward.normalized, _targetVec.normalized);
 
         if (Mathf.Acos(dot) * Mathf.Rad2Deg <= 20.0f)
         {
             //プレイヤーの方向に対する超音波の射程距離を出す。
-            float withinRange = length / dot;
+            float withinRange = range / dot;
 
             //超音波の範囲ないにプレイヤーがいるか確認する
             if (_targetVec.magnitude - withinRange < 0)
@@ -103,10 +72,30 @@ public class UltraSoundBeam : MonoBehaviour
                 bool hit = Physics.Raycast(_ray, out _raycastHit, withinRange);
 
                 Debug.Log("超音波が当たった！！");
-
                 return true;
             }
         }
         return false;
+    }
+
+    public override void DrawLine()
+    {
+        //当たり判定
+        Vector3 _firePos = transform.position + (transform.up * 0.3f);
+        Vector3 _targetVec = playerCC.transform.position - _firePos;
+
+        //デバッグ用の線を描画
+        var lineRenderer = gameObject.GetComponent<LineRenderer>();
+
+        var positions = new Vector3[]
+        {
+            _firePos,
+            _firePos + (transform.forward * range),
+        };
+
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+
+        lineRenderer.SetPositions(positions);
     }
 }
