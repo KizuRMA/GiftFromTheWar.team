@@ -14,13 +14,11 @@ public class WingFoldState : BaseState
         leave,
     }
 
-    [SerializeField] float ultrasoundCoolTime;
     [SerializeField] float ascendingSpeed;
     private Vector3 targetPos;
     private RaycastHit hit;
     private CharacterController playerCC;
     private NavMeshAgent agent;
-    private UltraSound ultrasound;
     private GameObject childGameObject;
     private bool nextAnime;
     private bool navmeshOnFlg;
@@ -52,8 +50,7 @@ public class WingFoldState : BaseState
         childGameObject.GetComponent<CapsuleCollider>().enabled = true;
         childGameObject.GetComponent<BatCapsuleScript>().Start();
 
-        ultrasound = GetComponent<UltraSound>();
-        ultrasound.Init();
+        ChangeUltrasound(GetComponent<SmallUltrasound>());
 
         CurrentState = (int)BatController.e_State.wingFold;
     }
@@ -80,6 +77,14 @@ public class WingFoldState : BaseState
             myController.SimpleAdjustHeight();
         }
 
+        //超音波処理
+        float _ultrasoundCoolTime = ultrasound.coolDown;
+        if (ultrasound != null && untilLaunch - _ultrasoundCoolTime > 0)
+        {
+            ultrasound.Update();
+            ultrasound.DrawLine();
+        }
+
         //現在のアクション状態毎に関数を実行する
         switch (nowAction)
         {
@@ -102,6 +107,14 @@ public class WingFoldState : BaseState
             case e_Action.leave:
                 ActionLeave();
                 break;
+        }
+
+        //超音波を出し切った場合
+        if (ultrasound.IsAlive == false)
+        {
+            //超音波処理を初期化
+            ultrasound.Init();
+            untilLaunch = 0;
         }
 
         if (agent.isStopped == true)
@@ -155,6 +168,7 @@ public class WingFoldState : BaseState
             nowAction = e_Action.none;
             untilLaunch = 0;
             nextAnime = false;
+            ChangeUltrasound(GetComponent<LargeUltrasound>());
             return;
         }
 
@@ -166,7 +180,7 @@ public class WingFoldState : BaseState
             //コウモリが180度回転していない場合
             if (myController.forwardAngle < 180.0f)
             {
-                myController.forwardAngle += 1.0f;
+                myController.forwardAngle += (180.0f * 1.5f) * Time.deltaTime;
 
                 if (myController.forwardAngle >= 180.0f)
                 {
@@ -188,13 +202,13 @@ public class WingFoldState : BaseState
         untilLaunch += Time.deltaTime;
 
         //超音波のクールタイムが終了している場合
-        if (untilLaunch - ultrasoundCoolTime > 0)
-        {
-            //超音波を更新
-            bool _hit = ultrasound.Update();
 
+
+        float _ultrasoundCoolTime = ultrasound.coolDown;
+        if (untilLaunch - _ultrasoundCoolTime > 0)
+        {
             //超音波がプレイヤーに当たっている場合
-            if (_hit == true)
+            if (ultrasound.CheckHit() == true)
             {
                 //アクション状態を天井から離れる状態に変化
                 nowAction = e_Action.leave;
@@ -208,16 +222,10 @@ public class WingFoldState : BaseState
                 //アニメーションを切り替える
                 Animator animator = GetComponent<Animator>();
                 animator.SetInteger("trans", 2);
-                ultrasound.Init();
+
+                ChangeUltrasound(GetComponent<SmallUltrasound>());
                 return;
             }
-        }
-
-        //超音波を出し切った場合
-        if (ultrasound.IsAlive() == false)
-        {
-            ultrasound.Init();
-            untilLaunch = 0;
         }
     }
 
@@ -227,8 +235,8 @@ public class WingFoldState : BaseState
         CapsuleCollider capsule = childGameObject.GetComponent<CapsuleCollider>();
         if (capsule.enabled == false) capsule.enabled = true;
 
-        //指定のフレーム分数える
-        frame--;
+          //指定のフレーム分数える
+          frame--;
         if (frame > 0) return;
 
         BatCapsuleScript _batCapsule = childGameObject.GetComponent<BatCapsuleScript>();
@@ -319,6 +327,8 @@ public class WingFoldState : BaseState
                 navmeshOnFlg = false;
                 transform.position = targetPos;
                 nowAction = e_Action.none;
+
+                ChangeUltrasound(GetComponent<LargeUltrasound>());
             }
         }
         else
@@ -335,6 +345,8 @@ public class WingFoldState : BaseState
     {
         //翼を広げるアニメーションに変更
         Animator animator = GetComponent<Animator>();
+
+        UltrasoundUpdate();
 
         //コウモリ移動処理
         transform.position = Vector3.MoveTowards(transform.position, targetPos, amountChangeDis * (Time.deltaTime * 1.5f));
@@ -411,5 +423,17 @@ public class WingFoldState : BaseState
 
         float _hight = a * (_amountMoved * _amountMoved) + q;
         return _hight;
+    }
+
+    public void UltrasoundUpdate()
+    {
+        ultrasound.Update();
+        ultrasound.DrawLine();
+        bool _hit = ultrasound.CheckHit();
+        if (_hit == true)
+        {
+            playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
+            abnormalcondition.AddHowlingAbnormal();
+        }
     }
 }

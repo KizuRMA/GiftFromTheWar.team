@@ -7,16 +7,24 @@ public abstract class BaseState : MonoBehaviour
 
     public int CurrentState { set; get; }
     protected BatController myController;
+    protected BaseUltrasound ultrasound = null;
 
-    // Start is called before the first frame update
     public virtual void Start()
     {
 
     }
 
-    // Update is called once per frame
     public virtual void Update()
     {
 
+    }
+
+    public void ChangeUltrasound(BaseUltrasound _base)
+    {
+        //実体を削除
+        ultrasound = null;
+        //新しい実体のアドレスを入れる
+        ultrasound = _base;
+        ultrasound.Start();
     }
 }
