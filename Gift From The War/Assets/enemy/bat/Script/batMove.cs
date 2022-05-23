@@ -18,11 +18,13 @@ public class batMove : BaseState
     private NavMeshAgent agent;
     private float untilLaunch;
     private e_Action nowAction;
+    private bool navmeshOnFlg;
 
 
     // Start is called before the first frame update
     public override void Start()
     {
+        navmeshOnFlg = true;
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
         playerCC = GameObject.Find("player").gameObject;
@@ -40,6 +42,8 @@ public class batMove : BaseState
     // Update is called once per frame
     public override void Update()
     {
+        bool _navmeshFlg = navmeshOnFlg;
+
         untilLaunch += Time.deltaTime;
 
         //‘Ì‚ð‘O‚ÉŒX‚¯‚é
@@ -93,6 +97,8 @@ public class batMove : BaseState
             {
                 Vector3 _playerPos = playerCC.transform.position;
                 Vector3 _myPos = transform.position;
+
+                float _dis = Vector3.Distance(_playerPos, _myPos);
 
                 if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
                 {

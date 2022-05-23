@@ -1,23 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BatAttackScript : BaseState
 {
     [SerializeField] private Collider attackCollider;
     [SerializeField] private float attackCooldown = 0.5f;
+    NavMeshAgent agent;
+    GameObject player;
+    public bool stateChangeFlg;
 
     // Start is called before the first frame update
 
     private void Awake()
     {
         myController = GetComponent<BatController>();
+        agent = GetComponent<NavMeshAgent>();
+        player = GameObject.Find("player");
         CurrentState = (int)BatController.e_State.attack;
     }
 
     public override void Start()
     {
+        playerAbnormalcondition abnormalcondition = player.GetComponent<playerAbnormalcondition>();
+        abnormalcondition.AddHowlingAbnormal();
         base.Start();
+        stateChangeFlg = false;
+        //agent.isStopped = false;
     }
 
     public override void Update()
@@ -27,8 +37,7 @@ public class BatAttackScript : BaseState
         _localAngle.x = myController.forwardAngle;
         transform.localEulerAngles = _localAngle;
 
-        //çÇÇ≥Çí≤êÆÇ∑ÇÈ
-        myController.AdjustHeight();
+
     }
 
     public void AttackIfPossible()
@@ -42,7 +51,13 @@ public class BatAttackScript : BaseState
 
     public void OnAttackRangeEnter(Collider collider)
     {
-       AttackIfPossible();
+        if (collider.tag == "Player")
+        {
+            AttackIfPossible();
+
+            myController.OffNavMesh();
+            agent.destination = transform.position;
+        }
     }
 
     public void OnAttackStart()
