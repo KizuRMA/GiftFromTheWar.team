@@ -37,26 +37,36 @@ public class BatAttackScript : BaseState
         _localAngle.x = myController.forwardAngle;
         transform.localEulerAngles = _localAngle;
 
+        Vector3 _forwardVec= transform.forward;
+        _forwardVec.y = 0;
+        _forwardVec = _forwardVec.normalized;
 
-        Vector3 _frontVec = transform.forward;
+        float dot = Vector3.Dot(_forwardVec, Vector3.forward);
+
+        if (_forwardVec.x < 0)
+        {
+            dot *= -1.0f;
+        }
+
+        float _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
         Vector3 _targetVec = player.transform.position - transform.position;
-        _targetVec.Normalize();
-        _frontVec.Normalize();
-        Vector3 _inteVec = _frontVec - Vector3.forward;
-        _frontVec -= _inteVec;
-        _targetVec += _inteVec;
+        _targetVec.y = 0;
+        _targetVec = _targetVec.normalized;
 
-        float _rotSpeed = 10.0f * Time.deltaTime;
+        _forwardVec = Quaternion.Euler(0, -_degAng, 0) * _forwardVec;
+        _targetVec = Quaternion.Euler(0, -_degAng, 0) * _targetVec;
+        Debug.Log(_targetVec);
+        float _rotSpeed = 180.0f * Time.deltaTime;
         if (_targetVec.normalized.x < 0)
         {
             _localAngle = transform.localEulerAngles;
-            _localAngle.y -= _rotSpeed;
+            _localAngle.y += _rotSpeed;
             transform.localEulerAngles = _localAngle;
         }
         else
         {
             _localAngle = transform.localEulerAngles;
-            _localAngle.y += _rotSpeed;
+            _localAngle.y -= _rotSpeed;
             transform.localEulerAngles = _localAngle;
         }
     

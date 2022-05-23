@@ -43,7 +43,6 @@ public class damage : MonoBehaviour
             alpha += Time.deltaTime * 80.0f;
             alpha = Mathf.Min(alpha,90.0f);
             float _alpha = (Mathf.Sin(alpha * Mathf.Deg2Rad) + 1.0f) / 2;
-            Debug.Log(_alpha);
             image.enabled = true;
             image.color = new Color(image.color.r, image.color.g, image.color.b, _alpha);
         }
