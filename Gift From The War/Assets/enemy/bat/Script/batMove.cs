@@ -15,7 +15,6 @@ public class batMove : BaseState
     [SerializeField] GameObject playerCC;
     [SerializeField] bool moveFlg;
     [SerializeField] float playerFromInterval;
-    [SerializeField] float ultrasoundCoolTime;
     private NavMeshAgent agent;
     private float untilLaunch;
     private e_Action nowAction;
@@ -29,8 +28,7 @@ public class batMove : BaseState
         playerCC = GameObject.Find("player").gameObject;
 
         //超音波を初期化
-        ChageUltrasound(GetComponent<UltraSoundBeam>());
-        ultrasoundCoolTime = ultrasound.coolDown;
+        ChangeUltrasound(GetComponent<UltraSoundBeam>());
 
         CurrentState = (int)BatController.e_State.move;
         nowAction = e_Action.move;
@@ -52,6 +50,14 @@ public class batMove : BaseState
         //高さを調整する
         myController.AdjustHeight();
 
+        //超音波処理
+        float _ultrasoundCoolTime = ultrasound.coolDown;
+        if (ultrasound != null && untilLaunch - _ultrasoundCoolTime > 0)
+        {
+            ultrasound.Update();
+            ultrasound.DrawLine();
+        }
+
         switch (nowAction)
         {
             case e_Action.move:
@@ -64,6 +70,15 @@ public class batMove : BaseState
                 ActionCheck();
                 break;
         }
+
+        //超音波を出し切った場合
+        if (ultrasound.IsAlive == false)
+        {
+            //超音波処理を初期化
+            ultrasound.Init();
+            untilLaunch = 0;
+        }
+
     }
 
     private void ActionMove()
@@ -85,28 +100,11 @@ public class batMove : BaseState
                     agent.destination = _playerPos;
                 }
 
-                //超音波処理
-                if (ultrasound != null && untilLaunch - ultrasoundCoolTime > 0)
+                if (ultrasound.CheckHit() == true)
                 {
-                    bool hit = false;
-                    ultrasound.Update();
-                    ultrasound.DrawLine();
-                    hit = ultrasound.CheckHit();
-                    if (hit == true)
-                    {
-                        //プレイヤーにハウリング状態を付加する
-                        abnormalcondition.AddHowlingAbnormal();
-                    }
+                    //プレイヤーにハウリング状態を付加する
+                    abnormalcondition.AddHowlingAbnormal();
                 }
-
-                //超音波を出し切った場合
-                if (ultrasound.IsAlive == false)
-                {
-                    //超音波処理を初期化
-                    ultrasound.Init();
-                    untilLaunch = 0;
-                }
-
             }
         }
         else
@@ -120,17 +118,14 @@ public class batMove : BaseState
                 Animator animator = GetComponent<Animator>();
                 animator.SetTrigger("ShakeHead");
 
-                ChageUltrasound(GetComponent<SmallUltrasound>());
+                ChangeUltrasound(GetComponent<SmallUltrasound>());
             }
         }
     }
 
     private void ActionSearch()
     {
-        ultrasound.Update();
-        ultrasound.DrawLine();
-        bool hit = ultrasound.CheckHit();
-        if (hit == true)
+        if (ultrasound.CheckHit() == true)
         {
             playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
             abnormalcondition.AddHowlingAbnormal();
@@ -141,12 +136,7 @@ public class batMove : BaseState
     {
         playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
 
-        bool hit = false;
-        ultrasound.Update();
-        ultrasound.DrawLine();
-        hit = ultrasound.CheckHit();
-
-        if (hit == true || abnormalcondition.IsHowling() == true)
+        if (ultrasound.CheckHit() == true || abnormalcondition.IsHowling() == true)
         {
             ultrasound.Init();
             untilLaunch = 0;
@@ -154,6 +144,7 @@ public class batMove : BaseState
             //プレイヤーにハウリング状態を付加する
             abnormalcondition.AddHowlingAbnormal();
             nowAction = e_Action.move;
+            ChangeUltrasound(GetComponent<UltraSoundBeam>());
             return;
         }
 
@@ -173,8 +164,7 @@ public class batMove : BaseState
     public void SearchPlayerAction()
     {
         nowAction = e_Action.check;
-        ChageUltrasound(GetComponent<LargeUltrasound>());
-        ultrasoundCoolTime = ultrasound.coolDown;
+        ChangeUltrasound(GetComponent<LargeUltrasound>());
     }
 
 }

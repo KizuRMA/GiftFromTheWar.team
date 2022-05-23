@@ -5,23 +5,29 @@ using UnityEngine;
 public class UltraSoundBeam : BaseUltrasound
 {
     [SerializeField] private ParticleSystem particle;
-    private float duration;
 
     private void Awake()
     {
         particle.Stop();
+        playerObject = GameObject.Find("player").gameObject;
+    }
+
+    public override void Start()
+    {
+        particle.Stop();
         velocity = 1;
-        coolDown = 10.0f;
+        coolDown = 0.0f;
+        duration = 10.0f;
         time = 0;
         range = 0.0f;
         maxRange = 5.0f;
-        duration = 10.0f;
         aliveFlg = true;
     }
 
     public override void Init()
     {
         particle.Stop();
+        coolDown = 5.0f;
         time = 0;
         range = 0.0f;
         aliveFlg = true;
@@ -36,14 +42,15 @@ public class UltraSoundBeam : BaseUltrasound
             particle.Play();
         }
 
-        time += Time.deltaTime;
-
         //超音波ビームを長くする
         range += velocity * Time.deltaTime;
         range = Mathf.Min(range, maxRange);
 
-        if (time - duration > 0)
+        if (range >= maxRange)
         {
+            //超音波の持続時間が終了した場合
+            time += Time.deltaTime;
+            if (time - duration < 0) return;
             aliveFlg = false;
             particle.Stop();
         }
@@ -53,7 +60,7 @@ public class UltraSoundBeam : BaseUltrasound
     {
         //当たり判定
         Vector3 _firePos = transform.position + (transform.up * 0.3f);
-        Vector3 _targetVec = playerCC.transform.position - _firePos;
+        Vector3 _targetVec = playerObject.transform.position - _firePos;
 
         float dot = Vector3.Dot(transform.forward.normalized, _targetVec.normalized);
 
@@ -82,7 +89,7 @@ public class UltraSoundBeam : BaseUltrasound
     {
         //当たり判定
         Vector3 _firePos = transform.position + (transform.up * 0.3f);
-        Vector3 _targetVec = playerCC.transform.position - _firePos;
+        Vector3 _targetVec = playerObject.transform.position - _firePos;
 
         //デバッグ用の線を描画
         var lineRenderer = gameObject.GetComponent<LineRenderer>();

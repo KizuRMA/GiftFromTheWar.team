@@ -14,7 +14,6 @@ public class WingFoldState : BaseState
         leave,
     }
 
-    [SerializeField] float ultrasoundCoolTime;
     [SerializeField] float ascendingSpeed;
     private Vector3 targetPos;
     private RaycastHit hit;
@@ -51,7 +50,7 @@ public class WingFoldState : BaseState
         childGameObject.GetComponent<CapsuleCollider>().enabled = true;
         childGameObject.GetComponent<BatCapsuleScript>().Start();
 
-        ChageUltrasound(GetComponent<SmallUltrasound>());
+        ChangeUltrasound(GetComponent<SmallUltrasound>());
 
         CurrentState = (int)BatController.e_State.wingFold;
     }
@@ -78,6 +77,14 @@ public class WingFoldState : BaseState
             myController.SimpleAdjustHeight();
         }
 
+        //超音波処理
+        float _ultrasoundCoolTime = ultrasound.coolDown;
+        if (ultrasound != null && untilLaunch - _ultrasoundCoolTime > 0)
+        {
+            ultrasound.Update();
+            ultrasound.DrawLine();
+        }
+
         //現在のアクション状態毎に関数を実行する
         switch (nowAction)
         {
@@ -100,6 +107,14 @@ public class WingFoldState : BaseState
             case e_Action.leave:
                 ActionLeave();
                 break;
+        }
+
+        //超音波を出し切った場合
+        if (ultrasound.IsAlive == false)
+        {
+            //超音波処理を初期化
+            ultrasound.Init();
+            untilLaunch = 0;
         }
 
         if (agent.isStopped == true)
@@ -153,8 +168,7 @@ public class WingFoldState : BaseState
             nowAction = e_Action.none;
             untilLaunch = 0;
             nextAnime = false;
-            ChageUltrasound(GetComponent<LargeUltrasound>());
-            ultrasoundCoolTime = ultrasound.coolDown;
+            ChangeUltrasound(GetComponent<LargeUltrasound>());
             return;
         }
 
@@ -166,7 +180,7 @@ public class WingFoldState : BaseState
             //コウモリが180度回転していない場合
             if (myController.forwardAngle < 180.0f)
             {
-                myController.forwardAngle += 1.0f;
+                myController.forwardAngle += (180.0f * 1.5f) * Time.deltaTime;
 
                 if (myController.forwardAngle >= 180.0f)
                 {
@@ -188,15 +202,13 @@ public class WingFoldState : BaseState
         untilLaunch += Time.deltaTime;
 
         //超音波のクールタイムが終了している場合
-        if (untilLaunch - ultrasoundCoolTime > 0)
-        {
-            //超音波を更新
-            ultrasound.Update();
-            ultrasound.DrawLine();
-            bool _hit = ultrasound.CheckHit();
 
+
+        float _ultrasoundCoolTime = ultrasound.coolDown;
+        if (untilLaunch - _ultrasoundCoolTime > 0)
+        {
             //超音波がプレイヤーに当たっている場合
-            if (_hit == true)
+            if (ultrasound.CheckHit() == true)
             {
                 //アクション状態を天井から離れる状態に変化
                 nowAction = e_Action.leave;
@@ -211,17 +223,9 @@ public class WingFoldState : BaseState
                 Animator animator = GetComponent<Animator>();
                 animator.SetInteger("trans", 2);
 
-                ultrasound.Init();
-                ChageUltrasound(GetComponent<SmallUltrasound>());
+                ChangeUltrasound(GetComponent<SmallUltrasound>());
                 return;
             }
-        }
-
-        //超音波を出し切った場合
-        if (ultrasound.IsAlive == false)
-        {
-            ultrasound.Init();
-            untilLaunch = 0;
         }
     }
 
@@ -230,8 +234,6 @@ public class WingFoldState : BaseState
         //カプセルコライダーの処理が停止している場合は開始する
         CapsuleCollider capsule = childGameObject.GetComponent<CapsuleCollider>();
         if (capsule.enabled == false) capsule.enabled = true;
-
-        UltrasoundUpdate();
 
           //指定のフレーム分数える
           frame--;
@@ -272,9 +274,6 @@ public class WingFoldState : BaseState
 
     private void ActionMove()
     {
-        //超音波を更新
-        UltrasoundUpdate();
-
         BatCapsuleScript _batCapsule = childGameObject.GetComponent<BatCapsuleScript>();
 
         Vector3 _myPos = transform.position;
@@ -329,8 +328,7 @@ public class WingFoldState : BaseState
                 transform.position = targetPos;
                 nowAction = e_Action.none;
 
-                ChageUltrasound(GetComponent<LargeUltrasound>());
-                ultrasoundCoolTime = ultrasound.coolDown;
+                ChangeUltrasound(GetComponent<LargeUltrasound>());
             }
         }
         else

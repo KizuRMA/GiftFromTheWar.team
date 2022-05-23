@@ -19,7 +19,7 @@ public abstract class BaseState : MonoBehaviour
 
     }
 
-    public void ChageUltrasound(BaseUltrasound _base)
+    public void ChangeUltrasound(BaseUltrasound _base)
     {
         //À‘Ì‚ğíœ
         ultrasound = null;

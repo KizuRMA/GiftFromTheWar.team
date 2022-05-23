@@ -6,19 +6,23 @@ public class LargeUltrasound : BaseUltrasound
 {
     private float minimumRange;
     private float hitRange;
-    private float duration;
+
+    private void Awake()
+    {
+        playerObject = GameObject.Find("player").gameObject;
+    }
 
     // Start is called before the first frame update
     public override void Start()
     {
         velocity = 1;
         coolDown = 0;
+        duration = 5.0f;
         time = 0;
         range = 0.0f;
         maxRange = 0.0f;
         minimumRange = 5.0f;
         hitRange = 0.5f;
-        duration = 10.0f;
         aliveFlg = true;
     }
 
@@ -47,7 +51,7 @@ public class LargeUltrasound : BaseUltrasound
         if (range >= maxRange)
         {
             //超音波の持続時間が終了した場合
-            time = Time.deltaTime;
+            time += Time.deltaTime;
             if (time - duration < 0) return;
             aliveFlg = false;
         }
@@ -57,7 +61,7 @@ public class LargeUltrasound : BaseUltrasound
     {
         //当たり判定
         Vector3 _firePos = transform.position + (transform.up * 0.3f);
-        Vector3 _targetVec = playerCC.transform.position - _firePos;
+        Vector3 _targetVec = playerObject.transform.position - _firePos;
 
         //超音波の長さに調整する
         _targetVec = _targetVec.normalized * range;
@@ -66,7 +70,7 @@ public class LargeUltrasound : BaseUltrasound
         Vector3 _pos = _firePos + _targetVec;
 
         //超音波本体とプレイヤーの距離を調べる
-        _targetVec = playerCC.transform.position - _pos;
+        _targetVec = playerObject.transform.position - _pos;
 
         float _distance = _targetVec.magnitude;
 
@@ -106,7 +110,7 @@ public class LargeUltrasound : BaseUltrasound
     {
         //当たり判定
         Vector3 _firePos = transform.position + (transform.up * 0.3f);
-        Vector3 _targetVec = playerCC.transform.position - _firePos;
+        Vector3 _targetVec = playerObject.transform.position - _firePos;
 
         //デバッグ用の線を描画
         var lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -114,7 +118,7 @@ public class LargeUltrasound : BaseUltrasound
         var positions = new Vector3[]
         {
             _firePos,
-            _firePos + ((playerCC.transform.position - _firePos).normalized * range),
+            _firePos + ((playerObject.transform.position - _firePos).normalized * range),
         };
 
         lineRenderer.startWidth = 0.1f;

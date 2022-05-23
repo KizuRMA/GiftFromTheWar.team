@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BaseUltrasound : MonoBehaviour
 {
-    [SerializeField] protected CharacterController playerCC;
+    protected GameObject playerObject;
     public float coolDown { set; get; }
+    protected float duration;
     protected float time;
     protected float range;
     protected float maxRange;
@@ -13,6 +14,11 @@ public class BaseUltrasound : MonoBehaviour
     protected bool aliveFlg;
 
     public bool IsAlive => aliveFlg == true;
+
+    private void Awake()
+    {
+        playerObject = GameObject.Find("player").gameObject;
+    }
 
     public virtual void Init()
     {
