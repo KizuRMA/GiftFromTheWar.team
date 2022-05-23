@@ -6,6 +6,8 @@ public class gunLadder : MonoBehaviour
 {
     [SerializeField] CharacterController playerCC;
     [SerializeField] playerHundLadder playerHund;
+    [SerializeField] rantanWallTouch rantanWallTouch;
+    [SerializeField] gunWallTouch gunWallTouch;
     private Transform trans;
     private Vector3 firstPos;
     [SerializeField] private float upDownSpeed;
@@ -34,6 +36,9 @@ public class gunLadder : MonoBehaviour
     private void TouchLadder()
     {
         if (!finishFlg) return;
+
+        if (!rantanWallTouch.GetReturnFinishFlg()) return;
+        if (!gunWallTouch.GetReturnFinishFlg()) return;
 
         if (trans.localPosition.y < firstPos.y - maxPosY)
         {

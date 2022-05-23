@@ -14,6 +14,7 @@ public class FPSController : MonoBehaviour
     [SerializeField] private float normalSpeed = 3; // 移動速度
     [SerializeField] private float dashSpeedRaito = 3; //走る速さの倍率
     [SerializeField] private float turnSpeed = 20; //振り向く速さ
+    private float turnRot = 90; //振り向いている向き
     private float turnRaito = 180; //振り向く段階
     private bool moveFlg = false;
     private bool dashFlg = false;
@@ -56,7 +57,7 @@ public class FPSController : MonoBehaviour
         cameraRot = cam.transform.localRotation;
         characterRot = transform.localRotation;
 
-        if (turnRaito >= turnSpeed) //180ターンを使っていなかったら
+        if (turnRaito >= 180) //180ターンを使っていなかったら
         {
             CameraMove();
         }
@@ -120,12 +121,12 @@ public class FPSController : MonoBehaviour
             turnRaito = 0;
         }
 
-        if (turnRaito < turnSpeed)
+        if (turnRaito < 180)
         {
             cameraRot[0] = 0;
             cameraRot[2] = 0;
-            turnRaito++;
-            characterRot *= Quaternion.Euler(0, 180 / turnSpeed, 0);
+            turnRaito += turnSpeed * Time.deltaTime;
+            characterRot *= Quaternion.Euler(0, turnSpeed * Time.deltaTime, 0);
         }
     }
 

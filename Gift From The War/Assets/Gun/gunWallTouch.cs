@@ -9,6 +9,7 @@ public class gunWallTouch : MonoBehaviour
     Vector3 firstPos;
     Rigidbody rd;
     bool returnFlg = true;
+    bool returnFinishFlg = true;
     [SerializeField] float firstSpeed;
     [SerializeField] float speedRaito;
     float nowSpeed;
@@ -78,6 +79,7 @@ public class gunWallTouch : MonoBehaviour
         {
             nowSpeed = firstSpeed;
             returnFlg = false;
+            returnFinishFlg = true;
         }
     }
 
@@ -91,6 +93,7 @@ public class gunWallTouch : MonoBehaviour
     private void OnCollisionEnter(Collision collison)
     {
         returnFlg = false;
+        returnFinishFlg = false;
         nowSpeed = firstSpeed;
     }
 
@@ -105,5 +108,11 @@ public class gunWallTouch : MonoBehaviour
     private void OnCollisionExit(Collision collison)
     {
         returnFlg = true;
+    }
+
+
+    public bool GetReturnFinishFlg()
+    {
+        return returnFinishFlg;
     }
 }

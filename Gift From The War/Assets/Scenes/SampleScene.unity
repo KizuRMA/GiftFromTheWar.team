@@ -1040,9 +1040,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8539645895a62734e924565075448752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 0.02
-  firstSpeed: 0.006
-  speedRaito: 1.5
+  force: 0.01
+  firstSpeed: 0.001
+  speedRaito: 1.01
 --- !u!114 &338067876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,9 +1057,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 401655008}
   playerHund: {fileID: 1463493487}
-  upDownSpeed: 0.01
-  maxPosY: 0.001
-  dashRaito: 1.01
+  upDownSpeed: 0.02
+  maxPosY: 0.006
+  dashRaito: 1.5
 --- !u!65 &338067877
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1103,6 +1103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCC: {fileID: 401655013}
   playerHund: {fileID: 1463493487}
+  rantanWallTouch: {fileID: 1851256026}
+  gunWallTouch: {fileID: 338067875}
   upDownSpeed: 1
   maxPosY: 0.2
 --- !u!4 &350869315 stripped
@@ -1273,7 +1275,7 @@ MonoBehaviour:
   ladder: {fileID: 1463493487}
   normalSpeed: 2
   dashSpeedRaito: 100.5
-  turnSpeed: 90
+  turnSpeed: 750
   cam: {fileID: 963194225}
   Xsensityvity: 3
   Ysensityvity: 3
@@ -4860,6 +4862,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1889003057716489450, guid: bf1d3dadf8b9a494394b3dd0adeb7594, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2577681534140339783, guid: bf1d3dadf8b9a494394b3dd0adeb7594, type: 3}
       propertyPath: m_Layer
       value: 14
@@ -5210,6 +5216,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCC: {fileID: 401655013}
   playerHund: {fileID: 1463493487}
+  rantanWallTouch: {fileID: 1851256026}
+  gunWallTouch: {fileID: 338067875}
   upDownSpeed: 1
   maxPosY: 0.2
 --- !u!114 &1851256026
@@ -6511,6 +6519,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCC: {fileID: 401655013}
   playerHund: {fileID: 1463493487}
+  rantanWallTouch: {fileID: 0}
+  gunWallTouch: {fileID: 0}
   upDownSpeed: 1
   maxPosY: 0.2
 --- !u!1 &2090233738 stripped
@@ -6601,6 +6611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCC: {fileID: 401655013}
   playerHund: {fileID: 1463493487}
+  rantanWallTouch: {fileID: 0}
+  gunWallTouch: {fileID: 0}
   upDownSpeed: 1
   maxPosY: 0.2
 --- !u!4 &2093843855 stripped
