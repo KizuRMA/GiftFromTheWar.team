@@ -38,6 +38,28 @@ public class BatAttackScript : BaseState
         transform.localEulerAngles = _localAngle;
 
 
+        Vector3 _frontVec = transform.forward;
+        Vector3 _targetVec = player.transform.position - transform.position;
+        _targetVec.Normalize();
+        _frontVec.Normalize();
+        Vector3 _inteVec = _frontVec - Vector3.forward;
+        _frontVec -= _inteVec;
+        _targetVec += _inteVec;
+
+        float _rotSpeed = 10.0f * Time.deltaTime;
+        if (_targetVec.normalized.x < 0)
+        {
+            _localAngle = transform.localEulerAngles;
+            _localAngle.y -= _rotSpeed;
+            transform.localEulerAngles = _localAngle;
+        }
+        else
+        {
+            _localAngle = transform.localEulerAngles;
+            _localAngle.y += _rotSpeed;
+            transform.localEulerAngles = _localAngle;
+        }
+    
     }
 
     public void AttackIfPossible()
@@ -51,13 +73,12 @@ public class BatAttackScript : BaseState
 
     public void OnAttackRangeEnter(Collider collider)
     {
-        if (collider.tag == "Player")
-        {
-            AttackIfPossible();
+        if (collider.tag != "Player") return;
+        AttackIfPossible();
 
-            myController.OffNavMesh();
-            agent.destination = transform.position;
-        }
+        //myController.OffNavMesh();
+        agent.updatePosition = false;
+        agent.destination = transform.position;
     }
 
     public void OnAttackStart()
