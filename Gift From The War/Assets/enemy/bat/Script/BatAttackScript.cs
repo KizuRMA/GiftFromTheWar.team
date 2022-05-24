@@ -28,48 +28,54 @@ public class BatAttackScript : BaseState
         base.Start();
         stateChangeFlg = false;
         //agent.isStopped = false;
-    }
 
-    public override void Update()
-    {
         //‘Ì‚ð‘O‚ÉŒX‚¯‚é
         Vector3 _localAngle = transform.localEulerAngles;
         _localAngle.x = myController.forwardAngle;
         transform.localEulerAngles = _localAngle;
+    }
 
-        Vector3 _forwardVec= transform.forward;
+    public override void Update()
+    {
+        Vector3 _forwardVec = transform.forward;
         _forwardVec.y = 0;
         _forwardVec = _forwardVec.normalized;
-
-        float dot = Vector3.Dot(_forwardVec, Vector3.forward);
-
-        if (_forwardVec.x < 0)
-        {
-            dot *= -1.0f;
-        }
-
-        float _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
         Vector3 _targetVec = player.transform.position - transform.position;
         _targetVec.y = 0;
         _targetVec = _targetVec.normalized;
 
+        float dot = Vector3.Dot(_targetVec, Vector3.forward);
+        float _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        if (_targetVec.x < 0)
+        {
+            _degAng *= -1.0f;
+        }
+
         _forwardVec = Quaternion.Euler(0, -_degAng, 0) * _forwardVec;
         _targetVec = Quaternion.Euler(0, -_degAng, 0) * _targetVec;
-        Debug.Log(_targetVec);
-        float _rotSpeed = 180.0f * Time.deltaTime;
-        if (_targetVec.normalized.x < 0)
+
+        dot = Vector3.Dot(_targetVec, _forwardVec);
+        _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        float _rotSpeed = 90.0f * Time.deltaTime;
+        if (_degAng <= _rotSpeed)
         {
-            _localAngle = transform.localEulerAngles;
+            _rotSpeed = _degAng;
+        }
+
+        if (_forwardVec.x < 0)
+        {
+            Vector3 _localAngle = transform.localEulerAngles;
             _localAngle.y += _rotSpeed;
             transform.localEulerAngles = _localAngle;
         }
         else
         {
-            _localAngle = transform.localEulerAngles;
+            Vector3 _localAngle = transform.localEulerAngles;
             _localAngle.y -= _rotSpeed;
             transform.localEulerAngles = _localAngle;
         }
-    
     }
 
     public void AttackIfPossible()

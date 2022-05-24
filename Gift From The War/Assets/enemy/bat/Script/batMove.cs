@@ -82,7 +82,6 @@ public class batMove : BaseState
             ultrasound.Init();
             untilLaunch = 0;
         }
-
     }
 
     private void ActionMove()
