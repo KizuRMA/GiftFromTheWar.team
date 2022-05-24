@@ -39,6 +39,12 @@ public class batMove : BaseState
         myController.OnNavMesh();
     }
 
+    public override void Init()
+    {
+        base.Init();
+        ultrasound.Init();
+    }
+
     // Update is called once per frame
     public override void Update()
     {

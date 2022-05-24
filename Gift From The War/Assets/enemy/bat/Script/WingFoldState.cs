@@ -31,6 +31,14 @@ public class WingFoldState : BaseState
     private float amountChangeAngX;
     private float amountChangeDis;
 
+    private void Awake()
+    {
+        myController = GetComponent<BatController>();
+        agent = GetComponent<NavMeshAgent>();
+        playerCC = GameObject.Find("player").GetComponent<CharacterController>();
+        childGameObject = transform.Find("Capsule").gameObject;
+    }
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -42,17 +50,14 @@ public class WingFoldState : BaseState
         distance = 0;
         defaltHight = 0;
         frame = 20;
-
-        myController = GetComponent<BatController>();
-        agent = GetComponent<NavMeshAgent>();
-        playerCC = GameObject.Find("player").GetComponent<CharacterController>();
-        childGameObject = transform.Find("Capsule").gameObject;
+      
         childGameObject.GetComponent<CapsuleCollider>().enabled = true;
         childGameObject.GetComponent<BatCapsuleScript>().Start();
 
         ChangeUltrasound(GetComponent<SmallUltrasound>());
 
         CurrentState = (int)BatController.e_State.wingFold;
+        myController.OnNavMesh();
     }
 
     // Update is called once per frame
@@ -269,6 +274,7 @@ public class WingFoldState : BaseState
 
             agent.destination = _targetVec;
             nowAction = e_Action.move;
+            navmeshOnFlg = true;
         }
     }
 

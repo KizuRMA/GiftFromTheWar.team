@@ -9,6 +9,11 @@ public abstract class BaseState : MonoBehaviour
     protected BatController myController;
     protected BaseUltrasound ultrasound = null;
 
+    public virtual void Init()
+    {
+
+    }
+
     public virtual void Start()
     {
 
@@ -22,6 +27,10 @@ public abstract class BaseState : MonoBehaviour
     public void ChangeUltrasound(BaseUltrasound _base)
     {
         //実体を削除
+        if (ultrasound != null)
+        {
+            ultrasound.Init();
+        }
         ultrasound = null;
         //新しい実体のアドレスを入れる
         ultrasound = _base;

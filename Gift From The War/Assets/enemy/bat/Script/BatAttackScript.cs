@@ -9,9 +9,6 @@ public class BatAttackScript : BaseState
     [SerializeField] private float attackCooldown = 0.5f;
     NavMeshAgent agent;
     GameObject player;
-    public bool stateChangeFlg;
-
-    // Start is called before the first frame update
 
     private void Awake()
     {
@@ -25,57 +22,15 @@ public class BatAttackScript : BaseState
     {
         playerAbnormalcondition abnormalcondition = player.GetComponent<playerAbnormalcondition>();
         abnormalcondition.AddHowlingAbnormal();
-        base.Start();
-        stateChangeFlg = false;
-        //agent.isStopped = false;
 
-        //‘Ì‚ð‘O‚ÉŒX‚¯‚é
-        Vector3 _localAngle = transform.localEulerAngles;
-        _localAngle.x = myController.forwardAngle;
-        transform.localEulerAngles = _localAngle;
+        myController.OffNavMesh();
+        ChangeUltrasound(GetComponent<SmallUltrasound>());
+        ultrasound.Start();
     }
 
     public override void Update()
     {
-        Vector3 _forwardVec = transform.forward;
-        _forwardVec.y = 0;
-        _forwardVec = _forwardVec.normalized;
-        Vector3 _targetVec = player.transform.position - transform.position;
-        _targetVec.y = 0;
-        _targetVec = _targetVec.normalized;
-
-        float dot = Vector3.Dot(_targetVec, Vector3.forward);
-        float _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
-
-        if (_targetVec.x < 0)
-        {
-            _degAng *= -1.0f;
-        }
-
-        _forwardVec = Quaternion.Euler(0, -_degAng, 0) * _forwardVec;
-        _targetVec = Quaternion.Euler(0, -_degAng, 0) * _targetVec;
-
-        dot = Vector3.Dot(_targetVec, _forwardVec);
-        _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
-
-        float _rotSpeed = 90.0f * Time.deltaTime;
-        if (_degAng <= _rotSpeed)
-        {
-            _rotSpeed = _degAng;
-        }
-
-        if (_forwardVec.x < 0)
-        {
-            Vector3 _localAngle = transform.localEulerAngles;
-            _localAngle.y += _rotSpeed;
-            transform.localEulerAngles = _localAngle;
-        }
-        else
-        {
-            Vector3 _localAngle = transform.localEulerAngles;
-            _localAngle.y -= _rotSpeed;
-            transform.localEulerAngles = _localAngle;
-        }
+        RotateUpdate();
     }
 
     public void AttackIfPossible()
@@ -120,5 +75,53 @@ public class BatAttackScript : BaseState
     {
         yield return new WaitForSeconds(attackCooldown);
         myController.ChangeState(GetComponent<batMove>());
+    }
+
+    private void RotateUpdate()
+    {
+        //‘Ì‚ð‘O‚ÉŒX‚¯‚é
+        Vector3 _localAngle = transform.localEulerAngles;
+        _localAngle.x = myController.forwardAngle;
+        transform.localEulerAngles = _localAngle;
+
+        Vector3 _forwardVec = transform.forward;
+        _forwardVec.y = 0;
+        _forwardVec = _forwardVec.normalized;
+        Vector3 _targetVec = player.transform.position - transform.position;
+        _targetVec.y = 0;
+        _targetVec = _targetVec.normalized;
+
+        float dot = Vector3.Dot(_targetVec, Vector3.forward);
+        float _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        if (_targetVec.x < 0)
+        {
+            _degAng *= -1.0f;
+        }
+
+        _forwardVec = Quaternion.Euler(0, -_degAng, 0) * _forwardVec;
+        _targetVec = Quaternion.Euler(0, -_degAng, 0) * _targetVec;
+
+        dot = Vector3.Dot(_targetVec, _forwardVec);
+        _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        float _rotSpeed = 120.0f * Time.deltaTime;
+        if (_degAng <= _rotSpeed)
+        {
+            _rotSpeed = _degAng;
+        }
+
+        if (_forwardVec.x < 0)
+        {
+            _localAngle = transform.localEulerAngles;
+            _localAngle.y += _rotSpeed;
+            transform.localEulerAngles = _localAngle;
+        }
+        else
+        {
+            _localAngle = transform.localEulerAngles;
+            _localAngle.y -= _rotSpeed;
+            transform.localEulerAngles = _localAngle;
+        }
     }
 }

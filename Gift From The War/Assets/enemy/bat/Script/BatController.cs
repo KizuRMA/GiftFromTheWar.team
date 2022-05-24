@@ -51,6 +51,10 @@ public class BatController : MonoBehaviour
     public void ChangeState(BaseState _state)
     {
         //実体を削除
+        if (state != null)
+        {
+            state.Init();
+        }
         state = null;
         //新しい実体のアドレスを入れる
         state = _state;
