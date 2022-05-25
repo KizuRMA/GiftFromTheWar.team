@@ -50,7 +50,7 @@ public class WingFoldState : BaseState
         distance = 0;
         defaltHight = 0;
         frame = 20;
-      
+
         childGameObject.GetComponent<CapsuleCollider>().enabled = true;
         childGameObject.GetComponent<BatCapsuleScript>().Start();
 
@@ -240,8 +240,8 @@ public class WingFoldState : BaseState
         CapsuleCollider capsule = childGameObject.GetComponent<CapsuleCollider>();
         if (capsule.enabled == false) capsule.enabled = true;
 
-          //指定のフレーム分数える
-          frame--;
+        //指定のフレーム分数える
+        frame--;
         if (frame > 0) return;
 
         BatCapsuleScript _batCapsule = childGameObject.GetComponent<BatCapsuleScript>();
@@ -298,16 +298,7 @@ public class WingFoldState : BaseState
         {
             Animator animator = GetComponent<Animator>();
 
-            //コウモリが180度回転していない場合
-            if (myController.forwardAngle < 180.0f)
-            {
-                myController.forwardAngle += 1.0f;
-
-                if (myController.forwardAngle >= 180.0f)
-                {
-                    myController.forwardAngle = 180.0f;
-                }
-            }
+            myController.forwardAngle = (-1600.0f * _targetDistance) + 180.0f;
 
             //体を回転させる処理
             if (myController.forwardAngle >= 90)

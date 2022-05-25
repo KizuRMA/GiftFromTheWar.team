@@ -14,6 +14,7 @@ public class DestructionScript : MonoBehaviour
         {
             ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
             ChildObjects[i].AddComponent<Rigidbody>();
+            ChildObjects[i].GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             ChildObjects[i].AddComponent<MeshCollider>();
             ChildObjects[i].AddComponent<NotSeeObjectDelete>();
             ChildObjects[i].GetComponent<MeshCollider>().convex = true;
@@ -34,11 +35,13 @@ public class DestructionScript : MonoBehaviour
             r.AddForce(vect, ForceMode.Impulse);
             r.AddTorque(vect, ForceMode.Impulse);
         }
+
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

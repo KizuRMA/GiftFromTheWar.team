@@ -47,7 +47,6 @@ public class BatAttackScript : BaseState
         if (collider.tag != "Player") return;
         AttackIfPossible();
 
-        //myController.OffNavMesh();
         agent.updatePosition = false;
         agent.destination = transform.position;
     }
@@ -62,7 +61,7 @@ public class BatAttackScript : BaseState
         var target = _collider.GetComponent<playerAbnormalcondition>();
         if (null == target) return;
 
-        target.Damage(1);
+        target.Damage(0.1f);
     }
 
     public void OnAttackFinished()

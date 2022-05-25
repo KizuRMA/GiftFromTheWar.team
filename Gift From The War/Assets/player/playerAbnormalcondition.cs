@@ -16,12 +16,17 @@ public class playerAbnormalcondition : MonoBehaviour
         public bool completeCureFlg;
     }
 
+
+    float unrivaledTime;
+    bool unrivaledFlg;
     Abnormal[] abnormal = new Abnormal[System.Enum.GetValues(typeof(e_Abnormal)).Length];
     [SerializeField]public float life { set; get; }
 
     // Start is called before the first frame update
     void Start()
     {
+        unrivaledTime = 2.0f;
+        unrivaledFlg = false;
         life = 2;
         for (int i = 0; i < abnormal.Length; i++)
         {
@@ -75,11 +80,19 @@ public class playerAbnormalcondition : MonoBehaviour
         howling.completeCureFlg = false;
     }
 
-    public void Damage(int _damage)
+    public void Damage(float _damage)
     {
-        if (life < 0) return;
+        if (life < 0 || unrivaledFlg == true) return;
 
         life -= _damage;
+        unrivaledFlg = true;
+        StartCoroutine(DamageCoroutine());
         if (life > 0) return;
+    }
+
+    private IEnumerator DamageCoroutine()
+    {
+        yield return new WaitForSeconds(unrivaledTime);
+        unrivaledFlg = false;
     }
 }
