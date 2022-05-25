@@ -27,21 +27,21 @@ public class gunMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerDied.GetDiedFlg()) return;
+        if (playerDied.diedFlg) return;
 
         tremor();
     }
 
     void tremor()
     {
-        if (fpsC.GetMoveFlg)  //プレイヤーが動いているか
+        if (fpsC.moveFlg)  //プレイヤーが動いているか
         {
             if (Mathf.Abs(trans.localPosition.y - firstPos.y) > Mathf.Abs(maxPosY))   //上下の移動のチェンジ
             {
                 upDown *= -1;
             }
 
-            if (fpsC.GetDashFlg)  //プレイヤーが走っているか
+            if (fpsC.dashFlg)  //プレイヤーが走っているか
             {
                 posY = upDownSpeed * upDown * dashRaito;
             }

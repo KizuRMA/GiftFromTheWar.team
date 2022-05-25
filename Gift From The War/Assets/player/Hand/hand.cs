@@ -16,7 +16,7 @@ public class hand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ladder.GetCloseLadderFlg())
+        if(ladder.closeLadderFlg)
         {
             this.GetComponent<Image>().enabled = true;
         }
@@ -25,7 +25,7 @@ public class hand : MonoBehaviour
             this.GetComponent<Image>().enabled = false;
         }
 
-        if (ladder.GetTouchLadderFlg())
+        if (ladder.touchLadderFlg)
         {
             this.GetComponent<Image>().enabled = false;
         }

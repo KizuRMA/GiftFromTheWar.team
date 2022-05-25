@@ -10,6 +10,7 @@ public class FPSController : MonoBehaviour
     [SerializeField] private playerHundLadder ladder;
     [SerializeField] private MoveWindGun moveWindGun;
     [SerializeField] private GameObject cam;
+    [SerializeField] private playerDied died;
 
     //カーソルロック
     private bool cursorLock = true; 
@@ -18,8 +19,8 @@ public class FPSController : MonoBehaviour
     [SerializeField] private float walkSpeed;   //歩行速度
     [SerializeField] private float dashSpeedRaito; //走る速さの倍率
     private float nowMoveSpeed; //今の移動速度
-    private bool moveFlg = false;
-    private bool dashFlg = false;
+    public bool moveFlg { get; set; }
+    public bool dashFlg { get; set; }
 
     //重力
     [SerializeField] private float gravity;
@@ -38,13 +39,15 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         nowMoveSpeed = walkSpeed;
+        moveFlg = false;
+        dashFlg = false;
     }
 
     void Update()
     {
         UpdateCursorLock();
 
-        if (ladder.GetTouchLadderFlg())
+        if (ladder.touchLadderFlg || died.diedFlg)
         {
             moveFlg = false;
             return;
@@ -193,25 +196,12 @@ public class FPSController : MonoBehaviour
 
     private void Gravity()
     {
-        if (moveWindGun.GetUpWindGunFlg()) return;
+        if (moveWindGun.upWindFlg) return;
 
         moveVec.y += gravity;
     }
 
-    //--------------------------------------------------------------------
-    //ゲッターセッター
-    //--------------------------------------------------------------------
-    public bool GetMoveFlg
-    {
-        get { return moveFlg; }
-    }
-
-    public bool GetDashFlg
-    {
-        get { return dashFlg; }
-    }
-
-    public float GetGravity
+    public float GetGravity //重力のゲッター
     {
         get { return gravity; }
     }

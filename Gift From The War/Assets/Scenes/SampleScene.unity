@@ -1402,8 +1402,9 @@ MonoBehaviour:
   ladder: {fileID: 1463493487}
   moveWindGun: {fileID: 401655015}
   cam: {fileID: 963194225}
+  died: {fileID: 401655017}
   walkSpeed: 2
-  dashSpeedRaito: 100.5
+  dashSpeedRaito: 100
   gravity: -4.9
   Xsensityvity: 3
   Ysensityvity: 3
@@ -1553,7 +1554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0770626b93705f4cb830341c849ed6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CC: {fileID: 401655013}
   rantan: {fileID: 1851256023}
   gun: {fileID: 338067872}
   downSpeed: 1.5
@@ -3833,9 +3833,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCC: {fileID: 401655013}
   playerCamera: {fileID: 963194225}
-  warpSpeed: 2
-  warpRotSpeed: 120
-  warpRotXSpeed: 120
+  moveBeforeSpeed: 2
+  rotXBeforeSpeed: 120
+  rotYBeforeSpeed: 120
   climbSpeed: 0.9
 --- !u!4 &1468359838 stripped
 Transform:

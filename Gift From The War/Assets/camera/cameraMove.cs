@@ -23,9 +23,9 @@ public class cameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fpsC.GetMoveFlg)
+        if (fpsC.moveFlg)
         {
-            if (fpsC.GetDashFlg)
+            if (fpsC.dashFlg)
             {
                 posY += upDownSpeed * upDown * dashRaito * Time.deltaTime;
             }
