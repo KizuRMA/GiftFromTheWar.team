@@ -4,28 +4,31 @@ using UnityEngine;
 
 public class MoveWindGun : MonoBehaviour
 {
-    CharacterController CC;
-    Transform trans;
-    [SerializeField] GameObject cam;
-    [SerializeField] playerHundLadder ladder;
-    [SerializeField] remainingAmount amount;
-    Quaternion viewpoint;
+    //ゲームオブジェクトやスクリプト
+    private CharacterController CC;
+    private Transform trans;
+    [SerializeField] private GameObject cam;
+    [SerializeField] private playerHundLadder ladder;
+    [SerializeField] private remainingAmount energyAmount;
 
-    [SerializeField] float movePower;
-    [SerializeField] float movePowerMin;
-    [SerializeField] float range;
-    float disRaitoPower;
-    [SerializeField] float amountPower;
+    //移動
+    [SerializeField] private float movePower;
+    [SerializeField] private float movePowerMin;    //パワーの最低値
+    [SerializeField] private float range;           //空気が届く射程
+    private float disRaitoPower;                    //距離による補正
+    [SerializeField] private float useEnergyAmount; //消費エネルギー量
+    private Quaternion viewpoint;                   //向いてる方向
+    private Vector3 power;                          //最終的な移動量
+    private float gravity;                          //重力の力
 
-    bool groundFlg = false;
-    float airResistance;
-    [SerializeField] float airResistancePower;
-    [SerializeField] float airResistanceMax;
-    [SerializeField] float airResistanceMin;
+    //空気抵抗
+    private bool groundFlg = false;                     //地面についているか
+    private float airResistance;                        //現在の空気抵抗
+    [SerializeField] private float airResistancePower;  //空気抵抗量
+    [SerializeField] private float airResistanceMax;    //空気抵抗の最大値
+    [SerializeField] private float airResistanceMin;    //空気抵抗の最小値
 
-    Vector3 power;
-    bool upWindFlg = false;
-    float gravity;
+    private bool upWindFlg = false;
 
     // Start is called before the first frame update
     void Start()
@@ -47,15 +50,15 @@ public class MoveWindGun : MonoBehaviour
 
     private void KnowViewpoint() //どこむいているか
     {
-        if (!Input.GetMouseButton(0)) return;
-        if (amount.GetSetNowAmount <= 0) return;
+        if (!Input.GetMouseButton(0)) return;  //クリックしていなかったら処理を行わない
+        if (energyAmount.GetSetNowAmount <= 0) return;  //エネルギーの残量がなかったら処理を行わない
 
-        viewpoint = Quaternion.Euler(cam.transform.localRotation.eulerAngles.x, trans.localRotation.eulerAngles.y, 0);
+        viewpoint = Quaternion.Euler(cam.transform.localRotation.eulerAngles.x, trans.localRotation.eulerAngles.y, 0);  //向いている方向計算
 
-        amount.GetSetNowAmount = amountPower;
+        energyAmount.GetSetNowAmount = useEnergyAmount; //エネルギー消費
     }
 
-    private void Move()
+    private void Move() //移動の処理
     {
         if (!Input.GetMouseButton(0))
         {
@@ -81,12 +84,12 @@ public class MoveWindGun : MonoBehaviour
             power.y = 0;
             CC.Move(power);
 
-            amount.GetSetNowAmount = 0;
+            energyAmount.GetSetNowAmount = 0;
 
             return;
         }
 
-        if (amount.GetSetNowAmount <= 0) return;
+        if (energyAmount.GetSetNowAmount <= 0) return;
 
         upWindFlg = true;
         CorrectionDis();
@@ -100,7 +103,7 @@ public class MoveWindGun : MonoBehaviour
         CC.Move(power);
     }
 
-    private void CorrectionDis()
+    private void CorrectionDis()    //地面からどれだけ離れているか
     {
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hit;
