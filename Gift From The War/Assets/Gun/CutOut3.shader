@@ -7,7 +7,7 @@ Shader "Custom/CutOut2"
 		_Metallic("Metallic", Range(0,1)) = 0.0
 		[HDR] _EmissionColor("Emission", Color) = (0, 0, 0, 0)
 	}
-	SubShader
+		SubShader
 	{
 		Tags { "RenderType" = "Opaque" "Queue" = "Geometry+2"}
 
@@ -52,5 +52,5 @@ Shader "Custom/CutOut2"
 		}
 		ENDCG
 	}
-	FallBack "Diffuse"
+		FallBack "Diffuse"
 }

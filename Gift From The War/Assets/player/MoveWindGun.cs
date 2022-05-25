@@ -8,12 +8,14 @@ public class MoveWindGun : MonoBehaviour
     Transform trans;
     [SerializeField] GameObject cam;
     [SerializeField] playerHundLadder ladder;
+    [SerializeField] remainingAmount amount;
     Quaternion viewpoint;
 
     [SerializeField] float movePower;
     [SerializeField] float movePowerMin;
     [SerializeField] float range;
     float disRaitoPower;
+    [SerializeField] float amountPower;
 
     bool groundFlg = false;
     float airResistance;
@@ -30,7 +32,7 @@ public class MoveWindGun : MonoBehaviour
     {
         CC = this.GetComponent<CharacterController>();
         trans = transform;
-        gravity = this.GetComponent<FPSController>().GetGravity();
+        gravity = this.GetComponent<FPSController>().GetGravity;
     }
 
     // Update is called once per frame
@@ -46,8 +48,11 @@ public class MoveWindGun : MonoBehaviour
     private void KnowViewpoint() //‚Ç‚±‚Þ‚¢‚Ä‚¢‚é‚©
     {
         if (!Input.GetMouseButton(0)) return;
+        if (amount.GetSetNowAmount <= 0) return;
 
         viewpoint = Quaternion.Euler(cam.transform.localRotation.eulerAngles.x, trans.localRotation.eulerAngles.y, 0);
+
+        amount.GetSetNowAmount = amountPower;
     }
 
     private void Move()
@@ -75,8 +80,13 @@ public class MoveWindGun : MonoBehaviour
             power = viewpoint * new Vector3(0, 0, -movePower) * airResistance * Time.deltaTime;
             power.y = 0;
             CC.Move(power);
+
+            amount.GetSetNowAmount = 0;
+
             return;
         }
+
+        if (amount.GetSetNowAmount <= 0) return;
 
         upWindFlg = true;
         CorrectionDis();
