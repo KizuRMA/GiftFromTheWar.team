@@ -481,8 +481,9 @@ MonoBehaviour:
   mat1: {fileID: 2100000, guid: bf4e8dfb1fc703d43b4fd9cf2341c391, type: 2}
   mat2: {fileID: 2100000, guid: cc2d9136a1eb1c34da1e097ff95bd44a, type: 2}
   upSpeed: 0.85
-  amountMax: -0.018
-  amountMin: -0.0708
+  energyMax: -0.018
+  energyMin: -0.0708
+  coolTime: 2
 --- !u!1 &168035773
 GameObject:
   m_ObjectHideFlags: 0
@@ -4068,8 +4069,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6501932749215834415, guid: e6f01067292d10a4381e30d95bb4dd95, type: 3}
-  shotSpeed: 90000
-  bulletMax: 1000
+  energyAmount: {fileID: 124306684}
+  shotSpeed: 1000
+  bulletMax: 1
+  useEnergy: -75
 --- !u!4 &1597833382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 946675447799068494, guid: 661d9563d5ffba944a845f9c117e5dce, type: 3}
