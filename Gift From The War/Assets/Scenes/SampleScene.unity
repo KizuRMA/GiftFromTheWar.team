@@ -1164,7 +1164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8539645895a62734e924565075448752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 0.01
   firstSpeed: 0.001
   speedRaito: 1.01
 --- !u!114 &338067876
@@ -2639,6 +2638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b603ba986c4dd44aacbad673fe1bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fpsC: {fileID: 401655009}
   firstPos: {x: 0, y: 0.4, z: 0}
   upDownSpeed: 0.3
   maxPosY: 0.08
@@ -4068,7 +4068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6501932749215834415, guid: e6f01067292d10a4381e30d95bb4dd95, type: 3}
-  shotSpeed: 1000
+  shotSpeed: 90000
   bulletMax: 1000
 --- !u!4 &1597833382 stripped
 Transform:
@@ -5403,7 +5403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f861581534903704a8965ada3ad02cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 0.01
   firstSpeed: 0.001
   speedRaito: 1.01
 --- !u!114 &1851256027
@@ -5419,9 +5418,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 401655008}
+  camTrans: {fileID: 963194228}
   playerHund: {fileID: 1463493487}
   playerDied: {fileID: 401655017}
-  camTrans: {fileID: 963194228}
   upDownSpeed: 0.02
   maxPosY: 0.006
   dashRaito: 1.5
@@ -6628,7 +6627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8539645895a62734e924565075448752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 0.01
   firstSpeed: 0.001
   speedRaito: 1.01
 --- !u!65 &2084443704
@@ -6719,9 +6717,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 401655008}
+  camTrans: {fileID: 0}
   playerHund: {fileID: 1463493487}
   playerDied: {fileID: 0}
-  camTrans: {fileID: 0}
   upDownSpeed: 0.02
   maxPosY: 0.006
   dashRaito: 1.5
@@ -6752,7 +6750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f861581534903704a8965ada3ad02cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 0.01
   firstSpeed: 0.001
   speedRaito: 1.01
 --- !u!54 &2090233745

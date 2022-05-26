@@ -4,61 +4,76 @@ using UnityEngine;
 
 public class cameraMove : MonoBehaviour
 {
+    //ゲームオブジェクトやスクリプト
     private Transform trans;
-    [SerializeField] private Vector3 firstPos;
-    private float posY = 0;
-    private int upDown = 1; //上がるか下がるかの符号を表す
-    [SerializeField] private float upDownSpeed;
-    [SerializeField] private float maxPosY;
-    [SerializeField] private float dashRaito;
-    private FPSController fpsC;
+    [SerializeField] private FPSController fpsC;
 
-    // Start is called before the first frame update
+    //カメラの移動
+    [SerializeField] private Vector3 firstPos;  //基準の位置
+    private float posY = 0;                     //Y座標の移動量
+    private int upDown = 1;                     //上がるか下がるかの符号を表す
+    [SerializeField] private float upDownSpeed; //カメラの移動スピード
+    [SerializeField] private float maxPosY;     //カメラの最大移動位置
+    [SerializeField] private float dashRaito;   //走った時の倍率
+
     void Start()
     {
         trans = transform;
-        fpsC = GameObject.Find("player").GetComponent<FPSController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (fpsC.moveFlg)
         {
-            if (fpsC.dashFlg)
+            Move();
+        }
+        else
+        {
+            Return();
+        }
+
+        trans.localPosition = firstPos + new Vector3(0.0f, posY, 0.0f);
+    }
+
+    private void Move() //カメラの上下移動
+    {
+        //走っているか
+        if (fpsC.dashFlg)
+        {
+            posY += upDownSpeed * upDown * dashRaito * Time.deltaTime;
+        }
+        else
+        {
+            posY += upDownSpeed * upDown * Time.deltaTime;
+        }
+
+        //最大値まで移動したら、向きを逆にする
+        if (Mathf.Abs(posY) > Mathf.Abs(maxPosY))
+        {
+            upDown *= -1;
+        }
+    }
+
+    private void Return()   //カメラが所定の位置に戻る
+    {
+        bool returnFlg = Mathf.Abs(posY) > upDownSpeed * Time.deltaTime;    //所定の位置に戻る必要があるか
+        if (returnFlg)
+        {
+            //所定の位置に戻る
+            if (posY > 0)
             {
-                posY += upDownSpeed * upDown * dashRaito * Time.deltaTime;
+                posY += -upDownSpeed * Time.deltaTime;
             }
             else
             {
-                posY += upDownSpeed * upDown * Time.deltaTime;
-            }
-            
-            if (Mathf.Abs(posY) > Mathf.Abs(maxPosY))
-            {
-                upDown *= -1;
+                posY += upDownSpeed * Time.deltaTime;
             }
         }
         else
         {
-            if (Mathf.Abs(posY) > upDownSpeed * Time.deltaTime)
-            {
-                if (posY > 0)
-                {
-                    posY += -upDownSpeed * Time.deltaTime;
-                }
-                else
-                {
-                    posY += upDownSpeed * Time.deltaTime;
-                }
-            }
-            else
-            {
-                posY = 0;
-                upDown = 1;
-            }
+            //ブレを防止する
+            posY = 0;
+            upDown = 1;
         }
-
-        trans.localPosition = firstPos + new Vector3(0.0f, posY, 0.0f);
     }
 }

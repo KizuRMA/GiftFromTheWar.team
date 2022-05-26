@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class rantanLadder : MonoBehaviour
 {
-    [SerializeField] CharacterController playerCC;
-    [SerializeField] playerHundLadder playerHund;
-    [SerializeField] rantanWallTouch rantanWallTouch;
-    [SerializeField] gunWallTouch gunWallTouch;
+    //ゲームオブジェクトやスクリプト
+    [SerializeField] private CharacterController playerCC;
+    [SerializeField] private playerHundLadder playerHund;
+    [SerializeField] private rantanWallTouch rantanWallTouch;
+    [SerializeField] private gunWallTouch gunWallTouch;
     private Transform trans;
-    private Vector3 firstPos;
-    [SerializeField] private float upDownSpeed;
-    [SerializeField] private float maxPosY;
 
-    bool finishFlg = true;
+    //梯子を上る
+    private Vector3 firstPos;                   //基準の位置
+    [SerializeField] private float upDownSpeed; //ランタンの移動スピード
+    [SerializeField] private float maxPosY;     //ランタンの最大移動位置
 
-    // Start is called before the first frame update
+    private bool limitFlg = true;   //最初の位置または最大移動位置に到達するか
+
     void Start()
     {
         trans = transform;
@@ -35,30 +37,33 @@ public class rantanLadder : MonoBehaviour
 
     private void TouchLadder()
     {
-        if (!finishFlg) return;
+        if (!limitFlg) return;  //最大移動位置に到達していたら
 
-        if (!rantanWallTouch.GetReturnFinishFlg()) return;
-        if (!gunWallTouch.GetReturnFinishFlg()) return;
+        //壁ずりが終わっていたら
+        if (!rantanWallTouch.returnFinishFlg) return;
+        if (!gunWallTouch.returnFinishFlg) return;
 
-        if (trans.localPosition.y < firstPos.y - maxPosY)
+        bool maxPosFlg = trans.localPosition.y < firstPos.y - maxPosY; //最大移動位置に到達たら
+        if (maxPosFlg)
         {
-            finishFlg = false;
+            limitFlg = false;
             return;
         }
 
-        trans.localPosition += new Vector3(0, -upDownSpeed, 0) * Time.deltaTime;
+        trans.localPosition += new Vector3(0, -upDownSpeed, 0) * Time.deltaTime;    //移動する
     }
 
     private void NoTouchLadder()
     {
-        if (finishFlg) return;
+        if (limitFlg) return;   //元の位置に戻っていたら
 
-        if (trans.localPosition.y > firstPos.y)
+        bool returnFlg = trans.localPosition.y > firstPos.y;    //元の位置に戻っていたら
+        if (returnFlg)
         {
-            finishFlg = true;
+            limitFlg = true;
             return;
         }
 
-        trans.localPosition += new Vector3(0, upDownSpeed, 0) * Time.deltaTime;
+        trans.localPosition += new Vector3(0, upDownSpeed, 0) * Time.deltaTime; //戻る
     }
 }
