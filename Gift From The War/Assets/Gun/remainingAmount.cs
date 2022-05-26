@@ -20,6 +20,7 @@ public class remainingAmount : MonoBehaviour
     [SerializeField] private float upSpeed;     //回復スピード
     [SerializeField] private float energyMax;   //最大量
     [SerializeField] private float energyMin;   //最小量
+    public bool useDeltaTime { get; set; }     //デルタタイムを使うか
 
     //エネルギー回復のクールタイム
     [SerializeField] private int coolTime;      //エネルギー回復のクールタイム
@@ -57,7 +58,14 @@ public class remainingAmount : MonoBehaviour
             StartCoroutine(cor);
 
             //エネルギーの消費処理
-            trans.localPosition += new Vector3(0, 0, (useEnergy * allRemainingEnergy - allRemainingEnergy) * Time.deltaTime);
+            if (useDeltaTime)
+            {
+                trans.localPosition += new Vector3(0, 0, (useEnergy * allRemainingEnergy - allRemainingEnergy) * Time.deltaTime);
+            }
+            else
+            {
+                trans.localPosition += new Vector3(0, 0, (useEnergy * allRemainingEnergy - allRemainingEnergy));
+            }
 
             //エネルギーの色変更
             Material[] tmp = gameObject.GetComponent<Renderer>().materials;

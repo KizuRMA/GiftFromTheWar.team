@@ -39,6 +39,7 @@ public class shooting : MonoBehaviour
             if (shotFlg) //発射処理
             {
                 energyAmount.GetSetNowAmount = useEnergy;
+                energyAmount.useDeltaTime = false;
 
                 //プレハブから弾を作り、銃の向いている向きに発射
                 GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));

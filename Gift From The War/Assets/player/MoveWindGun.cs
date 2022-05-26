@@ -115,6 +115,7 @@ public class MoveWindGun : MonoBehaviour
         }
 
         energyAmount.GetSetNowAmount = useEnergyAmount; //エネルギー消費
+        energyAmount.useDeltaTime = true;
     }
 
     private void CorrectionDis()    //地面からどれだけ離れているか
