@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- 
+
 public class shooting : MonoBehaviour
 {
     //ゲームオブジェクトやスクリプト
@@ -10,28 +10,34 @@ public class shooting : MonoBehaviour
 
     //弾の発射
     [SerializeField] private float shotSpeed;   //発射スピード
-    [SerializeField] private int bulletMax;     //弾の最大数
     [SerializeField] private float useEnergy;   //消費エネルギー
-    private int shotCount;                      //打った弾数
+    private bool shotFlg;                       //発射可能
     private float shotInterval;                 //インターバル
 
     private void Start()
     {
-        shotCount = 0;
     }
 
     void Update()
     {
+        //エネルギーが最大までたまっていたら、発射できる
+        if (energyAmount.energyMaxFlg)
+        {
+            shotFlg = true;
+        }
+        else
+        {
+            shotFlg = false;
+        }
+
         if (Input.GetKey(KeyCode.Mouse1))
         {
             energyAmount.GetSetNowAmount = 0;
 
             shotInterval += 1;
 
-            if (shotInterval % 5 == 0 && shotCount > 0) //発射処理
+            if (shotFlg) //発射処理
             {
-                shotCount -= 1;
-
                 energyAmount.GetSetNowAmount = useEnergy;
 
                 //プレハブから弾を作り、銃の向いている向きに発射
@@ -44,12 +50,5 @@ public class shooting : MonoBehaviour
             }
 
         }
-        else/* if (Input.GetKeyDown(KeyCode.R))   //リロード*/
-        {
-            if (!energyAmount.energyMaxFlg) return;
-
-            shotCount = bulletMax;
-        }
-
     }
 }

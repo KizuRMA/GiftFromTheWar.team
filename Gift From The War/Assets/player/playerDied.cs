@@ -7,6 +7,7 @@ public class playerDied : MonoBehaviour
     //ゲームオブジェクトやスクリプト
     private CharacterController CC;
     private Transform trans;
+    [SerializeField] private FPSController fpsCon;
     [SerializeField] private GameObject rantan;
     [SerializeField] private GameObject gun;
     private Rigidbody rantanRD;
@@ -15,15 +16,19 @@ public class playerDied : MonoBehaviour
     public bool diedFlg { get; set; }
 
     //移動
+    [SerializeField] private float height;      //高さ
     [SerializeField] private float downSpeed;   //下がるスピード
     [SerializeField] private float downMax;     //下がる最大値
     private float downSum = 0;                  //ダウンした合計値
+    private float nowGravity;                   //今の重力加速度
 
     //回転
     [SerializeField] private float rotSpeed;    //回転スピード
     [SerializeField] private float rotMax;      //回転の最大値
     private float rotSum = 0;                   //回転の合計値
     [SerializeField] private float gunRotSpeed; //銃の回転スピード
+
+    private bool groundFlg = false;    //一度でも地面についたかどうか
 
     void Start()
     {
@@ -32,6 +37,7 @@ public class playerDied : MonoBehaviour
         rantanRD = rantan.GetComponent<Rigidbody>();
         gunRD = gun.GetComponent<Rigidbody>();
         diedFlg = false;
+        nowGravity = fpsCon.GetGravity * Time.deltaTime;
     }
 
     void Update()
@@ -40,51 +46,45 @@ public class playerDied : MonoBehaviour
         {
             diedFlg = true;
 
-            CC.enabled = false; //プレイヤーの当たり判定削除
+            CC.height = height;
 
             //親子関係削除
             rantan.transform.parent = null;
             gun.transform.parent = null;
 
+            rantanRD.useGravity = true;
+            gunRD.useGravity = true;
+
             //移動角度制限削除
-            rantan.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-            gun.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            rantanRD.constraints = RigidbodyConstraints.None;
+            gunRD.constraints = RigidbodyConstraints.None;
         }
 
         if (!diedFlg) return;
-
-        EraseInertia();
 
         DownKnees();
 
         Fall();
     }
 
-    private void EraseInertia() //慣性を消す
-    {
-        rantanRD.velocity = Vector3.zero;
-        rantanRD.angularVelocity = Vector3.zero;
-        gunRD.velocity = Vector3.zero;
-        gunRD.angularVelocity = Vector3.zero;
-    }
-
     private void DownKnees()    //膝をつく
     {
-        if (downSum >= downMax) return;
+        Ray ray = new Ray(trans.position, -transform.up);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, downMax))
+        {
+            groundFlg = true;
+        }
 
-        downSum += downSpeed * Time.deltaTime;  //下がる合計を保存
-        trans.position += new Vector3(0, -downSpeed, 0) * Time.deltaTime;   //プレイヤーを移動
+        nowGravity += fpsCon.GetGravity * Time.deltaTime;
+        CC.Move(new Vector3(0, nowGravity, 0) * Time.deltaTime);   //プレイヤーを移動
 
-        //オブジェクトを自由落下
-        rantan.transform.position += new Vector3(0, -downSpeed, 0) * Time.deltaTime;
-        gun.transform.position += new Vector3(0, -downSpeed, 0) * Time.deltaTime;
     }
 
     private void Fall()
     {
-        if (downSum < downMax) return;
-
-        if (rotSum >= rotMax) return;
+        if (!groundFlg) return;
+        if (rotSum > rotMax) return;
 
         rotSum += rotSpeed * Time.deltaTime;    //回転の合計を保存
         trans.rotation *= Quaternion.Euler(rotSpeed * Time.deltaTime, rotSpeed * Time.deltaTime, rotSpeed * Time.deltaTime);    //プレイヤーを回転

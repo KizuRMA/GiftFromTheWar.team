@@ -1165,6 +1165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8539645895a62734e924565075448752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  died: {fileID: 401655017}
   firstSpeed: 0.001
   speedRaito: 1.01
 --- !u!114 &338067876
@@ -1405,7 +1406,7 @@ MonoBehaviour:
   died: {fileID: 401655017}
   walkSpeed: 2
   dashSpeedRaito: 100
-  gravity: -4.9
+  gravity: -13
   Xsensityvity: 3
   Ysensityvity: 3
   turnSpeed: 750
@@ -1523,6 +1524,7 @@ MonoBehaviour:
   cam: {fileID: 963194225}
   ladder: {fileID: 1463493487}
   energyAmount: {fileID: 124306684}
+  died: {fileID: 401655017}
   movePower: 5
   movePowerMin: 0.3
   range: 3.5
@@ -1554,12 +1556,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0770626b93705f4cb830341c849ed6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fpsCon: {fileID: 401655009}
   rantan: {fileID: 1851256023}
   gun: {fileID: 338067872}
+  height: 1
   downSpeed: 1.5
-  downMax: 0.5
+  downMax: 0.4
   rotSpeed: 100
-  rotMax: 65
+  rotMax: 45
   gunRotSpeed: -100
 --- !u!1 &411778759 stripped
 GameObject:
@@ -4071,7 +4075,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6501932749215834415, guid: e6f01067292d10a4381e30d95bb4dd95, type: 3}
   energyAmount: {fileID: 124306684}
   shotSpeed: 1000
-  bulletMax: 1
   useEnergy: -75
 --- !u!4 &1597833382 stripped
 Transform:
@@ -5406,6 +5409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f861581534903704a8965ada3ad02cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  died: {fileID: 401655017}
   firstSpeed: 0.001
   speedRaito: 1.01
 --- !u!114 &1851256027
@@ -6630,6 +6634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8539645895a62734e924565075448752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  died: {fileID: 0}
   firstSpeed: 0.001
   speedRaito: 1.01
 --- !u!65 &2084443704
@@ -6753,6 +6758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f861581534903704a8965ada3ad02cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  died: {fileID: 0}
   firstSpeed: 0.001
   speedRaito: 1.01
 --- !u!54 &2090233745

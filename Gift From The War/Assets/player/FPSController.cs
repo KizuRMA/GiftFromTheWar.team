@@ -24,6 +24,7 @@ public class FPSController : MonoBehaviour
 
     //重力
     [SerializeField] private float gravity;
+    private float nowGravity;
 
     //プレイヤー移動全般
     private Vector3 moveVelocity; // キャラの移動速度情報
@@ -196,9 +197,14 @@ public class FPSController : MonoBehaviour
 
     private void Gravity()
     {
-        if (moveWindGun.upWindFlg) return;
+        if (moveWindGun.upWindFlg)
+        {
+            nowGravity = gravity * Time.deltaTime;
+            return;
+        }
 
-        moveVec.y += gravity;
+        nowGravity += gravity * Time.deltaTime;
+        moveVec.y += nowGravity;
     }
 
     public float GetGravity //重力のゲッター

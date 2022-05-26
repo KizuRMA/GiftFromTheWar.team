@@ -7,6 +7,7 @@ public class rantanWallTouch : MonoBehaviour
     //ゲームオブジェクトやスクリプト
     private Transform trans;
     private Rigidbody rd;
+    [SerializeField] private playerDied died;
 
     //フラグ
     private bool returnFlg = true;              //戻るか
@@ -29,6 +30,8 @@ public class rantanWallTouch : MonoBehaviour
 
     void Update()
     {
+        if (died.diedFlg) return;
+
         EraseInertia();
 
         //押し戻す処理

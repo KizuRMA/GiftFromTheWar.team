@@ -10,6 +10,7 @@ public class MoveWindGun : MonoBehaviour
     [SerializeField] private GameObject cam;
     [SerializeField] private playerHundLadder ladder;
     [SerializeField] private remainingAmount energyAmount;
+    [SerializeField] private playerDied died;
 
     //移動
     [SerializeField] private float movePower;
@@ -19,7 +20,6 @@ public class MoveWindGun : MonoBehaviour
     [SerializeField] private float useEnergyAmount; //消費エネルギー量
     private Quaternion viewpoint;                   //向いてる方向
     private Vector3 power;                          //最終的な移動量
-    private float gravity;                          //重力の力
 
     //空気抵抗
     private bool groundFlg = false;                     //地面についているか
@@ -35,13 +35,13 @@ public class MoveWindGun : MonoBehaviour
     {
         CC = this.GetComponent<CharacterController>();
         trans = transform;
-        gravity = this.GetComponent<FPSController>().GetGravity;
         upWindFlg = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (died.diedFlg) return;
         if (ladder.touchLadderFlg) return;
 
         KnowViewpoint();
