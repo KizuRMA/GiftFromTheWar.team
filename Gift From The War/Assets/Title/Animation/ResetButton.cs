@@ -23,8 +23,8 @@ public class ResetButton : MonoBehaviour
             .Append(ButtonCanvasGroup.DOFade(endValue: 1f, duration: 0.2f))
             .Join(ButtonRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
             .Join(FillRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
-            .Join(BackRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic));
-            
+            .Join(BackRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
+            .SetDelay(2.5f);
 
         ListsCanvasGroup.blocksRaycasts = true;
 

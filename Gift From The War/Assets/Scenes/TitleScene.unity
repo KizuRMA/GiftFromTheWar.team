@@ -854,6 +854,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 369753083}
+        m_TargetAssemblyTypeName: OpenMessageBox, Assembly-CSharp
+        m_MethodName: OpenBoxAnimate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!225 &116306821
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6681,6 +6693,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 369753083}
+        m_TargetAssemblyTypeName: OpenMessageBox, Assembly-CSharp
+        m_MethodName: OpenBoxAnimate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!225 &284496990
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6817,6 +6841,8 @@ GameObject:
   - component: {fileID: 369753079}
   - component: {fileID: 369753081}
   - component: {fileID: 369753080}
+  - component: {fileID: 369753083}
+  - component: {fileID: 369753082}
   m_Layer: 5
   m_Name: MessageBox
   m_TagString: Untagged
@@ -6882,6 +6908,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369753078}
   m_CullTransparentMesh: 1
+--- !u!114 &369753082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369753078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652dc64950a880746a78978286d8cb91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoxCanvasGroup: {fileID: 1237461122}
+  BoxRectTransform: {fileID: 369753079}
+  BlurRectTransform: {fileID: 997353994}
+--- !u!114 &369753083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369753078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e7c88352ba4e67438e179d5565ae767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoxCanvasGroup: {fileID: 1237461122}
+  BoxRectTransform: {fileID: 369753079}
+  BlurRectTransform: {fileID: 997353994}
 --- !u!1 &376523997 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a1c8a3c7eab009418177ff8a7f5b3e3, type: 3}
@@ -7396,6 +7452,18 @@ MonoBehaviour:
       - m_Target: {fileID: 925968397}
         m_TargetAssemblyTypeName: ReturnButton, Assembly-CSharp
         m_MethodName: AppButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 369753083}
+        m_TargetAssemblyTypeName: OpenMessageBox, Assembly-CSharp
+        m_MethodName: OpenBoxAnimate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8505,6 +8573,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 369753082}
+        m_TargetAssemblyTypeName: CloseMessageBox, Assembly-CSharp
+        m_MethodName: CloseBoxAnimate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &626097605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9093,6 +9173,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 369753082}
+        m_TargetAssemblyTypeName: CloseMessageBox, Assembly-CSharp
+        m_MethodName: CloseBoxAnimate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &925968399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9405,6 +9497,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 369753082}
+        m_TargetAssemblyTypeName: CloseMessageBox, Assembly-CSharp
+        m_MethodName: CloseBoxAnimate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &974039119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9537,7 +9641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 3c4df49c2cd79b948bd79ec3cdafe3fd, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 0.11764706}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10681,9 +10785,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237461120}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1001 &1287439389
 PrefabInstance:
@@ -11908,6 +12012,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 369753083}
+        m_TargetAssemblyTypeName: OpenMessageBox, Assembly-CSharp
+        m_MethodName: OpenBoxAnimate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!225 &1475882828
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -12993,6 +13109,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1067818556}
         m_TargetAssemblyTypeName: NeziKunAnime, Assembly-CSharp
         m_MethodName: BackAnimate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 369753082}
+        m_TargetAssemblyTypeName: CloseMessageBox, Assembly-CSharp
+        m_MethodName: CloseBoxAnimate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
