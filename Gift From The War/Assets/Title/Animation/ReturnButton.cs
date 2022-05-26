@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ReturnButton : MonoBehaviour
 {
     [SerializeField] private CanvasGroup CanvasGroup;
-    [SerializeField] private UnityEvent appButtons = new UnityEvent();
 
 
     // Start is called before the first frame update

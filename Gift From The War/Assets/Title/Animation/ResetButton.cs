@@ -10,7 +10,7 @@ public class ResetButton : MonoBehaviour
     [SerializeField] private CanvasGroup ButtonCanvasGroup;
     [SerializeField] private RectTransform ButtonRectTransform;
     [SerializeField] private RectTransform FillRectTransform;
-    [SerializeField] private UnityEvent BackNeziAnime = new UnityEvent();
+    [SerializeField] private RectTransform BackRectTransform;
 
     private Vector2 ButtonSizeDelta;
 
@@ -22,12 +22,11 @@ public class ResetButton : MonoBehaviour
         var sequence = DOTween.Sequence()
             .Append(ButtonCanvasGroup.DOFade(endValue: 1f, duration: 0.2f))
             .Join(ButtonRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
-            .Join(FillRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic));
+            .Join(FillRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
+            .Join(BackRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic));
             
 
         ListsCanvasGroup.blocksRaycasts = true;
-
-        BackNeziAnime.Invoke();
 
     }
 
