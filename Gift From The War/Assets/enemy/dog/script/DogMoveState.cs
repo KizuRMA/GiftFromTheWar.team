@@ -9,11 +9,21 @@ public class DogMoveState : MonoBehaviour
     [SerializeField]GameObject player;
     [SerializeField]float Speed;
     NavMeshAgent agent;
+    Vector3[] targetPos;
+    const int arrayMax = 60;
+    bool canSetFlg;
     int nextIndex;
 
     // Start is called before the first frame update
     void Start()
     {
+        canSetFlg = true;
+        targetPos = new Vector3[arrayMax];
+        for (int i = 0; i < arrayMax; i++)
+        {
+            targetPos[i] = player.transform.position;
+        }
+
         nextIndex = 0;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = Speed;
@@ -22,13 +32,26 @@ public class DogMoveState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       StartCoroutine(TargetCoroutine());
+        if (canSetFlg == true)
+        {
+            StartCoroutine(TargetCoroutine());
+        }
+       
         //agent.destination = player.transform.position;
     }
 
     private IEnumerator TargetCoroutine()
     {
-        yield return new WaitForSeconds(3.0f);
-        agent.destination = player.transform.position;
+        canSetFlg = false;
+        yield return new WaitForSeconds(0.1f);
+
+        for (int i = arrayMax - 1; i > 0; i--)
+        {
+            targetPos[i] = targetPos[i - 1];
+        }
+
+        targetPos[0] = player.transform.position;
+        agent.destination = targetPos[arrayMax - 1];
+        canSetFlg = true;
     }
 }
