@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class gunMove : MonoBehaviour
 {
+    //ゲームオブジェクトやスクリプト
     [SerializeField] private GameObject player;
     private Transform trans;
     private FPSController fpsC;
-    [SerializeField] playerHundLadder playerHund;
-    private int upDown = 1;
-    private Vector3 firstPos;
-    private float posY = 0;
-    [SerializeField] private float upDownSpeed;
-    [SerializeField] private float maxPosY;
-    [SerializeField] private float dashRaito;
+    [SerializeField] private playerHundLadder playerHund;
+    [SerializeField] private playerDied playerDied;
 
-    // Start is called before the first frame update
+    //銃の移動
+    private Vector3 firstPos;                   //最初の位置
+    private int upDown = 1;                     //上がるか下がるかの符号
+    private float posY = 0;                     //Y座標の移動量
+    [SerializeField] private float upDownSpeed; //上がり下がりの速さ
+    [SerializeField] private float maxPosY;     //最大移動位置
+    [SerializeField] private float dashRaito;   //走った時の補正倍率
+
     void Start()
     {
         trans = GetComponent<Transform>();
@@ -23,55 +26,67 @@ public class gunMove : MonoBehaviour
         firstPos = trans.localPosition;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (playerDied.diedFlg) return;
+
         tremor();
     }
 
-    void tremor()
+    void tremor()   //プレイヤーの動きによる移動
     {
-        if (fpsC.GetMoveFlg())  //プレイヤーが動いているか
+        if (fpsC.moveFlg)  //プレイヤーが動いているか
         {
-            if (Mathf.Abs(trans.localPosition.y - firstPos.y) > Mathf.Abs(maxPosY))   //上下の移動のチェンジ
-            {
-                upDown *= -1;
-            }
+            Move();
+        }
+        else
+        {
+            Return();
+        }
 
-            if (fpsC.GetDashFlg())  //プレイヤーが走っているか
+        trans.localPosition += new Vector3(0.0f, posY, 0.0f) * Time.deltaTime;
+    }
+
+    private void Move() //銃の移動
+    {
+        if (Mathf.Abs(trans.localPosition.y - firstPos.y) > Mathf.Abs(maxPosY))   //上下の移動のチェンジ
+        {
+            upDown *= -1;
+        }
+
+        if (fpsC.dashFlg)  //プレイヤーが走っているか
+        {
+            posY = upDownSpeed * upDown * dashRaito;
+        }
+        else
+        {
+            posY = upDownSpeed * upDown;
+        }
+    }
+
+    private void Return()   //銃が戻る
+    {
+        if (playerHund.ClimbLadderFlg()) return;
+
+        //自動で戻る処理
+        float nowPos = firstPos.y - trans.localPosition.y;
+        bool largeMoveFlg = Mathf.Abs(nowPos) > upDownSpeed * Time.deltaTime;   //大きく動く必要があるか
+        if (largeMoveFlg)
+        {
+            if (nowPos > 0)
             {
-                posY = upDownSpeed * upDown * dashRaito;
+                posY = upDownSpeed;
             }
             else
             {
-                posY = upDownSpeed * upDown;
+                posY = -upDownSpeed;
             }
         }
         else
         {
-            if (playerHund.ClimbLadderFlg()) return;
-
-            //自動で戻る処理
-            float nowPos = firstPos.y - trans.localPosition.y;
-            if (Mathf.Abs(nowPos) > upDownSpeed * Time.deltaTime) //ほぼ最初のところに戻っていなかったら
-            {
-                if (nowPos > 0)
-                {
-                    posY = upDownSpeed;
-                }
-                else
-                {
-                    posY = -upDownSpeed;
-                }
-            }
-            else
-            {
-                upDown = 1;
-                trans.localPosition = firstPos;
-                return;
-            }
+            upDown = 1;
+            trans.localPosition = firstPos;
+            return;
         }
-
-        trans.localPosition += new Vector3(0.0f, posY, 0.0f) * Time.deltaTime;
     }
 }

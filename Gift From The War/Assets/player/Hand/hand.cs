@@ -5,18 +5,16 @@ using UnityEngine.UI;
 
 public class hand : MonoBehaviour
 {
-    [SerializeField] playerHundLadder ladder;
+    [SerializeField] private playerHundLadder ladder;
 
-    // Start is called before the first frame update
     void Start()
     {
-        this.GetComponent<Image>().enabled = false;
+        this.GetComponent<Image>().enabled = false; //最初は表示しない
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(ladder.GetCloseLadderFlg())
+        if(ladder.closeLadderFlg)  //梯子の近くなら表示
         {
             this.GetComponent<Image>().enabled = true;
         }
@@ -25,7 +23,7 @@ public class hand : MonoBehaviour
             this.GetComponent<Image>().enabled = false;
         }
 
-        if (ladder.GetTouchLadderFlg())
+        if (ladder.touchLadderFlg)  //梯子に登り始めたら非表示
         {
             this.GetComponent<Image>().enabled = false;
         }

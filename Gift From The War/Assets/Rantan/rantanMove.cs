@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class rantanMove : MonoBehaviour
 {
+    //ゲームオブジェクトやスクリプト
     [SerializeField] private GameObject player;
+    [SerializeField] private Transform camTrans;
     private Transform trans;
     private FPSController fpsC;
-    [SerializeField] playerHundLadder playerHund;
-    [SerializeField] private Transform camTrans;
-    private Quaternion firstQua;
-    private int upDown = -1;
-    private Vector3 firstPos;
-    private float posY = 0;
-    [SerializeField] private float upDownSpeed;
-    [SerializeField] private float maxPosY;
-    [SerializeField] private float dashRaito;
-    [SerializeField] private float upRaito = 0; //上の傾きの補正倍率
-    [SerializeField] private float downRaito = 0; //上の傾きの補正倍率
+    [SerializeField] private playerHundLadder playerHund;
+    [SerializeField] private playerDied playerDied;
 
-    // Start is called before the first frame update
+    //ランタンの移動
+    private Vector3 firstPos;                   //最初の位置
+    private int upDown = -1;                    //上がるか下がるかの符号
+    private float posY = 0;                     //Y座標の移動量
+    [SerializeField] private float upDownSpeed; //上がり下がりの速さ
+    [SerializeField] private float maxPosY;     //最大移動位置
+    [SerializeField] private float dashRaito;   //走った時の補正倍率
+
+    //ランタンの回転
+    private Quaternion firstQua;                    //最初のクォータニオン
+    [SerializeField] private float upRaito = 0;     //上の傾きの補正倍率
+    [SerializeField] private float downRaito = 0;   //上の傾きの補正倍率
+
     void Start()
     {
         trans = GetComponent<Transform>();
@@ -28,14 +33,15 @@ public class rantanMove : MonoBehaviour
         firstPos = trans.localPosition;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (playerDied.diedFlg) return;
+
         rotation();
         tremor();
     }
 
-    void rotation()
+    void rotation() //ランタンの回転
     {
         //カメラのクオータニオン値を取得
         Quaternion _camQua = camTrans.rotation;
@@ -55,53 +61,65 @@ public class rantanMove : MonoBehaviour
 
         _camEulerAngleX *= -1;
 
+        //ランタンの回転を代入
         Quaternion _ranQua = Quaternion.AngleAxis(_camEulerAngleX, Vector3.right);
         trans.localRotation = _ranQua * firstQua;
     }
 
-    void tremor()
+    void tremor()   //移動によるランタンの揺れ
     {
-        if (fpsC.GetMoveFlg())  //プレイヤーが動いているか
+        if (fpsC.moveFlg)  //プレイヤーが動いているか
         {
-            if (Mathf.Abs(trans.localPosition.y - firstPos.y) > Mathf.Abs(maxPosY))   //上下の移動のチェンジ
-            {
-                upDown *= -1;
-            }
+            Move();
+        }
+        else
+        {
+            Return();
+        }
 
-            if (fpsC.GetDashFlg())  //プレイヤーが走っているか
+        trans.localPosition += new Vector3(0.0f, posY, 0.0f) * Time.deltaTime;
+    }
+
+    private void Move() //ランタンの移動
+    {
+        if (Mathf.Abs(trans.localPosition.y - firstPos.y) > Mathf.Abs(maxPosY))   //上下の移動のチェンジ
+        {
+            upDown *= -1;
+        }
+
+        if (fpsC.dashFlg)  //プレイヤーが走っているか
+        {
+            posY = upDownSpeed * upDown * dashRaito;
+        }
+        else
+        {
+            posY = upDownSpeed * upDown;
+        }
+    }
+
+    private void Return()   //ランタンが戻る
+    {
+        if (playerHund.ClimbLadderFlg()) return;    //梯子に登っていたら処理しない
+
+        //自動で戻る処理
+        float nowPos = firstPos.y - trans.localPosition.y;
+        bool largeMoveFlg = Mathf.Abs(nowPos) > upDownSpeed * Time.deltaTime;   //大きく動く必要があるか
+        if (largeMoveFlg)
+        {
+            if (nowPos > 0)
             {
-                posY = upDownSpeed * upDown * dashRaito;
+                posY = upDownSpeed;
             }
             else
             {
-                posY = upDownSpeed * upDown;
+                posY = -upDownSpeed;
             }
         }
         else
         {
-            if (playerHund.ClimbLadderFlg()) return;
-
-            //自動で戻る処理
-            float nowPos = firstPos.y - trans.localPosition.y;
-            if (Mathf.Abs(nowPos) > upDownSpeed * Time.deltaTime) //ほぼ最初のところに戻っていなかったら
-            {
-                if (nowPos > 0)
-                {
-                    posY = upDownSpeed;
-                }
-                else
-                {
-                    posY = -upDownSpeed;
-                }
-            }
-            else
-            {
-                upDown = -1;
-                trans.localPosition = firstPos;
-                return;
-            }
+            upDown = -1;
+            trans.localPosition = firstPos;
+            return;
         }
-
-        trans.localPosition += new Vector3(0.0f, posY, 0.0f) * Time.deltaTime;
     }
 }

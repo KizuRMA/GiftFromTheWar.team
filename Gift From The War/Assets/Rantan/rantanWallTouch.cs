@@ -4,32 +4,34 @@ using UnityEngine;
 
 public class rantanWallTouch : MonoBehaviour
 {
-    Transform trans;
-    [SerializeField] float force;
-    Vector3 firstPos;
-    Rigidbody rd;
-    bool returnFlg = true;
-    [SerializeField] float firstSpeed;
-    [SerializeField] float speedRaito;
-    float nowSpeed;
-    Vector3 forceVec;
+    //ゲームオブジェクトやスクリプト
+    private Transform trans;
+    private Rigidbody rd;
+    [SerializeField] private playerDied died;
 
-    // Start is called before the first frame update
+    //フラグ
+    private bool returnFlg = true;              //戻るか
+    public bool returnFinishFlg { get; set; }   //戻り終わったか
+
+    //移動
+    private Vector3 firstPos;                   //基準の位置
+    [SerializeField] private float firstSpeed;  //最初の速さ
+    [SerializeField] private float speedRaito;  //速さの倍率
+    private float nowSpeed;                     //今の速さ
+    private Vector3 forceVec;                   //移動の向き
+
     void Start()
     {
         trans = transform;
         rd = this.GetComponent<Rigidbody>();
         firstPos = transform.localPosition;
+        returnFinishFlg = true;
     }
 
-
-
-
-    /// <summary>
-    /// アップデート
-    /// </summary>
     void Update()
     {
+        if (died.diedFlg) return;
+
         EraseInertia();
 
         //押し戻す処理
@@ -69,7 +71,6 @@ public class rantanWallTouch : MonoBehaviour
     private void ForceVecCorrection() //ぶるぶるしないための補正
     {
         bool froceVecSmallFlg = forceVec.magnitude > nowSpeed;  //forceVecが小さすぎないか見る
-
         if (froceVecSmallFlg)
         {
             forceVec = forceVec.normalized * nowSpeed;
@@ -78,31 +79,18 @@ public class rantanWallTouch : MonoBehaviour
         {
             nowSpeed = firstSpeed;
             returnFlg = false;
+            returnFinishFlg = true;
         }
     }
 
-
-
-
-    /// <summary>
-    /// 衝突
-    /// </summary>
-    /// <param name="collison"></param>
-    private void OnCollisionEnter(Collision collison)
+    private void OnCollisionEnter(Collision collison)   //衝突
     {
         returnFlg = false;
+        returnFinishFlg = false;
         nowSpeed = firstSpeed;
     }
 
-
-
-
-
-    /// <summary>
-    /// 衝突終了
-    /// </summary>
-    /// <param name="collison"></param>
-    private void OnCollisionExit(Collision collison)
+    private void OnCollisionExit(Collision collison)    //衝突終了
     {
         returnFlg = true;
     }
