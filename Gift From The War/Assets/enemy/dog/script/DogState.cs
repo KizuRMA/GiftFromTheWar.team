@@ -7,6 +7,7 @@ public enum e_DogState
 {
     Search,
     Traking,
+    Vigilance,
 }
 
 public class DogState : StatefulObjectBase<DogState, e_DogState>
@@ -20,13 +21,34 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [SerializeField] public float SearchSpeed;
     [SerializeField] public float TrakingSpeed;
 
+    public bool canVigilance;
+    public bool endAnimationFlg;
+
+    public bool IsVigilance => canVigilance == true;
+
     void Start()
     {
         stateList.Add(new DogSearchState(this));
         stateList.Add(new DogTrakingState(this));
+        stateList.Add(new DogVigilanceState(this));
 
         stateMachine = new StateMachine<DogState>();
 
         ChangeState(e_DogState.Search);
+
+        endAnimationFlg = false;
+        canVigilance = true;
+    }
+
+    public void EndAnimation()
+    {
+        endAnimationFlg = true;
+    }
+
+    public IEnumerator CoolDownCoroutine()
+    {
+        canVigilance = false;
+        yield return new WaitForSeconds(3.0f);
+        canVigilance = true;
     }
 }
