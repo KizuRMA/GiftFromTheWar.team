@@ -42,7 +42,7 @@ public class playerDied : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (CC.GetComponent<playerAbnormalcondition>().life <= 0)
         {
             diedFlg = true;
 

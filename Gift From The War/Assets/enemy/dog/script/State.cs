@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State<T> : MonoBehaviour
+public class State<T>
 {
     protected T owner;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DogMoveState : MonoBehaviour
+public class DogSearchState : MonoBehaviour
 {
     [SerializeField]WayPoint wayPoint;
     [SerializeField]GameObject player;
@@ -36,7 +36,6 @@ public class DogMoveState : MonoBehaviour
         {
             StartCoroutine(TargetCoroutine());
         }
-       
         //agent.destination = player.transform.position;
     }
 

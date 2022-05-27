@@ -61,7 +61,7 @@ public class BatAttackScript : BaseState
         var target = _collider.GetComponent<playerAbnormalcondition>();
         if (null == target) return;
 
-        target.Damage(0.1f);
+        target.Damage(1.0f);
     }
 
     public void OnAttackFinished()
