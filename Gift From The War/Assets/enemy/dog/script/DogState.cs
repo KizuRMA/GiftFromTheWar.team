@@ -21,6 +21,6 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     // Update is called once per frame
     protected override void Update()
     {
-        
+
     }
 }
