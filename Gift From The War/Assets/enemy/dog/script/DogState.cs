@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum e_DogState
 {
@@ -10,17 +11,18 @@ public enum e_DogState
 
 public class DogState : StatefulObjectBase<DogState, e_DogState>
 {
+    [SerializeField]public NavMeshAgent agent;
+    [SerializeField]public GameObject player;
+
+    //SerchState
+    [SerializeField]public float SearchSpeed;
+
     void Start()
     {
-        //stateList.Add(new StateWander(this));
-        //stateList.Add(new StatePursuit(this));
+        stateList.Add(new DogSearchState(this));
 
         stateMachine = new StateMachine<DogState>();
-    }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-
+        ChangeState(e_DogState.Search);
     }
 }
