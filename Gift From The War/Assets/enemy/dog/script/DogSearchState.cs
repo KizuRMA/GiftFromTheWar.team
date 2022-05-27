@@ -14,6 +14,7 @@ public class DogSearchState : State<DogState>
 
     public override void Enter()
     {
+        owner.animator.SetInteger("trans", 0);
         canSetFlg = true;
         targetPos = new Vector3[arrayMax];
         for (int i = 0; i < arrayMax; i++)
@@ -31,6 +32,13 @@ public class DogSearchState : State<DogState>
         if (canSetFlg == true)
         {
             owner.StartCoroutine(TargetCoroutine());
+        }
+
+        float dis = Vector3.Distance(owner.player.transform.position,owner.dog.transform.position);
+        if (dis <= 3.0f)
+        {
+            owner.ChangeState(e_DogState.Traking);
+            return;
         }
     }
 

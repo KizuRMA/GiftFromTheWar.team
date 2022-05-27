@@ -6912,7 +6912,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2020527138}
   player: {fileID: 401655008}
+  dog: {fileID: 2020527136}
+  animator: {fileID: 2020527140}
   SearchSpeed: 0.5
+  TrakingSpeed: 1.8
 --- !u!1001 &2053968128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7964,7 +7967,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 746430043379285383, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
 --- !u!1001 &768423597615005984
 PrefabInstance:
