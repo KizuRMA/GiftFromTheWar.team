@@ -13,18 +13,21 @@ public class FPSController : MonoBehaviour
     [SerializeField] private playerDied died;
 
     //カーソルロック
-    private bool cursorLock = true; 
+    private bool cursorLock = true;
 
     //プレイヤーのXZ移動
-    [SerializeField] private float walkSpeed;   //歩行速度
-    [SerializeField] private float dashSpeedRaito; //走る速さの倍率
-    private float nowMoveSpeed; //今の移動速度
+    private Transform trans;
+    [SerializeField] private float walkSpeed;       //歩行速度
+    [SerializeField] private float dashSpeedRaito;  //走る速さの倍率
+    private float nowMoveSpeed;                     //今の移動速度
     public bool moveFlg { get; set; }
     public bool dashFlg { get; set; }
+    public bool groundFlg { get; set; }
 
     //重力
     [SerializeField] private float gravity;
     private float nowGravity;
+    [SerializeField] private float groundDis;   //地面との距離
 
     //プレイヤー移動全般
     private Vector3 moveVelocity; // キャラの移動速度情報
@@ -39,9 +42,11 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
+        trans = transform;
         nowMoveSpeed = walkSpeed;
         moveFlg = false;
         dashFlg = false;
+        groundFlg = false;
     }
 
     void Update()
@@ -106,13 +111,13 @@ public class FPSController : MonoBehaviour
     private void AssignTmpRot()    //計算するために回転量を保持する
     {
         cameraRot = cam.transform.localRotation;
-        characterRot = transform.localRotation;
+        characterRot = trans.localRotation;
     }
 
     private void AssignFinalRot()   //計算した回転量を代入
     {
         cam.transform.localRotation = cameraRot;
-        transform.localRotation = characterRot;
+        trans.localRotation = characterRot;
     }
 
     private void MiddleClick()
@@ -201,6 +206,22 @@ public class FPSController : MonoBehaviour
         {
             nowGravity = gravity * Time.deltaTime;
             return;
+        }
+
+        Ray ray = new Ray(trans.position, -trans.up);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, groundDis))
+        {
+            nowGravity = gravity * Time.deltaTime;
+
+            if (groundFlg) return;
+            moveVec.y += 1.0f;  //完全に地面につけるための処理
+            groundFlg = true;
+            return;
+        }
+        else
+        {
+            groundFlg = false;
         }
 
         nowGravity += gravity * Time.deltaTime;
