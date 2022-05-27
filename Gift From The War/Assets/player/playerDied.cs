@@ -19,7 +19,6 @@ public class playerDied : MonoBehaviour
     [SerializeField] private float height;      //高さ
     [SerializeField] private float downSpeed;   //下がるスピード
     [SerializeField] private float downMax;     //下がる最大値
-    private float downSum = 0;                  //ダウンした合計値
     private float nowGravity;                   //今の重力加速度
 
     //回転
