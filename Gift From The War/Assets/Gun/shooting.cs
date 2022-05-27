@@ -15,6 +15,7 @@ public class shooting : MonoBehaviour
     [SerializeField] private float useEnergy;   //消費エネルギー
     private bool shotFlg;                       //発射可能
     private Quaternion bulletQua;               //発射する弾の向き
+    private Vector3 shotPos;                    //着弾点
 
     private void Start()
     {
@@ -62,14 +63,14 @@ public class shooting : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            Vector3 shotVec = hit.point - trans.position;   //飛んでいく方向のベクトル
-            Debug.Log(hit.point);
+            shotPos = hit.point;
         }
     }
 
     private void CreateBullet() //プレハブから弾を作る
     {
-        GameObject bullet = (GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.Euler(trans.parent.eulerAngles.x, trans.parent.eulerAngles.y, 0));
+        GameObject bullet = (GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.identity);
+        trans.LookAt(shotPos);
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
         bulletRb.AddForce(trans.forward * shotSpeed);
 
