@@ -60,4 +60,6 @@ public class DogSearchState : State<DogState>
         agent.destination = targetPos[arrayMax - 1];
         canSetFlg = true;
     }
+
+
 }
