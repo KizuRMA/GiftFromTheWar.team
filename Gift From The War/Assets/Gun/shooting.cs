@@ -5,6 +5,8 @@ using UnityEngine;
 public class shooting : MonoBehaviour
 {
     //ゲームオブジェクトやスクリプト
+    private Transform trans;
+    [SerializeField] private Transform camTrans;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private remainingAmount energyAmount;
 
@@ -12,14 +14,16 @@ public class shooting : MonoBehaviour
     [SerializeField] private float shotSpeed;   //発射スピード
     [SerializeField] private float useEnergy;   //消費エネルギー
     private bool shotFlg;                       //発射可能
-    private float shotInterval;                 //インターバル
+    private Quaternion bulletQua;               //発射する弾の向き
 
     private void Start()
     {
+        trans = transform;
     }
 
     void Update()
     {
+        BulletVecter();
         //エネルギーが最大までたまっていたら、発射できる
         if (energyAmount.energyMaxFlg)
         {
@@ -34,22 +38,42 @@ public class shooting : MonoBehaviour
         {
             energyAmount.GetSetNowAmount = 0;
 
-            shotInterval += 1;
-
             if (shotFlg) //発射処理
             {
-                energyAmount.GetSetNowAmount = useEnergy;
-                energyAmount.useDeltaTime = false;
-
-                //プレハブから弾を作り、銃の向いている向きに発射
-                GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
-                Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-                bulletRb.AddForce(transform.forward * shotSpeed);
-
-                //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
-                Destroy(bullet, 3.0f);
+                Shot();
             }
-
         }
+    }
+
+    private void Shot() //弾を打つ処理
+    {
+        energyAmount.GetSetNowAmount = useEnergy;
+        energyAmount.useDeltaTime = false;
+
+        BulletVecter();
+
+        CreateBullet();
+    }
+
+    private void BulletVecter() //弾の向きを決める
+    {
+        //プレイヤーの前にレイ判定を飛ばし、オブジェクトとの距離を求める。
+        Ray ray = new Ray(camTrans.position, camTrans.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            Vector3 shotVec = hit.point - trans.position;   //飛んでいく方向のベクトル
+            Debug.Log(hit.point);
+        }
+    }
+
+    private void CreateBullet() //プレハブから弾を作る
+    {
+        GameObject bullet = (GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.Euler(trans.parent.eulerAngles.x, trans.parent.eulerAngles.y, 0));
+        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+        bulletRb.AddForce(trans.forward * shotSpeed);
+
+        //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
+        Destroy(bullet, 3.0f);
     }
 }

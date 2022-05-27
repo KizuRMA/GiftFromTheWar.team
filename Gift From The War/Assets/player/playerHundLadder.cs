@@ -8,21 +8,22 @@ public class playerHundLadder : MonoBehaviour
     [SerializeField] private CharacterController playerCC;
     [SerializeField] private GameObject playerCamera;
     private Transform playerTrans;
-    private Transform cmaTrans;
+    private Transform camTrans;
 
     //フラグ関係
     public bool closeLadderFlg { get; set; }    //梯子の近くにいるかどうか
-    public bool touchLadderFlg { get; set; }     //梯子に触れているか
+    public bool touchLadderFlg { get; set; }    //梯子に触れているか
 
     private bool moveBeforeFlg = false;     //梯子の前までいったか
     private bool rotXBeforeFlg = false;     //梯子の方に向いているか
     private bool rotYBeforeFlg = false;     //梯子の方に向いているか
 
     //梯子の情報
-    private Vector3 ladderStartPos;     //梯子の始点の座標
-    private Vector3 ladderStartRot;     //梯子の向き
-    private Quaternion ladderStartQua;  //梯子の向き
-    private Vector3 ladderEndPos;       //梯子の終点の座標
+    [SerializeField] private float ladderDis;   //梯子にぼれる最大の距離
+    private Vector3 ladderStartPos;             //梯子の始点の座標
+    private Vector3 ladderStartRot;             //梯子の向き
+    private Quaternion ladderStartQua;          //梯子の向き
+    private Vector3 ladderEndPos;               //梯子の終点の座標
 
     //梯子までの移動
     [SerializeField] private float moveBeforeSpeed;   //梯子の前まで行く速さ
@@ -34,7 +35,7 @@ public class playerHundLadder : MonoBehaviour
     void Start()
     {
         playerTrans = playerCC.transform;
-        cmaTrans = playerCamera.transform;
+        camTrans = playerCamera.transform;
 
         touchLadderFlg = false;
         closeLadderFlg = false;
@@ -59,6 +60,8 @@ public class playerHundLadder : MonoBehaviour
 
     void Update()
     {
+        LadderRay();
+
         if (closeLadderFlg && Input.GetKeyDown(KeyCode.Space))
         {
             touchLadderFlg = true;
@@ -79,10 +82,29 @@ public class playerHundLadder : MonoBehaviour
 
             GoUpLadder();
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.E))
+    private void LadderRay()    //レイ判定で登れる状態か判定
+    {
+        Ray ray = new Ray(camTrans.position, camTrans.forward);
+        RaycastHit hit;
+        int layerMask = 1 << 16;
+        if (Physics.Raycast(ray, out hit, ladderDis, layerMask))
         {
-            FinishLadder();
+            if (hit.collider.tag != "ladder") return;
+            if (closeLadderFlg) return; //すでに情報を入力していたら処理しない
+
+            //梯子の情報を入力
+            ladderStartPos = hit.collider.gameObject.transform.GetChild(2).gameObject.transform.position;
+            ladderStartRot = hit.collider.gameObject.transform.GetChild(2).gameObject.transform.eulerAngles;
+            ladderStartQua = hit.collider.gameObject.transform.GetChild(2).gameObject.transform.rotation;
+            ladderEndPos = hit.collider.gameObject.transform.GetChild(3).gameObject.transform.position;
+
+            closeLadderFlg = true;
+        }
+        else
+        {
+            closeLadderFlg = false;
         }
     }
 
@@ -123,7 +145,7 @@ public class playerHundLadder : MonoBehaviour
     private void RotationX()    //X軸回転
     {
         //プレイヤーの向きを算出
-        float camLocalRotX = cmaTrans.rotation.eulerAngles.x;
+        float camLocalRotX = camTrans.rotation.eulerAngles.x;
 
         if (camLocalRotX >= 180.0f)
         {
@@ -139,18 +161,18 @@ public class playerHundLadder : MonoBehaviour
             //一定量回転する
             if (camLocalRotX > ladderStartRot.x)
             {
-                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(-rotXBeforeSpeed * Time.deltaTime, 0f, 0f));
+                camTrans.localRotation *= Quaternion.Euler(new Vector3(-rotXBeforeSpeed * Time.deltaTime, 0f, 0f));
             }
             else
             {
-                cmaTrans.localRotation *= Quaternion.Euler(new Vector3(rotXBeforeSpeed * Time.deltaTime, 0f, 0f));
+                camTrans.localRotation *= Quaternion.Euler(new Vector3(rotXBeforeSpeed * Time.deltaTime, 0f, 0f));
             }
         }
         else
         {
             //ぴったり回転する
             rotXBeforeFlg = true;
-            cmaTrans.localRotation = Quaternion.Euler(new Vector3(ladderStartRot.x, 0f, 0f));
+            camTrans.localRotation = Quaternion.Euler(new Vector3(ladderStartRot.x, 0f, 0f));
         }
     }
 

@@ -69,6 +69,7 @@ public class playerDied : MonoBehaviour
 
     private void DownKnees()    //膝をつく
     {
+        //レイ判定で地面に着いたか確認する
         Ray ray = new Ray(trans.position, -transform.up);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, downMax))
