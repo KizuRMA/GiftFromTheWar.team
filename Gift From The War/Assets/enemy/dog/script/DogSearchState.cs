@@ -3,40 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DogSearchState : MonoBehaviour
+public class DogSearchState : State<DogState>
 {
-    [SerializeField]WayPoint wayPoint;
-    [SerializeField]GameObject player;
-    [SerializeField]float Speed;
+    public DogSearchState(DogState owner) : base(owner) { }
+
     NavMeshAgent agent;
     Vector3[] targetPos;
     const int arrayMax = 60;
     bool canSetFlg;
-    int nextIndex;
 
-    // Start is called before the first frame update
-    void Start()
+    public override void Enter()
     {
         canSetFlg = true;
         targetPos = new Vector3[arrayMax];
         for (int i = 0; i < arrayMax; i++)
         {
-            targetPos[i] = player.transform.position;
+            targetPos[i] = owner.player.transform.position;
         }
 
-        nextIndex = 0;
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = Speed;
+        agent = owner.agent;
+        agent.speed = owner.SearchSpeed;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Execute()
     {
+        base.Execute();
         if (canSetFlg == true)
         {
-            StartCoroutine(TargetCoroutine());
+            owner.StartCoroutine(TargetCoroutine());
         }
-        //agent.destination = player.transform.position;
+    }
+
+    public override void Exit()
+    {
+
     }
 
     private IEnumerator TargetCoroutine()
@@ -49,7 +49,7 @@ public class DogSearchState : MonoBehaviour
             targetPos[i] = targetPos[i - 1];
         }
 
-        targetPos[0] = player.transform.position;
+        targetPos[0] = owner.player.transform.position;
         agent.destination = targetPos[arrayMax - 1];
         canSetFlg = true;
     }

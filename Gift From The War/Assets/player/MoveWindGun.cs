@@ -144,4 +144,41 @@ public class MoveWindGun : MonoBehaviour
             disRaitoPower = 0;
         }
     }
+
+    private void ObjectsAffect()    //風によるオブジェクトへの影響
+    {
+        //GameObject stage = GameObject.FindGameObjectWithTag("stage");
+        //if (stage == null) return;
+
+        //List<GameObject> gameList = new List<GameObject>();
+
+        //GameObject game;
+        //game = stage.transform.Find("dynamicObj").gameObject;
+
+        ////プレイヤーと近いステージオブジェクトをリストに保管
+        //for (int i  = 0; i < game.transform.childCount; i++)
+        //{
+        //    for (int j = 0; j < game.transform.GetChild(i).childCount; j++)
+        //    {
+        //        Transform trans = game.transform.GetChild(i).GetChild(j).transform;
+        //        float dis = Vector3.Distance(trans.position,CC.transform.position);
+
+        //        if (dis < range)
+        //        {
+        //            gameList.Add(game.transform.GetChild(i).GetChild(j).gameObject);
+        //        }
+        //    }
+        //}
+
+        //if (gameList.Count == 0) return;
+
+        //for (int i = 0; i < gameList.Count; i++)
+        //{
+        //    //ターゲットへのベクトル
+        //    //Vector3 _targetVec = gameList[i].transform.position - CC.transform.position;
+        //    //float dis
+
+        //}
+
+    }
 }
