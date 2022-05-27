@@ -7,6 +7,7 @@ public class CloseButtonTest : MonoBehaviour
 {
     [SerializeField] private CanvasGroup ListsCanvasGroup;
     [SerializeField] private CanvasGroup ButtonCanvasGroup;
+    [SerializeField] private Image text;
     [SerializeField] private RectTransform ButtonRectTransform;
     [SerializeField] private RectTransform FillRectTransform;
     [SerializeField] private RectTransform BackRectTransform;
@@ -18,6 +19,7 @@ public class CloseButtonTest : MonoBehaviour
         Initialize();
         //É{É^ÉìÇ™ï¬Ç∂ÇÈèàóù
         var sequence = DOTween.Sequence()
+            .Append(text.DOFade(endValue: 0f, duration: 0.05f))
             .Append(ButtonRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, y: 5), duration: 1f)).SetEase(Ease.OutCubic).Play()
             .Join(FillRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, y: 5), duration: 1f)).SetEase(Ease.OutCubic).Play()
             .Join(BackRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, y: 5), duration: 1f)).SetEase(Ease.OutCubic).Play()

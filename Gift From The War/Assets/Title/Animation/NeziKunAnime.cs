@@ -50,19 +50,5 @@ public class NeziKunAnime : MonoBehaviour
         });
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.P))
-        {
-            
-            Animate();
-        }
-        if (Input.GetKey(KeyCode.O))
-        {
-
-            BackAnimate();
-        }
-    }
   
 }

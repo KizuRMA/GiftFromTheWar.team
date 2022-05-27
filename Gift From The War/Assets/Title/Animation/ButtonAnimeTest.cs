@@ -13,8 +13,7 @@ public class ButtonAnimeTest : UIBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private UnityEvent emiOnEvent = new UnityEvent();
     [SerializeField] private UnityEvent emiOffEvent = new UnityEvent();
 
-
-    void Start()
+    protected override void Start()
     {
         base.Start();
         FillImage.fillAmount = 0;

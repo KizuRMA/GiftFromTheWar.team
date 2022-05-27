@@ -8,6 +8,7 @@ public class ResetButton : MonoBehaviour
 {
     [SerializeField] private CanvasGroup ListsCanvasGroup;
     [SerializeField] private CanvasGroup ButtonCanvasGroup;
+    [SerializeField] private Image text;
     [SerializeField] private RectTransform ButtonRectTransform;
     [SerializeField] private RectTransform FillRectTransform;
     [SerializeField] private RectTransform BackRectTransform;
@@ -24,6 +25,7 @@ public class ResetButton : MonoBehaviour
             .Join(ButtonRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
             .Join(FillRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
             .Join(BackRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
+            .Append(text.DOFade(endValue: 1f, duration: 0.1f))
             .SetDelay(2.5f);
 
         ListsCanvasGroup.blocksRaycasts = true;
@@ -36,11 +38,4 @@ public class ResetButton : MonoBehaviour
         //ButtonRectTransform.sizeDelta = Vector2.zero;
     }
 
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.Q))
-        {
-            ButtonOpenAnimate();
-        }
-    }
 }

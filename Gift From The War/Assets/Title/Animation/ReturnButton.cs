@@ -17,7 +17,7 @@ public class ReturnButton : MonoBehaviour
     //–ß‚éƒ{ƒ^ƒ“‚ğoŒ»‚³‚¹‚é
     public void AppButton()
     {
-        CanvasGroup.DOFade(endValue: 1f, duration: 0.2f);
+        CanvasGroup.DOFade(endValue: 1f, duration: 0.2f).SetDelay(3.5f);
         CanvasGroup.blocksRaycasts = true;
     }
 
