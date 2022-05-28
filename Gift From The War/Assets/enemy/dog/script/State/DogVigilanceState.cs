@@ -42,14 +42,13 @@ public class DogVigilanceState : State<DogState>
 
         if (CheckVisibility() == true)
         {
-            owner.ChangeState(e_DogState.Traking);
+            owner.ChangeState(e_DogState.Tracking);
             return;
         }
     }
 
     public override void Exit()
     {
-        owner.endAnimationFlg = false;
         owner.agent.isStopped = false;
         owner.StartCoroutine(CoolDownCoroutine());
     }

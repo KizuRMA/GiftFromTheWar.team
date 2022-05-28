@@ -6,9 +6,10 @@ using UnityEngine.AI;
 public enum e_DogState
 {
     Search,
-    Traking,
+    Tracking,
     Vigilance,
     Attack,
+    CheckAround,
 }
 
 public class DogState : StatefulObjectBase<DogState, e_DogState>
@@ -23,28 +24,27 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [SerializeField] public float TrakingSpeed;
 
     public bool canVigilance;
-    public bool endAnimationFlg;
 
     public bool IsVigilance => canVigilance == true;
 
     void Start()
     {
         stateList.Add(new DogSearchState(this));
-        stateList.Add(new DogTrakingState(this));
+        stateList.Add(new DogTrackingState(this));
         stateList.Add(new DogVigilanceState(this));
         stateList.Add(new DogAttackState(this));
+        stateList.Add(new DogCheckAroundState(this));
 
         stateMachine = new StateMachine<DogState>();
 
         ChangeState(e_DogState.Search);
 
-        endAnimationFlg = false;
         canVigilance = true;
     }
 
     public void EndAnimation()
     {
-        endAnimationFlg = true;
+
     }
 
     public IEnumerator CoolDownCoroutine()

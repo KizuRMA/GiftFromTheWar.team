@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DogTrakingState : State<DogState>
+public class DogTrackingState : State<DogState>
 {
-    public DogTrakingState(DogState owner) : base(owner) { }
+    public DogTrackingState(DogState owner) : base(owner) { }
 
     // Start is called before the first frame update
     public override void Enter()
@@ -18,9 +18,18 @@ public class DogTrakingState : State<DogState>
     {
         owner.agent.destination = owner.player.transform.position;
 
-        if (owner.agent.remainingDistance <= 1.5f)
+        float targetDis = owner.agent.remainingDistance;
+
+        if (targetDis <= 1.5f)
         {
             owner.ChangeState(e_DogState.Attack);
+            return;
+        }
+
+        if (targetDis >= 10.0f)
+        {
+            owner.ChangeState(e_DogState.CheckAround);
+            return;
         }
     }
 
