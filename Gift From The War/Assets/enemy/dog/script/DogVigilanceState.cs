@@ -74,27 +74,30 @@ public class DogVigilanceState : State<DogState>
         Transform _dogTrans = owner.dog.transform;
 
         Vector3 _playerPos = owner.player.transform.position;
-        Vector3 _dogHeadPos = _dogTrans.position + ((_dogTrans.forward * 0.5f) + (_dogTrans.up * 0.5f));
+        Vector3 _dogHeadPos = _dogTrans.position + ((_dogTrans.forward * 0.6f) + (_dogTrans.up * 0.5f));
 
         float distance = Vector3.Distance(_playerPos,_dogHeadPos);
 
         //‹——£”»’è
-        if (range >= distance) return false;
+        if (range <= distance) return false;
 
         Vector3 _targetVec = _playerPos - _dogHeadPos;
         Vector3 _forwardVec = owner.dog.transform.forward;
 
-        float dot = Vector3.Dot(_targetVec,_forwardVec);
+        float dot = Vector3.Dot(_targetVec.normalized,_forwardVec.normalized);
         float degAngle = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
+        Debug.Log(degAngle);
+
         //Šp“x”»’è
-        if (visibility >= degAngle) return false;
+        if (visibility <= degAngle) return false;
 
         Ray _ray = new Ray(_dogHeadPos, _targetVec);
         RaycastHit _raycastHit;
 
         bool hit = Physics.Raycast(_ray, out _raycastHit,range);
 
+        Debug.Log(_raycastHit.collider.gameObject);
         //ƒŒƒC”»’è
         if (hit == false || _raycastHit.collider.tag != "Player") return false;
 

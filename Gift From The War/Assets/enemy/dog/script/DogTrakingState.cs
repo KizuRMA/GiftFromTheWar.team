@@ -11,11 +11,17 @@ public class DogTrakingState : State<DogState>
     {
         owner.animator.SetInteger("trans", 1);
         owner.agent.speed = owner.TrakingSpeed;
+        owner.agent.stoppingDistance = 1.5f;
     }
 
     public override void Execute()
     {
         owner.agent.destination = owner.player.transform.position;
+
+        if (owner.agent.remainingDistance <= 1.5f)
+        {
+            owner.ChangeState(e_DogState.Attack);
+        }
     }
 
     public override void Exit()

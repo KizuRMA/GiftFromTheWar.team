@@ -8,6 +8,7 @@ public enum e_DogState
     Search,
     Traking,
     Vigilance,
+    Attack,
 }
 
 public class DogState : StatefulObjectBase<DogState, e_DogState>
@@ -31,6 +32,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         stateList.Add(new DogSearchState(this));
         stateList.Add(new DogTrakingState(this));
         stateList.Add(new DogVigilanceState(this));
+        stateList.Add(new DogAttackState(this));
 
         stateMachine = new StateMachine<DogState>();
 
