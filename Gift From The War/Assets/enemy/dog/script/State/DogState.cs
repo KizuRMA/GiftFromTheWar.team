@@ -15,20 +15,24 @@ public enum e_DogState
 public class DogState : StatefulObjectBase<DogState, e_DogState>
 {
     [SerializeField]public NavMeshAgent agent;
+    [SerializeField] public NavMeshSurface[] navMeshSurface;
     [SerializeField]public GameObject player;
     [SerializeField]public GameObject dog;
-    [SerializeField]public Animator animator;
-
-    //SerchState
+    [SerializeField] public Animator animator;
     [SerializeField] public float SearchSpeed;
     [SerializeField] public float TrakingSpeed;
 
     public bool canVigilance;
-
     public bool IsVigilance => canVigilance == true;
 
     void Start()
     {
+        navMeshSurface = GameObject.Find("stage").GetComponents<NavMeshSurface>();
+
+        Debug.Log(NavMesh.GetSettingsNameFromID(navMeshSurface[0].agentTypeID));
+        Debug.Log(NavMesh.GetSettingsNameFromID(navMeshSurface[1].agentTypeID));
+        navMeshSurface[1].BuildNavMesh();
+
         stateList.Add(new DogSearchState(this));
         stateList.Add(new DogTrackingState(this));
         stateList.Add(new DogVigilanceState(this));
