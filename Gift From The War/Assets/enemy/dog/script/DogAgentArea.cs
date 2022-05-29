@@ -8,7 +8,8 @@ public class DogAgentArea : MonoBehaviour
     [SerializeField] GameObject dog;
     [SerializeField] GameObject stage;
     [SerializeField] List<string> useAgentNames;
-
+    [SerializeField] NavMeshModifierVolume volume;
+    
     NavMeshSurface[] navMesh;
     Dictionary<string,NavMeshSurface> navMeshes = new Dictionary<string,NavMeshSurface>();
 
@@ -53,12 +54,11 @@ public class DogAgentArea : MonoBehaviour
         NavMeshAgent agent = dogObject.GetComponent<NavMeshAgent>();
         string _agentName = NavMesh.GetSettingsNameFromID(agent.agentTypeID);
 
-        Debug.Log(11111111111111);
-
         foreach (string str in navMeshes.Keys)
         {
             if (_agentName != str)
             {
+                volume.AddAffectsAgentType(navMeshes[str].agentTypeID);
                 navMeshes[str].BuildNavMesh();
             }
         }
