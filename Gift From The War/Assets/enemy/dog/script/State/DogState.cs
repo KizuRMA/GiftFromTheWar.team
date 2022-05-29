@@ -31,7 +31,6 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
 
         Debug.Log(NavMesh.GetSettingsNameFromID(navMeshSurface[0].agentTypeID));
         Debug.Log(NavMesh.GetSettingsNameFromID(navMeshSurface[1].agentTypeID));
-        navMeshSurface[1].BuildNavMesh();
 
         stateList.Add(new DogSearchState(this));
         stateList.Add(new DogTrackingState(this));

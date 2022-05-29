@@ -18,7 +18,7 @@ public class DogTrackingState : State<DogState>
     {
         owner.agent.destination = owner.player.transform.position;
 
-        float targetDis = owner.agent.remainingDistance;
+        float targetDis = Vector3.Distance(owner.dog.transform.position,owner.player.transform.position);
 
         if (targetDis <= 1.5f)
         {
@@ -26,7 +26,7 @@ public class DogTrackingState : State<DogState>
             return;
         }
 
-        if (targetDis >= 10.0f)
+        if (targetDis >= 30.0f)
         {
             owner.ChangeState(e_DogState.CheckAround);
             return;

@@ -34,24 +34,33 @@ public class DogAgentArea : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log(navMeshes.Count);
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = dog.transform.position;
+        //transform.position = dog.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Œ¢‚Æ“–‚½‚Á‚½‚Æ‚«‚Ì‚İˆ—‚ğs‚¤
+        //Œ¢‚Æ“–‚½‚Á‚½‚Æ‚«‚Ì‚İˆ—‚ğs
+        Debug.Log(other.gameObject.tag);
 
-        if (other.tag != "Dog1") return;
+        if (other.gameObject.tag != "Dog1") return;
 
+        GameObject dogObject = other.gameObject;
+        NavMeshAgent agent = dogObject.GetComponent<NavMeshAgent>();
+        string _agentName = NavMesh.GetSettingsNameFromID(agent.agentTypeID);
 
+        Debug.Log(11111111111111);
 
+        foreach (string str in navMeshes.Keys)
+        {
+            if (_agentName != str)
+            {
+                navMeshes[str].BuildNavMesh();
+            }
+        }
     }
 }

@@ -16,8 +16,8 @@ public class DogVigilanceState : State<DogState>
 
         //ステートマシン側の切り替えが完了していないため変数を用意する
         switchAnime = true;
-        range = 5.0f;
-        visibility = 40.0f;
+        range = 7.0f;
+        visibility = 50.0f;
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("metarig_action_Vigilance") == false) switchAnime = false;
        
         owner.agent.isStopped = true;
@@ -86,8 +86,6 @@ public class DogVigilanceState : State<DogState>
         float dot = Vector3.Dot(_targetVec.normalized,_forwardVec.normalized);
         float degAngle = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-        Debug.Log(degAngle);
-
         //角度判定
         if (visibility <= degAngle) return false;
 
@@ -96,7 +94,6 @@ public class DogVigilanceState : State<DogState>
 
         bool hit = Physics.Raycast(_ray, out _raycastHit,range);
 
-        Debug.Log(_raycastHit.collider.gameObject);
         //レイ判定
         if (hit == false || _raycastHit.collider.tag != "Player") return false;
 
