@@ -5,11 +5,12 @@ using UnityEngine.AI;
 
 public class DogAgentArea : MonoBehaviour
 {
-    [SerializeField] GameObject dog;
     [SerializeField] GameObject stage;
     [SerializeField] List<string> useAgentNames;
     [SerializeField] NavMeshModifierVolume volume;
-    
+    GameObject baseDogObject = null;
+
+
     NavMeshSurface[] navMesh;
     Dictionary<string,NavMeshSurface> navMeshes = new Dictionary<string,NavMeshSurface>();
 
@@ -20,7 +21,7 @@ public class DogAgentArea : MonoBehaviour
         //ステージにある全てのNavMeshSurfaceの情報を取得する
         navMesh = stage.GetComponents<NavMeshSurface>();
 
-        for (int i = 0; i < navMesh.Length; i++) 
+        for (int i = 0; i < navMesh.Length; i++)
         {
             //NavMeshSurfaceからAgentの名前を取得する
             string _name = NavMesh.GetSettingsNameFromID(navMesh[i].agentTypeID);
@@ -40,18 +41,22 @@ public class DogAgentArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.position = dog.transform.position;
+        if (baseDogObject == null) return;
+
+        if (this != baseDogObject.GetComponent<UsingDogArea>().area)
+        {
+            baseDogObject = null;
+            volume.AllRemoveAffectsAgentType();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //犬と当たったときのみ処理を行
-        Debug.Log(other.gameObject.tag);
+        if (other.gameObject.tag != "Dog1" || baseDogObject != null) return;
 
-        if (other.gameObject.tag != "Dog1") return;
-
-        GameObject dogObject = other.gameObject;
-        NavMeshAgent agent = dogObject.GetComponent<NavMeshAgent>();
+        baseDogObject = other.gameObject;
+        baseDogObject.GetComponent<UsingDogArea>().area = this;
+        NavMeshAgent agent = baseDogObject.GetComponent<NavMeshAgent>();
         string _agentName = NavMesh.GetSettingsNameFromID(agent.agentTypeID);
 
         foreach (string str in navMeshes.Keys)

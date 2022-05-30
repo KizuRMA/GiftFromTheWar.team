@@ -55,5 +55,15 @@ namespace UnityEngine.AI
         {
             m_AffectedAgents.Add(agentTypeID);
         }
+
+        public void RemoveAffectsAgentType(int agentTypeID)
+        {
+            m_AffectedAgents.Remove(agentTypeID);
+        }
+
+        public void AllRemoveAffectsAgentType()
+        {
+            m_AffectedAgents.Clear();
+        }
     }
 }
