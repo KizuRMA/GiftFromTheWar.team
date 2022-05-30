@@ -375,7 +375,6 @@ GameObject:
   - component: {fileID: 124306680}
   - component: {fileID: 124306683}
   - component: {fileID: 124306682}
-  - component: {fileID: 124306681}
   - component: {fileID: 124306684}
   m_Layer: 14
   m_Name: Cube
@@ -399,19 +398,6 @@ Transform:
   m_Father: {fileID: 171316044}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &124306681
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124306679}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &124306682
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2820,6 +2806,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3996110647418995180, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3996110647418995180, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
+      propertyPath: m_TagString
+      value: Dog1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_Name
       value: EnemyDog
@@ -3133,7 +3127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_TagString
@@ -4794,10 +4788,12 @@ MonoBehaviour:
   energyAmount: {fileID: 124306684}
   cameraObj: {fileID: 963194225}
   shotSpeed: 300
-  useEnergy: 1
+  useEnergy: 0.7
   returnSpeed: 5
   returnSpeedMin: 1
   returnSpeedMax: 10
+  useEnergyMag: 1
+  cameraOverMax: 5
 --- !u!4 &1597833382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 946675447799068494, guid: 661d9563d5ffba944a845f9c117e5dce, type: 3}

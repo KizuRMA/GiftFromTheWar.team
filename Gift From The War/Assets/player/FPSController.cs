@@ -210,7 +210,7 @@ public class FPSController : MonoBehaviour
 
         Ray ray = new Ray(trans.position, -trans.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, groundDis))
+        if (Physics.Raycast(ray, out hit, groundDis))   //’n–Ê‚É‚Â‚¢‚Ä‚¢‚éê‡
         {
             nowGravity = gravity * Time.deltaTime;
 

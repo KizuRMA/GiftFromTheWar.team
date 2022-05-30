@@ -18,7 +18,7 @@ public class magnetBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "metal")
+        if (other.gameObject.tag == "metal" || other.gameObject.tag == "Dog1")
         {
             mag.metal = other.gameObject;
         }

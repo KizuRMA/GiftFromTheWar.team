@@ -31,7 +31,6 @@ public class MoveWindGun : MonoBehaviour
 
     public bool upWindFlg { get; set; }
 
-    // Start is called before the first frame update
     void Start()
     {
         CC = this.GetComponent<CharacterController>();
@@ -39,7 +38,6 @@ public class MoveWindGun : MonoBehaviour
         upWindFlg = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (died.diedFlg) return;
@@ -115,7 +113,8 @@ public class MoveWindGun : MonoBehaviour
             upWindFlg = false;
         }
 
-        energyAmount.GetSetNowAmount = useEnergyAmount; //エネルギー消費
+        //エネルギー消費
+        energyAmount.GetSetNowAmount = useEnergyAmount; 
         energyAmount.useDeltaTime = true;
     }
 

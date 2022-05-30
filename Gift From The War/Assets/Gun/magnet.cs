@@ -25,7 +25,10 @@ public class magnet : MonoBehaviour
     [SerializeField] private float returnSpeed;     //戻る速さ
     [SerializeField] private float returnSpeedMin;  //戻る速さの最小値
     [SerializeField] private float returnSpeedMax;  //戻る速さの最小値
+    [SerializeField] private float useEnergyMag;    //くっついているときに消費するエネルギー
     private bool magnetFlg = false;                 //磁石が触れた瞬間のフラグ
+    private bool cameraOverFlg = false;             //金属がカメラ外にでた時
+    [SerializeField] private float cameraOverMax;   //カメラの外の上限
 
     private void Start()
     {
@@ -35,8 +38,8 @@ public class magnet : MonoBehaviour
 
     void Update()
     {
-        //エネルギーが最大までたまっていたら、発射できる
-        shotFlg = energyAmount.energyMaxFlg;
+        //エネルギーが必要量あれば
+        shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
         //発射キーを押したら
         if (Input.GetKeyDown(KeyCode.M))
@@ -91,6 +94,7 @@ public class magnet : MonoBehaviour
         if (!magnetFlg) //最初に金属に触れたときだけ行う
         {
             magnetFlg = true;
+            cameraOverFlg = false;
             metal.transform.parent = cameraObj.gameObject.transform;
             firstPos = metal.transform.localPosition;
             metal.GetComponent<Rigidbody>().useGravity = false;
@@ -98,9 +102,16 @@ public class magnet : MonoBehaviour
         }
 
         ReturnMiddle();
-        EraseInertia();       
+        EraseInertia();
 
-        if (Input.GetKey(KeyCode.M))    //解除する処理
+        //エネルギー消費
+        energyAmount.GetSetNowAmount = useEnergyMag;
+        energyAmount.useDeltaTime = true;
+
+        CameraOver();
+
+        //解除する処理
+        if (Input.GetKey(KeyCode.M) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
         {
             magnetFlg = false;
             metal.transform.parent = null;
@@ -152,5 +163,10 @@ public class magnet : MonoBehaviour
         {
             nowReturnSpeed = returnSpeedMax;
         }
+    }
+
+    private void CameraOver()   //カメラの外に出る処理
+    {
+        cameraOverFlg = (metal.transform.localPosition - firstPos).magnitude > cameraOverMax;
     }
 }
