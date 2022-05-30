@@ -5,4 +5,9 @@ using UnityEngine;
 public class UsingDogArea : MonoBehaviour
 {
     public DogAgentArea area {set;get;}
+
+    private void Awake()
+    {
+        area = null;
+    }
 }
