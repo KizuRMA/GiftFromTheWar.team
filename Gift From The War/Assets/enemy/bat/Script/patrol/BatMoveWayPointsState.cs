@@ -34,6 +34,8 @@ public class BatMoveWayPointsState : State<BatPatrolState>
 
         if (owner.currentUltrasound.CheckHit() == true)
         {
+            var target = owner.player.GetComponent<playerAbnormalcondition>();
+            target.AddHowlingAbnormal();
             owner.ChangeState(e_BatPatrolState.Tracking);
         }
     }

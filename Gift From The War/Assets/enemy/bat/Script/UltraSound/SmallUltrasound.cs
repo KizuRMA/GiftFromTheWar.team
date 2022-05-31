@@ -16,7 +16,7 @@ public class SmallUltrasound : BaseUltrasound
         duration = 0;
         time = 0;
         range = 0.0f;
-        maxRange = 0.5f;
+        maxRange = 1.0f;
     }
 
     // Update is called once per frame

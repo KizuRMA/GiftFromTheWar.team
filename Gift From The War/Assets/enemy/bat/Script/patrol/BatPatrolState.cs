@@ -28,6 +28,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [SerializeField] public WayPoint wayPoint;
     [SerializeField] private LayerMask raycastLayerMask;
     [SerializeField] public GameObject prefab;
+    [SerializeField] private Collider attackCollider;
 
     public BaseUltrasound currentUltrasound;
     protected List<BaseUltrasound> ultrasoundsList = new List<BaseUltrasound>();
@@ -49,10 +50,12 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         stateList.Add(new BatMoveWayPointsState(this));
         stateList.Add(new BatDeadState(this));
         stateList.Add(new BatTrackingState(this));
+        stateList.Add(new BatAttackState(this));
 
         ChangeState(e_BatPatrolState.MoveWayPoints);
 
         ultrasoundsList.Add(GetComponent<LargeUltrasound>());
+        ultrasoundsList.Add(GetComponent<SmallUltrasound>());
 
         ChangeUltrasound(e_UltrasoundState.Large);
     }
@@ -60,7 +63,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     protected override void Update()
     {
         //NavMeshAgent‚Ì‰e‹¿‚ÅYŽ²‚ª’n–Ê‚ÌˆÊ’u‚Ü‚Å‰º‚ª‚Á‚Ä‚µ‚Ü‚Á‚Ä‚¢‚é‚½‚ßA‚‚³‚ÍŽ©•ª‚ÅŠÇ—‚µ‚Ä‚¢‚é
-        if (IsNavMeshON == true)
+        if (agent.updatePosition == true)
         {
             //‘Ì‚ð‘O‚ÉŒX‚¯‚é
             Vector3 _localAngle = transform.localEulerAngles;
@@ -125,7 +128,6 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         transform.position = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != "windBullet") return;
@@ -143,5 +145,23 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     {
         currentUltrasound = ultrasoundsList[(int)state];
         currentUltrasound.Start();
+    }
+
+    public void OnHitAttack(Collider _collider)
+    {
+        var target = _collider.GetComponent<playerAbnormalcondition>();
+        if (null == target) return;
+
+        target.Damage(1.0f);
+    }
+
+    public void OnAttackStart()
+    {
+        attackCollider.enabled = true;
+    }
+
+    public void OnAttackFinished()
+    {
+        attackCollider.enabled = false;
     }
 }

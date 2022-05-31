@@ -21,7 +21,7 @@ public class DogAttackState : State<DogState>
     public override void Execute()
     {
         time += Time.deltaTime;
-        if (time >= 2.0f)
+        if (time >= 1.0f)
         {
             owner.ChangeState(e_DogState.Tracking);
         }

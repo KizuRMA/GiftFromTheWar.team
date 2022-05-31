@@ -14,6 +14,20 @@ public class BatTrackingState : State<BatPatrolState>
     public override void Execute()
     {
         owner.agent.destination = owner.player.transform.position;
+
+        float distance = Vector3.Distance(owner.bat.transform.position,owner.player.transform.position);
+        if (distance <= 1.0f)
+        {
+            owner.ChangeState(e_BatPatrolState.Attack);
+            return;
+        }
+
+        var target = owner.player.GetComponent<playerAbnormalcondition>();
+        if (target.IsHowling() == false)
+        {
+            owner.ChangeState(e_BatPatrolState.MoveWayPoints);
+            return;
+        }
     }
 
     public override void Exit()
