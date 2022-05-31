@@ -10,6 +10,7 @@ public class FPSController : MonoBehaviour
     [SerializeField] private playerHundLadder ladder;
     [SerializeField] private MoveWindGun moveWindGun;
     [SerializeField] private GameObject cam;
+    [SerializeField] private magnetChain magnetChain;
     [SerializeField] private playerDied died;
 
     //カーソルロック
@@ -53,7 +54,7 @@ public class FPSController : MonoBehaviour
     {
         UpdateCursorLock();
 
-        if (ladder.touchLadderFlg || died.diedFlg)
+        if (ladder.touchLadderFlg || died.diedFlg || magnetChain.magnetFlg)  //プレイヤーの移動無効化
         {
             moveFlg = false;
             return;

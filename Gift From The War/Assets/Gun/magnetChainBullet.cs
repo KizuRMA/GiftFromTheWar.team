@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class magnetBullet : MonoBehaviour
+public class magnetChainBullet : MonoBehaviour
 {
-    private magnet mag;
+    private magnetChain magChain;
 
     void Start()
     {
-        mag = GameObject.Find("muzzlePos").GetComponent<magnet>();
+        magChain = GameObject.Find("muzzlePos").GetComponent<magnetChain>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -17,7 +17,7 @@ public class magnetBullet : MonoBehaviour
 
         if (other.gameObject.tag == "metal" || other.gameObject.tag == "Dog1")
         {
-            mag.metal = other.gameObject;
+            magChain.metalFlg = true;
         }
         Destroy(this.gameObject);
     }

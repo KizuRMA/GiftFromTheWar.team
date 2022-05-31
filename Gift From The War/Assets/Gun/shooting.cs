@@ -25,8 +25,8 @@ public class shooting : MonoBehaviour
     void Update()
     {
         BulletVecter();
-        //エネルギーが最大までたまっていたら、発射できる
-        shotFlg = energyAmount.energyMaxFlg;
+        //エネルギーが必要量あれば
+        shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
         //発射キーを押したら
         if (Input.GetKey(KeyCode.Mouse1))

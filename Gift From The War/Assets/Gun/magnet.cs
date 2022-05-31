@@ -15,7 +15,6 @@ public class magnet : MonoBehaviour
     [SerializeField] private float shotSpeed;   //発射スピード
     [SerializeField] private float useEnergy;   //消費エネルギー
     private bool shotFlg;                       //発射可能
-    private Quaternion bulletQua;               //発射する弾の向き
     private Vector3 shotPos;                    //着弾点
 
     //磁石の処理
@@ -41,10 +40,14 @@ public class magnet : MonoBehaviour
         //エネルギーが必要量あれば
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
-        energyAmount.GetSetNowAmount = 0;
+        //エネルギーを使用しないときは0にする
+        if (Input.GetMouseButton(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
+        {
+            energyAmount.GetSetNowAmount = 0;
+        }
 
         //発射キーを押したら
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             if (!shotFlg) return;
             if (magnetFlg) return;
@@ -110,14 +113,7 @@ public class magnet : MonoBehaviour
 
         CameraOver();
 
-        //解除する処理
-        if (Input.GetMouseButton(0) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
-        {
-            magnetFlg = false;
-            metal.transform.parent = null;
-            AddInertia();
-            metal = null;
-        }
+        Relieve();
     }
 
     private void EraseInertia() //慣性を消す
@@ -157,9 +153,9 @@ public class magnet : MonoBehaviour
         {
             nowReturnSpeed += returnSpeed * Time.deltaTime;
         }
-        
+
         //上限補正
-        if(nowReturnSpeed > returnSpeedMax)
+        if (nowReturnSpeed > returnSpeedMax)
         {
             nowReturnSpeed = returnSpeedMax;
         }
@@ -168,5 +164,17 @@ public class magnet : MonoBehaviour
     private void CameraOver()   //カメラの外に出る処理
     {
         cameraOverFlg = (metal.transform.localPosition - firstPos).magnitude > cameraOverMax;
+    }
+
+    private void Relieve()   //解除処理
+    {
+        //解除する処理
+        if (Input.GetMouseButton(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
+        {
+            magnetFlg = false;
+            metal.transform.parent = null;
+            AddInertia();
+            metal = null;
+        }
     }
 }
