@@ -1,0 +1,71 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class DogAgentArea : MonoBehaviour
+{
+    [SerializeField] GameObject stage;
+    [SerializeField] List<string> useAgentNames;
+    [SerializeField] NavMeshModifierVolume volume;
+    GameObject baseDogObject = null;
+
+
+    NavMeshSurface[] navMesh;
+    Dictionary<string,NavMeshSurface> navMeshes = new Dictionary<string,NavMeshSurface>();
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //ステージにある全てのNavMeshSurfaceの情報を取得する
+        navMesh = stage.GetComponents<NavMeshSurface>();
+
+        for (int i = 0; i < navMesh.Length; i++)
+        {
+            //NavMeshSurfaceからAgentの名前を取得する
+            string _name = NavMesh.GetSettingsNameFromID(navMesh[i].agentTypeID);
+
+            //使用するAgentの名前を全て参照するためのループ
+            foreach (string str in useAgentNames)
+            {
+                //名前が一致する物があった場合はDictionary配列に追加する
+                if (str == _name)
+                {
+                    navMeshes.Add(str, navMesh[i]);
+                }
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (baseDogObject == null) return;
+
+        if (this != baseDogObject.GetComponent<UsingDogArea>().area)
+        {
+            baseDogObject = null;
+            volume.AllRemoveAffectsAgentType();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag != "Dog1" || baseDogObject != null) return;
+
+        baseDogObject = other.gameObject;
+        baseDogObject.GetComponent<UsingDogArea>().area = this;
+        NavMeshAgent agent = baseDogObject.GetComponent<NavMeshAgent>();
+        string _agentName = NavMesh.GetSettingsNameFromID(agent.agentTypeID);
+
+        foreach (string str in navMeshes.Keys)
+        {
+            if (_agentName != str)
+            {
+                volume.AddAffectsAgentType(navMeshes[str].agentTypeID);
+                navMeshes[str].BuildNavMesh();
+            }
+        }
+    }
+}

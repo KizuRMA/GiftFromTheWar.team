@@ -28,16 +28,15 @@ public class DogSearchState : State<DogState>
 
     public override void Execute()
     {
-        base.Execute();
         if (canSetFlg == true)
         {
             owner.StartCoroutine(TargetCoroutine());
         }
 
         float dis = Vector3.Distance(owner.player.transform.position,owner.dog.transform.position);
-        if (dis <= 3.0f)
+        if (owner.canVigilance == true && dis <= 5.0f)
         {
-            owner.ChangeState(e_DogState.Traking);
+            owner.ChangeState(e_DogState.Vigilance);
             return;
         }
     }
@@ -61,4 +60,6 @@ public class DogSearchState : State<DogState>
         agent.destination = targetPos[arrayMax - 1];
         canSetFlg = true;
     }
+
+
 }
