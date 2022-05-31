@@ -41,11 +41,11 @@ public class magnet : MonoBehaviour
         //エネルギーが必要量あれば
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
+        energyAmount.GetSetNowAmount = 0;
+
         //発射キーを押したら
         if (Input.GetKeyDown(KeyCode.M))
         {
-            energyAmount.GetSetNowAmount = 0;
-
             if (!shotFlg) return;
             if (magnetFlg) return;
             Shot();
