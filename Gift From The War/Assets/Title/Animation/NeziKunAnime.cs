@@ -23,7 +23,7 @@ public class NeziKunAnime : MonoBehaviour
 
         var NeziAnime = DOTween.Sequence()
            .Append(transform.DOMove(endValue: new Vector3(0f, 1.8f, 0f), duration: 1.5f).SetEase(Ease.OutCubic).SetRelative(true))
-           .Join(transform.DORotate(endValue: new Vector3(0f, 3600.0f, 0f), duration: 2.2f, RotateMode.FastBeyond360).SetEase(Ease.OutCubic));
+           .Join(transform.DORotate(endValue: new Vector3(0f, -3600.0f, 0f), duration: 2.2f, RotateMode.FastBeyond360).SetEase(Ease.OutCubic));
         //.Append(transform.DORotate(endValue: new Vector3(0f, 3600.0f, 0f), duration: 2.2f, RotateMode.FastBeyond360).SetEase(Ease.OutCubic));
 
         NeziAnime.InsertCallback(1.501f, () =>
