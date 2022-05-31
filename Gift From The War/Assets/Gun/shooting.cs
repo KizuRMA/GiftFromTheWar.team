@@ -31,8 +31,6 @@ public class shooting : MonoBehaviour
         //”­ËƒL[‚ğ‰Ÿ‚µ‚½‚ç
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            energyAmount.GetSetNowAmount = 0;
-
             if (!shotFlg) return;
             Shot();
         }

@@ -7,6 +7,7 @@ public class bulletChange : MonoBehaviour
     //スクリプト取得
     [SerializeField] private remainingAmount RA;
     [SerializeField] private MoveWindGun moveWind;
+    [SerializeField] private shooting shooting;
     [SerializeField] private magnet magnet;
 
     //武器切り替え
@@ -78,16 +79,19 @@ public class bulletChange : MonoBehaviour
         {
             case bulletChange.bulletType.e_wind:
                 moveWind.enabled = true;
+                shooting.enabled = true;
                 magnet.enabled = false;
                 break;
 
             case bulletChange.bulletType.e_magnet:
                 moveWind.enabled = false;
+                shooting.enabled = false;
                 magnet.enabled = true;
                 break;
 
             case bulletChange.bulletType.e_fire:
                 moveWind.enabled = false;
+                shooting.enabled = false;
                 magnet.enabled = false;
                 break;
         }

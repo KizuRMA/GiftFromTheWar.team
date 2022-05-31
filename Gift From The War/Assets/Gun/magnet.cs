@@ -44,7 +44,7 @@ public class magnet : MonoBehaviour
         energyAmount.GetSetNowAmount = 0;
 
         //”­ËƒL[‚ğ‰Ÿ‚µ‚½‚ç
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetMouseButtonDown(0))
         {
             if (!shotFlg) return;
             if (magnetFlg) return;
@@ -111,7 +111,7 @@ public class magnet : MonoBehaviour
         CameraOver();
 
         //‰ğœ‚·‚éˆ—
-        if (Input.GetKey(KeyCode.M) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
+        if (Input.GetMouseButton(0) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
         {
             magnetFlg = false;
             metal.transform.parent = null;
