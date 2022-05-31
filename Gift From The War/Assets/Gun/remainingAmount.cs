@@ -8,9 +8,13 @@ public class remainingAmount : MonoBehaviour
     [SerializeField] private GameObject amount;
     [SerializeField] private GameObject amount2;
     [SerializeField] private Transform trans;
-    [SerializeField] private MoveWindGun windGun;
-    [SerializeField] private Material mat1;
-    [SerializeField] private Material mat2;
+    [SerializeField] private Material matWind;
+    [SerializeField] private Material matWindMax;
+    [SerializeField] private Material matMagnet;
+    [SerializeField] private Material matMagnetMax;
+    [SerializeField] private Material matFire;
+    [SerializeField] private Material matFireMax;
+    [SerializeField] private bulletChange bulletChange;
 
     //エネルギー残量の表示
     private Vector3 firstPos;                   //基準の位置   
@@ -40,56 +44,16 @@ public class remainingAmount : MonoBehaviour
     {
         if (useEnergy == 0) //エネルギー消費がなかったら
         {
-            //エネルギーの回復
-            if (recoveryFlg)
-            {
-                trans.localPosition += new Vector3(0, 0, -(upSpeed * allRemainingEnergy - allRemainingEnergy) * Time.deltaTime);
-            }
+            NoUseEnergy();
         }
         else
         {
-            recoveryFlg = false;
-            energyMaxFlg = false;
-
-            //一つのコルーチンを使いまわす
-            if (cor != null) StopCoroutine(cor);
-            cor = null;
-            cor = RecoveryCoolTime();
-            StartCoroutine(cor);
-
-            //エネルギーの消費処理
-            if (useDeltaTime)
-            {
-                trans.localPosition += new Vector3(0, 0, (useEnergy * allRemainingEnergy - allRemainingEnergy) * Time.deltaTime);
-            }
-            else
-            {
-                trans.localPosition += new Vector3(0, 0, (useEnergy * allRemainingEnergy - allRemainingEnergy));
-            }
-
-            //エネルギーの色変更
-            Material[] tmp = gameObject.GetComponent<Renderer>().materials;
-            tmp[0] = mat1;
-            amount2.GetComponent<Renderer>().materials = tmp;
+            UseEnergy();
         }
 
-        if (trans.localPosition.z > energyMax)
-        {
-            //エネルギーの最大値
-            trans.localPosition = new Vector3(0, 0, energyMax);
+        EnergyMax();
 
-            energyMaxFlg = true;
-
-            //エネルギーの色変更
-            Material[] tmp = gameObject.GetComponent<Renderer>().materials;
-            tmp[0] = mat2;
-            amount2.GetComponent<Renderer>().materials = tmp;
-        }
-        else if (trans.localPosition.z < energyMin)
-        {
-            //エネルギーの最小値
-            trans.localPosition = new Vector3(0, 0, energyMin);
-        }
+        ColorChange();
 
         nowRemainingEnergy = 1.0f - (energyMax - trans.localPosition.z) / allRemainingEnergy;
     }
@@ -99,6 +63,97 @@ public class remainingAmount : MonoBehaviour
         yield return new WaitForSeconds(coolTime);  //クールタイム分待つ
 
         recoveryFlg = true;
+    }
+
+    private void NoUseEnergy()  //エネルギー消費がなかったら
+    {
+        //エネルギーの回復
+        if (recoveryFlg)
+        {
+            trans.localPosition += new Vector3(0, 0, -(upSpeed * allRemainingEnergy - allRemainingEnergy) * Time.deltaTime);
+        }
+    }
+
+    private void UseEnergy()    //エネルギー消費があったら
+    {
+        recoveryFlg = false;
+        energyMaxFlg = false;
+
+        //一つのコルーチンを使いまわす
+        if (cor != null) StopCoroutine(cor);
+        cor = null;
+        cor = RecoveryCoolTime();
+        StartCoroutine(cor);
+
+        //エネルギーの消費処理
+        if (useDeltaTime)
+        {
+            trans.localPosition += new Vector3(0, 0, (useEnergy * allRemainingEnergy - allRemainingEnergy) * Time.deltaTime);
+        }
+        else
+        {
+            trans.localPosition += new Vector3(0, 0, (useEnergy * allRemainingEnergy - allRemainingEnergy));
+        }
+    }
+
+    private void EnergyMax()    //エネルギーが最大までたまっていたら
+    {
+        if (trans.localPosition.z > energyMax)
+        {
+            //エネルギーの最大値
+            trans.localPosition = new Vector3(0, 0, energyMax);
+
+            energyMaxFlg = true;
+        }
+        else if (trans.localPosition.z < energyMin)
+        {
+            //エネルギーの最小値
+            trans.localPosition = new Vector3(0, 0, energyMin);
+        }
+    }
+
+    private void ColorChange()  //エネルギーの色変更
+    {
+        Material[] tmp = gameObject.GetComponent<Renderer>().materials;
+
+        if (trans.localPosition.z < energyMax)
+        {
+            //弾の種類による、色の変化
+            switch (bulletChange.nowBulletType)
+            {
+                case bulletChange.bulletType.e_wind:
+                    tmp[0] = matWind;
+                    break;
+
+                case bulletChange.bulletType.e_magnet:
+                    tmp[0] = matMagnet;
+                    break;
+
+                case bulletChange.bulletType.e_fire:
+                    tmp[0] = matFire;
+                    break;
+            }
+        }
+        else
+        {
+            //弾の種類による、色の変化
+            switch (bulletChange.nowBulletType)
+            {
+                case bulletChange.bulletType.e_wind:
+                    tmp[0] = matWindMax;
+                    break;
+
+                case bulletChange.bulletType.e_magnet:
+                    tmp[0] = matMagnetMax;
+                    break;
+
+                case bulletChange.bulletType.e_fire:
+                    tmp[0] = matFireMax;
+                    break;
+            }
+        }
+
+        amount2.GetComponent<Renderer>().materials = tmp;
     }
 
     public float GetSetNowAmount

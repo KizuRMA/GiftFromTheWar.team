@@ -464,8 +464,13 @@ MonoBehaviour:
   amount2: {fileID: 1091197470}
   trans: {fileID: 124306680}
   windGun: {fileID: 401655015}
-  mat1: {fileID: 2100000, guid: bf4e8dfb1fc703d43b4fd9cf2341c391, type: 2}
-  mat2: {fileID: 2100000, guid: cc2d9136a1eb1c34da1e097ff95bd44a, type: 2}
+  matWind: {fileID: 2100000, guid: bf4e8dfb1fc703d43b4fd9cf2341c391, type: 2}
+  matWindMax: {fileID: 2100000, guid: cc2d9136a1eb1c34da1e097ff95bd44a, type: 2}
+  matMagnet: {fileID: 2100000, guid: 89e3dddf938c27548851be0aedefad0b, type: 2}
+  matMagnetMax: {fileID: 2100000, guid: d825201b64f35384d9152d7a2f0d49e8, type: 2}
+  matFire: {fileID: 2100000, guid: 2243b4985e4d6e240bf6d93de0c6ee19, type: 2}
+  matFireMax: {fileID: 2100000, guid: 2d19564c6cf1d9f4fab8f326e7ab552b, type: 2}
+  bulletChange: {fileID: 338067880}
   upSpeed: 0.85
   energyMax: -0.018
   energyMin: -0.0708
@@ -1208,6 +1213,22 @@ MonoBehaviour:
   gunWallTouch: {fileID: 338067875}
   upDownSpeed: 0.8
   maxPosY: 0.2
+--- !u!114 &338067880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338067872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb052d5ac03c314a8b21b237cf28ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RA: {fileID: 124306684}
+  moveWind: {fileID: 401655015}
+  magnet: {fileID: 1581864212}
+  coolTime: 0.15
 --- !u!4 &350869315 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2691984012808516588, guid: 80b7f22b45fa7544196e2480688a91fc, type: 3}
@@ -2203,7 +2224,7 @@ GameObject:
   - component: {fileID: 603060165}
   m_Layer: 0
   m_Name: DogBranchRoute
-  m_TagString: Untagged
+  m_TagString: dogAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3712,9 +3733,9 @@ GameObject:
   - component: {fileID: 1096027323}
   - component: {fileID: 1096027322}
   - component: {fileID: 1096027321}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DogAgentArea (1)
-  m_TagString: Untagged
+  m_TagString: dogAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4747,7 +4768,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581864209}
   m_LocalRotation: {x: -0.043619405, y: -0, z: -0, w: 0.9990483}
-  m_LocalPosition: {x: -0.01, y: -0.48, z: 7.25}
+  m_LocalPosition: {x: -0.01, y: -0.01, z: 7.32}
   m_LocalScale: {x: 0.07, y: 0.07, z: 0.043750003}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4792,7 +4813,7 @@ MonoBehaviour:
   returnSpeed: 5
   returnSpeedMin: 1
   returnSpeedMax: 10
-  useEnergyMag: 1
+  useEnergyMag: 0.8
   cameraOverMax: 5
 --- !u!4 &1597833382 stripped
 Transform:
@@ -5577,7 +5598,7 @@ PrefabInstance:
     - target: {fileID: -9019016285146256411, guid: bf1d3dadf8b9a494394b3dd0adeb7594, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: df0f1e3b89c85d441b9357571d257c5f, type: 2}
+      objectReference: {fileID: 2100000, guid: f85ee0fcc3655a64cbfcc41f7911fd5f, type: 2}
     - target: {fileID: -8679921383154817045, guid: bf1d3dadf8b9a494394b3dd0adeb7594, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -7487,9 +7508,9 @@ GameObject:
   - component: {fileID: 2058802352}
   - component: {fileID: 2058802353}
   - component: {fileID: 2058802354}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DogAgentArea
-  m_TagString: Untagged
+  m_TagString: dogAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
