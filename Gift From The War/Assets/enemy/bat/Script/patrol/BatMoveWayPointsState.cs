@@ -9,13 +9,42 @@ public class BatMoveWayPointsState : State<BatPatrolState>
     private WayPoint wayPoint;
     private NavMeshAgent agent;
     private BaseUltrasound ultrasound;
-    private int currentWaypointIndex = 0;
+    private int currentWaypointIndex;
+    Vector3[] corners;
 
     public override void Enter()
     {
         owner.animator.SetInteger("trans", 0);
         wayPoint = owner.wayPoint;
         agent = owner.agent;
+
+        Vector3 _batPos = owner.bat.transform.position;
+        float _minDistance = float.MaxValue;
+
+        NavMeshPath navMeshPath = new NavMeshPath(); ;
+        //navMeshPath.GetCornersNonAlloc();
+
+        //現在地から最も近いWayPointをターゲット座標にする
+        foreach (var _wayPoint in wayPoint.wayPoints)
+        {
+            NavMesh.CalculatePath(_batPos,_wayPoint.position,agent.areaMask, agent.path);
+            float dis = agent.remainingDistance;
+
+            //Vector3 corner = _batPos;
+            //for (int i = 0; i < navMeshPath.corners.Length; i++)
+            //{
+            //    Vector3 corner2 = navMeshPath.corners[i];
+            //    dis += Vector3.Distance(corner,corner2);
+            //    corner = corner2;
+            //}
+
+            if (dis < _minDistance)
+            {
+                _minDistance = dis;
+                currentWaypointIndex = wayPoint.wayPoints.IndexOf(_wayPoint);
+            }
+        }
+
         owner.agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
     }
 

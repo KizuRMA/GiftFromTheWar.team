@@ -9,6 +9,7 @@ public enum e_BatPatrolState
     Dead,
     Tracking,
     Attack,
+    ShakeHead,
 }
 
 public enum e_UltrasoundState
@@ -51,13 +52,14 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         stateList.Add(new BatDeadState(this));
         stateList.Add(new BatTrackingState(this));
         stateList.Add(new BatAttackState(this));
+        stateList.Add(new BatShakeHeadState(this));
 
         ChangeState(e_BatPatrolState.MoveWayPoints);
 
         ultrasoundsList.Add(GetComponent<LargeUltrasound>());
         ultrasoundsList.Add(GetComponent<SmallUltrasound>());
 
-        ChangeUltrasound(e_UltrasoundState.Large);
+        ChangeUltrasound(e_UltrasoundState.Small);
     }
 
     protected override void Update()
@@ -163,5 +165,10 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public void OnAttackFinished()
     {
         attackCollider.enabled = false;
+    }
+
+    public void SearchPlayerAction()
+    {
+
     }
 }

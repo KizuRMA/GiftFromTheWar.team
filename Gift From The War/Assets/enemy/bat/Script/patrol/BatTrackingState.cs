@@ -25,7 +25,7 @@ public class BatTrackingState : State<BatPatrolState>
         var target = owner.player.GetComponent<playerAbnormalcondition>();
         if (target.IsHowling() == false)
         {
-            owner.ChangeState(e_BatPatrolState.MoveWayPoints);
+            owner.ChangeState(e_BatPatrolState.ShakeHead);
             return;
         }
     }
