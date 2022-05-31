@@ -48,10 +48,11 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         stateList.Add(new BatMoveWayPointsState(this));
         stateList.Add(new BatDeadState(this));
+        stateList.Add(new BatTrackingState(this));
 
         ChangeState(e_BatPatrolState.MoveWayPoints);
 
-        ultrasoundsList.Add(new LargeUltrasound());
+        ultrasoundsList.Add(GetComponent<LargeUltrasound>());
 
         ChangeUltrasound(e_UltrasoundState.Large);
     }

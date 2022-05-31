@@ -29,6 +29,13 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             // –Ú“I’n‚ğŸ‚ÌêŠ‚Éİ’è
             agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
         }
+
+        if (owner.currentUltrasound == null) return;
+
+        if (owner.currentUltrasound.CheckHit() == true)
+        {
+            owner.ChangeState(e_BatPatrolState.Tracking);
+        }
     }
 
     public override void Exit()
