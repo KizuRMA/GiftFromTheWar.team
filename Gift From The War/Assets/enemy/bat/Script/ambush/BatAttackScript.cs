@@ -40,6 +40,7 @@ public class BatAttackScript : BaseState
         myController.ChangeState(this);
         Animator animator = GetComponent<Animator>();
         animator.SetTrigger("Attack");
+        animator.SetFloat("AnimationSpeed",1.1f);
     }
 
     public void OnAttackRangeEnter(Collider collider)
