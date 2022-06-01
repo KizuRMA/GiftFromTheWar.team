@@ -29,6 +29,7 @@ public class magnet : MonoBehaviour
     private bool magnetFlg = false;                 //磁石が触れた瞬間のフラグ
     private bool cameraOverFlg = false;             //金属がカメラ外にでた時
     [SerializeField] private float cameraOverMax;   //カメラの外の上限
+    public float sensityvity;                       //カメラの感度
 
     private void Start()
     {
@@ -42,7 +43,7 @@ public class magnet : MonoBehaviour
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
         //エネルギーを使用しないときは0にする
-        if (Input.GetMouseButton(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
+        if (!Input.GetMouseButtonDown(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
         {
             energyAmount.GetSetNowAmount = 0;
         }
@@ -50,8 +51,7 @@ public class magnet : MonoBehaviour
         //発射キーを押したら
         if (Input.GetMouseButtonDown(1))
         {
-            if (!shotFlg) return;
-            if (magnetFlg) return;
+            if(shotFlg && !magnetFlg)
             Shot();
         }
 
@@ -170,7 +170,7 @@ public class magnet : MonoBehaviour
     private void Relieve()   //解除処理
     {
         //解除する処理
-        if (Input.GetMouseButton(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
+        if (Input.GetMouseButtonDown(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
         {
             magnetFlg = false;
             metal.transform.parent = null;

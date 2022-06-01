@@ -8,8 +8,9 @@ public class FPSController : MonoBehaviour
     [SerializeField] private CharacterController CC;
     [SerializeField] private GameObject ladderHund;
     [SerializeField] private playerHundLadder ladder;
-    [SerializeField] private MoveWindGun moveWindGun;
     [SerializeField] private GameObject cam;
+    [SerializeField] private MoveWindGun moveWindGun;
+    [SerializeField] private magnet magnet;
     [SerializeField] private magnetChain magnetChain;
     [SerializeField] private playerDied died;
 
@@ -36,10 +37,11 @@ public class FPSController : MonoBehaviour
 
     //プレイヤーの回転
     Quaternion cameraRot, characterRot;
-    [SerializeField] private float Xsensityvity = 3f, Ysensityvity = 3f;    //振り向く感度
+    [SerializeField] private float sensityvity;    //振り向く感度
     [SerializeField] private float turnSpeed; //振り向く速さ
     private float turnRaito = 180; //振り向く段階
     [SerializeField] private float minX = -45f, maxX = 45f; //角度の制限用
+    private float nowSensityvity;  //今の振りむき感度
 
     void Start()
     {
@@ -164,13 +166,27 @@ public class FPSController : MonoBehaviour
 
     private void CameraMove()
     {
+        CalSensityvity();
+
         //マウスから角度を計算
-        float xRot = Input.GetAxis("Mouse X") * Ysensityvity;
-        float yRot = Input.GetAxis("Mouse Y") * Xsensityvity;
+        float xRot = Input.GetAxis("Mouse X") * nowSensityvity;
+        float yRot = Input.GetAxis("Mouse Y") * nowSensityvity;
 
         //カメラとキャラクターの回転を代入
         cameraRot *= Quaternion.Euler(-yRot, 0, 0);
         characterRot *= Quaternion.Euler(0, xRot, 0);
+    }
+
+    private void CalSensityvity()   //カメラの感度の算出
+    {
+        if(magnet.metal != null)    //磁石の能力を使っていたら、遅くする
+        {
+            nowSensityvity = magnet.sensityvity;
+        }
+        else
+        {
+            nowSensityvity = sensityvity;
+        }
     }
 
     private void DashJudge()
