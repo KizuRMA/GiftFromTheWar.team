@@ -10,7 +10,6 @@ public class DogAgentArea : MonoBehaviour
     [SerializeField] NavMeshModifierVolume volume;
     GameObject baseDogObject = null;
 
-
     NavMeshSurface[] navMesh;
     Dictionary<string,NavMeshSurface> navMeshes = new Dictionary<string,NavMeshSurface>();
 
@@ -38,25 +37,27 @@ public class DogAgentArea : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (baseDogObject == null) return;
-
-        if (this != baseDogObject.GetComponent<UsingDogArea>().area)
-        {
-            baseDogObject = null;
-            volume.AllRemoveAffectsAgentType();
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != "Dog1" || baseDogObject != null) return;
 
         baseDogObject = other.gameObject;
-        baseDogObject.GetComponent<UsingDogArea>().area = this;
+        UsingDogArea _dogArea = baseDogObject.GetComponent<UsingDogArea>();
         NavMeshAgent agent = baseDogObject.GetComponent<NavMeshAgent>();
+
+        //基準にする犬が既に他のエリアを基準にしている場合
+        if (_dogArea.area != null)
+        {
+            //前に基準にしていたDogAgentAreaをリセットする
+            _dogArea.area.ResetAffectsAgentType();
+            _dogArea.area = this;
+        }
+        else
+        {
+            _dogArea.area = this;
+        }
+
+
         string _agentName = NavMesh.GetSettingsNameFromID(agent.agentTypeID);
 
         foreach (string str in navMeshes.Keys)
@@ -67,5 +68,11 @@ public class DogAgentArea : MonoBehaviour
                 navMeshes[str].BuildNavMesh();
             }
         }
+    }
+
+    public void ResetAffectsAgentType()
+    {
+        volume.AllRemoveAffectsAgentType();
+        baseDogObject = null;
     }
 }
