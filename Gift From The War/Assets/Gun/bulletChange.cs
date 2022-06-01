@@ -10,6 +10,7 @@ public class bulletChange : MonoBehaviour
     [SerializeField] private shooting shooting;
     [SerializeField] private magnet magnet;
     [SerializeField] private magnetChain magnetChain;
+    [SerializeField] private fireGun fireGun;
 
     //ïêäÌêÿÇËë÷Ç¶
     public enum bulletType
@@ -83,6 +84,7 @@ public class bulletChange : MonoBehaviour
                 shooting.enabled = true;
                 magnet.enabled = false;
                 magnetChain.enabled = false;
+                fireGun.enabled = false;
                 break;
 
             case bulletChange.bulletType.e_magnet:
@@ -90,6 +92,7 @@ public class bulletChange : MonoBehaviour
                 shooting.enabled = false;
                 magnet.enabled = true;
                 magnetChain.enabled = true;
+                fireGun.enabled = false;
                 break;
 
             case bulletChange.bulletType.e_fire:
@@ -97,6 +100,7 @@ public class bulletChange : MonoBehaviour
                 shooting.enabled = false;
                 magnet.enabled = false;
                 magnetChain.enabled = false;
+                fireGun.enabled = true;
                 break;
         }
     }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class shooting : MonoBehaviour
+public class fireGun : MonoBehaviour
 {
-    //ゲームオブジェクトやスクリプト
+    ///ゲームオブジェクトやスクリプト
     private Transform trans;
     [SerializeField] private Transform camTrans;
     [SerializeField] private GameObject bulletPrefab;
@@ -30,10 +30,14 @@ public class shooting : MonoBehaviour
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
         //発射キーを押したら
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1))
         {
             if (!shotFlg) return;
             Shot();
+        }
+        else
+        {
+            energyAmount.GetSetNowAmount = 0;
         }
     }
 

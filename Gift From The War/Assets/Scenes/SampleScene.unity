@@ -1229,6 +1229,7 @@ MonoBehaviour:
   shooting: {fileID: 1581864211}
   magnet: {fileID: 1581864212}
   magnetChain: {fileID: 1581864213}
+  fireGun: {fileID: 1581864214}
   coolTime: 0.15
 --- !u!4 &350869315 stripped
 Transform:
@@ -4756,6 +4757,7 @@ GameObject:
   - component: {fileID: 1581864211}
   - component: {fileID: 1581864212}
   - component: {fileID: 1581864213}
+  - component: {fileID: 1581864214}
   m_Layer: 14
   m_Name: muzzlePos
   m_TagString: Untagged
@@ -4793,7 +4795,8 @@ MonoBehaviour:
   camTrans: {fileID: 963194228}
   bulletPrefab: {fileID: 6501932749215834415, guid: e6f01067292d10a4381e30d95bb4dd95, type: 3}
   energyAmount: {fileID: 124306684}
-  shotSpeed: 500
+  shotSpeed: 200000
+  range: 1
   useEnergy: 0.4
 --- !u!114 &1581864212
 MonoBehaviour:
@@ -4811,7 +4814,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2228080246682398517, guid: 12dd54c0f5e4e3b48a44c9e221626d75, type: 3}
   energyAmount: {fileID: 124306684}
   cameraObj: {fileID: 963194225}
-  shotSpeed: 300
+  shotSpeed: 200000
+  range: 0.5
   useEnergy: 0.7
   returnSpeed: 5
   returnSpeedMin: 1
@@ -4835,10 +4839,29 @@ MonoBehaviour:
   camTrans: {fileID: 963194228}
   bulletPrefab: {fileID: 2228080246682398517, guid: d3695a4a28b8e1f4a827df2707d5f1b6, type: 3}
   energyAmount: {fileID: 124306684}
-  shotSpeed: 500
-  useEnergy: 0.5
+  shotSpeed: 200000
+  range: 0.4
+  useEnergy: 0.51
   moveSpeed: 20
-  range: 5
+  hitRange: 1
+--- !u!114 &1581864214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581864209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de9748415af318045b8ef40fa2834087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTrans: {fileID: 963194228}
+  bulletPrefab: {fileID: 2228080246682398517, guid: abbadb17390261f4c9ae8714e04cb181, type: 3}
+  energyAmount: {fileID: 124306684}
+  shotSpeed: 200000
+  range: 1
+  useEnergy: 0.9
 --- !u!4 &1597833382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 946675447799068494, guid: 661d9563d5ffba944a845f9c117e5dce, type: 3}

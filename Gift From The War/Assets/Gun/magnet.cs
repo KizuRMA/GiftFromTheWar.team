@@ -13,6 +13,7 @@ public class magnet : MonoBehaviour
 
     //弾の発射
     [SerializeField] private float shotSpeed;   //発射スピード
+    [SerializeField] private float range;       //弾の消えるまでの時間
     [SerializeField] private float useEnergy;   //消費エネルギー
     private bool shotFlg;                       //発射可能
     private Vector3 shotPos;                    //着弾点
@@ -86,10 +87,10 @@ public class magnet : MonoBehaviour
         GameObject bullet = (GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.identity);
         trans.LookAt(shotPos);
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.AddForce(trans.forward * shotSpeed);
+        bulletRb.AddForce(trans.forward * shotSpeed * Time.deltaTime);
 
-        //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
-        Destroy(bullet, 3.0f);
+        //射撃されてから指定秒後に銃弾のオブジェクトを破壊する
+        Destroy(bullet, range);
     }
 
     private void CatchMetal()   //金属を操る

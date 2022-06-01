@@ -14,19 +14,20 @@ public class magnetChain : MonoBehaviour
 
     //弾の発射
     [SerializeField] private float shotSpeed;   //発射スピード
+    [SerializeField] private float range;       //弾の消えるまでの時間
     [SerializeField] private float useEnergy;   //消費エネルギー
     private bool shotFlg;                       //発射可能
     private Vector3 shotPos;                    //着弾点
 
     //移動処理
     public bool metalFlg { get; set; }              //金属にくっついたフラグ
-    public bool magnetFlg { get; set; }               //磁石移動中のフラグ
     [SerializeField] private float moveSpeed;       //移動する速さ
-    [SerializeField] private float range;   
+    private Vector3 moveVec;                        //移動方向
     private bool moveFinishFlg = false;             //移動が終わったフラグ
     private bool hitFlg = false;                    //オブジェクトにあたったか
     private Vector3 prePos;                         //前フレームの位置を記憶しておく
     private bool useEnergy0;                        //エネルギー消費量を0にするフラグ
+    [SerializeField] private float hitRange;        //当たり判定の範囲
 
     private void Start()
     {
@@ -46,10 +47,10 @@ public class magnetChain : MonoBehaviour
         }
 
         //発射キーを押したら
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             if (!shotFlg) return;
-            if (magnetFlg) return;
+            if (metalFlg) return;
             Shot();
         }
 
@@ -87,39 +88,20 @@ public class magnetChain : MonoBehaviour
         GameObject bullet = (GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.identity);
         trans.LookAt(shotPos);
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.AddForce(trans.forward * shotSpeed);
+        bulletRb.AddForce(trans.forward * shotSpeed * Time.deltaTime);
 
-        //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
-        Destroy(bullet, 3.0f);
+        //射撃されてから指定秒後に銃弾のオブジェクトを破壊する
+        Destroy(bullet, range);
     }
 
     private void MagnetChain()   //金属の方に飛ぶ
     {
-        RangeCheck();
-
-        if (!magnetFlg) return;
-
         prePos = playerTrans.position;
         PlayerMove();
         PlayerHitJudge();        
 
         //解除する処理
-        if (moveFinishFlg || hitFlg || !magnetFlg)
-        {
-            Relieve();
-        }
-    }
-
-    private void RangeCheck()   //射程内かどうか判定
-    {
-        if (magnetFlg) return;
-
-        bool rangeJudge = Mathf.Abs((trans.position - shotPos).magnitude) < range;
-        if (rangeJudge)
-        {
-            magnetFlg = true;
-        }
-        else
+        if (moveFinishFlg || hitFlg)
         {
             Relieve();
         }
@@ -127,7 +109,7 @@ public class magnetChain : MonoBehaviour
 
     private void PlayerMove()   //プレイヤーの移動
     {
-        Vector3 moveVec = shotPos - trans.position; //移動方向算出
+        moveVec = shotPos - trans.position; //移動方向算出
 
         if (Mathf.Abs(moveVec.magnitude) > moveSpeed * Time.deltaTime)  //移動量が大きすぎたら、一定にする
         {
@@ -141,19 +123,18 @@ public class magnetChain : MonoBehaviour
         CC.Move(moveVec);
     }
 
-    private void PlayerHitJudge()
+    private void PlayerHitJudge()   //プレイヤーがオブジェクトに当たっているか
     {
-        float moveAmount = Mathf.Abs(playerTrans.position.magnitude) - Mathf.Abs(prePos.magnitude); //前のフレームからの移動量
-
-        if(Mathf.Abs(moveAmount) <= 0.0001)   //移動量が、小さすぎたら、引っかかってるとみなす
+        Ray ray = new Ray(playerTrans.position, moveVec);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, hitRange))
         {
-            hitFlg = true;     
+            hitFlg = true;
         }
     }
 
     private void Relieve()   //解除処理
     {
-        magnetFlg = false;
         metalFlg = false;
         moveFinishFlg = false;
         hitFlg = false;
