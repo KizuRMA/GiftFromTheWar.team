@@ -40,6 +40,9 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public float hight;
     public float hightRatio;
 
+    [SerializeField] public float trackingSpeed;
+    [SerializeField] public float moveWayPointSpeed;
+
     void Start()
     {
         hight = 0.8f;

@@ -8,21 +8,23 @@ public class BatTrackingState : State<BatPatrolState>
 
     public override void Enter()
     {
-
+        owner.agent.speed = owner.trackingSpeed;
+        owner.animator.SetFloat("AnimationSpeed",1.2f);
     }
 
     public override void Execute()
     {
         owner.agent.destination = owner.player.transform.position;
-
+        var target = owner.player.GetComponent<playerAbnormalcondition>();
         float distance = Vector3.Distance(owner.bat.transform.position,owner.player.transform.position);
+
         if (distance <= 1.0f)
         {
+            target.AddHowlingAbnormal();
             owner.ChangeState(e_BatPatrolState.Attack);
             return;
         }
 
-        var target = owner.player.GetComponent<playerAbnormalcondition>();
         if (target.IsHowling() == false)
         {
             owner.ChangeState(e_BatPatrolState.ShakeHead);

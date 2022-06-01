@@ -1381,7 +1381,7 @@ MonoBehaviour:
   cam: {fileID: 963194225}
   died: {fileID: 401655017}
   walkSpeed: 2
-  dashSpeedRaito: 100
+  dashSpeedRaito: 1.8
   gravity: -13
   groundDis: 1
   Xsensityvity: 3
@@ -5988,6 +5988,8 @@ MonoBehaviour:
   currentUltrasound: {fileID: 0}
   hight: 0.8
   hightRatio: 0.4
+  trackingSpeed: 2.5
+  moveWayPointSpeed: 1.2
 --- !u!65 &1637391688
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9791,6 +9793,10 @@ PrefabInstance:
     - target: {fileID: 746430042938304239, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
       propertyPath: m_TagString
       value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 746430043379285378, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
+      propertyPath: m_Speed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 746430043379285378, guid: aa4feb3efc86e744096eb9a6b0c7f785, type: 3}
       propertyPath: m_StoppingDistance

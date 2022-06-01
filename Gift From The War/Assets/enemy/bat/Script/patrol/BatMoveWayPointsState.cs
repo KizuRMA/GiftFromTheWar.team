@@ -15,8 +15,10 @@ public class BatMoveWayPointsState : State<BatPatrolState>
     public override void Enter()
     {
         owner.animator.SetInteger("trans", 0);
+        owner.animator.SetFloat("AnimationSpeed", 1.0f);
         wayPoint = owner.wayPoint;
         agent = owner.agent;
+        owner.agent.speed = owner.moveWayPointSpeed;
 
         Vector3 _batPos = owner.bat.transform.position;
         float _minDistance = float.MaxValue;
@@ -27,16 +29,16 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         //現在地から最も近いWayPointをターゲット座標にする
         foreach (var _wayPoint in wayPoint.wayPoints)
         {
-            NavMesh.CalculatePath(_batPos,_wayPoint.position,agent.areaMask, agent.path);
+            agent.CalculatePath(_wayPoint.position, navMeshPath);
             float dis = agent.remainingDistance;
 
-            //Vector3 corner = _batPos;
-            //for (int i = 0; i < navMeshPath.corners.Length; i++)
-            //{
-            //    Vector3 corner2 = navMeshPath.corners[i];
-            //    dis += Vector3.Distance(corner,corner2);
-            //    corner = corner2;
-            //}
+            Vector3 corner = _batPos;
+            for (int i = 0; i < navMeshPath.corners.Length; i++)
+            {
+                Vector3 corner2 = navMeshPath.corners[i];
+                dis += Vector3.Distance(corner, corner2);
+                corner = corner2;
+            }
 
             if (dis < _minDistance)
             {
@@ -50,6 +52,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
 
     public override void Execute()
     {
+
         // 目的地点までの距離(remainingDistance)が目的地の手前までの距離(stoppingDistance)以下になったら
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
