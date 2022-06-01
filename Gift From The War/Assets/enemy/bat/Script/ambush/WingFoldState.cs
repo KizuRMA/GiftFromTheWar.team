@@ -174,6 +174,7 @@ public class WingFoldState : BaseState
             untilLaunch = 0;
             nextAnime = false;
             ChangeUltrasound(GetComponent<LargeUltrasound>());
+            ultrasound.Init();
             return;
         }
 
@@ -326,6 +327,7 @@ public class WingFoldState : BaseState
                 nowAction = e_Action.none;
 
                 ChangeUltrasound(GetComponent<LargeUltrasound>());
+                ultrasound.Init();
             }
         }
         else
@@ -364,6 +366,7 @@ public class WingFoldState : BaseState
         if (Vector3.Distance(targetPos, transform.position) <= 0.001f)
         {
             animator.SetInteger("trans", 0);
+            animator.SetFloat("AnimationSpeed", 1.3f);
 
             GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = true;
 

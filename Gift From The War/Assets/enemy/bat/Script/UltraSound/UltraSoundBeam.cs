@@ -20,7 +20,7 @@ public class UltraSoundBeam : BaseUltrasound
         duration = 10.0f;
         time = 0;
         range = 0.0f;
-        maxRange = 5.0f;
+        maxRange = 1.0f;
         aliveFlg = true;
     }
 

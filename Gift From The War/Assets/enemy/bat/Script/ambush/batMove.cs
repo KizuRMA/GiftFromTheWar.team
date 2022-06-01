@@ -13,8 +13,9 @@ public class batMove : BaseState
     }
 
     [SerializeField] GameObject playerCC;
-    [SerializeField] bool moveFlg;
     [SerializeField] float playerFromInterval;
+    [SerializeField] float trackingSpeed;
+    [SerializeField] float normalSpeed;
     private NavMeshAgent agent;
     private float untilLaunch;
     private e_Action nowAction;
@@ -32,6 +33,7 @@ public class batMove : BaseState
         //超音波を初期化
         ChangeUltrasound(GetComponent<UltraSoundBeam>());
 
+        agent.speed = trackingSpeed;
         CurrentState = (int)BatController.e_State.move;
         nowAction = e_Action.move;
         untilLaunch = 0;
@@ -97,29 +99,30 @@ public class batMove : BaseState
         //主人公がハウリング状態の時
         if (abnormalcondition.IsHowling() == true)
         {
-            //移動する場合
-            if (moveFlg)
+            Animator animator = GetComponent<Animator>();
+            animator.SetFloat("AnimationSpeed", 1.3f);
+            agent.speed = trackingSpeed;
+            Vector3 _playerPos = playerCC.transform.position;
+            Vector3 _myPos = transform.position;
+
+            float _dis = Vector3.Distance(_playerPos, _myPos);
+
+            if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
             {
-                Vector3 _playerPos = playerCC.transform.position;
-                Vector3 _myPos = transform.position;
+                //離れている場合
+                agent.destination = _playerPos;
+            }
 
-                float _dis = Vector3.Distance(_playerPos, _myPos);
-
-                if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
-                {
-                    //離れている場合
-                    agent.destination = _playerPos;
-                }
-
-                if (ultrasound.CheckHit() == true)
-                {
-                    //プレイヤーにハウリング状態を付加する
-                    abnormalcondition.AddHowlingAbnormal();
-                }
+            if (ultrasound.CheckHit() == true)
+            {
+                //プレイヤーにハウリング状態を付加する
+                abnormalcondition.AddHowlingAbnormal();
             }
         }
         else
         {
+            agent.speed = normalSpeed;
+
             ultrasound.Init();
 
             if (agent.velocity.magnitude <= 0.0f)
@@ -128,6 +131,7 @@ public class batMove : BaseState
                 nowAction = e_Action.search;
                 Animator animator = GetComponent<Animator>();
                 animator.SetTrigger("ShakeHead");
+                animator.SetFloat("AnimationSpeed", 1.0f);
 
                 ChangeUltrasound(GetComponent<SmallUltrasound>());
             }

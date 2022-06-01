@@ -24,7 +24,6 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         float _minDistance = float.MaxValue;
 
         NavMeshPath navMeshPath = new NavMeshPath(); ;
-        //navMeshPath.GetCornersNonAlloc();
 
         //現在地から最も近いWayPointをターゲット座標にする
         foreach (var _wayPoint in wayPoint.wayPoints)
