@@ -30,12 +30,14 @@ public class MoveWindGun : MonoBehaviour
     [SerializeField] private float airResistanceMin;    //空気抵抗の最小値
 
     public bool upWindFlg { get; set; }
+    public bool effectFlg { get; set; }
 
     void Start()
     {
         CC = this.GetComponent<CharacterController>();
         trans = transform;
         upWindFlg = false;
+        effectFlg = false;
     }
 
     void Update()
@@ -50,10 +52,12 @@ public class MoveWindGun : MonoBehaviour
 
     private void KnowViewpoint() //どこむいているか
     {
+        effectFlg = false;
         if (!Input.GetMouseButton(0)) return;  //クリックしていなかったら処理を行わない
         if (energyAmount.GetSetNowAmount <= 0) return;  //エネルギーの残量がなかったら処理を行わない
 
         viewpoint = Quaternion.Euler(cam.transform.localRotation.eulerAngles.x, trans.localRotation.eulerAngles.y, 0);  //向いている方向計算
+        effectFlg = true;
     }
 
     private void Move() //移動の処理
