@@ -106,7 +106,9 @@ public class BatController : MonoBehaviour
         _ray = new Ray(playerCC.transform.position, Vector3.down);
         _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
-        if (_hit == true)
+        playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
+       
+        if (_hit == true && abnormalcondition.IsHowling() == true)
         {
             _targetHight = Mathf.Min(Mathf.Max(_raycastHit.distance,_minHight),_maxHight);
         }

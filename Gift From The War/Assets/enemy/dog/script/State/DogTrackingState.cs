@@ -10,6 +10,7 @@ public class DogTrackingState : State<DogState>
     public override void Enter()
     {
         owner.animator.SetInteger("trans", 1);
+        owner.animator.SetFloat("Speed", 1.1f);
         owner.agent.speed = owner.TrakingSpeed;
         owner.agent.stoppingDistance = 1.5f;
     }
@@ -35,6 +36,6 @@ public class DogTrackingState : State<DogState>
 
     public override void Exit()
     {
-
+        owner.animator.SetFloat("Speed", 1.0f);
     }
 }

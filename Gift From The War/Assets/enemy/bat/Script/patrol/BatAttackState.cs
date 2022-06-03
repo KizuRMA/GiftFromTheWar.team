@@ -16,6 +16,7 @@ public class BatAttackState : State<BatPatrolState>
         facingThePlayer = false;
 
         owner.agent.destination = owner.bat.transform.position;
+        owner.animator.SetFloat("AnimationSpeed", 1.1f);
     }
 
     public override void Execute()

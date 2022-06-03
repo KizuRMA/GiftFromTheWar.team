@@ -35,7 +35,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     protected List<BaseUltrasound> ultrasoundsList = new List<BaseUltrasound>();
 
     public bool IsNavMeshON => agent.isStopped == false;
-
+    public bool IsPlayerDiscover => IsCurrentState(e_BatPatrolState.Attack) == true || IsCurrentState(e_BatPatrolState.Tracking) == true;
     private float limitHight;
     public float hight;
     public float hightRatio;
@@ -61,6 +61,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         ultrasoundsList.Add(GetComponent<LargeUltrasound>());
         ultrasoundsList.Add(GetComponent<SmallUltrasound>());
+        ultrasoundsList.Add(GetComponent<UltraSoundBeam>());
 
         ChangeUltrasound(e_UltrasoundState.Small);
     }
@@ -111,7 +112,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         _ray = new Ray(player.transform.position, Vector3.down);
         _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
-        if (_hit == true)
+        if (_hit == true && IsPlayerDiscover == true)
         {
             _targetHight = Mathf.Min(Mathf.Max(_raycastHit.distance, _minHight), _maxHight);
         }
@@ -133,10 +134,9 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         transform.position = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag != "windBullet") return;
 
+    public void Damage(int damage)
+    {
         ChangeState(e_BatPatrolState.Dead);
     }
 
