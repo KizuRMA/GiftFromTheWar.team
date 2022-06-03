@@ -28,7 +28,7 @@ public class GameStart : MonoBehaviour
             //.Append(text.DOFade(endValue: 1f, duration: 0.05f))
             .SetDelay(1.7f);
 
-
+        ButtonCanvasGroup.blocksRaycasts = true;
     }
 
     public void CloseAnimate()
@@ -42,6 +42,7 @@ public class GameStart : MonoBehaviour
             .Join(BlurRectTransform.DOSizeDelta(endValue: new Vector2(BoxSizeDelta.x, y: 5), duration: 1f).SetEase(Ease.OutCubic))
             .Append(BoxCanvasGroup.DOFade(endValue: 0f, duration: 0.2f));
 
+        ButtonCanvasGroup.blocksRaycasts = false;
     }
 
     private void Initialize()
