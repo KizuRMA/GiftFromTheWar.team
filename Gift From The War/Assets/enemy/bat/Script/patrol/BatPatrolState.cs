@@ -61,6 +61,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         ultrasoundsList.Add(GetComponent<LargeUltrasound>());
         ultrasoundsList.Add(GetComponent<SmallUltrasound>());
+        ultrasoundsList.Add(GetComponent<UltraSoundBeam>());
 
         ChangeUltrasound(e_UltrasoundState.Small);
     }
@@ -133,10 +134,9 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         transform.position = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag != "windBullet") return;
 
+    public void Damage(int damage)
+    {
         ChangeState(e_BatPatrolState.Dead);
     }
 

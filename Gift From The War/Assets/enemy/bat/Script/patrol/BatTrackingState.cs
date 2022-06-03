@@ -10,15 +10,18 @@ public class BatTrackingState : State<BatPatrolState>
     {
         owner.agent.speed = owner.trackingSpeed;
         owner.animator.SetFloat("AnimationSpeed",1.3f);
+        owner.ChangeUltrasound(e_UltrasoundState.Beam);
     }
 
     public override void Execute()
     {
         owner.agent.destination = owner.player.transform.position;
         var target = owner.player.GetComponent<playerAbnormalcondition>();
-        float distance = Vector3.Distance(owner.bat.transform.position,owner.player.transform.position);
 
-        if (distance <= 0.5f)
+        Vector3 _batPos = owner.bat.transform.position + (owner.bat.transform.forward * 0.5f);
+        float distance = Vector3.Distance(_batPos,owner.player.transform.position);
+
+        if (distance <= 0.3f)
         {
             target.AddHowlingAbnormal();
             owner.ChangeState(e_BatPatrolState.Attack);

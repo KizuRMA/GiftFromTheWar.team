@@ -5,23 +5,28 @@ using UnityEngine;
 public class UltraSoundBeam : BaseUltrasound
 {
     [SerializeField] private ParticleSystem particle;
+    float delay;
+    bool delayEnd;
 
     private void Awake()
     {
         particle.Stop();
         playerObject = GameObject.Find("player").gameObject;
+        var main = particle.main;
+        duration = main.duration;
+        velocity = 0.5f;
+        delay = 2.0f;
     }
 
     public override void Start()
     {
         particle.Stop();
-        velocity = 1;
         coolDown = 0.0f;
-        duration = 10.0f;
         time = 0;
         range = 0.0f;
-        maxRange = 1.0f;
         aliveFlg = true;
+        delayEnd = false;
+        StartCoroutine(DelayCoroutine());
     }
 
     public override void Init()
@@ -31,6 +36,8 @@ public class UltraSoundBeam : BaseUltrasound
         time = 0;
         range = 0.0f;
         aliveFlg = true;
+        delayEnd = false;
+        StartCoroutine(DelayCoroutine());
     }
 
     // Update is called once per frame
@@ -42,18 +49,19 @@ public class UltraSoundBeam : BaseUltrasound
             particle.Play();
         }
 
+        //’x‰„‚ªŠ®—¹‚µ‚Ä‚È‚¢ê‡
+        if (delayEnd == false) return;
+
+        //’´‰¹”g‚Ì‘±ŠÔ‚ªI—¹‚µ‚½ê‡
+        time += Time.deltaTime;
+
         //’´‰¹”gƒr[ƒ€‚ğ’·‚­‚·‚é
         range += velocity * Time.deltaTime;
-        range = Mathf.Min(range, maxRange);
+        //range = Mathf.Min(range, maxRange);
 
-        if (range >= maxRange)
-        {
-            //’´‰¹”g‚Ì‘±ŠÔ‚ªI—¹‚µ‚½ê‡
-            time += Time.deltaTime;
-            if (time - duration < 0) return;
-            aliveFlg = false;
-            particle.Stop();
-        }
+        if (time - duration < 0) return;
+        aliveFlg = false;
+        particle.Stop();
     }
 
     public override bool CheckHit()
@@ -104,5 +112,11 @@ public class UltraSoundBeam : BaseUltrasound
         lineRenderer.endWidth = 0.1f;
 
         lineRenderer.SetPositions(positions);
+    }
+
+    private IEnumerator DelayCoroutine()
+    {
+        yield return new WaitForSeconds(delay);
+        delayEnd = true;
     }
 }

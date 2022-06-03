@@ -12,9 +12,16 @@ public class windBulletHit : MonoBehaviour
 
         if (_collider.tag != "Bat") return;
 
-        var target = _collider.transform.parent.GetComponent<BatController>();
-        if (null == target) return;
-
-        target.Damage(1);
+        if (_collider.gameObject.name == "CollisionDetector")
+        {
+            var target = _collider.transform.parent.GetComponent<BatController>();
+            target.Damage(1);
+        }
+        else
+        {
+            var target = _collider.transform.GetComponent<BatPatrolState>();
+            target.Damage(1);
+        }
+        return;
     }
 }
