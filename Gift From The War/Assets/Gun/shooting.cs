@@ -8,10 +8,12 @@ public class shooting : MonoBehaviour
     private Transform trans;
     [SerializeField] private Transform camTrans;
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject bulletEffectPrefab;
     [SerializeField] private remainingAmount energyAmount;
 
     //弾の発射
     private List<GameObject> bullet = new List<GameObject>();   //弾の配列
+    private List<GameObject> bulletEffect = new List<GameObject>();   //弾の配列
     [SerializeField] private float shotSpeed;   //発射スピード
     [SerializeField] private float range;       //弾の消えるまでの時間
     [SerializeField] private float useEnergy;   //消費エネルギー
@@ -65,13 +67,22 @@ public class shooting : MonoBehaviour
     {
         //リストに弾を追加
         bullet.Add((GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.identity));
-        Rigidbody bulletRb = bullet[bullet.Count - 1].GetComponent<Rigidbody>();    //リジッドボディ追加
 
         //目的地に球を方向転換
         bullet[bullet.Count - 1].transform.LookAt(shotPos);
 
         //射撃されてから指定秒後に銃弾のオブジェクトを破壊する
         Destroy(bullet[bullet.Count - 1], range);
+
+
+        //リストに弾を追加
+        bulletEffect.Add((GameObject)Instantiate(bulletEffectPrefab, trans.position, Quaternion.identity));
+
+        //目的地に球を方向転換
+        bulletEffect[bulletEffect.Count - 1].transform.LookAt(shotPos);
+
+        //射撃されてから指定秒後に銃弾のオブジェクトを破壊する
+        Destroy(bulletEffect[bulletEffect.Count - 1], range);
     }
 
     private void MoveBullet()   //弾の移動
@@ -83,9 +94,12 @@ public class shooting : MonoBehaviour
             if (bullet[i] == null)   //弾が破壊されていたら、リストから削除
             {
                 bullet.RemoveAt(i);
+                bulletEffect.RemoveAt(i);
                 continue;
             }
             bullet[i].transform.transform.position += bullet[i].transform.forward * shotSpeed * Time.deltaTime; //移動処理
+            bulletEffect[i].transform.transform.position += bulletEffect[i].transform.forward * shotSpeed * Time.deltaTime; //移動処理
+
         }
     }
 }
