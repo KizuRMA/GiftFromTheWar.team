@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-#if UNITY_EDITOR
-[CustomEditor(typeof(ShootParent))]
-#endif
-
 public class shooting : ShootParent
 {
     //’e‚Ì”­ŽË  
