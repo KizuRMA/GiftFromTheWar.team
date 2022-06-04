@@ -50,6 +50,7 @@ public class ShootParent : MonoBehaviour
         {
             if (bullet[i] == null)   //’e‚ª”j‰ó‚³‚ê‚Ä‚¢‚½‚çAƒŠƒXƒg‚©‚çíœ
             {
+                Destroy(bulletEffect[i]);
                 bullet.RemoveAt(i);
                 bulletEffect.RemoveAt(i);
                 continue;
