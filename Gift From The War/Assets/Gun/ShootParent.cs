@@ -34,23 +34,19 @@ public class ShootParent : MonoBehaviour
         Destroy(bullet[bullet.Count - 1], range);
 
 
-        //リストに弾を追加
+        //エフェクト
         bulletEffect.Add((GameObject)Instantiate(bulletEffectPrefab, trans.position, Quaternion.identity));
 
-        //目的地に球を方向転換
         bulletEffect[bulletEffect.Count - 1].transform.LookAt(shotPos);
 
-        //射撃されてから指定秒後に銃弾のオブジェクトを破壊する
         Destroy(bulletEffect[bulletEffect.Count - 1], range);
 
 
-        //リストに弾を追加
+        //残留エフェクト
         bulletRemainEffect.Add((GameObject)Instantiate(bulletRemainEffectPrefab, trans.position, Quaternion.identity));
 
-        //目的地に球を方向転換
         bulletRemainEffect[bulletRemainEffect.Count - 1].transform.LookAt(shotPos);
 
-        //射撃されてから指定秒後に銃弾のオブジェクトを破壊する
         Destroy(bulletRemainEffect[bulletRemainEffect.Count - 1], range);
     }
 

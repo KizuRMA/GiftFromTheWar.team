@@ -5,9 +5,7 @@ using UnityEngine;
 public class fireGun : ShootParent
 {
     //’e‚Ì”­ŽË
-    private List<GameObject> bullet = new List<GameObject>();   //’e‚Ì”z—ñ
     private bool shotFlg;                       //”­ŽË‰Â”\
-    private Quaternion bulletQua;               //”­ŽË‚·‚é’e‚ÌŒü‚«
 
     private void Start()
     {

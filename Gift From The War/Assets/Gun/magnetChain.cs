@@ -9,7 +9,6 @@ public class magnetChain : ShootParent
     [SerializeField] private Transform playerTrans;
 
     //’e‚Ì”­Ë
-    private List<GameObject> bullet = new List<GameObject>();   //’e‚Ì”z—ñ
     private bool shotFlg;                       //”­Ë‰Â”\
 
     //ˆÚ“®ˆ—
