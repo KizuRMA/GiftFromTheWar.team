@@ -2,22 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fireGun : MonoBehaviour
+public class fireGun : ShootParent
 {
-    ///ゲームオブジェクトやスクリプト
-    private Transform trans;
-    [SerializeField] private Transform camTrans;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private remainingAmount energyAmount;
-
     //弾の発射
-    private List<GameObject> bullet = new List<GameObject>();   //弾の配列
-    [SerializeField] private float shotSpeed;   //発射スピード
-    [SerializeField] private float range;       //弾の消えるまでの時間
-    [SerializeField] private float useEnergy;   //消費エネルギー
     private bool shotFlg;                       //発射可能
-    private Quaternion bulletQua;               //発射する弾の向き
-    private Vector3 shotPos;                    //着弾点
 
     private void Start()
     {
@@ -62,34 +50,6 @@ public class fireGun : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             shotPos = hit.point;
-        }
-    }
-
-    private void CreateBullet() //プレハブから弾を作る
-    {
-        //リストに弾を追加
-        bullet.Add((GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.identity));
-        Rigidbody bulletRb = bullet[bullet.Count - 1].GetComponent<Rigidbody>();    //リジッドボディ追加
-
-        //目的地に球を方向転換
-        bullet[bullet.Count - 1].transform.LookAt(shotPos);
-
-        //射撃されてから指定秒後に銃弾のオブジェクトを破壊する
-        Destroy(bullet[bullet.Count - 1], range);
-    }
-
-    private void MoveBullet()   //弾の移動
-    {
-        if (bullet == null) return; //弾がなければ処理しない
-
-        for (int i = 0; i < bullet.Count; i++) //弾の数だけ繰り返す
-        {
-            if (bullet[i] == null)   //弾が破壊されていたら、リストから削除
-            {
-                bullet.RemoveAt(i);
-                continue;
-            }
-            bullet[i].transform.transform.position += bullet[i].transform.forward * shotSpeed * Time.deltaTime; //移動処理
         }
     }
 }

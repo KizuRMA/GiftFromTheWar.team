@@ -9,7 +9,6 @@ public class FPSController : MonoBehaviour
     [SerializeField] private GameObject ladderHund;
     [SerializeField] private playerHundLadder ladder;
     [SerializeField] private GameObject cam;
-    [SerializeField] private MoveWindGun moveWindGun;
     [SerializeField] private magnet magnet;
     [SerializeField] private magnetChain magnetChain;
     [SerializeField] private playerDied died;
@@ -24,12 +23,6 @@ public class FPSController : MonoBehaviour
     private float nowMoveSpeed;                     //今の移動速度
     public bool moveFlg { get; set; }
     public bool dashFlg { get; set; }
-    public bool groundFlg { get; set; }
-
-    //重力
-    [SerializeField] private float gravity;
-    private float nowGravity;
-    [SerializeField] private float groundDis;   //地面との距離
 
     //プレイヤー移動全般
     private Vector3 moveVelocity; // キャラの移動速度情報
@@ -49,7 +42,6 @@ public class FPSController : MonoBehaviour
         nowMoveSpeed = walkSpeed;
         moveFlg = false;
         dashFlg = false;
-        groundFlg = false;
     }
 
     void Update()
@@ -160,8 +152,6 @@ public class FPSController : MonoBehaviour
         //移動量を計算
         moveVec.Normalize();
         moveVec *= nowMoveSpeed;
-
-        Gravity();
     }
 
     private void CameraMove()
@@ -215,38 +205,5 @@ public class FPSController : MonoBehaviour
         q.x = Mathf.Tan(angleX * Mathf.Deg2Rad * 0.5f);
 
         return q;
-    }
-
-    private void Gravity()
-    {
-        if (moveWindGun.upWindFlg)
-        {
-            nowGravity = gravity * Time.deltaTime;
-            return;
-        }
-
-        Ray ray = new Ray(trans.position, -trans.up);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, groundDis))   //地面についている場合
-        {
-            nowGravity = gravity * Time.deltaTime;
-
-            if (groundFlg) return;
-            moveVec.y += 1.0f;  //完全に地面につけるための処理
-            groundFlg = true;
-            return;
-        }
-        else
-        {
-            groundFlg = false;
-        }
-
-        nowGravity += gravity * Time.deltaTime;
-        moveVec.y += nowGravity;
-    }
-
-    public float GetGravity //重力のゲッター
-    {
-        get { return gravity; }
     }
 }

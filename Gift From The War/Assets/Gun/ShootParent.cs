@@ -10,6 +10,7 @@ public class ShootParent : MonoBehaviour
     [SerializeField] protected remainingAmount energyAmount;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected GameObject bulletEffectPrefab;
+    [SerializeField] protected GameObject bulletRemainEffectPrefab;
 
     //弾の発射  
     [SerializeField] protected float shotSpeed;   //発射スピード
@@ -17,7 +18,8 @@ public class ShootParent : MonoBehaviour
     [SerializeField] protected float useEnergy;   //消費エネルギー
 
     private List<GameObject> bullet = new List<GameObject>();   //弾の配列
-    private List<GameObject> bulletEffect = new List<GameObject>();   //弾の配列
+    private List<GameObject> bulletEffect = new List<GameObject>();   //弾のエフェクト
+    private List<GameObject> bulletRemainEffect = new List<GameObject>();   //弾の残留エフェクト
     protected Vector3 shotPos;                    //着弾点
 
     protected void CreateBullet() //プレハブから弾を作る
@@ -32,14 +34,20 @@ public class ShootParent : MonoBehaviour
         Destroy(bullet[bullet.Count - 1], range);
 
 
-        //リストに弾を追加
+        //エフェクト
         bulletEffect.Add((GameObject)Instantiate(bulletEffectPrefab, trans.position, Quaternion.identity));
 
-        //目的地に球を方向転換
         bulletEffect[bulletEffect.Count - 1].transform.LookAt(shotPos);
 
-        //射撃されてから指定秒後に銃弾のオブジェクトを破壊する
         Destroy(bulletEffect[bulletEffect.Count - 1], range);
+
+
+        //残留エフェクト
+        bulletRemainEffect.Add((GameObject)Instantiate(bulletRemainEffectPrefab, trans.position, Quaternion.identity));
+
+        bulletRemainEffect[bulletRemainEffect.Count - 1].transform.LookAt(shotPos);
+
+        Destroy(bulletRemainEffect[bulletRemainEffect.Count - 1], range);
     }
 
     protected void MoveBullet()   //弾の移動
@@ -50,12 +58,15 @@ public class ShootParent : MonoBehaviour
         {
             if (bullet[i] == null)   //弾が破壊されていたら、リストから削除
             {
+                Destroy(bulletEffect[i]);
                 bullet.RemoveAt(i);
                 bulletEffect.RemoveAt(i);
+                bulletRemainEffect.RemoveAt(i);
                 continue;
             }
             bullet[i].transform.transform.position += bullet[i].transform.forward * shotSpeed * Time.deltaTime; //移動処理
             bulletEffect[i].transform.transform.position += bulletEffect[i].transform.forward * shotSpeed * Time.deltaTime; //移動処理
+            bulletRemainEffect[i].transform.transform.position += bulletRemainEffect[i].transform.forward * shotSpeed * Time.deltaTime; //移動処理
         }
     }
 }
