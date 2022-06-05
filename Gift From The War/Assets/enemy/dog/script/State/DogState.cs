@@ -18,6 +18,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [SerializeField]public GameObject player;
     [SerializeField]public GameObject dog;
     [SerializeField] public Animator animator;
+    [SerializeField] private Collider attackCollider;
     [SerializeField] public float SearchSpeed;
     [SerializeField] public float TrakingSpeed;
 
@@ -50,4 +51,23 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         yield return new WaitForSeconds(3.0f);
         canVigilance = true;
     }
+
+    public void OnHitAttack(Collider _collider) //UŒ‚‚ª“–‚½‚Á‚½‚Æ‚«‚Ìˆ—
+    {
+        var target = _collider.GetComponent<playerAbnormalcondition>();
+        if (null == target) return;
+
+        target.Damage(1.0f);
+    }
+
+    public void OnAttackStart()
+    {
+        attackCollider.enabled = true;
+    }
+
+    public void OnAttackFinished()
+    {
+        attackCollider.enabled = false;
+    }
+
 }

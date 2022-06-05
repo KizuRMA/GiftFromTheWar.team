@@ -5,6 +5,7 @@ using UnityEngine;
 public class DogAttackState : State<DogState>
 {
     public DogAttackState(DogState owner) : base(owner) { }
+    private Rigidbody rigidbody;
     float time;
 
     public override void Enter()
@@ -14,7 +15,9 @@ public class DogAttackState : State<DogState>
         //警戒アニメーションに変更する
         owner.animator.SetInteger("trans", 0);
         owner.animator.SetTrigger("Attack");
+        rigidbody = owner.dog.GetComponent<Rigidbody>();
         owner.agent.isStopped = true;
+        rigidbody.isKinematic = false;
         owner.agent.destination = owner.dog.transform.position;
     }
 
@@ -30,5 +33,6 @@ public class DogAttackState : State<DogState>
     public override void Exit()
     {
         owner.agent.isStopped = false;
+        rigidbody.isKinematic = true;
     }
 }
