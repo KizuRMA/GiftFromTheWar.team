@@ -75,7 +75,7 @@ public class FPSController : MonoBehaviour
 
         Move();
 
-        CC.Move(moveVec* Time.deltaTime);
+        CC.Move(moveVec * Time.deltaTime);
 
     }
 
@@ -101,6 +101,7 @@ public class FPSController : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
+
     }
 
     private void AssignTmpRot()    //計算するために回転量を保持する
@@ -169,7 +170,7 @@ public class FPSController : MonoBehaviour
 
     private void CalSensityvity()   //カメラの感度の算出
     {
-        if(magnet.metal != null)    //磁石の能力を使っていたら、遅くする
+        if (magnet.metal != null)    //磁石の能力を使っていたら、遅くする
         {
             nowSensityvity = magnet.sensityvity;
         }
@@ -188,7 +189,7 @@ public class FPSController : MonoBehaviour
     {
         nowMoveSpeed = dashFlg ? walkSpeed * dashSpeedRaito : walkSpeed;
     }
-    
+
     private Quaternion ClampRotation(Quaternion q)  //角度制限
     {
         //q = x,y,z,w (x,y,zはベクトル（量と向き）：wはスカラー（座標とは無関係の量）)
