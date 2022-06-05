@@ -7,7 +7,7 @@ public class playerDied : MonoBehaviour
     //ゲームオブジェクトやスクリプト
     private CharacterController CC;
     private Transform trans;
-    [SerializeField] private FPSController fpsCon;
+    [SerializeField] private Gravity gravity;
     [SerializeField] private GameObject rantan;
     [SerializeField] private GameObject gun;
     private Rigidbody rantanRD;
@@ -36,7 +36,7 @@ public class playerDied : MonoBehaviour
         rantanRD = rantan.GetComponent<Rigidbody>();
         gunRD = gun.GetComponent<Rigidbody>();
         diedFlg = false;
-        nowGravity = fpsCon.GetGravity * Time.deltaTime;
+        nowGravity = gravity.GetGravity * Time.deltaTime;
     }
 
     void Update()
@@ -76,7 +76,7 @@ public class playerDied : MonoBehaviour
             groundFlg = true;
         }
 
-        nowGravity += fpsCon.GetGravity * Time.deltaTime;
+        nowGravity += gravity.GetGravity * Time.deltaTime;
         CC.Move(new Vector3(0, nowGravity, 0) * Time.deltaTime);   //プレイヤーを移動
 
     }

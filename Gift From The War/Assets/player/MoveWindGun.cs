@@ -8,7 +8,7 @@ public class MoveWindGun : MonoBehaviour
     private CharacterController CC;
     private Transform trans;
     [SerializeField] private GameObject cam;
-    [SerializeField] private FPSController fpsCon;
+    [SerializeField] private Gravity gravity;
     [SerializeField] private playerHundLadder ladder;
     [SerializeField] private remainingAmount energyAmount;
     [SerializeField] private playerDied died;
@@ -77,7 +77,7 @@ public class MoveWindGun : MonoBehaviour
     {
         upWindFlg = false;
 
-        if (fpsCon.groundFlg)  //ê›ínîªíË
+        if (gravity.groundFlg)  //ê›ínîªíË
         {
             groundFlg = true;
         }

@@ -6465,6 +6465,7 @@ GameObject:
   - component: {fileID: 401655016}
   - component: {fileID: 401655017}
   - component: {fileID: 401655018}
+  - component: {fileID: 401655019}
   m_Layer: 7
   m_Name: player
   m_TagString: Player
@@ -6488,14 +6489,11 @@ MonoBehaviour:
   ladderHund: {fileID: 1463493482}
   ladder: {fileID: 401655018}
   cam: {fileID: 963194225}
-  moveWindGun: {fileID: 401655015}
   magnet: {fileID: 1581864212}
   magnetChain: {fileID: 1581864213}
   died: {fileID: 401655017}
   walkSpeed: 2
   dashSpeedRaito: 1.8
-  gravity: -13
-  groundDis: 1.1
   sensityvity: 3
   turnSpeed: 750
   minX: -60
@@ -6610,7 +6608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 963194225}
-  fpsCon: {fileID: 401655009}
+  gravity: {fileID: 401655019}
   ladder: {fileID: 401655018}
   energyAmount: {fileID: 124306684}
   died: {fileID: 401655017}
@@ -6645,7 +6643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0770626b93705f4cb830341c849ed6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpsCon: {fileID: 401655009}
+  gravity: {fileID: 401655019}
   rantan: {fileID: 1851256023}
   gun: {fileID: 338067872}
   height: 1
@@ -6673,6 +6671,26 @@ MonoBehaviour:
   rotXBeforeSpeed: 120
   rotYBeforeSpeed: 120
   climbSpeed: 0.9
+--- !u!114 &401655019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401655008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0b905c0228694baacf0e7f894fb20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CC: {fileID: 401655013}
+  moveWindGun: {fileID: 401655015}
+  ladder: {fileID: 401655018}
+  magnet: {fileID: 1581864212}
+  magnetChain: {fileID: 1581864213}
+  died: {fileID: 401655017}
+  gravity: -13
+  groundDis: 1.1
 --- !u!1 &411778759 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: d2ea75c857565ea4d95ea71c44e546dd, type: 3}
