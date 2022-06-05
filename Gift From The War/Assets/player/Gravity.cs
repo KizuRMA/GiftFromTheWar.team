@@ -11,7 +11,9 @@ public class Gravity : MonoBehaviour
     [SerializeField] private magnetChain magnetChain;
     [SerializeField] private playerDied died;
 
-    public bool groundFlg { get; set; }
+    public bool firstGroundHitFlg { get; set; }
+
+    public bool groundHitFlg { get; set; }
 
     //重力
     private Transform trans;
@@ -23,12 +25,13 @@ public class Gravity : MonoBehaviour
     void Start()
     {
         trans = transform;
-        groundFlg = false;
+        firstGroundHitFlg = false;
+        groundHitFlg = false;
     }
 
     void Update()
     {
-        if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg) return;   //プレイヤーの移動無効化
+        if (ladder.touchLadderFlg || died.diedFlg) return;   //プレイヤーの移動無効化
 
         GravityProcess();
 
@@ -49,16 +52,19 @@ public class Gravity : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, groundDis))   //地面についている場合
         {
+            groundHitFlg = true;
+
             nowGravity = gravity * Time.deltaTime;
 
-            if (groundFlg) return;
+            if (firstGroundHitFlg) return;
             moveVec.y += 1.0f;  //完全に地面につけるための処理
-            groundFlg = true;
+            firstGroundHitFlg = true;
             return;
         }
         else
         {
-            groundFlg = false;
+            firstGroundHitFlg = false;
+            groundHitFlg = false;
         }
 
         nowGravity += gravity * Time.deltaTime;
