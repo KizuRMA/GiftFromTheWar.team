@@ -8,6 +8,8 @@ public class magnetChain : ShootParent
     [SerializeField] private CharacterController CC;    
     [SerializeField] private Transform playerTrans;
     [SerializeField] private Gravity gravity;
+    [SerializeField] private GameObject bulletLineEffect;
+    [SerializeField] private GameObject bulletLinePos;
 
     //弾の発射
     private bool shotFlg;                       //発射可能
@@ -26,6 +28,7 @@ public class magnetChain : ShootParent
     {
         trans = transform;
         metalFlg = false;
+        bulletLineEffect.SetActive(false);
     }
 
     void Update()
@@ -50,7 +53,11 @@ public class magnetChain : ShootParent
         }
 
         //発射した弾が金属に当たってなかったら、処理しない
-        if (!metalFlg) return;
+        if (!metalFlg)
+        {
+            bulletLineEffect.SetActive(false);
+            return;
+        }
 
         MagnetChain();
     }
@@ -95,6 +102,11 @@ public class magnetChain : ShootParent
     {
         moveVec = shotPos - trans.position; //移動方向算出
         moveVec.y = gravity.groundHitFlg && moveVec.y < 0 ? 0 : moveVec.y;
+
+        //ラインエフェクト
+        bulletLineEffect.SetActive(true);
+        bulletLineEffect.transform.position = bulletLinePos.transform.position;
+        bulletLineEffect.transform.LookAt(shotPos);
 
         if (Mathf.Abs(moveVec.magnitude) > moveSpeed * Time.deltaTime)  //移動量が大きすぎたら、一定にする
         {
