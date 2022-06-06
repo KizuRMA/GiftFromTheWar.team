@@ -6,6 +6,8 @@ public class magnet : ShootParent
 {
     //ゲームオブジェクトやスクリプト
     [SerializeField] private GameObject cameraObj;
+    [SerializeField] private GameObject bulletLineEffect;
+    [SerializeField] private GameObject bulletLinePos;
 
     //弾の発射
     private bool shotFlg;                       //発射可能
@@ -27,6 +29,7 @@ public class magnet : ShootParent
     {
         trans = transform;
         metal = null;
+        bulletLineEffect.SetActive(false);
     }
 
     void Update()
@@ -50,7 +53,11 @@ public class magnet : ShootParent
         }
 
         //発射した弾が金属に当たってなかったら、処理しない
-        if (metal == null) return;
+        if (metal == null)
+        {
+            bulletLineEffect.SetActive(false);
+            return;
+        }
 
         CatchMetal();
     }
@@ -90,6 +97,11 @@ public class magnet : ShootParent
 
         ReturnMiddle();
         EraseInertia();
+
+        //ラインエフェクト
+        bulletLineEffect.SetActive(true);
+        bulletLineEffect.transform.position = bulletLinePos.transform.position;
+        bulletLineEffect.transform.LookAt(metal.transform.position);
 
         //エネルギー消費
         energyAmount.GetSetNowAmount = useEnergyMag;

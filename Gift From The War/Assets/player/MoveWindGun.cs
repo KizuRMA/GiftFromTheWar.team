@@ -77,7 +77,7 @@ public class MoveWindGun : MonoBehaviour
     {
         upWindFlg = false;
 
-        if (gravity.groundFlg)  //ê›ínîªíË
+        if (gravity.firstGroundHitFlg)  //ê›ínîªíË
         {
             groundFlg = true;
         }
