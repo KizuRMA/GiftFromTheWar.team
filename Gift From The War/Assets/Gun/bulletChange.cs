@@ -36,7 +36,7 @@ public class bulletChange : MonoBehaviour
 
     void Update()
     {
-        if (!RA.energyMaxFlg) return;   //エネルギーを消費していたら、切り替えできない
+        //if (!RA.energyMaxFlg) return;   //エネルギーを消費していたら、切り替えできない
         if (!changeableFlg) return;
 
         wheelBulletChange();
@@ -76,32 +76,9 @@ public class bulletChange : MonoBehaviour
 
         scriptChangeFlg = false;
 
-        //弾の種類わけ
-        switch (nowBulletType)
-        {
-            case bulletChange.bulletType.e_wind:
-                moveWind.enabled = true;
-                shooting.enabled = true;
-                magnet.enabled = false;
-                magnetChain.enabled = false;
-                fireGun.enabled = false;
-                break;
-
-            case bulletChange.bulletType.e_magnet:
-                moveWind.enabled = false;
-                shooting.enabled = false;
-                magnet.enabled = true;
-                magnetChain.enabled = true;
-                fireGun.enabled = false;
-                break;
-
-            case bulletChange.bulletType.e_fire:
-                moveWind.enabled = false;
-                shooting.enabled = false;
-                magnet.enabled = false;
-                magnetChain.enabled = false;
-                fireGun.enabled = true;
-                break;
-        }
+        //弾が変わったら、弾の情報を一回リセットする
+        moveWind.Finish();
+        magnet.Finish();
+        magnetChain.Finish();
     }
 }

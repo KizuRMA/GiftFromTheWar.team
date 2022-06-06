@@ -12,6 +12,7 @@ public class MoveWindGun : MonoBehaviour
     [SerializeField] private playerHundLadder ladder;
     [SerializeField] private remainingAmount energyAmount;
     [SerializeField] private playerDied died;
+    [SerializeField] private bulletChange bulletChange;
 
     //ˆÚ“®
     [SerializeField] private float movePower;
@@ -40,8 +41,16 @@ public class MoveWindGun : MonoBehaviour
         effectFlg = false;
     }
 
+    public void Finish()    //•Ší‚ğØ‚è‘Ö‚¦‚½‚ÌI—¹ˆ—
+    {
+        upWindFlg = false;
+        effectFlg = false;
+    }
+
     void Update()
     {
+        if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind) return;   //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç
+
         if (died.diedFlg) return;
         if (ladder.touchLadderFlg) return;
 

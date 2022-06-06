@@ -8,6 +8,7 @@ public class magnet : ShootParent
     [SerializeField] private GameObject cameraObj;
     [SerializeField] private GameObject bulletLineEffect;
     [SerializeField] private GameObject bulletLinePos;
+    [SerializeField] private bulletChange bulletChange;
 
     //弾の発射
     private bool shotFlg;                       //発射可能
@@ -32,8 +33,27 @@ public class magnet : ShootParent
         bulletLineEffect.SetActive(false);
     }
 
+    public void Finish()    //武器を切り替えた時の終了処理
+    {
+        if (metal != null)
+        {
+            metal.transform.parent = null;
+            AddInertia();
+        }        
+        metal = null;
+        bulletLineEffect.SetActive(false);
+        nowReturnSpeed = 0;
+        shotFlg = false;
+        magnetFlg = false;
+        cameraOverFlg = false;
+    }
+
     void Update()
     {
+        MoveBullet();
+
+        if (bulletChange.nowBulletType != bulletChange.bulletType.e_magnet) return; //今の弾の種類が対応してなかったら
+
         //エネルギーが必要量あれば
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
@@ -41,9 +61,7 @@ public class magnet : ShootParent
         if (!Input.GetMouseButtonDown(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
         {
             energyAmount.GetSetNowAmount = 0;
-        }
-
-        MoveBullet();
+        } 
 
         //発射キーを押したら
         if (Input.GetMouseButtonDown(1))

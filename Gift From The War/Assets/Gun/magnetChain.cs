@@ -10,6 +10,7 @@ public class magnetChain : ShootParent
     [SerializeField] private Gravity gravity;
     [SerializeField] private GameObject bulletLineEffect;
     [SerializeField] private GameObject bulletLinePos;
+    [SerializeField] private bulletChange bulletChange;
 
     //弾の発射
     private bool shotFlg;                       //発射可能
@@ -21,7 +22,7 @@ public class magnetChain : ShootParent
     private bool moveFinishFlg = false;             //移動が終わったフラグ
     private bool hitFlg = false;                    //オブジェクトにあたったか
     private Vector3 prePos;                         //前フレームの位置を記憶しておく
-    private bool useEnergy0;                        //エネルギー消費量を0にするフラグ
+    private bool useEnergy0 = false;                        //エネルギー消費量を0にするフラグ
     [SerializeField] private float hitRange;        //当たり判定の範囲
 
     private void Start()
@@ -31,8 +32,22 @@ public class magnetChain : ShootParent
         bulletLineEffect.SetActive(false);
     }
 
+    public void Finish()    //武器を切り替えた時の終了処理
+    {
+        bulletLineEffect.SetActive(false);
+        shotFlg = false;
+        metalFlg = false;
+        moveFinishFlg = false;
+        hitFlg = false;
+        useEnergy0 = false;
+    }
+
     void Update()
     {
+        MoveBullet();
+
+        if (bulletChange.nowBulletType != bulletChange.bulletType.e_magnet) return; //今の弾の種類が対応してなかったら
+
         //エネルギーが必要量あれば
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
@@ -40,9 +55,7 @@ public class magnetChain : ShootParent
         {
             useEnergy0 = false;
             energyAmount.GetSetNowAmount = 0;
-        }
-
-        MoveBullet();
+        } 
 
         //発射キーを押したら
         if (Input.GetMouseButtonDown(0))

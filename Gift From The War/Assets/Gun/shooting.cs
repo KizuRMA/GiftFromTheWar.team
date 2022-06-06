@@ -5,6 +5,7 @@ using UnityEngine;
 public class shooting : ShootParent
 {
     //弾の発射  
+    [SerializeField] private bulletChange bulletChange;
     private bool shotFlg;                       //発射可能
     private Quaternion bulletQua;               //発射する弾の向き
 
@@ -15,11 +16,13 @@ public class shooting : ShootParent
 
     void Update()
     {
+        MoveBullet();
+
+        if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind) return;   //今の弾の種類が対応してなかったら
+
         BulletVecter();
         //エネルギーが必要量あれば
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
-
-        MoveBullet();
 
         //発射キーを押したら
         if (Input.GetKeyDown(KeyCode.Mouse1))
