@@ -14,8 +14,8 @@ Shader "Custom/Lightning"
         Pass{
             CGPROGRAM
             // Physically based Standard lighting model, and enable shadows on all light types
-            #pragma vertex vert 
-            #pragma fragment frag 
+            #pragma vertex vert
+            #pragma fragment frag
             #pragma multi_compile_fog
             #include "UnityCG.cginc"
 
