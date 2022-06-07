@@ -30,6 +30,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [SerializeField] private LayerMask raycastLayerMask;
     [SerializeField] public GameObject prefab;
     [SerializeField] private Collider attackCollider;
+    [SerializeField] private ParticleSystem windBladeParticle;
 
     public BaseUltrasound currentUltrasound;
     protected List<BaseUltrasound> ultrasoundsList = new List<BaseUltrasound>();
@@ -163,6 +164,19 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public void OnAttackStart()
     {
         attackCollider.enabled = true;
+
+        // パーティクルシステムのインスタンスを生成する。
+        ParticleSystem newParticle = Instantiate(windBladeParticle);
+
+        newParticle.transform.position = transform.position;
+        newParticle.transform.rotation = transform.rotation;
+
+        // パーティクルを発生させる。
+        newParticle.Play();
+
+        // インスタンス化したパーティクルシステムのGameObjectを削除する。(任意)
+        // ※第一引数をnewParticleだけにするとコンポーネントしか削除されない。
+        Destroy(newParticle.gameObject, 5.0f);
     }
 
     public void OnAttackFinished()
