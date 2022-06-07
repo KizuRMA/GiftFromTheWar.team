@@ -17,9 +17,9 @@ public class ShootParent : MonoBehaviour
     [SerializeField] protected float range;       //弾の消えるまでの時間
     [SerializeField] protected float useEnergy;   //消費エネルギー
 
-    private List<GameObject> bullet = new List<GameObject>();   //弾の配列
-    private List<GameObject> bulletEffect = new List<GameObject>();   //弾のエフェクト
-    private List<GameObject> bulletRemainEffect = new List<GameObject>();   //弾の残留エフェクト
+    protected List<GameObject> bullet = new List<GameObject>();   //弾の配列
+    protected List<GameObject> bulletEffect = new List<GameObject>();   //弾のエフェクト
+    protected List<GameObject> bulletRemainEffect = new List<GameObject>();   //弾の残留エフェクト
     protected Vector3 shotPos;                    //着弾点
 
     protected void CreateBullet() //プレハブから弾を作る
@@ -52,7 +52,7 @@ public class ShootParent : MonoBehaviour
 
     protected void MoveBullet()   //弾の移動
     {
-        if (bullet == null) return; //弾がなければ処理しない
+        if (bullet.Count == 0) return; //弾がなければ処理しない
 
         for (int i = 0; i < bullet.Count; i++) //弾の数だけ繰り返す
         {

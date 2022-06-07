@@ -648,7 +648,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &171316044 stripped
 Transform:
@@ -32725,11 +32725,12 @@ MonoBehaviour:
   camTrans: {fileID: 963194228}
   energyAmount: {fileID: 124306684}
   bulletPrefab: {fileID: 2228080246682398517, guid: abbadb17390261f4c9ae8714e04cb181, type: 3}
-  bulletEffectPrefab: {fileID: 2485593427570519067, guid: a205eb2a892b1db40af54ddc6aa30622, type: 3}
-  bulletRemainEffectPrefab: {fileID: 8393808128369847909, guid: 3d0e5e3f7b7e86345babdaac14a8441d, type: 3}
-  shotSpeed: 20
+  bulletEffectPrefab: {fileID: 2485593427570519067, guid: 2d6df6aa2804999439e530e3cc3d612c, type: 3}
+  bulletRemainEffectPrefab: {fileID: 8393808128369847909, guid: b6035c2760cd03c4289e1df95b6d1b2b, type: 3}
+  shotSpeed: 5
   range: 0.8
-  useEnergy: 0.9
+  useEnergy: 1
+  explosionEffect: {fileID: 2485593427570519067, guid: 2a3c75ef02fc40544b91676a7b561f52, type: 3}
   bulletChange: {fileID: 338067880}
 --- !u!4 &1597833382 stripped
 Transform:
