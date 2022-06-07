@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerDied : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class playerDied : MonoBehaviour
     [SerializeField] private float downSpeed;   //下がるスピード
     [SerializeField] private float downMax;     //下がる最大値
     private float nowGravity;                   //今の重力加速度
+    private bool groundFlg = false;             //一度でも地面についたかどうか
 
     //回転
     [SerializeField] private float rotSpeed;    //回転スピード
@@ -27,7 +29,15 @@ public class playerDied : MonoBehaviour
     private float rotSum = 0;                   //回転の合計値
     [SerializeField] private float gunRotSpeed; //銃の回転スピード
 
-    private bool groundFlg = false;    //一度でも地面についたかどうか
+    //目を閉じる  
+    [SerializeField] private GameObject eye;    //目の画像
+    [SerializeField] private GameObject eye2;   //目の画像
+    [SerializeField] private float eyeCoolTime; //目を閉じるまでの、クールタイム
+    [SerializeField] private float sceneCoolTime; //目を閉じるまでの、クールタイム
+    [SerializeField] private float moveEyeSpeed;//瞼の動く速さ
+    private RectTransform eyeRec;               //目の画像情報
+    private RectTransform eye2Rec;              //目の画像情報
+    private bool eyeCloseFlg = false;           //目を閉じるフラグ
 
     void Start()
     {
@@ -37,11 +47,20 @@ public class playerDied : MonoBehaviour
         gunRD = gun.GetComponent<Rigidbody>();
         diedFlg = false;
         nowGravity = gravity.GetGravity * Time.deltaTime;
+        eyeRec = eye.GetComponent<RectTransform>();
+        eye2Rec = eye2.GetComponent<RectTransform>();
+        eyeRec.localPosition = new Vector3(0 ,720, 0);
+        eye2Rec.localPosition = new Vector3(0, -720, 0);
     }
 
     void Update()
     {
-        if (CC.GetComponent<playerAbnormalcondition>().life <= 0)
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            CC.GetComponent<playerAbnormalcondition>().life = 0;
+        }
+
+        if (CC.GetComponent<playerAbnormalcondition>().life <= 0)   //HPが０になっていたら
         {
             diedFlg = true;
 
@@ -64,24 +83,31 @@ public class playerDied : MonoBehaviour
         DownKnees();
 
         Fall();
+
+        if (!eyeCloseFlg) return;
+
+        MoveEye();
     }
 
     private void DownKnees()    //膝をつく
     {
+        if (groundFlg) return;  //地面についていたら通らない
+
         //レイ判定で地面に着いたか確認する
         Ray ray = new Ray(trans.position, -transform.up);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, downMax))
         {
             groundFlg = true;
+            StartCoroutine(EyeCoolTime());
+            StartCoroutine(SceneCoolTime());
         }
 
         nowGravity += gravity.GetGravity * Time.deltaTime;
         CC.Move(new Vector3(0, nowGravity, 0) * Time.deltaTime);   //プレイヤーを移動
-
     }
 
-    private void Fall()
+    private void Fall() //倒れるときの回転
     {
         if (!groundFlg) return;
         if (rotSum > rotMax) return;
@@ -89,5 +115,34 @@ public class playerDied : MonoBehaviour
         rotSum += rotSpeed * Time.deltaTime;    //回転の合計を保存
         trans.rotation *= Quaternion.Euler(rotSpeed * Time.deltaTime, rotSpeed * Time.deltaTime, rotSpeed * Time.deltaTime);    //プレイヤーを回転
         gun.transform.rotation *= Quaternion.Euler(0, 0, gunRotSpeed * Time.deltaTime); //銃を回転
+    }
+
+    private IEnumerator EyeCoolTime()  //回復までのクールタイム
+    {
+        yield return new WaitForSeconds(eyeCoolTime);  //クールタイム分待つ
+
+        eyeCloseFlg = true;
+        eye.SetActive(true);
+        eye2.SetActive(true);
+    }
+
+    private void MoveEye()  //目を動かす
+    {
+        if (eyeRec.localPosition.y > 0)
+        {
+            eyeRec.localPosition += new Vector3(0, -moveEyeSpeed * Time.deltaTime, 0);
+        }
+
+        if (eye2Rec.localPosition.y < 0)
+        {
+            eye2Rec.localPosition += new Vector3(0, moveEyeSpeed * Time.deltaTime, 0);
+        }
+    }
+
+    private IEnumerator SceneCoolTime()  //回復までのクールタイム
+    {
+        yield return new WaitForSeconds(sceneCoolTime);  //クールタイム分待つ
+
+        SceneManager.LoadScene("TitleScene");
     }
 }
