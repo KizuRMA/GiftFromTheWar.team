@@ -174,6 +174,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         // パーティクルを発生させる。
         newParticle.Play();
 
+
         // インスタンス化したパーティクルシステムのGameObjectを削除する。(任意)
         // ※第一引数をnewParticleだけにするとコンポーネントしか削除されない。
         Destroy(newParticle.gameObject, 5.0f);
@@ -187,5 +188,11 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public void SearchPlayerAction()
     {
 
+    }
+
+    public float CheckVectorAngCode(Vector3 _baseVec,Vector3 _targetVec,Vector3 _searchAxis)
+    {
+
+        return 0;
     }
 }
