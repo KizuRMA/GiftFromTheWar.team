@@ -165,6 +165,11 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     {
         attackCollider.enabled = true;
 
+
+        Vector3 _fowardVec = transform.forward;
+
+       // CheckVectorDegAngCode();
+
         // パーティクルシステムのインスタンスを生成する。
         ParticleSystem newParticle = Instantiate(windBladeParticle);
 
@@ -190,9 +195,21 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     }
 
-    public float CheckVectorAngCode(Vector3 _baseVec,Vector3 _targetVec,Vector3 _searchAxis)
+    public float CheckVectorDegAngCode(Vector3 _baseVec,Vector3 _targetVec,Vector2 _searchAxis)    //2本のベクトルから角度を符号を含む角度を求める
     {
+        _baseVec = new Vector3(_baseVec.x * _searchAxis.x, _baseVec.y * _searchAxis.y, _baseVec.z).normalized;
+        _targetVec = new Vector3(_targetVec.x * _searchAxis.x, _targetVec.y * _searchAxis.y, _targetVec.z).normalized;
 
-        return 0;
+        float dot = Vector3.Dot(_baseVec,_targetVec);
+        Vector3 cross = Vector3.Cross(_baseVec,_targetVec);
+
+        if (cross.y < 0)
+        {
+            dot *= -1;
+        }
+
+        float _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        return _degAng;
     }
 }
