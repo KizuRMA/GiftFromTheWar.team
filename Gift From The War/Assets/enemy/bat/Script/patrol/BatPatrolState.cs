@@ -30,6 +30,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [SerializeField] private LayerMask raycastLayerMask;
     [SerializeField] public GameObject prefab;
     [SerializeField] private Collider attackCollider;
+    [SerializeField] private ParticleSystem windBladeParticle;
 
     public BaseUltrasound currentUltrasound;
     protected List<BaseUltrasound> ultrasoundsList = new List<BaseUltrasound>();
@@ -163,6 +164,25 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public void OnAttackStart()
     {
         attackCollider.enabled = true;
+
+
+        Vector3 _fowardVec = transform.forward;
+
+       // CheckVectorDegAngCode();
+
+        // パーティクルシステムのインスタンスを生成する。
+        ParticleSystem newParticle = Instantiate(windBladeParticle);
+
+        newParticle.transform.position = transform.position;
+        newParticle.transform.rotation = transform.rotation;
+
+        // パーティクルを発生させる。
+        newParticle.Play();
+
+
+        // インスタンス化したパーティクルシステムのGameObjectを削除する。(任意)
+        // ※第一引数をnewParticleだけにするとコンポーネントしか削除されない。
+        Destroy(newParticle.gameObject, 5.0f);
     }
 
     public void OnAttackFinished()
@@ -173,5 +193,23 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public void SearchPlayerAction()
     {
 
+    }
+
+    public float CheckVectorDegAngCode(Vector3 _baseVec,Vector3 _targetVec,Vector2 _searchAxis)    //2本のベクトルから角度を符号を含む角度を求める
+    {
+        _baseVec = new Vector3(_baseVec.x * _searchAxis.x, _baseVec.y * _searchAxis.y, _baseVec.z).normalized;
+        _targetVec = new Vector3(_targetVec.x * _searchAxis.x, _targetVec.y * _searchAxis.y, _targetVec.z).normalized;
+
+        float dot = Vector3.Dot(_baseVec,_targetVec);
+        Vector3 cross = Vector3.Cross(_baseVec,_targetVec);
+
+        if (cross.y < 0)
+        {
+            dot *= -1;
+        }
+
+        float _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        return _degAng;
     }
 }
