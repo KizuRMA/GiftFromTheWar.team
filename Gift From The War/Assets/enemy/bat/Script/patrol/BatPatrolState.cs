@@ -173,7 +173,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         // パーティクルシステムのインスタンスを生成する。
         ParticleSystem newParticle = Instantiate(windBladeParticle);
 
-        newParticle.transform.position = transform.position;
+        newParticle.transform.position = transform.position + (transform.up * 0.3f);
         newParticle.transform.rotation = transform.rotation;
 
         // パーティクルを発生させる。
