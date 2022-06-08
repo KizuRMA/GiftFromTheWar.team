@@ -7,6 +7,7 @@ public class BatAttackScript : BaseState
 {
     [SerializeField] private Collider attackCollider;
     [SerializeField] private float attackCooldown = 0.5f;
+    [SerializeField] private ParticleSystem particle;
     NavMeshAgent agent;
     GameObject player;
 
@@ -55,6 +56,18 @@ public class BatAttackScript : BaseState
     public void OnAttackStart()
     {
         attackCollider.enabled = true;
+
+        // パーティクルシステムのインスタンスを生成する。
+        ParticleSystem newParticle = Instantiate(particle);
+
+        newParticle.transform.position = transform.position;
+        newParticle.transform.rotation = transform.rotation;
+
+        // パーティクルを発生させる。
+        newParticle.Play();
+        // インスタンス化したパーティクルシステムのGameObjectを削除する。(任意)
+        // ※第一引数をnewParticleだけにするとコンポーネントしか削除されない。
+        Destroy(newParticle.gameObject, 5.0f);
     }
 
     public void OnHitAttack(Collider _collider)
