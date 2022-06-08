@@ -21,6 +21,7 @@ public class BatController : MonoBehaviour
     [SerializeField] public float defaltHight;
     [SerializeField] public float defaltForwardAngle;
     [SerializeField] private LayerMask raycastLayerMask;
+
     private CharacterController playerCC;
 
     public bool IsAttackable => (int)e_State.move == state.CurrentState;
@@ -107,7 +108,7 @@ public class BatController : MonoBehaviour
         _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
         playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
-       
+
         if (_hit == true && abnormalcondition.IsHowling() == true)
         {
             _targetHight = Mathf.Min(Mathf.Max(_raycastHit.distance,_minHight),_maxHight);
