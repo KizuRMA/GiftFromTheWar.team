@@ -5,7 +5,7 @@ using UnityEngine;
 public class magnetChain : ShootParent
 {
     //ゲームオブジェクトやスクリプト
-    [SerializeField] private CharacterController CC;    
+    [SerializeField] private CharacterController CC;
     [SerializeField] private Transform playerTrans;
     [SerializeField] private Gravity gravity;
     [SerializeField] private GameObject bulletLineEffect;
@@ -18,6 +18,8 @@ public class magnetChain : ShootParent
     //移動処理
     public bool metalFlg { get; set; }              //金属にくっついたフラグ
     [SerializeField] private float moveSpeed;       //移動する速さ
+    [SerializeField] private float moveSpeedMax;    //移動する速さの最大値
+    private float nowMoveSpeed;                     //今の移動スピード
     private Vector3 moveVec;                        //移動方向
     private bool moveFinishFlg = false;             //移動が終わったフラグ
     private bool hitFlg = false;                    //オブジェクトにあたったか
@@ -51,11 +53,11 @@ public class magnetChain : ShootParent
         //エネルギーが必要量あれば
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
-        if(useEnergy0)  //エネルギー消費量を0にする
+        if (useEnergy0)  //エネルギー消費量を0にする
         {
             useEnergy0 = false;
             energyAmount.GetSetNowAmount = 0;
-        } 
+        }
 
         //発射キーを押したら
         if (Input.GetMouseButtonDown(0))
@@ -102,7 +104,7 @@ public class magnetChain : ShootParent
     {
         prePos = playerTrans.position;
         PlayerMove();
-        PlayerHitJudge();        
+        PlayerHitJudge();
 
         //解除する処理
         if (moveFinishFlg || hitFlg)
@@ -121,9 +123,13 @@ public class magnetChain : ShootParent
         bulletLineEffect.transform.position = bulletLinePos.transform.position;
         bulletLineEffect.transform.LookAt(shotPos);
 
-        if (Mathf.Abs(moveVec.magnitude) > moveSpeed * Time.deltaTime)  //移動量が大きすぎたら、一定にする
+        //速さ調整
+        nowMoveSpeed += (nowMoveSpeed + moveSpeed) * (nowMoveSpeed + moveSpeed) * Time.deltaTime;
+        nowMoveSpeed = nowMoveSpeed > moveSpeedMax ? moveSpeedMax : nowMoveSpeed;   //最大値より大きかったら、最大値にする
+
+        if (Mathf.Abs(moveVec.magnitude) > nowMoveSpeed * Time.deltaTime)  //移動量が大きすぎたら、一定にする
         {
-            moveVec = moveVec.normalized * moveSpeed * Time.deltaTime;
+            moveVec = moveVec.normalized * nowMoveSpeed * Time.deltaTime;
         }
         else
         {
@@ -145,6 +151,7 @@ public class magnetChain : ShootParent
 
     private void Relieve()   //解除処理
     {
+        nowMoveSpeed = 0;
         metalFlg = false;
         moveFinishFlg = false;
         hitFlg = false;
