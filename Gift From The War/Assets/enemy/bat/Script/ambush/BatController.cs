@@ -13,7 +13,7 @@ public class BatController : MonoBehaviour
     }
 
     BaseState state;
-    public float hight { get; set; }
+    public float height { get; set; }
     public float forwardAngle { get; set; }
     private NavMeshAgent agent;
 
@@ -32,7 +32,7 @@ public class BatController : MonoBehaviour
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
         life = 1.0f;
-        hight = defaltHight;
+        height = defaltHight;
         forwardAngle = defaltForwardAngle;
         //ステートを切り替える
         ChangeState(GetComponent<WingFoldState>());
@@ -42,6 +42,7 @@ public class BatController : MonoBehaviour
     void Update()
     {
         state.Update();
+       
 
         if (Input.GetKey(KeyCode.T))
         {
@@ -89,52 +90,53 @@ public class BatController : MonoBehaviour
         RaycastHit _raycastHit;
         bool _hit = Physics.Raycast(_ray, out _raycastHit,1000.0f, raycastLayerMask);
 
+        float nowBatHeight = transform.position.y;
+        
         //ステージの立幅を記録
-        float _maxHight = _raycastHit.distance;
-        float _minHight = _maxHight;
+        float _maxHeight = (_raycastHit.distance - 1.0f) + transform.position.y;
+        float _minHeight = _raycastHit.distance;
 
         //ステージの縦幅の４割の位置にいるようにする
-        _minHight *= 0.4f;
+        _minHeight *= 0.4f;
+
         //コウモリの飛行上限を設定する
-        if (_minHight > 0.8f)
+        if (_minHeight > 0.8f)
         {
-            _minHight = 0.8f;
+            _minHeight = 0.8f;
         }
 
-        float _targetHight = _maxHight;
+        _minHeight += transform.position.y;
 
-        //プレイヤーの地面までの距離を取得
-        _ray = new Ray(playerCC.transform.position, Vector3.down);
-        _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
+        float _targetHeight = playerCC.transform.position.y;
 
         playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
 
         if (_hit == true && abnormalcondition.IsHowling() == true)
         {
-            _targetHight = Mathf.Min(Mathf.Max(_raycastHit.distance,_minHight),_maxHight);
+            _targetHeight = Mathf.Min(Mathf.Max(_raycastHit.distance,_minHeight),_maxHeight);
         }
         else
         {
-            _targetHight = _minHight;
+            _targetHeight = _minHeight;
         }
 
         //現在のコウモリを高さを含んだ座標
-        Vector3 nowPos = new Vector3(transform.position.x, hight, transform.position.z);
+        Vector3 nowPos = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
         //本来いてほしい座標
-        Vector3 nextPos = new Vector3(transform.position.x, _targetHight, transform.position.z);
+        Vector3 nextPos = new Vector3(transform.position.x, _targetHeight, transform.position.z);
 
         //ナビメッシュのスピードを用いてコウモリの高さを調整する
         nowPos = Vector3.MoveTowards(nowPos, nextPos, 0.8f * Time.deltaTime);
 
         //次のフレームでは現在のY軸が保存されないため、記録しておく。
-        hight = nowPos.y;
+        height = nowPos.y - nowBatHeight;
 
-        transform.position = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
     }
 
     public void SimpleAdjustHeight()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
     }
 
     //ナビメッシュの処理を再開

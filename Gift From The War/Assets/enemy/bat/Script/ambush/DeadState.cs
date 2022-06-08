@@ -29,7 +29,7 @@ public class DeadState : BaseState
     // Update is called once per frame
     public override void Update()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y + myController.hight, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + myController.height, transform.position.z);
         Instantiate(BoxPrefab, transform.position, transform.rotation);
         Destroy(gameObject);
     }

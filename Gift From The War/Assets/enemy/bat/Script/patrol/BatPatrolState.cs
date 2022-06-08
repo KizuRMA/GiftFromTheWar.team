@@ -38,7 +38,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public bool IsNavMeshON => agent.isStopped == false;
     public bool IsPlayerDiscover => IsCurrentState(e_BatPatrolState.Attack) == true || IsCurrentState(e_BatPatrolState.Tracking) == true;
     private float limitHight;
-    public float hight;
+    public float height;
     public float hightRatio;
 
     [SerializeField] public float trackingSpeed;
@@ -46,11 +46,10 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     void Start()
     {
-        hight = 0.8f;
+        height = 0.8f;
         limitHight = 0.8f;
         hightRatio = 0.4f;
         stateMachine = new StateMachine<BatPatrolState>();
-
 
         stateList.Add(new BatMoveWayPointsState(this));
         stateList.Add(new BatDeadState(this));
@@ -63,7 +62,6 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         ultrasoundsList.Add(GetComponent<LargeUltrasound>());
         ultrasoundsList.Add(GetComponent<SmallUltrasound>());
         ultrasoundsList.Add(GetComponent<UltraSoundBeam>());
-
         ChangeUltrasound(e_UltrasoundState.Small);
     }
 
@@ -90,24 +88,28 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     public void AdjustHeight()
     {
+        //天井に向かってレイ判定を行う
         Ray _ray = new Ray(transform.position, Vector3.up);
         RaycastHit _raycastHit;
         bool _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
+        //上昇可能な高さ(天井までの距離 - コウモリの高さ)
+        float _climbableheight = _raycastHit.distance - 1.5f;
+
         //ステージの立幅を記録
-        float _maxHight = _raycastHit.distance;
-        float _minHight = _maxHight;
+        float _maxHeight = _raycastHit.distance;
+        float _minHeight = _maxHeight;
 
         //ステージの縦幅の４割の位置にいるようにする
-        _minHight *= hightRatio;
+        _minHeight *= hightRatio;
 
         //コウモリの飛行上限を設定する
-        if (_minHight > limitHight)
+        if (_minHeight > limitHight)
         {
-            _minHight = limitHight;
+            _minHeight = limitHight;
         }
 
-        float _targetHight = _maxHight;
+        float _targetHeight = _maxHeight;
 
         //プレイヤーの地面までの距離を取得
         _ray = new Ray(player.transform.position, Vector3.down);
@@ -115,25 +117,35 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         if (_hit == true && IsPlayerDiscover == true)
         {
-            _targetHight = Mathf.Min(Mathf.Max(_raycastHit.distance, _minHight), _maxHight);
+            _targetHeight = Mathf.Min(Mathf.Max(_raycastHit.distance, _minHeight), _maxHeight);
         }
         else
         {
-            _targetHight = _minHight;
+            _targetHeight = _minHeight;
+        }
+
+        //上昇しようとしている時
+        if (height - _targetHeight <= 0)
+        {
+            //上昇可能な高さがない場合
+            if (_climbableheight <= 0)
+            {
+                return;
+            }
         }
 
         //現在のコウモリを高さを含んだ座標
-        Vector3 nowPos = new Vector3(transform.position.x, hight, transform.position.z);
+        Vector3 nowPos = new Vector3(transform.position.x, height, transform.position.z);
         //本来いてほしい座標
-        Vector3 nextPos = new Vector3(transform.position.x, _targetHight, transform.position.z);
+        Vector3 nextPos = new Vector3(transform.position.x, _targetHeight, transform.position.z);
 
         //ナビメッシュのスピードを用いてコウモリの高さを調整する
         nowPos = Vector3.MoveTowards(nowPos, nextPos, 0.8f * Time.deltaTime);
 
         //次のフレームでは現在のY軸が保存されないため、記録しておく。
-        hight = nowPos.y;
+        height = nowPos.y;
 
-        transform.position = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
     }
 
     public void Damage(int damage)
@@ -149,6 +161,9 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     public void ChangeUltrasound(e_UltrasoundState state)
     {
+        if (ultrasoundsList.Count <= 0) return;
+        if ((int)state >= System.Enum.GetValues(typeof(e_UltrasoundState)).Length - 1) return;
+
         currentUltrasound = ultrasoundsList[(int)state];
         currentUltrasound.Start();
     }
