@@ -26,8 +26,6 @@ public class BatController : MonoBehaviour
 
     public bool IsAttackable => (int)e_State.move == state.CurrentState;
 
-    bool flg;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,9 +34,8 @@ public class BatController : MonoBehaviour
         life = 1.0f;
         height = defaltHight;
         forwardAngle = defaltForwardAngle;
-        flg = true;
         //ステートを切り替える
-        ChangeState(GetComponent<WingFoldState>());
+        ChangeState(GetComponent<batMove>());
     }
 
     // Update is called once per frame
@@ -46,40 +43,40 @@ public class BatController : MonoBehaviour
     {
         if (agent.isOnOffMeshLink == true)
         {
-            if (flg == true)
-            {
-                // 体を前に傾ける
-                Vector3 _localAngle = transform.localEulerAngles;
-                _localAngle.x = forwardAngle;
-                transform.localEulerAngles = _localAngle;
+           // if (flg == true)
+           // {
+           //     // 体を前に傾ける
+           //     Vector3 _localAngle = transform.localEulerAngles;
+           //     _localAngle.x = forwardAngle;
+           //     transform.localEulerAngles = _localAngle;
 
-                flg = false;
-            }
+           //     flg = false;
+           // }
 
-            OffNavMesh();
+           // OffNavMesh();
 
-            Vector3 _targetPos = agent.currentOffMeshLinkData.endPos;
-            _targetPos.y = playerCC.transform.position.y;
+           // Vector3 _targetPos = agent.currentOffMeshLinkData.endPos;
+           // _targetPos.y = playerCC.transform.position.y;
 
-            //Vector3 vecOne = transform.position;
-            //Vector3 vecTow = agent.currentOffMeshLinkData.endPos;
-            //vecOne.y = 0;
-            //vecTow.y = 0;
+           // //Vector3 vecOne = transform.position;
+           // //Vector3 vecTow = agent.currentOffMeshLinkData.endPos;
+           // //vecOne.y = 0;
+           // //vecTow.y = 0;
 
-            transform.position = Vector3.MoveTowards(transform.position,_targetPos, agent.speed * Time.deltaTime);
+           // transform.position = Vector3.MoveTowards(transform.position,_targetPos, agent.speed * Time.deltaTime);
 
-            float _targetDis = Vector3.Distance(transform.position, _targetPos);
-            //Debug.Log(_targetDis);
+           // float _targetDis = Vector3.Distance(transform.position, _targetPos);
+           // //Debug.Log(_targetDis);
 
-            //transform.position = new Vector3(transform.position.x,agent.currentOffMeshLinkData.startPos.y,transform.position.z);
-           // AdjustHeight();
+           // //transform.position = new Vector3(transform.position.x,agent.currentOffMeshLinkData.startPos.y,transform.position.z);
+           //// AdjustHeight();
 
-            if (_targetDis < 0.1f)
-            {
-                agent.CompleteOffMeshLink();
-                flg = true;
-                OnNavMesh();
-            }
+           // if (_targetDis < 0.1f)
+           // {
+           //     agent.CompleteOffMeshLink();
+           //     flg = true;
+           //     OnNavMesh();
+           // }
         }
         else
         {
