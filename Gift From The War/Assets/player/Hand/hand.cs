@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class hand : MonoBehaviour
 {
     [SerializeField] private playerHundLadder ladder;
+    [SerializeField] private OpenMetalDoor metalDoor;
 
     void Start()
     {
@@ -14,7 +15,7 @@ public class hand : MonoBehaviour
 
     void Update()
     {
-        if(ladder.closeLadderFlg)  //梯子の近くなら表示
+        if(ladder.closeLadderFlg || metalDoor.closeValveFlg)  //梯子の近くなら表示
         {
             this.GetComponent<Image>().enabled = true;
         }
@@ -23,7 +24,7 @@ public class hand : MonoBehaviour
             this.GetComponent<Image>().enabled = false;
         }
 
-        if (ladder.touchLadderFlg)  //梯子に登り始めたら非表示
+        if (ladder.touchLadderFlg || metalDoor.touchValveFlg)  //梯子に登り始めたら非表示
         {
             this.GetComponent<Image>().enabled = false;
         }

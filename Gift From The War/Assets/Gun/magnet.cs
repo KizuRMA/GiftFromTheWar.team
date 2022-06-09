@@ -111,6 +111,11 @@ public class magnet : ShootParent
             firstPos = metal.transform.localPosition;
             metal.GetComponent<Rigidbody>().useGravity = false;
             metal.gameObject.AddComponent<metalHitJudge>();
+
+            if(metal.GetComponent<Rigidbody>().isKinematic)
+            {
+                metal.GetComponent<Rigidbody>().isKinematic = false;
+            }
         }
 
         ReturnMiddle();
