@@ -29,17 +29,20 @@ public class windHitJuge : MonoBehaviour
     {
         if (!wind.effectFlg)    //•—‚ðo‚µ‚Ä‚¢‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
         {
+            if (!MC.enabled) return; //‚·‚Å‚É“–‚½‚è”»’è‚ðÁ‚µ‚Ä‚¢‚½‚çˆ—‚µ‚È‚¢
             nowWindPower = 0;
             nowWindPower2 = 0;
             MC.enabled = false;
             return;    
         }
 
-        if(!MC.enabled) MC.enabled = true;
+        if(!MC.enabled) MC.enabled = true;  //“–‚½‚è”»’è‚ðƒIƒ“‚É‚·‚é
 
+        //“–‚½‚è”»’è‚ð’·‚­‚·‚é
         nowWindPower += windPower * Time.deltaTime;
         nowWindPower = nowWindPower > windPowerMax ? windPowerMax : nowWindPower;
 
+        //“–‚½‚è”»’è‚ð‘å‚«‚­‚·‚é
         nowWindPower2 += windPower2 * Time.deltaTime;
         nowWindPower2 = nowWindPower2 > windPowerMax2 ? windPowerMax2 : nowWindPower2;
 
