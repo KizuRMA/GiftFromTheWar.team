@@ -13,6 +13,8 @@ public class valve : MonoBehaviour
     [SerializeField] private float valveSpeed;
     [SerializeField] private float door1Speed;
     [SerializeField] private float door2Speed;
+    [SerializeField] private float openAngMax;
+    private float sumAng = 0;
 
     void Start()
     {
@@ -24,8 +26,10 @@ public class valve : MonoBehaviour
 
     public void Open()
     {
+        if (sumAng > Mathf.Abs(openAngMax)) return;  //Å‘å‚Ü‚ÅŠJ‚¢‚Ä‚¢‚½‚çˆ—‚µ‚È‚¢
         valceTrans.localEulerAngles += new Vector3(0, valveSpeed * Time.deltaTime, 0);
         door1.localEulerAngles += new Vector3(0, door1Speed * Time.deltaTime, 0);
         door2.localEulerAngles += new Vector3(0, door2Speed * Time.deltaTime, 0);
+        sumAng += Mathf.Abs(door1Speed * Time.deltaTime);
     }
 }
