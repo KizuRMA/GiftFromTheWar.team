@@ -24,8 +24,10 @@ public class magnetChain : ShootParent
     private bool moveFinishFlg = false;             //移動が終わったフラグ
     private bool hitFlg = false;                    //オブジェクトにあたったか
     private Vector3 prePos;                         //前フレームの位置を記憶しておく
-    private bool useEnergy0 = false;                        //エネルギー消費量を0にするフラグ
+    private bool useEnergy0 = false;                //エネルギー消費量を0にするフラグ
     [SerializeField] private float hitRange;        //当たり判定の範囲
+    private float nowTime = 0;                      //今の移動時間
+    [SerializeField] private float timeMax;         //移動時間の限界値
 
     private void Start()
     {
@@ -82,6 +84,8 @@ public class magnetChain : ShootParent
         energyAmount.GetSetNowAmount = useEnergy;
         energyAmount.useDeltaTime = false;
 
+        nowTime = 0;
+
         BulletVecter();
 
         CreateBullet();
@@ -106,8 +110,11 @@ public class magnetChain : ShootParent
         PlayerMove();
         PlayerHitJudge();
 
+        //時間の処理
+        nowTime += Time.deltaTime;
+
         //解除する処理
-        if (moveFinishFlg || hitFlg)
+        if (moveFinishFlg || hitFlg || nowTime > timeMax)
         {
             Relieve();
         }
