@@ -153,11 +153,6 @@ public class BatController : MonoBehaviour
             _ray = new Ray(transform.position, Vector3.down);
             _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
-            if (_hit == false)
-            {
-                Debug.Log("当たっていない");
-            }
-
             //コウモリが地面から離れている分だけプレイヤーの高さを低くする
             _playerHeight -= _raycastHit.distance;
             if (_playerHeight < 0)

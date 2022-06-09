@@ -1749,7 +1749,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.1
+  m_VoxelSize: 0.06666667
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: 48a9fbb35b498d84dad3128e1d8b2985, type: 2}
 --- !u!114 &320664754
@@ -8030,7 +8030,6 @@ MonoBehaviour:
   player: {fileID: 401655008}
   dog: {fileID: 536341823}
   animator: {fileID: 536341826}
-  attackCollider: {fileID: 2111353834}
   SearchSpeed: 0.5
   TrakingSpeed: 1.8
   canVigilance: 0
@@ -8122,6 +8121,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
   m_PrefabInstance: {fileID: 989748950}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &536341833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536341823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cddf7640d98711c409dfd985d74f5bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 536341824}
+  attackCollider: {fileID: 2111353834}
 --- !u!4 &563300201 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 54102979e7fd8a84faf9d5e26e91114a, type: 3}
@@ -24359,7 +24372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_TagString
@@ -42382,7 +42395,6 @@ MonoBehaviour:
   player: {fileID: 401655008}
   dog: {fileID: 2020527136}
   animator: {fileID: 2020527140}
-  attackCollider: {fileID: 1483677236}
   SearchSpeed: 0.5
   TrakingSpeed: 2.5
   canVigilance: 0
@@ -43147,8 +43159,8 @@ MonoBehaviour:
   onTriggerStay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2020527141}
-        m_TargetAssemblyTypeName: DogState, Assembly-CSharp
+      - m_Target: {fileID: 536341833}
+        m_TargetAssemblyTypeName: DogAttackFunction, Assembly-CSharp
         m_MethodName: OnHitAttack
         m_Mode: 0
         m_Arguments:
