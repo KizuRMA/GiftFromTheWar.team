@@ -42,7 +42,7 @@ public class BatController : MonoBehaviour
     void Update()
     {
         state.Update();
-       
+
 
         if (Input.GetKey(KeyCode.T))
         {
@@ -90,10 +90,8 @@ public class BatController : MonoBehaviour
         RaycastHit _raycastHit;
         bool _hit = Physics.Raycast(_ray, out _raycastHit,1000.0f, raycastLayerMask);
 
-        float nowBatHeight = transform.position.y;
-        
         //ステージの立幅を記録
-        float _maxHeight = (_raycastHit.distance - 1.0f) + transform.position.y;
+        float _maxHeight = (_raycastHit.distance - 1.0f);
         float _minHeight = _raycastHit.distance;
 
         //ステージの縦幅の４割の位置にいるようにする
@@ -105,15 +103,27 @@ public class BatController : MonoBehaviour
             _minHeight = 0.8f;
         }
 
-        _minHeight += transform.position.y;
+        float _targetHeight;
 
-        float _targetHeight = playerCC.transform.position.y;
+        //プレイヤーの地面までの距離を取得
+        _ray = new Ray(playerCC.transform.position, Vector3.down);
+        _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
         playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
 
         if (_hit == true && abnormalcondition.IsHowling() == true)
         {
-            _targetHeight = Mathf.Min(Mathf.Max(_raycastHit.distance,_minHeight),_maxHeight);
+            float _playerHeight = _raycastHit.distance;
+
+            //コウモリが地面からどれだけ離れているか調べる
+            _ray = new Ray(transform.position, Vector3.down);
+            _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
+
+            //コウモリが地面から離れている分だけプレイヤーの高さを低くする
+            _playerHeight -= _raycastHit.distance;
+            _playerHeight = Mathf.Abs(_playerHeight);
+
+            _targetHeight = Mathf.Min(Mathf.Max(_playerHeight, _minHeight),_maxHeight);
         }
         else
         {
@@ -121,7 +131,7 @@ public class BatController : MonoBehaviour
         }
 
         //現在のコウモリを高さを含んだ座標
-        Vector3 nowPos = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
+        Vector3 nowPos = new Vector3(transform.position.x, height, transform.position.z);
         //本来いてほしい座標
         Vector3 nextPos = new Vector3(transform.position.x, _targetHeight, transform.position.z);
 
@@ -129,7 +139,7 @@ public class BatController : MonoBehaviour
         nowPos = Vector3.MoveTowards(nowPos, nextPos, 0.8f * Time.deltaTime);
 
         //次のフレームでは現在のY軸が保存されないため、記録しておく。
-        height = nowPos.y - nowBatHeight;
+        height = nowPos.y;
 
         transform.position = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
     }

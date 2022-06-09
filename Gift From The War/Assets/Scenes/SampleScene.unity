@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: -334000983
-  m_StartPoint: {x: 0.00000016391277, y: 0.93476105, z: -0.7851856}
+  m_StartPoint: {x: 0.00000021120186, y: 0.72989756, z: -0.7851854}
   m_EndPoint: {x: 0.000000014901161, y: -0.93476105, z: 0.7851875}
   m_Width: 1.0466893
   m_CostModifier: -1
@@ -8285,6 +8285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 603060165}
+  - component: {fileID: 603060166}
   m_Layer: 0
   m_Name: DogBranchRoute
   m_TagString: dogAgent
@@ -8309,6 +8310,22 @@ Transform:
   m_Father: {fileID: 320664750}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &603060166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603060164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: a98c17ec
 --- !u!1001 &613306001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34259,7 +34276,7 @@ MonoBehaviour:
   attackCollider: {fileID: 1058663202}
   windBladeParticle: {fileID: 3719638909804525330, guid: 7c477e8d7ea22a047b379b159452c336, type: 3}
   currentUltrasound: {fileID: 0}
-  hight: 0.8
+  height: 0
   hightRatio: 0.4
   trackingSpeed: 2.2
   moveWayPointSpeed: 1.5
