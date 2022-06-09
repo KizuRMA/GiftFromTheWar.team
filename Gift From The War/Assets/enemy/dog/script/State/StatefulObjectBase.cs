@@ -11,7 +11,7 @@ public abstract class StatefulObjectBase<T, TEnum> : MonoBehaviour
 
     public virtual void ChangeState(TEnum state)
     {
-        if (stateMachine == null)
+        if (stateMachine == null || stateList.Count <= 0)
         {
             return;
         }

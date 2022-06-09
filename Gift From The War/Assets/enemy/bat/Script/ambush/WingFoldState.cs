@@ -135,7 +135,7 @@ public class WingFoldState : BaseState
             if (_rayHit == true)
             {
                 //åªç›ÇÃçÇÇ≥ÇãLò^ÇµÇƒÇ®Ç≠
-                myController.hight = _raycastHit.distance;
+                myController.height = _raycastHit.distance;
             }
         }
 
@@ -270,7 +270,7 @@ public class WingFoldState : BaseState
             }
 
             distance = Vector3.Distance(_targetVec, transform.position);
-            defaltHight = myController.hight;
+            defaltHight = myController.height;
             targetPos = SearchCeiling(_targetVec);
 
             agent.destination = _targetVec;
@@ -293,7 +293,7 @@ public class WingFoldState : BaseState
         float _targetDistance = Vector3.Distance(_myPos, _targetPos);
         float _amountMove = Mathf.Abs(distance - _targetDistance);
 
-        myController.hight = NeedHight(_amountMove, defaltHight, _maxHight, distance);
+        myController.height = NeedHight(_amountMove, defaltHight, _maxHight, distance);
 
         if (_targetDistance <= 0.1f)
         {

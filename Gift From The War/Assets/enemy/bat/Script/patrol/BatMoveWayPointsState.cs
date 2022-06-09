@@ -8,9 +8,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
     public BatMoveWayPointsState(BatPatrolState owner) : base(owner) { }
     private WayPoint wayPoint;
     private NavMeshAgent agent;
-    private BaseUltrasound ultrasound;
     private int currentWaypointIndex;
-    Vector3[] corners;
 
     public override void Enter()
     {
@@ -47,6 +45,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         }
 
         owner.agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
+        owner.ChangeUltrasound(e_UltrasoundState.Small);
     }
 
     public override void Execute()

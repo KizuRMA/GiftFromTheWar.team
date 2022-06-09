@@ -17,7 +17,7 @@ public class LargeUltrasound : BaseUltrasound
     {
         velocity = 1;
         coolDown = 0;
-        duration = 3.0f;
+        duration = 1.0f;
         time = 0;
         range = 0.0f;
         maxRange = 0.0f;
