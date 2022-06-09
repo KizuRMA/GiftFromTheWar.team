@@ -41,13 +41,15 @@ public class BatController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        state.Update();
-
-
-        if (Input.GetKey(KeyCode.T))
+        if (agent.isOnOffMeshLink == false)
         {
-            Damage(1);
+            state.Update();
         }
+        else
+        {
+            OffNavMesh();
+        }
+
     }
 
     public void ChangeState(BaseState _state)
