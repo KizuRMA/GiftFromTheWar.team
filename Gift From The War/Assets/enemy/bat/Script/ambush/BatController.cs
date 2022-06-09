@@ -26,6 +26,8 @@ public class BatController : MonoBehaviour
 
     public bool IsAttackable => (int)e_State.move == state.CurrentState;
 
+    bool flg;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,7 @@ public class BatController : MonoBehaviour
         life = 1.0f;
         height = defaltHight;
         forwardAngle = defaltForwardAngle;
+        flg = true;
         //ステートを切り替える
         ChangeState(GetComponent<WingFoldState>());
     }
@@ -41,15 +44,47 @@ public class BatController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (agent.isOnOffMeshLink == false)
+        if (agent.isOnOffMeshLink == true)
         {
-            state.Update();
+            if (flg == true)
+            {
+                // 体を前に傾ける
+                Vector3 _localAngle = transform.localEulerAngles;
+                _localAngle.x = forwardAngle;
+                transform.localEulerAngles = _localAngle;
+
+                flg = false;
+            }
+
+            OffNavMesh();
+
+            Vector3 _targetPos = agent.currentOffMeshLinkData.endPos;
+            _targetPos.y = playerCC.transform.position.y;
+
+            //Vector3 vecOne = transform.position;
+            //Vector3 vecTow = agent.currentOffMeshLinkData.endPos;
+            //vecOne.y = 0;
+            //vecTow.y = 0;
+
+            transform.position = Vector3.MoveTowards(transform.position,_targetPos, agent.speed * Time.deltaTime);
+
+            float _targetDis = Vector3.Distance(transform.position, _targetPos);
+            //Debug.Log(_targetDis);
+
+            //transform.position = new Vector3(transform.position.x,agent.currentOffMeshLinkData.startPos.y,transform.position.z);
+           // AdjustHeight();
+
+            if (_targetDis < 0.1f)
+            {
+                agent.CompleteOffMeshLink();
+                flg = true;
+                OnNavMesh();
+            }
         }
         else
         {
-            OffNavMesh();
+            state.Update();
         }
-
     }
 
     public void ChangeState(BaseState _state)
@@ -90,7 +125,7 @@ public class BatController : MonoBehaviour
         //ナビメッシュの影響でY軸の値が地面の座標になっている
         Ray _ray = new Ray(transform.position, Vector3.up);
         RaycastHit _raycastHit;
-        bool _hit = Physics.Raycast(_ray, out _raycastHit,1000.0f, raycastLayerMask);
+        bool _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
         //ステージの立幅を記録
         float _maxHeight = (_raycastHit.distance - 1.0f);
@@ -121,11 +156,19 @@ public class BatController : MonoBehaviour
             _ray = new Ray(transform.position, Vector3.down);
             _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
+            if (_hit == false)
+            {
+                Debug.Log("当たっていない");
+            }
+
             //コウモリが地面から離れている分だけプレイヤーの高さを低くする
             _playerHeight -= _raycastHit.distance;
-            _playerHeight = Mathf.Abs(_playerHeight);
+            if (_playerHeight < 0)
+            {
+                _playerHeight = 0;
+            }
 
-            _targetHeight = Mathf.Min(Mathf.Max(_playerHeight, _minHeight),_maxHeight);
+            _targetHeight = Mathf.Min(Mathf.Max(_playerHeight, _minHeight), _maxHeight);
         }
         else
         {
