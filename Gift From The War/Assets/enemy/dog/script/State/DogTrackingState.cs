@@ -21,7 +21,7 @@ public class DogTrackingState : State<DogState>
 
         float targetDis = Vector3.Distance(owner.dog.transform.position,owner.player.transform.position);
 
-        if (targetDis <= 1.5f)
+        if (targetDis <= 2.0f)
         {
             owner.ChangeState(e_DogState.Attack);
             return;
