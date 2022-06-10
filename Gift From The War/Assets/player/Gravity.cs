@@ -50,9 +50,11 @@ public class Gravity : MonoBehaviour
 
         Ray ray = new Ray(trans.position, -trans.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, groundDis))   //’n–Ê‚É‚Â‚¢‚Ä‚¢‚éê‡
+        if (Physics.Raycast(ray, out hit, groundDis) || CC.isGrounded)   //’n–Ê‚É‚Â‚¢‚Ä‚¢‚éê‡
         {
             groundHitFlg = true;
+
+            Debug.Log(hit.distance);
 
             nowGravity = gravity * Time.deltaTime;
 
