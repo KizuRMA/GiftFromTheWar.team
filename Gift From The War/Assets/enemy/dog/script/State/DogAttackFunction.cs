@@ -24,4 +24,18 @@ public class DogAttackFunction : MonoBehaviour
 
         target.Damage(1.0f);
     }
+
+    public void Jump()
+    {
+        Rigidbody rig = owner.dog.GetComponent<Rigidbody>();
+        rig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        Vector3 _upVec = transform.up.normalized * 4;
+        Vector3 _forwardVec = transform.forward.normalized * 2;
+
+        rig.AddForce(_upVec, ForceMode.Impulse);
+        rig.AddForce(_forwardVec, ForceMode.Impulse);
+    }
+
+
 }
