@@ -54,8 +54,6 @@ public class Gravity : MonoBehaviour
         {
             groundHitFlg = true;
 
-            Debug.Log(hit.distance);
-
             nowGravity = gravity * Time.deltaTime;
 
             if (firstGroundHitFlg) return;
