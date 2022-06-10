@@ -6,6 +6,7 @@ public class fireGun : ShootParent
 {
     //’e‚Ì”­Ë
     [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private GetItem getItem;
     private List<GameObject> explosionEffectList = new List<GameObject>();   //’e‚Ì”z—ñ
     [SerializeField] private bulletChange bulletChange;
     private Vector3 explosionPos;   //”š”­ˆÊ’u
@@ -19,6 +20,8 @@ public class fireGun : ShootParent
 
     void Update()
     {
+        if (!getItem.fireAmmunitionFlg) return; //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
+
         MoveBullet();
 
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_fire) return;   //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç

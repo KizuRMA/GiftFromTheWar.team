@@ -14,12 +14,19 @@ public class GetItem : MonoBehaviour
 
     //アイテム判定
     private string tagName;
+    private string objName;
+    public bool windAmmunitionFlg { get; set; }
+    public bool magnetAmmunitionFlg { get; set; }
+    public bool fireAmmunitionFlg { get; set; }
 
     void Start()
     {
         gunObj.SetActive(false);
         closeItemFlg = false;
         tagName = null;
+        windAmmunitionFlg = false;
+        magnetAmmunitionFlg = false;
+        fireAmmunitionFlg = false;
     }
 
     void Update()
@@ -36,8 +43,9 @@ public class GetItem : MonoBehaviour
         if (Physics.Raycast(ray, out hit, handDis))
         {
             tagName = hit.collider.gameObject.tag;
+            objName = hit.collider.gameObject.name;
 
-            if (!(tagName == "gun")) return;   //触ったのがアイテム出なかったら処理しない
+            if (!(tagName == "gun" || tagName == "ammunition")) return;   //触ったのがアイテム出なかったら処理しない
 
             closeItemFlg = true;
 
@@ -51,11 +59,30 @@ public class GetItem : MonoBehaviour
         }
     }
 
-    private void JudgeItem()
+    private void JudgeItem()    //拾ったアイテム毎による処理
     {
         if (tagName == "gun")
         {
             gunObj.SetActive(true);
+            return;
+        }
+
+        if(objName == "WindAmmunition")
+        {
+            windAmmunitionFlg = true;
+            return;
+        }
+
+        if (objName == "MagnetAmmunition")
+        {
+            magnetAmmunitionFlg = true;
+            return;
+        }
+
+        if (objName == "FireAmmunition")
+        {
+            fireAmmunitionFlg = true;
+            return;
         }
     }
 }

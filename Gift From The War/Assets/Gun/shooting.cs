@@ -5,6 +5,7 @@ using UnityEngine;
 public class shooting : ShootParent
 {
     //’e‚Ì”­Ë  
+    [SerializeField] private GetItem getItem;
     [SerializeField] private bulletChange bulletChange;
     private bool shotFlg;                       //”­Ë‰Â”\
     private Quaternion bulletQua;               //”­Ë‚·‚é’e‚ÌŒü‚«
@@ -16,6 +17,8 @@ public class shooting : ShootParent
 
     void Update()
     {
+        if (!getItem.windAmmunitionFlg) return; //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
+
         MoveBullet();
 
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind) return;   //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç

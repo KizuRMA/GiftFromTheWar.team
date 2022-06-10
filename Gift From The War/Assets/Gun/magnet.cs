@@ -9,6 +9,7 @@ public class magnet : ShootParent
     [SerializeField] private GameObject bulletLineEffect;
     [SerializeField] private GameObject bulletLinePos;
     [SerializeField] private bulletChange bulletChange;
+    [SerializeField] private GetItem getItem;
 
     //’e‚Ì”­Ë
     private bool shotFlg;                       //”­Ë‰Â”\
@@ -50,6 +51,8 @@ public class magnet : ShootParent
 
     void Update()
     {
+        if (!getItem.magnetAmmunitionFlg) return;   //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
+
         MoveBullet();
 
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_magnet) return; //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç

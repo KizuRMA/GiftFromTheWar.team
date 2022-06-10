@@ -13,6 +13,7 @@ public class MoveWindGun : MonoBehaviour
     [SerializeField] private remainingAmount energyAmount;
     [SerializeField] private playerDied died;
     [SerializeField] private bulletChange bulletChange;
+    [SerializeField] private GetItem getItem;
 
     //ˆÚ“®
     [SerializeField] private float movePower;
@@ -49,6 +50,8 @@ public class MoveWindGun : MonoBehaviour
 
     void Update()
     {
+        if (!getItem.windAmmunitionFlg) return; //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
+
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind) return;   //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç
 
         if (died.diedFlg) return;
