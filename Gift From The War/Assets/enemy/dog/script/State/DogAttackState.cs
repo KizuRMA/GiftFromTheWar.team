@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DogAttackState : State<DogState>
 {
@@ -13,6 +14,7 @@ public class DogAttackState : State<DogState>
 
         //アニメーションを変化
         owner.animator.SetInteger("trans", 0);
+        owner.animator.SetFloat("Speed", 1.8f);
         owner.animator.SetTrigger("Attack");
         switchAnime = true;
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false) switchAnime = false;
@@ -23,7 +25,6 @@ public class DogAttackState : State<DogState>
         owner.agent.updateUpAxis = false;
 
         rig.isKinematic = false;
-        owner.agent.destination = owner.dog.transform.position;
     }
 
     public override void Execute()
@@ -35,7 +36,6 @@ public class DogAttackState : State<DogState>
             return;
         }
 
-        Debug.Log(owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
         if (owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             owner.ChangeState(e_DogState.Tracking);
@@ -46,6 +46,11 @@ public class DogAttackState : State<DogState>
     public override void Exit()
     {
         owner.agent.isStopped = false;
+        owner.agent.updatePosition = true;
+        owner.agent.updateUpAxis = true;
+
+        owner.agent.Warp(owner.dog.transform.position);
+
         rig.constraints = RigidbodyConstraints.None;
         rig.isKinematic = true;
     }

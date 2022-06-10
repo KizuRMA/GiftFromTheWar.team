@@ -24,7 +24,7 @@ public class BatController : MonoBehaviour
 
     private CharacterController playerCC;
 
-    public bool IsAttackable => (int)e_State.move == state.CurrentState;
+    public bool IsAttackable => (int)e_State.move == state.CurrentState && life >= 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -43,40 +43,7 @@ public class BatController : MonoBehaviour
     {
         if (agent.isOnOffMeshLink == true)
         {
-           // if (flg == true)
-           // {
-           //     // ‘Ì‚ð‘O‚ÉŒX‚¯‚é
-           //     Vector3 _localAngle = transform.localEulerAngles;
-           //     _localAngle.x = forwardAngle;
-           //     transform.localEulerAngles = _localAngle;
-
-           //     flg = false;
-           // }
-
-           // OffNavMesh();
-
-           // Vector3 _targetPos = agent.currentOffMeshLinkData.endPos;
-           // _targetPos.y = playerCC.transform.position.y;
-
-           // //Vector3 vecOne = transform.position;
-           // //Vector3 vecTow = agent.currentOffMeshLinkData.endPos;
-           // //vecOne.y = 0;
-           // //vecTow.y = 0;
-
-           // transform.position = Vector3.MoveTowards(transform.position,_targetPos, agent.speed * Time.deltaTime);
-
-           // float _targetDis = Vector3.Distance(transform.position, _targetPos);
-           // //Debug.Log(_targetDis);
-
-           // //transform.position = new Vector3(transform.position.x,agent.currentOffMeshLinkData.startPos.y,transform.position.z);
-           //// AdjustHeight();
-
-           // if (_targetDis < 0.1f)
-           // {
-           //     agent.CompleteOffMeshLink();
-           //     flg = true;
-           //     OnNavMesh();
-           // }
+           
         }
         else
         {

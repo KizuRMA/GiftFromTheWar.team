@@ -18,6 +18,11 @@ public class magnetBullet : MonoBehaviour
         if (other.gameObject.tag == "metal" || other.gameObject.tag == "Dog1")
         {
             mag.metal = other.gameObject;
+            if (other.gameObject.tag == "Dog1")
+            {
+                var state = other.GetComponent<DogState>();
+                state.MagnetCatch();
+            }
         }
         Destroy(this.gameObject);
     }

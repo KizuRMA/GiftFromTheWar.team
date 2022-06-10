@@ -38,6 +38,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public bool IsNavMeshON => agent.isStopped == false;
     public bool IsPlayerDiscover => IsCurrentState(e_BatPatrolState.Attack) == true || IsCurrentState(e_BatPatrolState.Tracking) == true;
     private float limitHight;
+    public float forwardAngle;
     public float height;
     public float hightRatio;
 
@@ -46,6 +47,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     void Start()
     {
+        forwardAngle = 20.0f;
         height = 0.8f;
         limitHight = 0.8f;
         hightRatio = 0.4f;
@@ -67,23 +69,29 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     protected override void Update()
     {
-        //NavMeshAgentの影響でY軸が地面の位置まで下がってしまっているため、高さは自分で管理している
-        if (agent.updatePosition == true)
-        {
-            //体を前に傾ける
-            Vector3 _localAngle = transform.localEulerAngles;
-            _localAngle.x = 20.0f;
-            transform.localEulerAngles = _localAngle;
-
-            AdjustHeight();
-        }
+       
 
         if (currentUltrasound != null)
         {
             currentUltrasound.Update();
         }
 
-        base.Update();
+        if (agent.isOnOffMeshLink == false)
+        {
+            //NavMeshAgentの影響でY軸が地面の位置まで下がってしまっているため、高さは自分で管理している
+            if (agent.updatePosition == true)
+            {
+                //体を前に傾ける
+                Vector3 _localAngle = transform.localEulerAngles;
+                _localAngle.x = 20.0f;
+                transform.localEulerAngles = _localAngle;
+
+                AdjustHeight();
+            }
+
+            base.Update();
+        }
+       
     }
 
     public void AdjustHeight()
@@ -93,12 +101,9 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         RaycastHit _raycastHit;
         bool _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
-        //上昇可能な高さ(天井までの距離 - コウモリの高さ)
-        float _climbableheight = _raycastHit.distance - 1.5f;
-
         //ステージの立幅を記録
-        float _maxHeight = _raycastHit.distance;
-        float _minHeight = _maxHeight;
+        float _maxHeight = (_raycastHit.distance - 1.0f);
+        float _minHeight = _raycastHit.distance;
 
         //ステージの縦幅の４割の位置にいるようにする
         _minHeight *= hightRatio;
@@ -109,29 +114,34 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
             _minHeight = limitHight;
         }
 
-        float _targetHeight = _maxHeight;
+        float _targetHeight;
 
         //プレイヤーの地面までの距離を取得
         _ray = new Ray(player.transform.position, Vector3.down);
         _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
-        if (_hit == true && IsPlayerDiscover == true)
+        playerAbnormalcondition abnormalcondition = player.GetComponent<playerAbnormalcondition>();
+
+        if (_hit == true && abnormalcondition.IsHowling() == true)
         {
-            _targetHeight = Mathf.Min(Mathf.Max(_raycastHit.distance, _minHeight), _maxHeight);
+            float _playerHeight = _raycastHit.distance;
+
+            //コウモリが地面からどれだけ離れているか調べる
+            _ray = new Ray(transform.position, Vector3.down);
+            _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
+
+            //コウモリが地面から離れている分だけプレイヤーの高さを低くする
+            _playerHeight -= _raycastHit.distance;
+            if (_playerHeight < 0)
+            {
+                _playerHeight = 0;
+            }
+
+            _targetHeight = Mathf.Min(Mathf.Max(_playerHeight, _minHeight), _maxHeight);
         }
         else
         {
             _targetHeight = _minHeight;
-        }
-
-        //上昇しようとしている時
-        if (height - _targetHeight <= 0)
-        {
-            //上昇可能な高さがない場合
-            if (_climbableheight <= 0)
-            {
-                return;
-            }
         }
 
         //現在のコウモリを高さを含んだ座標

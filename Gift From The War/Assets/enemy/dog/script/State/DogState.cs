@@ -10,6 +10,8 @@ public enum e_DogState
     Vigilance,
     Attack,
     CheckAround,
+    MagnetCatch,
+    BlowedAway,
 }
 
 public class DogState : StatefulObjectBase<DogState, e_DogState>
@@ -20,7 +22,8 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [SerializeField] public Animator animator;
     [SerializeField] public float SearchSpeed;
     [SerializeField] public float TrakingSpeed;
-
+    
+    private Rigidbody rd;
     public bool canVigilance;
     public bool IsVigilance => canVigilance == true;
 
@@ -31,6 +34,8 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         stateList.Add(new DogVigilanceState(this));
         stateList.Add(new DogAttackState(this));
         stateList.Add(new DogCheckAroundState(this));
+        stateList.Add(new DogMagnetCatchState(this));
+        stateList.Add(new DogBlowedAwayState(this));
 
         stateMachine = new StateMachine<DogState>();
 
@@ -49,5 +54,16 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         canVigilance = false;
         yield return new WaitForSeconds(3.0f);
         canVigilance = true;
+    }
+
+    public void MagnetCatch()
+    {
+        ChangeState(e_DogState.MagnetCatch);
+    }
+
+
+    public void ExplosionHit()
+    {
+        ChangeState(e_DogState.BlowedAway);
     }
 }
