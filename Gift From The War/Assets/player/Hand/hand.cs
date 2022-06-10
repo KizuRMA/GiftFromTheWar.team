@@ -7,26 +7,30 @@ public class hand : MonoBehaviour
 {
     [SerializeField] private playerHundLadder ladder;
     [SerializeField] private OpenMetalDoor metalDoor;
+    [SerializeField] private GetItem item;
+
+    [SerializeField] private Image image;
 
     void Start()
     {
-        this.GetComponent<Image>().enabled = false; //最初は表示しない
+        image = this.GetComponent<Image>();
+        image.enabled = false; //最初は表示しない
     }
 
     void Update()
     {
-        if(ladder.closeLadderFlg || metalDoor.closeValveFlg)  //梯子の近くなら表示
+        if(ladder.closeLadderFlg || metalDoor.closeValveFlg || item.closeItemFlg)
         {
-            this.GetComponent<Image>().enabled = true;
+            image.enabled = true;
         }
         else
         {
-            this.GetComponent<Image>().enabled = false;
+            image.enabled = false;
         }
 
-        if (ladder.touchLadderFlg || metalDoor.touchValveFlg)  //梯子に登り始めたら非表示
+        if (ladder.touchLadderFlg || metalDoor.touchValveFlg)
         {
-            this.GetComponent<Image>().enabled = false;
+            image.enabled = false;
         }
     }
 }
