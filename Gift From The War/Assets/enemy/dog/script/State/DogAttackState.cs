@@ -6,12 +6,10 @@ public class DogAttackState : State<DogState>
 {
     public DogAttackState(DogState owner) : base(owner) { }
     private Rigidbody rig;
-    float time;
     bool switchAnime;
 
     public override void Enter()
     {
-        time = 0;
 
         //アニメーションを変化
         owner.animator.SetInteger("trans", 0);
@@ -37,21 +35,18 @@ public class DogAttackState : State<DogState>
             return;
         }
 
-        //Debug.Log(owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-        if (owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
+        Debug.Log(owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        if (owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
-            owner.animator.speed = 0;
+            owner.ChangeState(e_DogState.Tracking);
+            return;
         }
-        //time += Time.deltaTime;
-        //if (time >= 1.0f)
-        //{
-        //    owner.ChangeState(e_DogState.Tracking);
-        //}
     }
 
     public override void Exit()
     {
         owner.agent.isStopped = false;
+        rig.constraints = RigidbodyConstraints.None;
         rig.isKinematic = true;
     }
 
