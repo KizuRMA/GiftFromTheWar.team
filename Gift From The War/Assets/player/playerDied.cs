@@ -143,6 +143,8 @@ public class playerDied : MonoBehaviour
     {
         yield return new WaitForSeconds(sceneCoolTime);  //クールタイム分待つ
 
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("TitleScene");
     }
 }
