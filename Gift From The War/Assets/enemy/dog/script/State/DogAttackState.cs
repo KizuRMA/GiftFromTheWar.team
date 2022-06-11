@@ -14,7 +14,7 @@ public class DogAttackState : State<DogState>
 
         //アニメーションを変化
         owner.animator.SetInteger("trans", 0);
-        owner.animator.SetFloat("Speed", 1.8f);
+        owner.animator.SetFloat("Speed", 1.0f);
         owner.animator.SetTrigger("Attack");
         switchAnime = true;
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false) switchAnime = false;

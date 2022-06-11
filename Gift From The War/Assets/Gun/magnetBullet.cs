@@ -15,7 +15,7 @@ public class magnetBullet : MonoBehaviour
     {
         if (other.gameObject.tag == "dogAgent") return; //“–‚½‚Á‚½‚Ì‚ªdogAgent‚¾‚Á‚½‚çˆ—‚µ‚È‚¢
 
-        if (other.gameObject.tag == "metal" || other.gameObject.tag == "Dog1")
+        if (other.gameObject.tag == "metal" || other.gameObject.tag == "Dog1" || other.gameObject.tag == "Bat")
         {
             mag.metal = other.gameObject;
             if (other.gameObject.tag == "Dog1")

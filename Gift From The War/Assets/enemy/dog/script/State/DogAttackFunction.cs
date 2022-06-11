@@ -27,10 +27,12 @@ public class DogAttackFunction : MonoBehaviour
 
     public void Jump()
     {
+        owner.animator.SetFloat("Speed", 1.8f);
+
         rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        Vector3 _upVec = transform.up.normalized * 3;
-        Vector3 _forwardVec = transform.forward.normalized * 4;
+        Vector3 _upVec = transform.up.normalized * 3.5f;
+        Vector3 _forwardVec = transform.forward.normalized * 4.5f;
 
         rd.AddForce(_upVec, ForceMode.Impulse);
         rd.AddForce(_forwardVec, ForceMode.Impulse);

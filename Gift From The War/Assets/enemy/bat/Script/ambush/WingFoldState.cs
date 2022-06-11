@@ -408,7 +408,7 @@ public class WingFoldState : BaseState
     {
         if (nowAction == e_Action.sticking)
         {
-            GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
+            transform.GetComponent<BoxCollider>().enabled = false;
         }
     }
 
