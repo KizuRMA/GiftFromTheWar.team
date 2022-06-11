@@ -10,6 +10,7 @@ public enum e_BatPatrolState
     Tracking,
     Attack,
     ShakeHead,
+    MagnetCatch,
 }
 
 public enum e_UltrasoundState
@@ -58,6 +59,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         stateList.Add(new BatTrackingState(this));
         stateList.Add(new BatAttackState(this));
         stateList.Add(new BatShakeHeadState(this));
+        stateList.Add(new PatrolBatMagnetCatchState(this));
 
         ChangeState(e_BatPatrolState.MoveWayPoints);
 
@@ -186,6 +188,8 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         target.Damage(1.0f);
     }
 
+    public void SearchPlayerAction() { }
+
     public void OnAttackStart()
     {
         attackCollider.enabled = true;
@@ -215,9 +219,15 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         attackCollider.enabled = false;
     }
 
-    public void SearchPlayerAction()
-    {
 
+    public void MagnetCatch()
+    {
+        if (agent.isOnOffMeshLink == true)
+        {
+            agent.CompleteOffMeshLink();
+        }
+
+        ChangeState(e_BatPatrolState.MagnetCatch);
     }
 
     public float CheckVectorDegAngCode(Vector3 _baseVec,Vector3 _targetVec,Vector2 _searchAxis)    //2本のベクトルから角度を符号を含む角度を求める

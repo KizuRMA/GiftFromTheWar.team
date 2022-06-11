@@ -15,14 +15,9 @@ public class windBulletHit : MonoBehaviour
 
         Debug.Log(_collider.gameObject.name);
 
-        if (_collider.gameObject.name == "Bat")
+        if (_collider.gameObject.tag == "Bat")
         {
-            var target = _collider.transform.GetComponent<BatController>();
-            target.Damage(1);
-        }
-        else
-        {
-            var target = _collider.transform.GetComponent<BatPatrolState>();
+            var target = _collider.transform.GetComponent<BatInterface>();
             target.Damage(1);
         }
 

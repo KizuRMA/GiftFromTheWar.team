@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class DogAttackState : State<DogState>
 {
     public DogAttackState(DogState owner) : base(owner) { }
-    private Rigidbody rig;
+    private Rigidbody rd;
     bool switchAnime;
 
     public override void Enter()
@@ -19,12 +19,13 @@ public class DogAttackState : State<DogState>
         switchAnime = true;
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false) switchAnime = false;
 
-        rig = owner.dog.GetComponent<Rigidbody>();
+        rd = owner.dog.GetComponent<Rigidbody>();
         owner.agent.isStopped = true;
         owner.agent.updatePosition = false;
         owner.agent.updateUpAxis = false;
 
-        rig.isKinematic = false;
+        rd.isKinematic = false;
+        rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     public override void Execute()
@@ -51,8 +52,8 @@ public class DogAttackState : State<DogState>
 
         owner.agent.Warp(owner.dog.transform.position);
 
-        rig.constraints = RigidbodyConstraints.None;
-        rig.isKinematic = true;
+        rd.constraints = RigidbodyConstraints.None;
+        rd.isKinematic = true;
     }
 
     void CheckSwitchAnime()

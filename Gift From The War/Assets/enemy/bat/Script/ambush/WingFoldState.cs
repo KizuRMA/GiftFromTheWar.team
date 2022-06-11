@@ -368,7 +368,7 @@ public class WingFoldState : BaseState
             animator.SetInteger("trans", 0);
             animator.SetFloat("AnimationSpeed", 1.3f);
 
-            GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = true;
+           transform.GetComponent<BoxCollider>().enabled = true;
 
             //コウモリを追跡ステートに切り替える
             BatController batCon = gameObject.GetComponent<BatController>();

@@ -23,6 +23,12 @@ public class magnetBullet : MonoBehaviour
                 var state = other.GetComponent<DogState>();
                 state.MagnetCatch();
             }
+
+            if (other.gameObject.tag == "Bat")
+            {
+                var state = other.GetComponent<BatPatrolState>();
+                state.MagnetCatch();
+            }
         }
         Destroy(this.gameObject);
     }

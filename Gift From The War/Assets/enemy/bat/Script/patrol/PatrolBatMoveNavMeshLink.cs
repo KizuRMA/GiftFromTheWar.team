@@ -11,6 +11,8 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
     private BatPatrolState state;
     private Vector3 nowPos;
 
+    public bool IsEnd => state.IsCurrentState(e_BatPatrolState.MagnetCatch) == true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,8 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
             // OffmeshLinkに乗るまで普通に移動
             yield return new WaitWhile(() => agent.isOnOffMeshLink == false);
 
+            if (IsEnd == true) continue;
+
             // OffMeshLinkに乗ったので、NavmeshAgentによる移動を止めて、
             // OffMeshLinkの終わりまでNavmeshAgent.speedと同じ速度で移動
 
@@ -47,6 +51,7 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
 
             yield return new WaitWhile(() =>
             {
+                if (IsEnd == true) return false;
 
                 if (state.IsPlayerDiscover == true)
                 {
@@ -73,6 +78,8 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
                     return Vector3.Distance(nowPos, _targetPos) > 0.05f;
                 }
             });
+
+            if (IsEnd == true) continue;
 
             //ナビメッシュの影響でY軸の値が地面の座標になっている
             Ray _ray = new Ray(transform.position, Vector3.down);
