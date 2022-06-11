@@ -6,8 +6,10 @@ public class fireGun : ShootParent
 {
     //弾の発射
     [SerializeField] private GameObject explosionEffect;
-    [SerializeField] private GetItem getItem;
-    private List<GameObject> explosionEffectList = new List<GameObject>();   //弾の配列
+    [SerializeField] private GameObject explosionHit;
+    private List<GameObject> explosionEffectList = new List<GameObject>();   //爆発エフェクトの配列
+    private List<GameObject> explosionHitList = new List<GameObject>();   //爆発当たり判定の配列
+    [SerializeField] private GetItem getItem; 
     [SerializeField] private bulletChange bulletChange;
     private Vector3 explosionPos;   //爆発位置
     private bool shotFlg;   //発射可能
@@ -15,7 +17,6 @@ public class fireGun : ShootParent
     private void Start()
     {
         trans = transform;
-        //explosionEffect.SetActive(false);
     }
 
     void Update()
@@ -45,9 +46,13 @@ public class fireGun : ShootParent
         if (explosionEffectList.Count != 0)
         {
             if (explosionEffectList[0].transform.childCount == 0)
+            {
                 explosionEffectList.RemoveAt(0);
+                Destroy(explosionHitList[0]);
+                explosionHitList.RemoveAt(0);
+            }
         }
-
+        
         //弾がある状態で、右クリックすると
         if (bullet.Count == 0) return;
 
@@ -84,6 +89,6 @@ public class fireGun : ShootParent
         Destroy(bullet[0]);
 
         explosionEffectList.Add((GameObject)Instantiate(explosionEffect, explosionPos, Quaternion.identity));
-        //explosionEffect.transform.position = explosionPos;
+        explosionHitList.Add((GameObject)Instantiate(explosionHit, explosionPos, Quaternion.identity));
     }
 }
