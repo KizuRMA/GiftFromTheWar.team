@@ -24,6 +24,11 @@ public abstract class BaseState : MonoBehaviour
 
     }
 
+    public virtual void Exit()
+    {
+
+    }
+
     public void ChangeUltrasound(BaseUltrasound _base)
     {
         //À‘Ì‚ğíœ

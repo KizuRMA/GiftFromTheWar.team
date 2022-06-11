@@ -10,19 +10,19 @@ public class BatController : MonoBehaviour
         move,
         wingFold,
         attack,
+        magnetCatch,
     }
 
-    BaseState state;
-    public float height { get; set; }
-    public float forwardAngle { get; set; }
-    private NavMeshAgent agent;
-
-    private float life;
     [SerializeField] public float defaltHight;
     [SerializeField] public float defaltForwardAngle;
     [SerializeField] private LayerMask raycastLayerMask;
-
-    private CharacterController playerCC;
+    public float height { get; set; }
+    public float forwardAngle { get; set; }
+    private float life;
+   
+    public BaseState state;
+    public CharacterController playerCC;
+    public NavMeshAgent agent;
 
     public bool IsAttackable => (int)e_State.move == state.CurrentState && life >= 1.0f;
 
@@ -57,6 +57,7 @@ public class BatController : MonoBehaviour
         if (state != null)
         {
             state.Init();
+            state.Exit();
         }
         state = null;
         //新しい実体のアドレスを入れる
@@ -169,5 +170,15 @@ public class BatController : MonoBehaviour
         agent.updateUpAxis = true;
         agent.updateRotation = true;
         agent.updatePosition = true;
+    }
+
+    public void MagnetCatch()
+    {
+        if (agent.isOnOffMeshLink == true)
+        {
+            agent.CompleteOffMeshLink();
+        }
+
+        ChangeState(GetComponent<BatMagnetCatchState>());
     }
 }

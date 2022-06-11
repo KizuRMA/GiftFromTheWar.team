@@ -219,7 +219,6 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         attackCollider.enabled = false;
     }
 
-
     public void MagnetCatch()
     {
         if (agent.isOnOffMeshLink == true)

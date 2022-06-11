@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class PatrolBatMoveNavMeshLink : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private LayerMask raycastLayerMask;
+    [SerializeField] public LayerMask raycastLayerMask;
     private GameObject player;
     private BatPatrolState state;
     private Vector3 nowPos;

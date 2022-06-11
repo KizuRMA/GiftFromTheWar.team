@@ -8153,6 +8153,36 @@ MonoBehaviour:
   owner: {fileID: 536341824}
   attackCollider: {fileID: 2111353834}
   rd: {fileID: 536341831}
+--- !u!114 &536341834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536341823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef41580359daf4a45a06f787efcea101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onMagnetCatch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 536341824}
+        m_TargetAssemblyTypeName: DogState, Assembly-CSharp
+        m_MethodName: MagnetCatch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &563300201 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 54102979e7fd8a84faf9d5e26e91114a, type: 3}
@@ -8206,6 +8236,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onMagnetCatch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 583161584}
+        m_TargetAssemblyTypeName: BatController, Assembly-CSharp
+        m_MethodName: MagnetCatch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &583161607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583161559}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d243fdba1eb1247ba8babae0b43275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &595706207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20103,7 +20160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_TagString
@@ -31326,6 +31383,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
   m_PrefabInstance: {fileID: 961459492}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2020527148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020527136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef41580359daf4a45a06f787efcea101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onMagnetCatch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2020527141}
+        m_TargetAssemblyTypeName: DogState, Assembly-CSharp
+        m_MethodName: MagnetCatch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &2053968128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32741,6 +32828,21 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onMagnetCatch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 919132147570548761}
+        m_TargetAssemblyTypeName: BatPatrolState, Assembly-CSharp
+        m_MethodName: MagnetCatch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -53269,6 +53371,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1455967548325289077, guid: ebe59bb9d7bcbd04ea12abf232b32737, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054790960757518148, guid: ebe59bb9d7bcbd04ea12abf232b32737, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8054790960757518149, guid: ebe59bb9d7bcbd04ea12abf232b32737, type: 3}

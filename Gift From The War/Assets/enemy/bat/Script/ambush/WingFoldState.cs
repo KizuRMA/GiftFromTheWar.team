@@ -181,7 +181,7 @@ public class WingFoldState : BaseState
         //天井との高さが近い場合
         if (_targetDis <= 0.5f)
         {
-            GameObject.Find("CollisionDetector").GetComponent<BoxCollider>().enabled = false;
+            transform.GetComponent<BoxCollider>().enabled = false;
 
             //コウモリが180度回転していない場合
             if (myController.forwardAngle < 180.0f)
