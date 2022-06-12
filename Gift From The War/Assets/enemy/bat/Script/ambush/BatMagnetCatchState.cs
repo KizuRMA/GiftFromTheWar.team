@@ -22,6 +22,8 @@ public class BatMagnetCatchState : BaseState
         myController.agent.updatePosition = false;
         myController.agent.updateUpAxis = false;
 
+
+        GetComponent<BoxCollider>().isTrigger = false;
         rd.isKinematic = false;
         rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 

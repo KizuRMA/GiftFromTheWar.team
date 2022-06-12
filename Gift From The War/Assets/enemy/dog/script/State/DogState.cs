@@ -28,6 +28,9 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     public bool canVigilance;
     public bool IsVigilance => canVigilance == true;
 
+    public float life = 1.0f;
+    public bool IsAlive => life > 0.0f;
+
     void Start()
     {
         stateList.Add(new DogSearchState(this));
@@ -59,12 +62,15 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
 
     public void MagnetCatch()
     {
+        if (IsAlive == false) return;
         ChangeState(e_DogState.MagnetCatch);
     }
 
-
     public void ExplosionHit(int _damage,Vector3 _hypocenter)
     {
+        if (IsAlive == false) return;
+        life -= _damage;
+
         hypocenter = _hypocenter;
         ChangeState(e_DogState.BlowedAway);
     }
