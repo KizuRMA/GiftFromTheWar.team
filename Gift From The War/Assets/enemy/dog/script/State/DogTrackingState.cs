@@ -12,16 +12,28 @@ public class DogTrackingState : State<DogState>
         owner.animator.SetInteger("trans", 1);
         owner.animator.SetFloat("Speed", 1.1f);
         owner.agent.speed = owner.TrakingSpeed;
-        owner.agent.stoppingDistance = 1.5f;
     }
 
     public override void Execute()
     {
         owner.agent.destination = owner.player.transform.position;
 
+        if (owner.agent.remainingDistance < 1.5f)
+        {
+            owner.agent.updatePosition = false;
+            owner.agent.updateUpAxis = false;
+        }
+        else
+        {
+            owner.agent.updatePosition = true;
+            owner.agent.updateUpAxis = true;
+        }
+
+       
+
         float targetDis = Vector3.Distance(owner.dog.transform.position,owner.player.transform.position);
 
-        if (targetDis <= 2.0f)
+        if (IsPossibleToAttack() == true)
         {
             owner.ChangeState(e_DogState.Attack);
             return;
@@ -37,5 +49,24 @@ public class DogTrackingState : State<DogState>
     public override void Exit()
     {
         owner.animator.SetFloat("Speed", 1.0f);
+    }
+
+    private bool IsPossibleToAttack()
+    {
+        GameObject _dog = owner.dog;
+        Vector3 _targetVec = owner.player.transform.position - (_dog.transform.position + new Vector3(0, 0.5f, 0));
+        float _dis = _targetVec.magnitude;
+
+        if (_dis >= 3.0f) return false;
+
+        Vector3 _fowardVec = _dog.transform.forward;
+        _fowardVec.y = 0;
+        _targetVec.y = 0;
+
+        float _dot = Vector3.Dot(_targetVec.normalized, _fowardVec.normalized);
+
+        if (Mathf.Acos(_dot) * Mathf.Rad2Deg >= 10.0f) return false;
+
+        return true;
     }
 }
