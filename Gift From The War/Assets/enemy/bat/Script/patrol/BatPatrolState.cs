@@ -33,9 +33,18 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [SerializeField] private Collider attackCollider;
     [SerializeField] private ParticleSystem windBladeParticle;
 
+    public enum e_CauseOfDead
+    {
+        None,
+        Explosion,
+        Wind,
+    }
+
+    public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
+    public Vector3 hypocenter;
+
     public BaseUltrasound currentUltrasound;
     protected List<BaseUltrasound> ultrasoundsList = new List<BaseUltrasound>();
-
     public bool IsNavMeshON => agent.isStopped == false;
     public bool IsPlayerDiscover => IsCurrentState(e_BatPatrolState.Attack) == true || IsCurrentState(e_BatPatrolState.Tracking) == true;
     private float limitHight;
@@ -158,14 +167,29 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         transform.position = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
     }
 
-    public void Damage(int damage)
+    public void Damage(int _damage)
     {
+        causeOfDead = e_CauseOfDead.Wind;
+        ChangeState(e_BatPatrolState.Dead);
+    }
+
+    public void ExpDamage(int _damage,Vector3 _hypocenter)
+    {
+        causeOfDead = e_CauseOfDead.Explosion;
+        hypocenter = _hypocenter;
         ChangeState(e_BatPatrolState.Dead);
     }
 
     public void DestroyBat()
     {
-        Instantiate(prefab, transform.position, transform.rotation);
+        GameObject game =  Instantiate(prefab, transform.position, transform.rotation);
+
+        //“|‚³‚ê‚½Œ´ˆö‚ª”š”­‚ÌŽž
+        if (causeOfDead == e_CauseOfDead.Explosion)
+        {
+            DestructionScript dead = game.GetComponent<DestructionScript>();
+            dead.ExpBlownAway(hypocenter);
+        }
         Destroy(bat);
     }
 

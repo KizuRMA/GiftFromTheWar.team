@@ -30,7 +30,15 @@ public class DeadState : BaseState
     public override void Update()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y + myController.height, transform.position.z);
-        Instantiate(BoxPrefab, transform.position, transform.rotation);
+        GameObject game = Instantiate(BoxPrefab, transform.position, transform.rotation);
+
+        //“|‚³‚ê‚½Œ´ˆö‚ª”š”­‚ÌŽž
+        if (myController.causeOfDead == BatController.e_CauseOfDead.Explosion)
+        {
+            DestructionScript dead = game.GetComponent<DestructionScript>();
+            dead.ExpBlownAway(myController.hypocenter);
+        }
+
         Destroy(gameObject);
     }
 }

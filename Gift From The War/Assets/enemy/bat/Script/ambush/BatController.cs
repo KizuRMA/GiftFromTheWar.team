@@ -13,13 +13,23 @@ public class BatController : MonoBehaviour
         magnetCatch,
     }
 
+    public enum e_CauseOfDead
+    {
+        None,
+        Explosion,
+        Wind,
+    }
+
     [SerializeField] public float defaltHight;
     [SerializeField] public float defaltForwardAngle;
     [SerializeField] private LayerMask raycastLayerMask;
     public float height { get; set; }
     public float forwardAngle { get; set; }
     private float life;
-   
+    public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
+    public Vector3 hypocenter;
+
+
     public BaseState state;
     public CharacterController playerCC;
     public NavMeshAgent agent;
@@ -82,6 +92,20 @@ public class BatController : MonoBehaviour
         life -= _damage;
         if (life > 0) return;
 
+        causeOfDead = e_CauseOfDead.Wind;
+        ChangeState(GetComponent<DeadState>());
+    }
+
+    public void ExpDamage(int _damage,Vector3 _hypocenter)
+    {
+        //ÇQâÒà»è„DeadStateÇ…Ç»ÇÁÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
+        if (life < 0) return;
+
+        life -= _damage;
+        if (life > 0) return;
+
+        hypocenter = _hypocenter;
+        causeOfDead = e_CauseOfDead.Explosion;
         ChangeState(GetComponent<DeadState>());
     }
 

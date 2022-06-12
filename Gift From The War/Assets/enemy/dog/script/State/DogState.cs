@@ -22,7 +22,8 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [SerializeField] public Animator animator;
     [SerializeField] public float SearchSpeed;
     [SerializeField] public float TrakingSpeed;
-    
+
+    public Vector3 hypocenter;
     private Rigidbody rd;
     public bool canVigilance;
     public bool IsVigilance => canVigilance == true;
@@ -62,8 +63,9 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     }
 
 
-    public void ExplosionHit()
+    public void ExplosionHit(int _damage,Vector3 _hypocenter)
     {
+        hypocenter = _hypocenter;
         ChangeState(e_DogState.BlowedAway);
     }
 }

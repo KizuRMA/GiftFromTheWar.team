@@ -25,4 +25,17 @@ public class fireBulletHit : MonoBehaviour
 
         trans.localScale = new Vector3(nowScale, nowScale, nowScale);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Bat" || other.gameObject.tag == "Dog1")
+        {
+            var enemyInter = other.GetComponent<EnemyInterface>();
+
+            if (enemyInter != null)
+            {
+                enemyInter.ExpDamage(1,transform.position);
+            }
+        }
+    }
 }

@@ -21,7 +21,7 @@ public class DogBlowedAwayState : State<DogState>
         Vector3 _forwardVec = owner.transform.forward .normalized * -3;
 
         rd.AddForce(_upVec, ForceMode.Impulse);
-        rd.AddForce(_forwardVec, ForceMode.Impulse);
+        rd.AddTorque(_forwardVec, ForceMode.Impulse);
     }
 
     public override void Execute()

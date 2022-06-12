@@ -6,7 +6,8 @@ public class DestructionScript : MonoBehaviour
 {
     private GameObject[] ChildObjects;
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         ChildObjects = new GameObject[gameObject.transform.childCount];
 
@@ -35,13 +36,28 @@ public class DestructionScript : MonoBehaviour
             r.AddForce(vect, ForceMode.Impulse);
             r.AddTorque(vect, ForceMode.Impulse);
         }
-
-        Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Destroy(gameObject,1.0f);
+    }
 
+    public void ExpBlownAway(Vector3 _hypocenter)
+    {
+        foreach (GameObject game in ChildObjects)
+        {
+            Rigidbody r = game.GetComponent<Rigidbody>();
+
+            r.transform.SetParent(null);
+            r.isKinematic = false;
+
+            var vect = game.transform.position - _hypocenter;
+            float dis = vect.magnitude;
+            vect = vect.normalized * (10.0f - Mathf.Min((dis * 5.0f),10.0f));
+            r.AddForce(vect, ForceMode.Impulse);
+            r.AddTorque(vect, ForceMode.Impulse);
+        }
     }
 }
