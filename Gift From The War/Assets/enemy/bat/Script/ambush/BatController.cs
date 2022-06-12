@@ -23,6 +23,7 @@ public class BatController : MonoBehaviour
     public BaseState state;
     public CharacterController playerCC;
     public NavMeshAgent agent;
+    public Animator animator;
 
     public bool IsAttackable => (int)e_State.move == state.CurrentState && life >= 1.0f;
 
@@ -31,6 +32,7 @@ public class BatController : MonoBehaviour
     {
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         life = 1.0f;
         height = defaltHight;
         forwardAngle = defaltForwardAngle;

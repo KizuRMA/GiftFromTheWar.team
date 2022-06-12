@@ -709,7 +709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &168035774
 Light:
   m_ObjectHideFlags: 0
@@ -8263,6 +8263,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d243fdba1eb1247ba8babae0b43275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rd: {fileID: 583161610}
+--- !u!54 &583161610 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 8054790960757518149, guid: ebe59bb9d7bcbd04ea12abf232b32737, type: 3}
+  m_PrefabInstance: {fileID: 8054790960174397858}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &595706207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20160,7 +20166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 648d015e708c9aa43a8d7f477c3a85a6, type: 3}
       propertyPath: m_TagString
@@ -53373,9 +53379,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5182781171169813762, guid: ebe59bb9d7bcbd04ea12abf232b32737, type: 3}
+      propertyPath: m_TagString
+      value: Detector
+      objectReference: {fileID: 0}
     - target: {fileID: 8054790960757518148, guid: ebe59bb9d7bcbd04ea12abf232b32737, type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054790960757518149, guid: ebe59bb9d7bcbd04ea12abf232b32737, type: 3}
+      propertyPath: m_Mass
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8054790960757518149, guid: ebe59bb9d7bcbd04ea12abf232b32737, type: 3}
       propertyPath: m_CollisionDetection

@@ -71,8 +71,6 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     protected override void Update()
     {
-       
-
         if (currentUltrasound != null)
         {
             currentUltrasound.Update();
@@ -124,7 +122,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         playerAbnormalcondition abnormalcondition = player.GetComponent<playerAbnormalcondition>();
 
-        if (_hit == true && abnormalcondition.IsHowling() == true)
+        if (_hit == true && abnormalcondition.IsHowling() == true && IsPlayerDiscover == true)
         {
             float _playerHeight = _raycastHit.distance;
 

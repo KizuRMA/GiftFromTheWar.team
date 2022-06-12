@@ -181,7 +181,7 @@ public class WingFoldState : BaseState
         //天井との高さが近い場合
         if (_targetDis <= 0.5f)
         {
-            transform.GetComponent<BoxCollider>().enabled = false;
+            transform.GetComponent<BoxCollider>().isTrigger = true;
 
             //コウモリが180度回転していない場合
             if (myController.forwardAngle < 180.0f)
@@ -368,7 +368,7 @@ public class WingFoldState : BaseState
             animator.SetInteger("trans", 0);
             animator.SetFloat("AnimationSpeed", 1.3f);
 
-           transform.GetComponent<BoxCollider>().enabled = true;
+           transform.GetComponent<BoxCollider>().isTrigger = false;
 
             //コウモリを追跡ステートに切り替える
             BatController batCon = gameObject.GetComponent<BatController>();
@@ -408,7 +408,7 @@ public class WingFoldState : BaseState
     {
         if (nowAction == e_Action.sticking)
         {
-            transform.GetComponent<BoxCollider>().enabled = false;
+            transform.GetComponent<BoxCollider>().isTrigger = true;
         }
     }
 
