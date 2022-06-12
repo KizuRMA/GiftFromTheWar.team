@@ -1,31 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DogAttackState : State<DogState>
 {
     public DogAttackState(DogState owner) : base(owner) { }
-    private Rigidbody rig;
-    float time;
+    private Rigidbody rd;
     bool switchAnime;
 
     public override void Enter()
     {
-        time = 0;
 
         //アニメーションを変化
         owner.animator.SetInteger("trans", 0);
+        owner.animator.SetFloat("Speed", 1.0f);
         owner.animator.SetTrigger("Attack");
         switchAnime = true;
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false) switchAnime = false;
 
-        rig = owner.dog.GetComponent<Rigidbody>();
+        rd = owner.dog.GetComponent<Rigidbody>();
         owner.agent.isStopped = true;
         owner.agent.updatePosition = false;
         owner.agent.updateUpAxis = false;
 
-        rig.isKinematic = false;
-        owner.agent.destination = owner.dog.transform.position;
+        rd.isKinematic = false;
+        rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     public override void Execute()
@@ -37,22 +37,23 @@ public class DogAttackState : State<DogState>
             return;
         }
 
-        //Debug.Log(owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-        if (owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
+        if (owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
-            owner.animator.speed = 0;
+            owner.ChangeState(e_DogState.Tracking);
+            return;
         }
-        //time += Time.deltaTime;
-        //if (time >= 1.0f)
-        //{
-        //    owner.ChangeState(e_DogState.Tracking);
-        //}
     }
 
     public override void Exit()
     {
         owner.agent.isStopped = false;
-        rig.isKinematic = true;
+        owner.agent.updatePosition = true;
+        owner.agent.updateUpAxis = true;
+
+        owner.agent.Warp(owner.dog.transform.position);
+
+        rd.constraints = RigidbodyConstraints.None;
+        rd.isKinematic = true;
     }
 
     void CheckSwitchAnime()

@@ -6,21 +6,18 @@ public class windBulletHit : MonoBehaviour
 {
     public void OnTriggerStay(Collider _collider)
     {
-        if (_collider.gameObject.tag == "dogAgent") return; //“–‚½‚Á‚½‚Ì‚ªdogAgent‚¾‚Á‚½‚çˆ—‚µ‚È‚¢
+        if (_collider.tag == "Detector") return;
+
         Destroy(this.gameObject);
 
         if (_collider.tag != "Bat") return;
 
-        if (_collider.gameObject.name == "CollisionDetector")
+        if (_collider.gameObject.tag == "Bat")
         {
-            var target = _collider.transform.parent.GetComponent<BatController>();
+            var target = _collider.transform.GetComponent<EnemyInterface>();
             target.Damage(1);
         }
-        else
-        {
-            var target = _collider.transform.GetComponent<BatPatrolState>();
-            target.Damage(1);
-        }
+
         return;
     }
 }

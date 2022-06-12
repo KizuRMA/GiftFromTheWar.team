@@ -21,7 +21,7 @@ public class BatTrackingState : State<BatPatrolState>
         Vector3 _batPos = owner.bat.transform.position + (owner.bat.transform.forward * 0.5f);
         float distance = Vector3.Distance(_batPos,owner.player.transform.position);
 
-        if (distance <= 3.0f)
+        if (distance <= 1.0f)
         {
             target.AddHowlingAbnormal();
             owner.ChangeState(e_BatPatrolState.Attack);

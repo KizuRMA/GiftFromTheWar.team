@@ -10,27 +10,29 @@ public class BatController : MonoBehaviour
         move,
         wingFold,
         attack,
+        magnetCatch,
     }
 
-    BaseState state;
-    public float height { get; set; }
-    public float forwardAngle { get; set; }
-    private NavMeshAgent agent;
-
-    private float life;
     [SerializeField] public float defaltHight;
     [SerializeField] public float defaltForwardAngle;
     [SerializeField] private LayerMask raycastLayerMask;
+    public float height { get; set; }
+    public float forwardAngle { get; set; }
+    private float life;
+   
+    public BaseState state;
+    public CharacterController playerCC;
+    public NavMeshAgent agent;
+    public Animator animator;
 
-    private CharacterController playerCC;
-
-    public bool IsAttackable => (int)e_State.move == state.CurrentState;
+    public bool IsAttackable => (int)e_State.move == state.CurrentState && life >= 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         playerCC = GameObject.Find("player").GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         life = 1.0f;
         height = defaltHight;
         forwardAngle = defaltForwardAngle;
@@ -43,40 +45,7 @@ public class BatController : MonoBehaviour
     {
         if (agent.isOnOffMeshLink == true)
         {
-           // if (flg == true)
-           // {
-           //     // 体を前に傾ける
-           //     Vector3 _localAngle = transform.localEulerAngles;
-           //     _localAngle.x = forwardAngle;
-           //     transform.localEulerAngles = _localAngle;
-
-           //     flg = false;
-           // }
-
-           // OffNavMesh();
-
-           // Vector3 _targetPos = agent.currentOffMeshLinkData.endPos;
-           // _targetPos.y = playerCC.transform.position.y;
-
-           // //Vector3 vecOne = transform.position;
-           // //Vector3 vecTow = agent.currentOffMeshLinkData.endPos;
-           // //vecOne.y = 0;
-           // //vecTow.y = 0;
-
-           // transform.position = Vector3.MoveTowards(transform.position,_targetPos, agent.speed * Time.deltaTime);
-
-           // float _targetDis = Vector3.Distance(transform.position, _targetPos);
-           // //Debug.Log(_targetDis);
-
-           // //transform.position = new Vector3(transform.position.x,agent.currentOffMeshLinkData.startPos.y,transform.position.z);
-           //// AdjustHeight();
-
-           // if (_targetDis < 0.1f)
-           // {
-           //     agent.CompleteOffMeshLink();
-           //     flg = true;
-           //     OnNavMesh();
-           // }
+           
         }
         else
         {
@@ -90,6 +59,7 @@ public class BatController : MonoBehaviour
         if (state != null)
         {
             state.Init();
+            state.Exit();
         }
         state = null;
         //新しい実体のアドレスを入れる
@@ -202,5 +172,15 @@ public class BatController : MonoBehaviour
         agent.updateUpAxis = true;
         agent.updateRotation = true;
         agent.updatePosition = true;
+    }
+
+    public void MagnetCatch()
+    {
+        if (agent.isOnOffMeshLink == true)
+        {
+            agent.CompleteOffMeshLink();
+        }
+
+        ChangeState(GetComponent<BatMagnetCatchState>());
     }
 }
