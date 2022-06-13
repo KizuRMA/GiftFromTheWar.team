@@ -10,7 +10,7 @@ public class DogBlowedAwayState : State<DogState>
     public override void Enter()
     {
         owner.animator.Play("metarig|action_Sniff");
-        owner.animator.speed = 4.5f;
+        owner.animator.speed = 0.5f;
 
         //ナビメッシュを切る
         owner.agent.isStopped = true;
@@ -38,16 +38,16 @@ public class DogBlowedAwayState : State<DogState>
 
     public override void Execute()
     {
-        ////アニメーション速度を徐々に落とす
-        //if (owner.animator.speed > 0)
-        //{
-        //    float difAmount = Time.deltaTime * 0.2f;
-        //    owner.animator.speed -= difAmount;
-        //    if (owner.animator.speed < difAmount)
-        //    {
-        //        owner.animator.speed = 0;
-        //    }
-        //}
+        //アニメーション速度を徐々に落とす
+        if (owner.animator.speed > 0)
+        {
+            float difAmount = Time.deltaTime * 0.2f;
+            owner.animator.speed -= difAmount;
+            if (owner.animator.speed < difAmount)
+            {
+                owner.animator.speed = 0;
+            }
+        }
     }
 
     public override void Exit()
