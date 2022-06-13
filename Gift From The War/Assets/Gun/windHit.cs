@@ -2,16 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fireBulletHit : MonoBehaviour
+public class windHit : MonoBehaviour
 {
     private Transform trans;
-
-    [SerializeField] private float scaleSpeed;
-    [SerializeField] private float scaleFirst;
-    [SerializeField] private float scaleMax;
-    private float nowScale;
-
-    //オブジェクトの移動
     [SerializeField] private float movePowerBase;
     [SerializeField] private float movePowerMax;
     [SerializeField] private float movePowerMin;
@@ -20,29 +13,6 @@ public class fireBulletHit : MonoBehaviour
     void Start()
     {
         trans = transform;
-        nowScale = scaleFirst;
-    }
-
-    void Update()
-    {
-        nowScale += scaleSpeed * Time.deltaTime;
-
-        nowScale = nowScale > scaleMax ? scaleMax : nowScale;
-
-        trans.localScale = new Vector3(nowScale, nowScale, nowScale);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Bat" || other.gameObject.tag == "Dog1")
-        {
-            var enemyInter = other.GetComponent<EnemyInterface>();
-
-            if (enemyInter != null)
-            {
-                enemyInter.ExpDamage(1,transform.position);
-            }
-        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -52,8 +22,6 @@ public class fireBulletHit : MonoBehaviour
         if (RD == null || RD.isKinematic) return;   //動かないオブジェクトだったら処理しない
 
         Vector3 moveVec = RD.gameObject.transform.position - trans.position;    //移動方向を算出
-
-        Debug.Log(moveVec.magnitude);
 
         //移動する力の計算
         movePower = movePowerBase - moveVec.magnitude;

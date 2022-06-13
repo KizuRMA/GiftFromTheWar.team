@@ -12,7 +12,6 @@ public class MoveObject : MonoBehaviour
 		Rigidbody rb = hit.collider.attachedRigidbody;
 
 		// 相手のオブジェクトにRigidbodyがついていなかったり、isKinematicにチェックが入っている場合には押せない。
-		// returnの機能を復習
 		if (rb == null || rb.isKinematic)
 		{
 			return;
