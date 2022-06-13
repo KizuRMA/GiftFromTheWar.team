@@ -145,6 +145,6 @@ public class playerDied : MonoBehaviour
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("GameOverScene");
     }
 }
