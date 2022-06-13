@@ -17,6 +17,7 @@ public class gunWallTouch : MonoBehaviour
     private Vector3 firstPos;                   //Šî€‚ÌˆÊ’u
     [SerializeField] private float firstSpeed;  //Å‰‚Ì‘¬‚³
     [SerializeField] private float speedRaito;  //‘¬‚³‚Ì”{—¦
+    [SerializeField] private float range;       //e‚ÌˆÚ“®”ÍˆÍ
     private float nowSpeed;                     //¡‚Ì‘¬‚³
     private Vector3 forceVec;                   //ˆÚ“®‚ÌŒü‚«
 
@@ -33,6 +34,8 @@ public class gunWallTouch : MonoBehaviour
         if (died.diedFlg) return;
 
         EraseInertia();
+
+        if (Mathf.Abs((firstPos - trans.position).magnitude) > range) returnFlg = true; //e‚ª”ÍˆÍ‚©‚ç—£‚ê‚·‚¬‚½‚ç–ß‚·
 
         //‰Ÿ‚µ–ß‚·ˆ—
         if (returnFlg)
@@ -85,6 +88,8 @@ public class gunWallTouch : MonoBehaviour
 
     private void OnCollisionEnter(Collision collison)   //Õ“Ë
     {
+        if (Mathf.Abs((firstPos - trans.position).magnitude) > range) return;   //e‚ª”ÍˆÍ‚©‚ço‚Ä‚¢‚½‚çˆ—‚µ‚È‚¢
+
         returnFlg = false;
         returnFinishFlg = false;
         nowSpeed = firstSpeed;

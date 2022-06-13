@@ -73,14 +73,7 @@ public class gunMove : MonoBehaviour
         bool largeMoveFlg = Mathf.Abs(nowPos) > upDownSpeed * Time.deltaTime;   //‘å‚«‚­“®‚­•K—v‚ª‚ ‚é‚©
         if (largeMoveFlg)
         {
-            if (nowPos > 0)
-            {
-                posY = upDownSpeed;
-            }
-            else
-            {
-                posY = -upDownSpeed;
-            }
+            posY = nowPos > 0 ? upDownSpeed : -upDownSpeed;
         }
         else
         {

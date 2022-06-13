@@ -53,8 +53,6 @@ public class fireBulletHit : MonoBehaviour
 
         Vector3 moveVec = RD.gameObject.transform.position - trans.position;    //ˆÚ“®•ûŒü‚ðŽZo
 
-        Debug.Log(moveVec.magnitude);
-
         //ˆÚ“®‚·‚é—Í‚ÌŒvŽZ
         movePower = movePowerBase - moveVec.magnitude;
         movePower = movePower > movePowerMax ? movePowerMax : movePower;
