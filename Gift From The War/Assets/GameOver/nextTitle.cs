@@ -8,5 +8,6 @@ public class nextTitle : MonoBehaviour
     public void OnClickStartButton()
     {
         SceneManager.LoadScene("Scenes/TitleScene");
+        SaveManager.Instance.ReadFile();
     }
 }

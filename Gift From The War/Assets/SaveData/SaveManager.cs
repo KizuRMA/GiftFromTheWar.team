@@ -8,8 +8,10 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
 {
     public enum SaveSpotNum
     {
+        none,
         s1p1,
-        s1p2
+        s1p2,
+        s1p3
     }
 
     public struct SaveData
@@ -40,6 +42,8 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         {
             System.IO.File.Create(path);
         }
+
+        DontDestroyOnLoad(this);
     }
 
     void Update()

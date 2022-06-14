@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class compass : MonoBehaviour
 {
-    [SerializeField] private GameObject goalPos;
     private Transform trans;
-    private Transform goaltrans;
 
     void Start()
     {
         trans = transform;
-        goaltrans = goalPos.transform;
+        Debug.Log(SaveManager.Instance.nowSaveData.saveSpotNum);
     }
 
     void Update()
     {
-        Vector3 compassVec = goaltrans.position;
+        Vector3 compassVec = SaveManager.Instance.nowSaveData.goalPos;
         compassVec.y = trans.position.y;
         trans.LookAt(compassVec);
         trans.localEulerAngles += new Vector3(-90, 180, 0);

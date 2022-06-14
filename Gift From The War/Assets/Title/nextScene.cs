@@ -8,6 +8,6 @@ public class nextScene : MonoBehaviour
     public void OnClickStartButton()
     {
         SceneManager.LoadScene("Scenes/SampleScene");
-        //ScaneManager.LoadScene("SampleScene");
+        SaveManager.Instance.ReadFile();
     }
 }
