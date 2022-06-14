@@ -46,6 +46,15 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.P))
+        {
+            moveFlg = false;
+            CC.enabled = false;
+            trans.position = SaveManager.Instance.nowSaveData.dataSpotPos;
+            CC.transform.position = SaveManager.Instance.nowSaveData.dataSpotPos;
+            CC.enabled = true;
+        }
+
         UpdateCursorLock();
 
         if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg)  //ƒvƒŒƒCƒ„[‚ÌˆÚ“®–³Œø‰»

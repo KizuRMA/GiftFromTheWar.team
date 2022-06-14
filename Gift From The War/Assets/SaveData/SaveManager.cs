@@ -6,6 +6,21 @@ using System;
 
 public class SaveManager : SingletonMonoBehaviour<SaveManager>
 {
+    public enum SaveSpotNum
+    {
+        s1p1,
+        s1p2
+    }
+
+    public struct SaveData
+    {
+        public SaveSpotNum saveSpotNum;
+        public Vector3 dataSpotPos;
+        public Vector3 goalPos;
+    }
+
+    public SaveData nowSaveData;
+
     private string directoryName;
     private string fileSaveSpotName;
     private string path;
@@ -24,15 +39,11 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         if (!System.IO.File.Exists(path))
         {
             System.IO.File.Create(path);
-            //new FileStream(path, FileMode.CreateNew);
         }
     }
 
     void Update()
     {
-        WriteFile();
-
-        ReadFile();
     }
 
     public void ReadFile()
@@ -41,7 +52,9 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
 
         using (var reader = new BinaryReader(new FileStream(path, FileMode.Open)))
         {
-            var data1 = reader.ReadBoolean();
+            nowSaveData.saveSpotNum = (SaveSpotNum)reader.ReadUInt32();
+            nowSaveData.dataSpotPos = new Vector3((float)reader.ReadDouble(), (float)reader.ReadDouble(), (float)reader.ReadDouble());
+            nowSaveData.goalPos = new Vector3((float)reader.ReadDouble(), (float)reader.ReadDouble(), (float)reader.ReadDouble());
         }
     }
 
@@ -52,7 +65,13 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         using (var writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
         {
             //èëÇ´çûÇﬁèàóù
-            writer.Write((bool)false);
+            writer.Write((uint)nowSaveData.saveSpotNum);
+            writer.Write((double)nowSaveData.dataSpotPos.x);
+            writer.Write((double)nowSaveData.dataSpotPos.y);
+            writer.Write((double)nowSaveData.dataSpotPos.z);
+            writer.Write((double)nowSaveData.goalPos.x);
+            writer.Write((double)nowSaveData.goalPos.y);
+            writer.Write((double)nowSaveData.goalPos.z);
         }
     }
 }
