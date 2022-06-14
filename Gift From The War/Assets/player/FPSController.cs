@@ -46,7 +46,6 @@ public class FPSController : MonoBehaviour
         CC.enabled = false;       
         trans.position = SaveManager.Instance.nowSaveData.dataSpotPos;
         CC.transform.position = SaveManager.Instance.nowSaveData.dataSpotPos;
-        //Debug.Log(SaveManager.Instance.nowSaveData.saveSpotNum);
         CC.enabled = true;
     }
 

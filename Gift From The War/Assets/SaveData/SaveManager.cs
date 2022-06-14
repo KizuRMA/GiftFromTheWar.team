@@ -19,6 +19,10 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         public SaveSpotNum saveSpotNum;
         public Vector3 dataSpotPos;
         public Vector3 goalPos;
+        public bool getGunFlg;
+        public bool getWindFlg;
+        public bool getMagnetFlg;
+        public bool getFireFlg;
     }
 
     public SaveData nowSaveData;
@@ -59,6 +63,10 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
             nowSaveData.saveSpotNum = (SaveSpotNum)reader.ReadUInt32();
             nowSaveData.dataSpotPos = new Vector3((float)reader.ReadDouble(), (float)reader.ReadDouble(), (float)reader.ReadDouble());
             nowSaveData.goalPos = new Vector3((float)reader.ReadDouble(), (float)reader.ReadDouble(), (float)reader.ReadDouble());
+            nowSaveData.getGunFlg = reader.ReadBoolean();
+            nowSaveData.getWindFlg = reader.ReadBoolean();
+            nowSaveData.getMagnetFlg = reader.ReadBoolean();
+            nowSaveData.getFireFlg = reader.ReadBoolean();
         }
     }
 
@@ -76,6 +84,21 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
             writer.Write((double)nowSaveData.goalPos.x);
             writer.Write((double)nowSaveData.goalPos.y);
             writer.Write((double)nowSaveData.goalPos.z);
+            writer.Write(nowSaveData.getGunFlg);
+            writer.Write(nowSaveData.getWindFlg);
+            writer.Write(nowSaveData.getMagnetFlg);
+            writer.Write(nowSaveData.getFireFlg);
         }
+    }
+
+    public void Restart()
+    {
+        nowSaveData.saveSpotNum = SaveSpotNum.none;
+        nowSaveData.dataSpotPos = Vector3.zero;
+        nowSaveData.goalPos = Vector3.zero;
+        nowSaveData.getGunFlg = false;
+        nowSaveData.getWindFlg = false;
+        nowSaveData.getMagnetFlg = false;
+        nowSaveData.getFireFlg = false;
     }
 }

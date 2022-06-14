@@ -9,7 +9,6 @@ public class compass : MonoBehaviour
     void Start()
     {
         trans = transform;
-        Debug.Log(SaveManager.Instance.nowSaveData.saveSpotNum);
     }
 
     void Update()
