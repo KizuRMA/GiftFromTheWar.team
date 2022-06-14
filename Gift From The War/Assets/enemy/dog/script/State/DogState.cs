@@ -74,4 +74,6 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         hypocenter = _hypocenter;
         ChangeState(e_DogState.BlowedAway);
     }
+
+
 }
