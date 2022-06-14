@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 
-public class SaveManager : MonoBehaviour
+public class SaveManager : SingletonMonoBehaviour<SaveManager>
 {
     private string directoryName;
     private string fileSaveSpotName;
