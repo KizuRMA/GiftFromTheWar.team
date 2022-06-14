@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class LargeUltrasound : BaseUltrasound
 {
+    [SerializeField] private ParticleSystem particle;
     private float minimumRange;
     private float hitRange;
 
     private void Awake()
     {
         playerObject = GameObject.Find("player").gameObject;
+        var main = particle.main;
+        duration = main.duration;
+        velocity = 1.2f;
     }
 
     // Start is called before the first frame update
     public override void Start()
     {
-        velocity = 1;
+        velocity = 1.2f;
         coolDown = 0;
-        duration = 1.0f;
         time = 0;
         range = 0.0f;
         maxRange = 0.0f;
@@ -43,18 +46,31 @@ public class LargeUltrasound : BaseUltrasound
         {
             //超音波の最大範囲を調べる
             SearchMaxRange();
+
+            // パーティクルシステムのインスタンスを生成する。
+            ParticleSystem newParticle = Instantiate(particle);
+            newParticle.Stop();
+
+            newParticle.transform.position = transform.position + (transform.up * 0.3f);
+
+            var main = newParticle.main;
+
+            main.startSize = maxRange;
+            main.startLifetime = maxRange / velocity;
+            duration = main.duration;
+            duration += 2.0f;
+
+            // パーティクルを発生させる。
+            newParticle.Play();
         }
 
         range += velocity * Time.deltaTime;
         range = Mathf.Min(range, maxRange);
 
-        if (range >= maxRange)
-        {
-            //超音波の持続時間が終了した場合
-            time += Time.deltaTime;
-            if (time - duration < 0) return;
-            aliveFlg = false;
-        }
+        //超音波の持続時間が終了した場合
+        time += Time.deltaTime;
+        if (time - duration < 0) return;
+        aliveFlg = false;
     }
 
     public override bool CheckHit()

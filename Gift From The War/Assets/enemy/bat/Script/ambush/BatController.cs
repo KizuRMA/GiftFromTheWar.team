@@ -23,18 +23,17 @@ public class BatController : MonoBehaviour
     [SerializeField] public float defaltHight;
     [SerializeField] public float defaltForwardAngle;
     [SerializeField] private LayerMask raycastLayerMask;
+    [SerializeField] public NavMeshAgent agent;
+    [SerializeField] public CharacterController playerCC;
+    [SerializeField] public Animator animator;
+
+    [System.NonSerialized] public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
+    [System.NonSerialized] public Vector3 hypocenter;
+    [System.NonSerialized] public BaseState state;
+
     public float height { get; set; }
     public float forwardAngle { get; set; }
     private float life;
-    public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
-    public Vector3 hypocenter;
-
-
-    public BaseState state;
-    public CharacterController playerCC;
-    public NavMeshAgent agent;
-    public Animator animator;
-
     public bool IsAttackable => (int)e_State.move == state.CurrentState && life >= 1.0f;
 
     // Start is called before the first frame update
@@ -206,5 +205,11 @@ public class BatController : MonoBehaviour
         }
 
         ChangeState(GetComponent<BatMagnetCatchState>());
+    }
+
+    public void WarpPosition(Vector3 _pos)
+    {
+        agent.Warp(_pos);
+        transform.position = _pos;
     }
 }

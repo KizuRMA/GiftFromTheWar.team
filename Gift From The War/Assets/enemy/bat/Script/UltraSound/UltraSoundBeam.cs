@@ -86,7 +86,6 @@ public class UltraSoundBeam : BaseUltrasound
                 //プレイヤーに向かってレイを発射
                 bool hit = Physics.Raycast(_ray, out _raycastHit, withinRange);
 
-                //Debug.Log("超音波が当たった！！");
                 return true;
             }
         }

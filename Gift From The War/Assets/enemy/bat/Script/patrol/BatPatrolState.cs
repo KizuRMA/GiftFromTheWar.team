@@ -268,4 +268,10 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         return _degAng;
     }
+
+    public void WarpPosition(Vector3 _pos)
+    {
+        agent.Warp(_pos);
+        bat.transform.position = _pos;
+    }
 }

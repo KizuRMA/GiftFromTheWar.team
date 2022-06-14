@@ -75,5 +75,9 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         ChangeState(e_DogState.BlowedAway);
     }
 
-
+    public void WarpPosition(Vector3 _pos)
+    {
+        agent.Warp(_pos);
+        dog.transform.position = _pos;
+    }
 }
