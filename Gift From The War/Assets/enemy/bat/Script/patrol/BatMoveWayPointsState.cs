@@ -45,7 +45,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         }
 
         owner.agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
-        owner.ChangeUltrasound(e_UltrasoundState.Small);
+        owner.ChangeUltrasound(e_UltrasoundState.Large);
     }
 
     public override void Execute()

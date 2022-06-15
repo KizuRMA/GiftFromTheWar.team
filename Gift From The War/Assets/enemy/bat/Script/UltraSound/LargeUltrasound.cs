@@ -75,6 +75,8 @@ public class LargeUltrasound : BaseUltrasound
 
     public override bool CheckHit()
     {
+        if (nowParticleSystem == null) return false;
+
         //“–‚½‚è”»’è
         Vector3 _firePos = transform.position + (transform.up * 0.3f);
         Vector3 _targetVec = playerObject.transform.position - _firePos;

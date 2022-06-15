@@ -20,7 +20,6 @@ public enum e_UltrasoundState
     Beam,
 }
 
-
 public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolState>
 {
     [SerializeField] public NavMeshAgent agent;
@@ -63,6 +62,11 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         hightRatio = 0.4f;
         stateMachine = new StateMachine<BatPatrolState>();
 
+        ultrasoundsList.Add(GetComponent<LargeUltrasound>());
+        ultrasoundsList.Add(GetComponent<SmallUltrasound>());
+        ultrasoundsList.Add(GetComponent<UltraSoundBeam>());
+        ChangeUltrasound(e_UltrasoundState.Small);
+
         stateList.Add(new BatMoveWayPointsState(this));
         stateList.Add(new BatDeadState(this));
         stateList.Add(new BatTrackingState(this));
@@ -72,10 +76,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         ChangeState(e_BatPatrolState.MoveWayPoints);
 
-        ultrasoundsList.Add(GetComponent<LargeUltrasound>());
-        ultrasoundsList.Add(GetComponent<SmallUltrasound>());
-        ultrasoundsList.Add(GetComponent<UltraSoundBeam>());
-        ChangeUltrasound(e_UltrasoundState.Small);
+
     }
 
     protected override void Update()
@@ -100,7 +101,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
             base.Update();
         }
-       
+
     }
 
     public void AdjustHeight()
