@@ -13,13 +13,11 @@ public class LargeUltrasound : BaseUltrasound
         playerObject = GameObject.Find("player").gameObject;
         var main = particle.main;
         duration = main.duration;
-        velocity = 1.2f;
+        duration += 2.0f;
+        velocity = main.startSize.constant / main.startLifetime.constant;
     }
-
-    // Start is called before the first frame update
     public override void Start()
     {
-        velocity = 1.2f;
         coolDown = 0;
         time = 0;
         range = 0.0f;
@@ -49,6 +47,7 @@ public class LargeUltrasound : BaseUltrasound
 
             // パーティクルシステムのインスタンスを生成する。
             ParticleSystem newParticle = Instantiate(particle);
+
             newParticle.Stop();
 
             newParticle.transform.position = transform.position + (transform.up * 0.3f);
@@ -57,8 +56,6 @@ public class LargeUltrasound : BaseUltrasound
 
             main.startSize = maxRange;
             main.startLifetime = maxRange / velocity;
-            duration = main.duration;
-            duration += 2.0f;
 
             // パーティクルを発生させる。
             newParticle.Play();
