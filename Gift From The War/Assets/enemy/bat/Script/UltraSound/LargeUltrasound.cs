@@ -5,6 +5,7 @@ using UnityEngine;
 public class LargeUltrasound : BaseUltrasound
 {
     [SerializeField] private ParticleSystem particle;
+    ParticleSystem nowParticleSystem;
     private float minimumRange;
     private float hitRange;
 
@@ -54,11 +55,12 @@ public class LargeUltrasound : BaseUltrasound
 
             var main = newParticle.main;
 
-            main.startSize = maxRange;
+            main.startSize = maxRange * 2;
             main.startLifetime = maxRange / velocity;
 
             // パーティクルを発生させる。
             newParticle.Play();
+            nowParticleSystem = newParticle;
         }
 
         range += velocity * Time.deltaTime;
@@ -68,6 +70,7 @@ public class LargeUltrasound : BaseUltrasound
         time += Time.deltaTime;
         if (time - duration < 0) return;
         aliveFlg = false;
+        nowParticleSystem = null;
     }
 
     public override bool CheckHit()
@@ -77,7 +80,7 @@ public class LargeUltrasound : BaseUltrasound
         Vector3 _targetVec = playerObject.transform.position - _firePos;
 
         //超音波の長さに調整する
-        _targetVec = _targetVec.normalized * range;
+        _targetVec = _targetVec.normalized * (range - 0.5f);
 
         //超音波本体の座標を算出
         Vector3 _pos = _firePos + _targetVec;
@@ -89,6 +92,8 @@ public class LargeUltrasound : BaseUltrasound
 
         if (_distance <= hitRange)
         {
+            nowParticleSystem.Stop();
+            nowParticleSystem = null;
             return true;
         }
         return false;
