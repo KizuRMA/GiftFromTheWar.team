@@ -22,6 +22,13 @@ public enum e_UltrasoundState
 
 public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolState>
 {
+    public enum e_CauseOfDead
+    {
+        None,
+        Explosion,
+        Wind,
+    }
+
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject bat;
@@ -31,28 +38,25 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [SerializeField] public GameObject prefab;
     [SerializeField] private Collider attackCollider;
     [SerializeField] private ParticleSystem windBladeParticle;
+    [SerializeField] public float trackingSpeed;
+    [SerializeField] public float moveWayPointSpeed;
 
-    public enum e_CauseOfDead
-    {
-        None,
-        Explosion,
-        Wind,
-    }
+    [System.NonSerialized] public float untilLaunch = 0;
+    [System.NonSerialized] public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
+    [System.NonSerialized] public Vector3 hypocenter;
+    [System.NonSerialized] public BaseUltrasound currentUltrasound;
 
-    public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
-    public Vector3 hypocenter;
 
-    public BaseUltrasound currentUltrasound;
     protected List<BaseUltrasound> ultrasoundsList = new List<BaseUltrasound>();
     public bool IsNavMeshON => agent.isStopped == false;
     public bool IsPlayerDiscover => IsCurrentState(e_BatPatrolState.Attack) == true || IsCurrentState(e_BatPatrolState.Tracking) == true;
     private float limitHight;
-    public float forwardAngle;
-    public float height;
-    public float hightRatio;
+    public float forwardAngle = 20.0f;
+    public float height = 0.8f;
+    public float hightRatio = 0.4f;
 
-    [SerializeField] public float trackingSpeed;
-    [SerializeField] public float moveWayPointSpeed;
+
+
 
     void Start()
     {
@@ -75,15 +79,18 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         stateList.Add(new PatrolBatMagnetCatchState(this));
 
         ChangeState(e_BatPatrolState.MoveWayPoints);
-
-
     }
 
     protected override void Update()
     {
-        if (currentUltrasound != null)
+        float coolDown = currentUltrasound.coolDown;
+        if (currentUltrasound != null && untilLaunch - coolDown >= 0)
         {
             currentUltrasound.Update();
+        }
+        else
+        {
+            untilLaunch += Time.deltaTime;
         }
 
         if (agent.isOnOffMeshLink == false)
@@ -170,12 +177,23 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     public void Damage(int _damage)
     {
+        if (agent.isOnOffMeshLink == true)
+        {
+            agent.CompleteOffMeshLink();
+        }
+
         causeOfDead = e_CauseOfDead.Wind;
         ChangeState(e_BatPatrolState.Dead);
     }
 
-    public void ExpDamage(int _damage,Vector3 _hypocenter)
+    public void ExpDamage(int _damage, Vector3 _hypocenter)
     {
+
+        if (agent.isOnOffMeshLink == true)
+        {
+            agent.CompleteOffMeshLink();
+        }
+
         causeOfDead = e_CauseOfDead.Explosion;
         hypocenter = _hypocenter;
         ChangeState(e_BatPatrolState.Dead);
@@ -183,7 +201,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     public void DestroyBat()
     {
-        GameObject game =  Instantiate(prefab, transform.position, transform.rotation);
+        GameObject game = Instantiate(prefab, transform.position, transform.rotation);
 
         //倒された原因が爆発の時
         if (causeOfDead == e_CauseOfDead.Explosion)
@@ -220,7 +238,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         Vector3 _fowardVec = transform.forward;
 
-       // CheckVectorDegAngCode();
+        // CheckVectorDegAngCode();
 
         // パーティクルシステムのインスタンスを生成する。
         ParticleSystem newParticle = Instantiate(windBladeParticle);
@@ -252,13 +270,13 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         ChangeState(e_BatPatrolState.MagnetCatch);
     }
 
-    public float CheckVectorDegAngCode(Vector3 _baseVec,Vector3 _targetVec,Vector2 _searchAxis)    //2本のベクトルから角度を符号を含む角度を求める
+    public float CheckVectorDegAngCode(Vector3 _baseVec, Vector3 _targetVec, Vector2 _searchAxis)    //2本のベクトルから角度を符号を含む角度を求める
     {
         _baseVec = new Vector3(_baseVec.x * _searchAxis.x, _baseVec.y * _searchAxis.y, _baseVec.z).normalized;
         _targetVec = new Vector3(_targetVec.x * _searchAxis.x, _targetVec.y * _searchAxis.y, _targetVec.z).normalized;
 
-        float dot = Vector3.Dot(_baseVec,_targetVec);
-        Vector3 cross = Vector3.Cross(_baseVec,_targetVec);
+        float dot = Vector3.Dot(_baseVec, _targetVec);
+        Vector3 cross = Vector3.Cross(_baseVec, _targetVec);
 
         if (cross.y < 0)
         {

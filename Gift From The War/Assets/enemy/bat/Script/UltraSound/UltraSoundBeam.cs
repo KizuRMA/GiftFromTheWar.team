@@ -41,6 +41,8 @@ public class UltraSoundBeam : BaseUltrasound
     // Update is called once per frame
     public override void Update()
     {
+        if (aliveFlg == false) return;
+
         //‰‚ß‚ÄXVŠÖ”‚ªÀs‚³‚ê‚é
         if (range <= 0.0f)
         {

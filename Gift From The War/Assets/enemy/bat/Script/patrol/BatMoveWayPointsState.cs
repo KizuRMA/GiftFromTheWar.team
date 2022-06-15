@@ -68,6 +68,12 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             target.AddHowlingAbnormal();
             owner.ChangeState(e_BatPatrolState.Tracking);
         }
+
+        if (owner.currentUltrasound.IsAlive == false)
+        {
+            owner.untilLaunch = 0;
+            owner.currentUltrasound.Init();
+        }
     }
 
     public override void Exit()

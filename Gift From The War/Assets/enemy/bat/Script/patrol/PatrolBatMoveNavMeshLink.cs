@@ -11,7 +11,7 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
     private BatPatrolState state;
     private Vector3 nowPos;
 
-    public bool IsEnd => state.IsCurrentState(e_BatPatrolState.MagnetCatch) == true;
+    public bool IsEnd => state.IsCurrentState(e_BatPatrolState.MagnetCatch) == true || state.IsCurrentState(e_BatPatrolState.Dead) == true;
 
     // Start is called before the first frame update
     void Start()

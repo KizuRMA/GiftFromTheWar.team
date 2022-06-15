@@ -59,6 +59,8 @@ public class LargeUltrasound : BaseUltrasound
 
     public override void Update()
     {
+        if (aliveFlg == false) return;
+
         if (range <= 0.0f)
         {
             //’´‰¹”g‚ÌÅ‘å”ÍˆÍ‚ð’²‚×‚é
@@ -130,6 +132,7 @@ public class LargeUltrasound : BaseUltrasound
         {
             nowParticleSystem.Stop();
             nowParticleSystem = null;
+            aliveFlg = false;
             return true;
         }
         return false;

@@ -8,7 +8,10 @@ public class BatDeadState : State<BatPatrolState>
 
     public override void Enter()
     {
-
+        //ナビメッシュを切る
+        owner.agent.isStopped = true;
+        owner.agent.updatePosition = false;
+        owner.agent.updateUpAxis = false;
     }
 
     public override void Execute()
