@@ -12,6 +12,7 @@ public class magnetChain : ShootParent
     [SerializeField] private GameObject bulletLinePos;
     [SerializeField] private bulletChange bulletChange;
     [SerializeField] private GetItem getItem;
+    [SerializeField] private magnet magnet;
 
     //’e‚Ì”­Ë
     private bool shotFlg;                       //”­Ë‰Â”\
@@ -50,6 +51,8 @@ public class magnetChain : ShootParent
     void Update()
     {
         if (!getItem.magnetAmmunitionFlg) return;   //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
+
+        if (magnet.metal != null) return;   //‚·‚Å‚É•Ê‚Ì¥Î‚ğ‘Å‚Á‚Ä‚¢‚½‚çˆ—‚µ‚È‚¢
 
         MoveBullet();
 

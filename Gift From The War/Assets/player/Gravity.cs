@@ -21,6 +21,7 @@ public class Gravity : MonoBehaviour
     [SerializeField] private float gravity;
     private float nowGravity;
     [SerializeField] private float groundDis;   //地面との距離
+    private Vector3 pastPos;    //前の座標保存
 
     void Start()
     {
@@ -35,6 +36,8 @@ public class Gravity : MonoBehaviour
 
         GravityProcess();
 
+        pastPos = trans.position;
+
         CC.Move(moveVec * Time.deltaTime);
     }
 
@@ -42,7 +45,13 @@ public class Gravity : MonoBehaviour
     {
         moveVec = Vector3.zero;
 
-        if (moveWindGun.upWindFlg)
+        if (moveWindGun.upWindFlg)  //風の力を使っていたら、重力をリセット
+        {
+            nowGravity = gravity * Time.deltaTime;
+            return;
+        }
+
+        if(pastPos == trans.position)
         {
             nowGravity = gravity * Time.deltaTime;
             return;
@@ -50,7 +59,7 @@ public class Gravity : MonoBehaviour
 
         Ray ray = new Ray(trans.position, -trans.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, groundDis) || CC.isGrounded)   //地面についている場合
+        if (Physics.Raycast(ray, out hit, groundDis) || CC.isGrounded)  //地面についている場合
         {
             groundHitFlg = true;
 

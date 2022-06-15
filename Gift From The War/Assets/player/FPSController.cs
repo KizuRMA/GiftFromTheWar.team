@@ -9,10 +9,11 @@ public class FPSController : MonoBehaviour
     [SerializeField] private GameObject ladderHund;
     [SerializeField] private playerHundLadder ladder;
     [SerializeField] private GameObject cam;
+    [SerializeField] private MoveWindGun moveWind;
     [SerializeField] private magnet magnet;
     [SerializeField] private magnetChain magnetChain;
     [SerializeField] private playerDied died;
-
+    
     //カーソルロック
     private bool cursorLock = true;
 
@@ -123,6 +124,8 @@ public class FPSController : MonoBehaviour
 
     private void MiddleClick()
     {
+        if (moveWind.effectFlg || magnet.metal != null) return; //一部例外あり
+
         if (Input.GetMouseButtonDown(2))
         {
             turnRaito = 0;
