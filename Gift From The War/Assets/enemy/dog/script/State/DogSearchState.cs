@@ -33,12 +33,21 @@ public class DogSearchState : State<DogState>
             owner.StartCoroutine(TargetCoroutine());
         }
 
-        float dis = Vector3.Distance(owner.player.transform.position,owner.dog.transform.position);
+        float dis = Vector3.Distance(owner.player.transform.position, owner.dog.transform.position);
+
+        if (dis <= 1.0f)
+        {
+            owner.ChangeState(e_DogState.Tracking);
+            return;
+        }
+       
         if (owner.canVigilance == true && dis <= 5.0f)
         {
             owner.ChangeState(e_DogState.Vigilance);
             return;
         }
+
+      
     }
 
     public override void Exit()

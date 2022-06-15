@@ -5,6 +5,7 @@ using UnityEngine;
 public class DogTrackingState : State<DogState>
 {
     public DogTrackingState(DogState owner) : base(owner) { }
+    float time;
 
     // Start is called before the first frame update
     public override void Enter()
@@ -12,6 +13,7 @@ public class DogTrackingState : State<DogState>
         owner.animator.SetInteger("trans", 1);
         owner.animator.SetFloat("Speed", 1.1f);
         owner.agent.speed = owner.TrakingSpeed;
+        time = 0;
     }
 
     public override void Execute()
@@ -29,11 +31,19 @@ public class DogTrackingState : State<DogState>
             owner.agent.updateUpAxis = true;
         }
 
-       
-
         float targetDis = Vector3.Distance(owner.dog.transform.position,owner.player.transform.position);
 
-        if (IsPossibleToAttack() == true)
+        //‹——£‚ª‹ß‚¢ó‘Ô‚ª‘±‚¢‚Ä‚¢‚éê‡‚Í•b”‚ğƒJƒEƒ“ƒg‚·‚é
+        if (targetDis <= 2.0f)
+        {
+            time += Time.deltaTime;
+        }
+        else
+        {
+            time = 0;
+        }
+
+        if (IsPossibleToAttack() == true || time >= 2.0f)
         {
             owner.ChangeState(e_DogState.Attack);
             return;
