@@ -9,6 +9,8 @@ public class LargeUltrasound : BaseUltrasound
     private float minimumRange;
     private float hitRange;
 
+    [System.NonSerialized] public bool pos;
+
     private void Awake()
     {
         playerObject = GameObject.Find("player").gameObject;
