@@ -21,12 +21,12 @@ public class GetItem : MonoBehaviour
 
     void Start()
     {
-        gunObj.SetActive(false);
+        gunObj.SetActive(SaveManager.Instance.nowSaveData.getGunFlg);
         closeItemFlg = false;
         tagName = null;
-        windAmmunitionFlg = false;
-        magnetAmmunitionFlg = false;
-        fireAmmunitionFlg = false;
+        windAmmunitionFlg = SaveManager.Instance.nowSaveData.getWindFlg;
+        magnetAmmunitionFlg = SaveManager.Instance.nowSaveData.getMagnetFlg;
+        fireAmmunitionFlg = SaveManager.Instance.nowSaveData.getFireFlg;
     }
 
     void Update()
@@ -64,24 +64,32 @@ public class GetItem : MonoBehaviour
         if (tagName == "gun")
         {
             gunObj.SetActive(true);
+            SaveManager.Instance.nowSaveData.getGunFlg = true;
+            SaveManager.Instance.WriteFile();
             return;
         }
 
         if(objName == "WindAmmunition")
         {
             windAmmunitionFlg = true;
+            SaveManager.Instance.nowSaveData.getWindFlg = true;
+            SaveManager.Instance.WriteFile();
             return;
         }
 
         if (objName == "MagnetAmmunition")
         {
             magnetAmmunitionFlg = true;
+            SaveManager.Instance.nowSaveData.getMagnetFlg = true;
+            SaveManager.Instance.WriteFile();
             return;
         }
 
         if (objName == "FireAmmunition")
         {
             fireAmmunitionFlg = true;
+            SaveManager.Instance.nowSaveData.getFireFlg = true;
+            SaveManager.Instance.WriteFile();
             return;
         }
     }

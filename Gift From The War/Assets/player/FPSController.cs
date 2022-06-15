@@ -42,6 +42,11 @@ public class FPSController : MonoBehaviour
         nowMoveSpeed = walkSpeed;
         moveFlg = false;
         dashFlg = false;
+
+        CC.enabled = false;       
+        trans.position = SaveManager.Instance.nowSaveData.dataSpotPos;
+        CC.transform.position = SaveManager.Instance.nowSaveData.dataSpotPos;
+        CC.enabled = true;
     }
 
     void Update()
