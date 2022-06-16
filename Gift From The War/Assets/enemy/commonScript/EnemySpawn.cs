@@ -9,7 +9,10 @@ public class EnemySpawn : MonoBehaviour
 
     private void Awake()
     {
-        EnemyInterface enemy = GetComponent<EnemyInterface>();
-        enemy.EnemySpawn(spawnLists[spawnNumber].position);
+        if (spawnLists.Count > 0)
+        {
+            EnemyInterface enemy = GetComponent<EnemyInterface>();
+            enemy.EnemySpawn(spawnLists[spawnNumber].position);
+        }
     }
 }

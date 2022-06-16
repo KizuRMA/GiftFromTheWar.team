@@ -45,7 +45,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         }
 
         owner.agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
-        owner.ChangeUltrasound(e_UltrasoundState.Small);
+        owner.ChangeUltrasound(e_UltrasoundState.Large);
     }
 
     public override void Execute()
@@ -67,6 +67,12 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             var target = owner.player.GetComponent<playerAbnormalcondition>();
             target.AddHowlingAbnormal();
             owner.ChangeState(e_BatPatrolState.Tracking);
+        }
+
+        if (owner.currentUltrasound.IsAlive == false)
+        {
+            owner.untilLaunch = 0;
+            owner.currentUltrasound.Init();
         }
     }
 

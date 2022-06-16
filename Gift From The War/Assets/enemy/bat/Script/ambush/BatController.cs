@@ -11,6 +11,7 @@ public class BatController : MonoBehaviour
         wingFold,
         attack,
         magnetCatch,
+        dead,
     }
 
     public enum e_CauseOfDead
@@ -85,6 +86,11 @@ public class BatController : MonoBehaviour
 
     public void Damage(int _damage)
     {
+        if (agent.isOnOffMeshLink == true)
+        {
+            agent.CompleteOffMeshLink();
+        }
+
         //ÇQâÒà»è„DeadStateÇ…Ç»ÇÁÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
         if (life < 0) return;
 

@@ -19,6 +19,8 @@ public class DeadState : BaseState
         agent.updateUpAxis = false;
         agent.updateRotation = false;
         agent.updatePosition = false;
+
+        CurrentState = (int)BatController.e_State.dead;
     }
 
     public override void Start()

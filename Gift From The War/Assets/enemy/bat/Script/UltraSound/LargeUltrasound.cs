@@ -5,8 +5,13 @@ using UnityEngine;
 public class LargeUltrasound : BaseUltrasound
 {
     [SerializeField] private ParticleSystem particle;
+    ParticleSystem nowParticleSystem;
     private float minimumRange;
     private float hitRange;
+    float delay;
+    bool delayEnd;
+
+    [System.NonSerialized] public bool movePos;
 
     private void Awake()
     {
@@ -15,6 +20,18 @@ public class LargeUltrasound : BaseUltrasound
         duration = main.duration;
         duration += 2.0f;
         velocity = main.startSize.constant / main.startLifetime.constant;
+
+        delay = 3.0f;
+        delayEnd = false;
+
+        if (transform.GetComponent<BatController>() == null)
+        {
+            movePos = true;
+        }
+        else
+        {
+            movePos = false;
+        }
     }
     public override void Start()
     {
@@ -25,6 +42,7 @@ public class LargeUltrasound : BaseUltrasound
         minimumRange = 5.0f;
         hitRange = 0.5f;
         aliveFlg = true;
+        delayEnd = false;
     }
 
     public override void Init()
@@ -36,30 +54,45 @@ public class LargeUltrasound : BaseUltrasound
         minimumRange = 5.0f;
         hitRange = 0.5f;
         aliveFlg = true;
+        delayEnd = false;
     }
 
     public override void Update()
     {
+        if (aliveFlg == false) return;
+
         if (range <= 0.0f)
         {
             //超音波の最大範囲を調べる
             SearchMaxRange();
 
-            // パーティクルシステムのインスタンスを生成する。
-            ParticleSystem newParticle = Instantiate(particle);
+            // パーティクルシステムのインスタンスを生成する
+            if (movePos == true)
+            {
+                nowParticleSystem = particle;
+            }
+            else
+            {
+                nowParticleSystem = Instantiate(particle);
 
-            newParticle.Stop();
+                nowParticleSystem.Stop();
 
-            newParticle.transform.position = transform.position + (transform.up * 0.3f);
+                nowParticleSystem.transform.position = transform.position + (transform.up * 0.3f);
 
-            var main = newParticle.main;
+                var main = nowParticleSystem.main;
 
-            main.startSize = maxRange;
-            main.startLifetime = maxRange / velocity;
+                main.startSize = maxRange * 2;
+                main.startLifetime = maxRange / velocity;
+            }
 
             // パーティクルを発生させる。
-            newParticle.Play();
+            nowParticleSystem.Play();
+            StartCoroutine(DelayCoroutine());
+            range += 0.001f;
         }
+
+        //遅延が完了してない場合
+        if (delayEnd == false) return;
 
         range += velocity * Time.deltaTime;
         range = Mathf.Min(range, maxRange);
@@ -68,16 +101,24 @@ public class LargeUltrasound : BaseUltrasound
         time += Time.deltaTime;
         if (time - duration < 0) return;
         aliveFlg = false;
+
+        if (nowParticleSystem != null)
+        {
+            nowParticleSystem.Stop();
+            nowParticleSystem = null;
+        }
     }
 
     public override bool CheckHit()
     {
+        if (nowParticleSystem == null) return false;
+
         //当たり判定
         Vector3 _firePos = transform.position + (transform.up * 0.3f);
         Vector3 _targetVec = playerObject.transform.position - _firePos;
 
         //超音波の長さに調整する
-        _targetVec = _targetVec.normalized * range;
+        _targetVec = _targetVec.normalized * (range - 0.5f);
 
         //超音波本体の座標を算出
         Vector3 _pos = _firePos + _targetVec;
@@ -89,6 +130,9 @@ public class LargeUltrasound : BaseUltrasound
 
         if (_distance <= hitRange)
         {
+            nowParticleSystem.Stop();
+            nowParticleSystem = null;
+            aliveFlg = false;
             return true;
         }
         return false;
@@ -138,5 +182,11 @@ public class LargeUltrasound : BaseUltrasound
         lineRenderer.endWidth = 0.1f;
 
         lineRenderer.SetPositions(positions);
+    }
+
+    private IEnumerator DelayCoroutine()
+    {
+        yield return new WaitForSeconds(delay);
+        delayEnd = true;
     }
 }

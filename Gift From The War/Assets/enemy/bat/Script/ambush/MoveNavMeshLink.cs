@@ -12,7 +12,8 @@ public class MoveNavMeshLink : MonoBehaviour
     private BatController controller;
     private Vector3 nowPos;
 
-    public bool IsEnd => controller.state.CurrentState == (int)BatController.e_State.magnetCatch;
+    public bool IsEnd => controller.state.CurrentState == (int)BatController.e_State.magnetCatch ||
+                         controller.state.CurrentState == (int)BatController.e_State.dead;
 
     // Start is called before the first frame update
     void Start()

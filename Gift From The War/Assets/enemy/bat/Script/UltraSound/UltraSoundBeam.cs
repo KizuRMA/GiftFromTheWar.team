@@ -14,7 +14,7 @@ public class UltraSoundBeam : BaseUltrasound
         playerObject = GameObject.Find("player").gameObject;
         var main = particle.main;
         duration = main.duration;
-        velocity = 0.5f;
+        velocity = 0.5f * 4;
         delay = 2.0f;
     }
 
@@ -26,7 +26,6 @@ public class UltraSoundBeam : BaseUltrasound
         range = 0.0f;
         aliveFlg = true;
         delayEnd = false;
-        StartCoroutine(DelayCoroutine());
     }
 
     public override void Init()
@@ -37,16 +36,19 @@ public class UltraSoundBeam : BaseUltrasound
         range = 0.0f;
         aliveFlg = true;
         delayEnd = false;
-        StartCoroutine(DelayCoroutine());
     }
 
     // Update is called once per frame
     public override void Update()
     {
+        if (aliveFlg == false) return;
+
         //‰‚ß‚ÄXVŠÖ”‚ªÀs‚³‚ê‚é
         if (range <= 0.0f)
         {
             particle.Play();
+            StartCoroutine(DelayCoroutine());
+            range += 0.001f;
         }
 
         //’x‰„‚ªŠ®—¹‚µ‚Ä‚È‚¢ê‡
