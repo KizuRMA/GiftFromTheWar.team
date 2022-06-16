@@ -61,7 +61,7 @@ public class BatAttackScript : BaseState
         ParticleSystem newParticle = Instantiate(particle);
 
         newParticle.transform.position = transform.position + (transform.up * 0.3f);
-        newParticle.transform.rotation = transform.rotation;
+        newParticle.transform.rotation = transform.rotation * Quaternion.AngleAxis(-15.0f,Vector3.right);
 
         // パーティクルを発生させる。
         newParticle.Play();

@@ -78,6 +78,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
 
     public override void Exit()
     {
-
+        owner.untilLaunch = 0;
+        owner.currentUltrasound.Start();
     }
 }

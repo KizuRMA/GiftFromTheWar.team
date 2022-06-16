@@ -215,7 +215,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public void ChangeUltrasound(e_UltrasoundState state)
     {
         if (ultrasoundsList.Count <= 0) return;
-        if ((int)state >= System.Enum.GetValues(typeof(e_UltrasoundState)).Length - 1) return;
+        if ((int)state > System.Enum.GetValues(typeof(e_UltrasoundState)).Length - 1) return;
 
         currentUltrasound = ultrasoundsList[(int)state];
         currentUltrasound.Start();
@@ -235,20 +235,16 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     {
         attackCollider.enabled = true;
 
-
         Vector3 _fowardVec = transform.forward;
-
-        // CheckVectorDegAngCode();
 
         // パーティクルシステムのインスタンスを生成する。
         ParticleSystem newParticle = Instantiate(windBladeParticle);
 
         newParticle.transform.position = transform.position + (transform.up * 0.3f);
-        newParticle.transform.rotation = transform.rotation;
+        newParticle.transform.rotation = transform.rotation * Quaternion.AngleAxis(-15.0f,Vector3.right); ;
 
         // パーティクルを発生させる。
         newParticle.Play();
-
 
         // インスタンス化したパーティクルシステムのGameObjectを削除する。(任意)
         // ※第一引数をnewParticleだけにするとコンポーネントしか削除されない。
@@ -292,5 +288,12 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     {
         agent.Warp(_pos);
         bat.transform.position = _pos;
+    }
+
+    //プレハブ化している場合に消えてしまうシリアライズの値を代入
+    public void PutInInfo(EnemyManager _info)
+    {
+        player = _info.player;
+        wayPoint = _info.wayPoints;
     }
 }
