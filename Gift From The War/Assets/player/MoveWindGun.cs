@@ -74,7 +74,7 @@ public class MoveWindGun : MonoBehaviour
 
     private void Move() //移動の処理
     {
-        if (!Input.GetMouseButton(0) || energyAmount.GetSetNowAmount <= 0)   //クリックしていなかったら、またはエネルギー残量がなかったら
+        if ((!Input.GetMouseButton(0)) || energyAmount.GetSetNowAmount <= 0)   //クリックしていなかったら、またはエネルギー残量がなかったら
         {
             AirResistance();
             return;

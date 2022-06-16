@@ -8,8 +8,6 @@ public class windBulletHit : MonoBehaviour
     {
         if (_collider.tag == "Detector") return;
 
-        Debug.Log(_collider.gameObject);
-
         Destroy(this.gameObject);
 
         if (_collider.tag != "Bat") return;

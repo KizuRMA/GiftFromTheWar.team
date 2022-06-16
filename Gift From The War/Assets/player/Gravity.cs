@@ -20,8 +20,10 @@ public class Gravity : MonoBehaviour
     private Vector3 moveVec; // 合成用
     [SerializeField] private float gravity;
     private float nowGravity;
-    [SerializeField] private float groundDis;   //地面との距離
-    private Vector3 pastPos;    //前の座標保存
+    [SerializeField] private float groundDis;       //地面との距離
+    [SerializeField] private float playerRadius;    //プレイヤーの半径
+    [SerializeField] private float playerHeight;    //プレイヤーの高さの補正
+    [SerializeField] private float playerHeightGap; //プレイヤーの高さの差
 
     void Start()
     {
@@ -36,8 +38,6 @@ public class Gravity : MonoBehaviour
 
         GravityProcess();
 
-        pastPos = trans.position;
-
         CC.Move(moveVec * Time.deltaTime);
     }
 
@@ -47,34 +47,50 @@ public class Gravity : MonoBehaviour
 
         if (moveWindGun.upWindFlg)  //風の力を使っていたら、重力をリセット
         {
-            nowGravity = gravity * Time.deltaTime;
+            nowGravity = 0;
             return;
         }
 
-        if(pastPos == trans.position)
-        {
-            nowGravity = gravity * Time.deltaTime;
-            return;
-        }
+        RayJudge();
 
-        Ray ray = new Ray(trans.position, -trans.up);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, groundDis) || CC.isGrounded)  //地面についている場合
-        {
-            groundHitFlg = true;
+    }
 
-            nowGravity = gravity * Time.deltaTime;
-
-            if (firstGroundHitFlg) return;
-            moveVec.y += 1.0f;  //完全に地面につけるための処理
-            firstGroundHitFlg = true;
-            return;
-        }
-        else
+    private void RayJudge() //地面のレイ判定
+    {
+        Vector3[] edgeTrans = new Vector3[5];
+        for(int i = 0;i < edgeTrans.Length;i++)
         {
-            firstGroundHitFlg = false;
-            groundHitFlg = false;
+            edgeTrans[i] = trans.position;
+            edgeTrans[i] += new Vector3(0, -playerHeight, 0);
         }
+        edgeTrans[1] += new Vector3(playerRadius, playerHeightGap, 0);
+        edgeTrans[2] += new Vector3(-playerRadius, playerHeightGap, 0);
+        edgeTrans[3] += new Vector3(0, playerHeightGap, playerRadius);
+        edgeTrans[4] += new Vector3(0, playerHeightGap, -playerRadius);
+
+        foreach(Vector3 i in edgeTrans)
+        {
+            Ray ray = new Ray(i, -trans.up);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, groundDis))
+            {
+                Debug.Log(hit.collider.gameObject.name);
+
+                nowGravity = 0;
+
+                groundHitFlg = true;
+
+                nowGravity = 0;
+
+                if (firstGroundHitFlg) return;
+                moveVec.y += 1.0f;  //完全に地面につけるための処理
+                firstGroundHitFlg = true;
+                return;
+            }
+        }      
+
+        firstGroundHitFlg = false;
+        groundHitFlg = false;
 
         nowGravity += gravity * Time.deltaTime;
         moveVec.y += nowGravity;

@@ -62,8 +62,7 @@ public class MoveNavMeshLink : MonoBehaviour
                 if (_targetPos.y < player.transform.position.y)
                 {
                     _targetPos.y = player.transform.position.y;
-                }
-               
+                }         
 
                 nowPos = Vector3.MoveTowards(nowPos,_targetPos, agent.speed * Time.deltaTime);
                 transform.position = nowPos;
