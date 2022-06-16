@@ -74,8 +74,6 @@ public class Gravity : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, groundDis))
             {
-                Debug.Log(hit.collider.gameObject.name);
-
                 nowGravity = 0;
 
                 groundHitFlg = true;
