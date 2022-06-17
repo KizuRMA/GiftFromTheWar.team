@@ -4,10 +4,13 @@ using UnityEngine.Events;
 
 public class EnemyInterface : MonoBehaviour
 {
+    [SerializeField] public e_EnemyType enemyType;
     [SerializeField] private EnemyDamageEvent onDamage = new EnemyDamageEvent();
     [SerializeField] private EnemyMagnetCatch onMagnetCatch = new EnemyMagnetCatch();
     [SerializeField] private EnemyExplosionDamage onExpDamge = new EnemyExplosionDamage();
     [SerializeField] private  EnemySpawnPos onSpawn = new EnemySpawnPos();
+    [SerializeField] private  EnemySerializeInfo oninfo = new EnemySerializeInfo();
+
 
     public void Damage(int _damage)
     {
@@ -27,6 +30,11 @@ public class EnemyInterface : MonoBehaviour
     public void EnemySpawn(Vector3 _pos)
     {
         onSpawn.Invoke(_pos);
+    }
+
+    public void EnemyInfo(EnemyManager _info)
+    {
+        oninfo.Invoke(_info);
     }
 
     [Serializable]
@@ -49,6 +57,12 @@ public class EnemyInterface : MonoBehaviour
 
     [Serializable]
     public class EnemySpawnPos : UnityEvent<Vector3>
+    {
+
+    }
+
+    [Serializable]
+    public class EnemySerializeInfo : UnityEvent<EnemyManager>
     {
 
     }

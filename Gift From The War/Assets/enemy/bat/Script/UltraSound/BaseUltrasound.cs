@@ -44,4 +44,9 @@ public class BaseUltrasound : MonoBehaviour
     {
 
     }
+
+    public virtual void Exit()
+    {
+
+    }
 }

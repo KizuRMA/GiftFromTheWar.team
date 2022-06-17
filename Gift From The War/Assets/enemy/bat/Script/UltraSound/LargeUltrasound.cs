@@ -35,7 +35,7 @@ public class LargeUltrasound : BaseUltrasound
     }
     public override void Start()
     {
-        coolDown = 0;
+        coolDown = 2;
         time = 0;
         range = 0.0f;
         maxRange = 0.0f;
@@ -104,8 +104,7 @@ public class LargeUltrasound : BaseUltrasound
 
         if (nowParticleSystem != null)
         {
-            nowParticleSystem.Stop();
-            nowParticleSystem = null;
+            StopParticle();
         }
     }
 
@@ -130,8 +129,7 @@ public class LargeUltrasound : BaseUltrasound
 
         if (_distance <= hitRange)
         {
-            nowParticleSystem.Stop();
-            nowParticleSystem = null;
+            StopParticle();
             aliveFlg = false;
             return true;
         }
@@ -189,4 +187,22 @@ public class LargeUltrasound : BaseUltrasound
         yield return new WaitForSeconds(delay);
         delayEnd = true;
     }
+
+    public void StopParticle()
+    {
+        if (nowParticleSystem == null) return;
+
+        nowParticleSystem.Stop();
+
+        ParticleSystem particle = nowParticleSystem.transform.GetChild(1).GetComponent<ParticleSystem>();
+        particle.Clear();
+
+        nowParticleSystem = null;
+    }
+
+    public override void Exit()
+    {
+        StopParticle();
+    }
+
 }

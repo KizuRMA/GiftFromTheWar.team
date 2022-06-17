@@ -12,7 +12,6 @@ public class batMove : BaseState
         check,
     }
 
-    [SerializeField] GameObject playerCC;
     [SerializeField] float playerFromInterval;
     [SerializeField] float trackingSpeed;
     [SerializeField] float normalSpeed;
@@ -28,7 +27,6 @@ public class batMove : BaseState
         navmeshOnFlg = true;
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
-        playerCC = GameObject.Find("player").gameObject;
 
         //超音波を初期化
         ChangeUltrasound(GetComponent<UltraSoundBeam>());
@@ -94,7 +92,7 @@ public class batMove : BaseState
 
     private void ActionMove()
     {
-        playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
+        playerAbnormalcondition abnormalcondition = myController.player.GetComponent<playerAbnormalcondition>();
 
         //主人公がハウリング状態の時
         if (abnormalcondition.IsHowling() == true)
@@ -102,7 +100,7 @@ public class batMove : BaseState
             Animator animator = GetComponent<Animator>();
             animator.SetFloat("AnimationSpeed", 1.3f);
             agent.speed = trackingSpeed;
-            Vector3 _playerPos = playerCC.transform.position;
+            Vector3 _playerPos = myController.player.transform.position;
             Vector3 _myPos = transform.position;
 
             float _dis = Vector3.Distance(_playerPos, _myPos);
@@ -142,14 +140,14 @@ public class batMove : BaseState
     {
         if (ultrasound.CheckHit() == true)
         {
-            playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
+            playerAbnormalcondition abnormalcondition = myController.player.GetComponent<playerAbnormalcondition>();
             abnormalcondition.AddHowlingAbnormal();
         }
     }
 
     private void ActionCheck()
     {
-        playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
+        playerAbnormalcondition abnormalcondition = myController.player.GetComponent<playerAbnormalcondition>();
 
         if (ultrasound.CheckHit() == true || abnormalcondition.IsHowling() == true)
         {
@@ -180,6 +178,11 @@ public class batMove : BaseState
     {
         nowAction = e_Action.check;
         ChangeUltrasound(GetComponent<LargeUltrasound>());
+    }
+
+    public override void Exit()
+    {
+
     }
 
 }

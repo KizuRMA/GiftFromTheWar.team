@@ -21,7 +21,7 @@ public class UltraSoundBeam : BaseUltrasound
     public override void Start()
     {
         particle.Stop();
-        coolDown = 0.0f;
+        coolDown = 2.0f;
         time = 0;
         range = 0.0f;
         aliveFlg = true;

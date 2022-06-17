@@ -60,6 +60,16 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
         }
 
+        float distance = Vector3.Distance(owner.player.transform.position,owner.bat.transform.position);
+
+        if (distance <= 1.0f)
+        {
+            var target = owner.player.GetComponent<playerAbnormalcondition>();
+            target.AddHowlingAbnormal();
+            owner.ChangeState(e_BatPatrolState.Tracking);
+            return;
+        }
+
         if (owner.currentUltrasound == null) return;
 
         if (owner.currentUltrasound.CheckHit() == true)
@@ -74,10 +84,12 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             owner.untilLaunch = 0;
             owner.currentUltrasound.Init();
         }
+
     }
 
     public override void Exit()
     {
-
+        owner.untilLaunch = 0;
+        owner.currentUltrasound.Start();
     }
 }
