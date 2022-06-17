@@ -188,7 +188,6 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     public void ExpDamage(int _damage, Vector3 _hypocenter)
     {
-
         if (agent.isOnOffMeshLink == true)
         {
             agent.CompleteOffMeshLink();
@@ -216,6 +215,12 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     {
         if (ultrasoundsList.Count <= 0) return;
         if ((int)state > System.Enum.GetValues(typeof(e_UltrasoundState)).Length - 1) return;
+
+        if (currentUltrasound != null)
+        {
+            currentUltrasound.Init();
+            currentUltrasound.Exit();
+        }
 
         currentUltrasound = ultrasoundsList[(int)state];
         currentUltrasound.Start();

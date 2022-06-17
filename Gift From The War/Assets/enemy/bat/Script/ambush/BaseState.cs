@@ -26,7 +26,11 @@ public abstract class BaseState : MonoBehaviour
 
     public virtual void Exit()
     {
-
+        if (ultrasound != null)
+        {
+            ultrasound.Init();
+            ultrasound.Exit();
+        }
     }
 
     public void ChangeUltrasound(BaseUltrasound _base)
@@ -35,6 +39,7 @@ public abstract class BaseState : MonoBehaviour
         if (ultrasound != null)
         {
             ultrasound.Init();
+            ultrasound.Exit();
         }
         ultrasound = null;
         //新しい実体のアドレスを入れる

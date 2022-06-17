@@ -25,7 +25,7 @@ public class BatController : MonoBehaviour
     [SerializeField] public float defaltForwardAngle;
     [SerializeField] private LayerMask raycastLayerMask;
     [SerializeField] public NavMeshAgent agent;
-    [SerializeField] public CharacterController playerCC;
+    [SerializeField] public GameObject player;
     [SerializeField] public Animator animator;
 
     [System.NonSerialized] public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
@@ -40,7 +40,7 @@ public class BatController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerCC = GameObject.Find("player").GetComponent<CharacterController>();
+        player = GameObject.Find("player").gameObject;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         life = 1.0f;
@@ -55,7 +55,7 @@ public class BatController : MonoBehaviour
     {
         if (agent.isOnOffMeshLink == true)
         {
-           
+
         }
         else
         {
@@ -139,10 +139,10 @@ public class BatController : MonoBehaviour
         float _targetHeight;
 
         //プレイヤーの地面までの距離を取得
-        _ray = new Ray(playerCC.transform.position, Vector3.down);
+        _ray = new Ray(player.transform.position, Vector3.down);
         _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, raycastLayerMask);
 
-        playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
+        playerAbnormalcondition abnormalcondition = player.GetComponent<playerAbnormalcondition>();
 
         if (_hit == true && abnormalcondition.IsHowling() == true)
         {
@@ -217,5 +217,11 @@ public class BatController : MonoBehaviour
     {
         agent.Warp(_pos);
         transform.position = _pos;
+    }
+
+    //プレハブ化している場合に消えてしまうシリアライズの値を代入
+    public void PutInInfo(EnemyManager _info)
+    {
+        player = _info.player;
     }
 }
