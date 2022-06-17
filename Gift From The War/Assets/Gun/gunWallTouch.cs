@@ -8,6 +8,7 @@ public class gunWallTouch : MonoBehaviour
     private Transform trans;
     private Rigidbody rd;
     [SerializeField] private playerDied died;
+    [SerializeField] private playerHundLadder playerHund;
 
     //ƒtƒ‰ƒO
     private bool returnFlg = true;              //–ß‚é‚©
@@ -31,7 +32,7 @@ public class gunWallTouch : MonoBehaviour
 
     void Update()
     {
-        if (died.diedFlg) return;
+        if (died.diedFlg || playerHund.ClimbLadderFlg()) return;
 
         EraseInertia();
 
@@ -88,8 +89,6 @@ public class gunWallTouch : MonoBehaviour
 
     private void OnCollisionEnter(Collision collison)   //Õ“Ë
     {
-        if (Mathf.Abs((firstPos - trans.position).magnitude) > range) return;   //e‚ª”ÍˆÍ‚©‚ço‚Ä‚¢‚½‚çˆ—‚µ‚È‚¢
-
         returnFlg = false;
         returnFinishFlg = false;
         nowSpeed = firstSpeed;

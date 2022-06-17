@@ -28,7 +28,7 @@ public class gunMove : MonoBehaviour
 
     void Update()
     {
-        if (playerDied.diedFlg) return;
+        if (playerDied.diedFlg || playerHund.ClimbLadderFlg()) return;
 
         tremor();
     }
@@ -66,8 +66,6 @@ public class gunMove : MonoBehaviour
 
     private void Return()   //e‚ª–ß‚é
     {
-        if (playerHund.ClimbLadderFlg()) return;
-
         //Ž©“®‚Å–ß‚éˆ—
         float nowPos = firstPos.y - trans.localPosition.y;
         bool largeMoveFlg = Mathf.Abs(nowPos) > upDownSpeed * Time.deltaTime;   //‘å‚«‚­“®‚­•K—v‚ª‚ ‚é‚©

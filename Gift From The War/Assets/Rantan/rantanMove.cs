@@ -35,7 +35,7 @@ public class rantanMove : MonoBehaviour
 
     void Update()
     {
-        if (playerDied.diedFlg) return;
+        if (playerDied.diedFlg || playerHund.ClimbLadderFlg()) return;
 
         rotation();
         tremor();
@@ -99,8 +99,6 @@ public class rantanMove : MonoBehaviour
 
     private void Return()   //ランタンが戻る
     {
-        if (playerHund.ClimbLadderFlg()) return;    //梯子に登っていたら処理しない
-
         //自動で戻る処理
         float nowPos = firstPos.y - trans.localPosition.y;
         bool largeMoveFlg = Mathf.Abs(nowPos) > upDownSpeed * Time.deltaTime;   //大きく動く必要があるか

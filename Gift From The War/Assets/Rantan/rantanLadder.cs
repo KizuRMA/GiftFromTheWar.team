@@ -16,7 +16,8 @@ public class rantanLadder : MonoBehaviour
     [SerializeField] private float upDownSpeed; //ランタンの移動スピード
     [SerializeField] private float maxPosY;     //ランタンの最大移動位置
 
-    private bool limitFlg = true;   //最初の位置または最大移動位置に到達するか
+    private bool limitFlg = false;   //最大移動位置に到達するか
+    private bool returnLimitFlg = true;   //最初の位置に到達するか
 
     void Start()
     {
@@ -37,16 +38,18 @@ public class rantanLadder : MonoBehaviour
 
     private void TouchLadder()
     {
-        if (!limitFlg) return;  //最大移動位置に到達していたら
+        if (limitFlg) return;  //最大移動位置に到達していたら
 
         //壁ずりが終わっていたら
         if (!rantanWallTouch.returnFinishFlg) return;
         if (!gunWallTouch.returnFinishFlg) return;
 
+        returnLimitFlg = false;
+
         bool maxPosFlg = trans.localPosition.y < firstPos.y - maxPosY; //最大移動位置に到達たら
         if (maxPosFlg)
         {
-            limitFlg = false;
+            limitFlg = true;
             return;
         }
 
@@ -55,12 +58,14 @@ public class rantanLadder : MonoBehaviour
 
     private void NoTouchLadder()
     {
-        if (limitFlg) return;   //元の位置に戻っていたら
+        if (returnLimitFlg) return;   //元の位置に戻っていたら
+
+        limitFlg = false;
 
         bool returnFlg = trans.localPosition.y > firstPos.y;    //元の位置に戻っていたら
         if (returnFlg)
         {
-            limitFlg = true;
+            returnLimitFlg = true;
             return;
         }
 

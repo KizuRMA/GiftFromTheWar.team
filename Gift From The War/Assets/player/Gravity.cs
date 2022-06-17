@@ -87,6 +87,22 @@ public class Gravity : MonoBehaviour
             }
         }      
 
+        if(CC.isGrounded)
+        {
+            Debug.Log("A");
+
+            nowGravity = 0;
+
+            groundHitFlg = true;
+
+            nowGravity = 0;
+
+            if (firstGroundHitFlg) return;
+            moveVec.y += 1.0f;  //Š®‘S‚É’n–Ê‚É‚Â‚¯‚é‚½‚ß‚Ìˆ—
+            firstGroundHitFlg = true;
+            return;
+        }
+
         firstGroundHitFlg = false;
         groundHitFlg = false;
 
