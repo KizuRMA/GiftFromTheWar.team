@@ -30,6 +30,9 @@ public class EnemyManager : MonoBehaviour
             EnemyInterface info = game.GetComponent<EnemyInterface>();
             info.EnemySpawn(enemy.spawnPosLists[i].position);
             info.EnemyInfo(this);
+            game.transform.parent = this.transform;
         }
     }
+
+    
 }

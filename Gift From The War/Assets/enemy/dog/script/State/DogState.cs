@@ -16,19 +16,18 @@ public enum e_DogState
 
 public class DogState : StatefulObjectBase<DogState, e_DogState>
 {
-    [SerializeField]public NavMeshAgent agent;
-    [SerializeField]public GameObject player;
-    [SerializeField]public GameObject dog;
+    [SerializeField] public NavMeshAgent agent;
+    [SerializeField] public GameObject player;
+    [SerializeField] public GameObject dog;
     [SerializeField] public Animator animator;
     [SerializeField] public float SearchSpeed;
     [SerializeField] public float TrakingSpeed;
+    [SerializeField] public float life = 1.0f;
 
-    public Vector3 hypocenter;
-    private Rigidbody rd;
-    public bool canVigilance;
+    [System.NonSerialized] public Vector3 hypocenter;
+    [System.NonSerialized] public bool canVigilance;
+
     public bool IsVigilance => canVigilance == true;
-
-    public float life = 1.0f;
     public bool IsAlive => life > 0.0f;
 
     void Start()
@@ -79,5 +78,11 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     {
         agent.Warp(_pos);
         dog.transform.position = _pos;
+    }
+
+    //プレハブ化している場合に消えてしまうシリアライズの値を代入
+    public void PutInInfo(EnemyManager _info)
+    {
+        player = _info.player;
     }
 }
