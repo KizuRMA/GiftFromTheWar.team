@@ -14,6 +14,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private EnemySpawnList list = null;
     [SerializeField] public GameObject player = null;
     [SerializeField] public WayPoint wayPoints = null;
+    private BaseEnemyManager manager = null;
 
     private void Awake()
     {
@@ -28,11 +29,27 @@ public class EnemyManager : MonoBehaviour
         {
             GameObject game = Instantiate(enemy.spawnTypeLists[i]);
             EnemyInterface info = game.GetComponent<EnemyInterface>();
+            SwitchManager(info.enemyType);
             info.EnemySpawn(enemy.spawnPosLists[i].position);
             info.EnemyInfo(this);
-            game.transform.parent = this.transform;
+            game.transform.parent = manager.transform;
         }
     }
 
+    public void SwitchManager(e_EnemyType _type)
+    {
+        switch (_type)
+        {
+            case e_EnemyType.Bat:
+                manager = transform.Find("BatManager").GetComponent<BatManager>();
+                break;
+            case e_EnemyType.PatrolBat:
+                manager = transform.Find("PatrolBatManager").GetComponent<PatrolBatManager>();
+                break;
+            case e_EnemyType.Dog:
+                manager = transform.Find("DogManager").GetComponent<DogManager>();
+                break;
+        }
+    }
     
 }
