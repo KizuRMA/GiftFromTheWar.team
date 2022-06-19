@@ -55,9 +55,6 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public float height = 0.8f;
     public float hightRatio = 0.4f;
 
-
-
-
     void Start()
     {
         forwardAngle = 20.0f;
@@ -300,5 +297,11 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     {
         player = _info.player;
         wayPoint = _info.wayPoints;
+        manager = _info.manager;
+    }
+
+    public void SetParentManager()  //マネージャーを親にする
+    {
+        transform.parent = manager.transform;
     }
 }

@@ -14,7 +14,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private EnemySpawnList list = null;
     [SerializeField] public GameObject player = null;
     [SerializeField] public WayPoint wayPoints = null;
-    private BaseEnemyManager manager = null;
+    public BaseEnemyManager manager = null;
 
     private void Awake()
     {

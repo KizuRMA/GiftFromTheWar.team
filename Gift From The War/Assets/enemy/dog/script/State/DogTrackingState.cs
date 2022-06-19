@@ -25,7 +25,6 @@ public class DogTrackingState : State<DogState>
     public override void Execute()
     {
         owner.animator.SetFloat("MoveSpeed",owner.agent.velocity.magnitude);
-        Debug.Log(owner.animator.GetFloat("MoveSpeed")) ;
         owner.agent.destination = owner.player.transform.position;
 
         float targetDis = Vector3.Distance(owner.dog.transform.position, owner.player.transform.position);

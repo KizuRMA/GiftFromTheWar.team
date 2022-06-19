@@ -32,6 +32,8 @@ public class BatController : MonoBehaviour
     [System.NonSerialized] public Vector3 hypocenter;
     [System.NonSerialized] public BaseState state;
 
+    public BaseEnemyManager manager = null;
+
     public float height { get; set; }
     public float forwardAngle { get; set; }
     private float life;
@@ -223,5 +225,11 @@ public class BatController : MonoBehaviour
     public void PutInInfo(EnemyManager _info)
     {
         player = _info.player;
+        manager = _info.manager;
+    }
+
+    public void SetParentManager()  //マネージャーを親にする
+    {
+        transform.parent = manager.transform;
     }
 }

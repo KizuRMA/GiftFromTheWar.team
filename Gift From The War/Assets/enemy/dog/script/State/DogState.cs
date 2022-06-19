@@ -84,5 +84,11 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     public void PutInInfo(EnemyManager _info)
     {
         player = _info.player;
+        manager = _info.manager;
+    }
+
+    public void SetParentManager()  //マネージャーを親にする
+    {
+        transform.parent = manager.transform;
     }
 }
