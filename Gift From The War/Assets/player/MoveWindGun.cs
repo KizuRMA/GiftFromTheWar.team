@@ -99,6 +99,8 @@ public class MoveWindGun : MonoBehaviour
             airResistance -= airResistancePower * Time.deltaTime;
         }
 
+        airResistance -= airResistancePower * Time.deltaTime;
+
         if (airResistance < 0)   //‹ó‹C’ïRI—¹
         {
             airResistance = 0;

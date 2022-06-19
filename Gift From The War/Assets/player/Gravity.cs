@@ -89,8 +89,6 @@ public class Gravity : MonoBehaviour
 
         if(CC.isGrounded)
         {
-            Debug.Log("A");
-
             nowGravity = 0;
 
             groundHitFlg = true;
