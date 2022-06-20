@@ -13,6 +13,7 @@ public class playerAwake : MonoBehaviour
 
     void Start()
     {
+        if (eye == null) return;
         eyeRec = eye.GetComponent<RectTransform>();
         eye2Rec = eye2.GetComponent<RectTransform>();
         eyeRec.localPosition = new Vector3(0, 0, 0);
@@ -21,7 +22,7 @@ public class playerAwake : MonoBehaviour
 
     void Update()
     {
-        if (awakeFinishFlg) return;
+        if (awakeFinishFlg || eyeRec == null) return;
 
         //áÙ‚ð“®‚©‚·
         eyeRec.localPosition += new Vector3(0, moveEyeSpeed * Time.deltaTime, 0);
@@ -29,7 +30,7 @@ public class playerAwake : MonoBehaviour
 
         //–Ú‚ªŠJ‚¢‚½‚çA‰æ‘œ‚ð”ñ•\Ž¦
         if (eyeRec.localPosition.y > 720 && eye2Rec.localPosition.y < -720)
-        { 
+        {
             eye.SetActive(false);
             eye2.SetActive(false);
 
