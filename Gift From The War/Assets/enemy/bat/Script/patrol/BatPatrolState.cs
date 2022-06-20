@@ -304,4 +304,9 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     {
         transform.parent = manager.transform;
     }
+
+    public void SetWayPoint(WayPoint _wayPoint)
+    {
+        wayPoint = _wayPoint;
+    }
 }
