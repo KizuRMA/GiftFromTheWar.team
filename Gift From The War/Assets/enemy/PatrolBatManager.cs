@@ -6,15 +6,16 @@ public class PatrolBatManager : BaseEnemyManager
 {
     [SerializeField] public WayPointList wayPointLists = new WayPointList();
     [SerializeField] public GameObject prefab = null;
-    [SerializeField] public Transform respawnPos = null;
-    [SerializeField] public Transform respawnPos2 = null;
+    [SerializeField] public List<Transform> respawnPos = new List<Transform>();
 
     EnemyManager owner;
     int wayPointIndex;
     int wayPointIndexMax = 0;
+    bool respawnFlg;
 
     private void Awake()
     {
+        respawnFlg = false;
         wayPointIndex = 0;
         wayPointIndexMax = wayPointLists.wayPoints.Count;
         owner = transform.parent.GetComponent<EnemyManager>();
@@ -27,20 +28,16 @@ public class PatrolBatManager : BaseEnemyManager
 
     private void Update()
     {
-        //EnemyReSpawn();
+        EnemyReSpawn();
     }
 
     protected override void EnemyReSpawn()
     {
         if (numberEnemies <= transform.childCount) return;
+        if (respawnFlg == true) return;
 
-        GameObject game = Instantiate(prefab);
-        EnemyInterface info = game.GetComponent<EnemyInterface>();
-        info.EnemySpawn(respawnPos.position);
-        info.EnemyInfo(owner);
-        game.transform.parent = this.transform;
-
-        SetWayPointRoot();
+        //ìGÇÉäÉXÉ|Å[ÉìÇ≥ÇπÇÈ
+        StartCoroutine(RespawnCoroutine());
     }
 
     private void SetWayPointRoot()
@@ -61,5 +58,21 @@ public class PatrolBatManager : BaseEnemyManager
             _state.SetWayPoint(wayPointLists.wayPoints[wayPointIndex]);
             wayPointIndex = (wayPointIndex + 1) % wayPointIndexMax;
         }
+    }
+
+    public IEnumerator RespawnCoroutine()
+    {
+        respawnFlg = true;
+
+        yield return new WaitForSeconds(5.0f);
+
+        GameObject game = Instantiate(prefab);
+        EnemyInterface info = game.GetComponent<EnemyInterface>();
+        info.EnemySpawn(respawnPos[0].position);
+        info.EnemyInfo(owner);
+        game.transform.parent = this.transform;
+
+        SetWayPointRoot();
+        respawnFlg = false;
     }
 }
