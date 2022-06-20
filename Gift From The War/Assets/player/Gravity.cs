@@ -20,6 +20,9 @@ public class Gravity : MonoBehaviour
     private Vector3 moveVec; // 合成用
     [SerializeField] private float gravity;
     private float nowGravity;
+    [SerializeField] private float slipAng; //滑る斜面の基準
+    private float distanceMin;  //最小の距離を保管
+    private Vector3 rayNormal;  //例が当たったところの法線
     [SerializeField] private float groundDis;       //地面との距離
     [SerializeField] private float playerRadius;    //プレイヤーの半径
     [SerializeField] private float playerHeight;    //プレイヤーの高さの補正
@@ -44,6 +47,8 @@ public class Gravity : MonoBehaviour
     private void GravityProcess()
     {
         moveVec = Vector3.zero;
+        distanceMin = float.MaxValue;
+        rayNormal = Vector3.zero;
 
         if (moveWindGun.upWindFlg)  //風の力を使っていたら、重力をリセット
         {
@@ -78,28 +83,32 @@ public class Gravity : MonoBehaviour
 
                 groundHitFlg = true;
 
-                nowGravity = 0;
+                if (!firstGroundHitFlg)
+                {
+                    firstGroundHitFlg = true;
+                }
 
-                if (firstGroundHitFlg) return;
-                moveVec.y += 1.0f;  //完全に地面につけるための処理
-                firstGroundHitFlg = true;
-                return;
+                if (i.x == trans.position.x && i.z == trans.position.z) continue;
+
+                if(hit.distance < distanceMin)
+                {
+                    rayNormal = hit.normal.normalized;
+                }
             }
-        }      
-
-        if(CC.isGrounded)
-        {
-            nowGravity = 0;
-
-            groundHitFlg = true;
-
-            nowGravity = 0;
-
-            if (firstGroundHitFlg) return;
-            moveVec.y += 1.0f;  //完全に地面につけるための処理
-            firstGroundHitFlg = true;
-            return;
         }
+
+        Debug.Log(Mathf.Abs((new Vector3(0, 1, 0) - rayNormal).magnitude));
+
+        if (rayNormal != Vector3.zero)
+        {
+            if (Mathf.Abs((new Vector3(0, 1, 0) - rayNormal).magnitude) > slipAng)  //斜面の角度が一定以上だったら
+            {
+                Vector3 slipVec = new Vector3(rayNormal.x, -10.0f, rayNormal.z);    //ずり落ちる処理
+                moveVec += slipVec * 2;
+            }
+        }
+
+        if (distanceMin != float.MaxValue) return;
 
         firstGroundHitFlg = false;
         groundHitFlg = false;
