@@ -27,6 +27,8 @@ public class Gravity : MonoBehaviour
     [SerializeField] private float playerRadius;    //プレイヤーの半径
     [SerializeField] private float playerHeight;    //プレイヤーの高さの補正
     [SerializeField] private float playerHeightGap; //プレイヤーの高さの差
+    [SerializeField] private float slipY;           //スリップの高さ
+    [SerializeField] private float slipPower;       //スリップするときの移動量
 
     void Start()
     {
@@ -103,8 +105,8 @@ public class Gravity : MonoBehaviour
         {
             if (Mathf.Abs((new Vector3(0, 1, 0) - rayNormal).magnitude) > slipAng)  //斜面の角度が一定以上だったら
             {
-                Vector3 slipVec = new Vector3(rayNormal.x, -10.0f, rayNormal.z);    //ずり落ちる処理
-                moveVec += slipVec * 2;
+                Vector3 slipVec = new Vector3(rayNormal.x, slipY, rayNormal.z);    //ずり落ちる処理
+                moveVec += slipVec.normalized * slipPower;
             }
         }
 
