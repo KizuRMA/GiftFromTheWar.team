@@ -99,8 +99,6 @@ public class Gravity : MonoBehaviour
             }
         }
 
-        Debug.Log(Mathf.Abs((new Vector3(0, 1, 0) - rayNormal).magnitude));
-
         if (rayNormal != Vector3.zero)
         {
             if (Mathf.Abs((new Vector3(0, 1, 0) - rayNormal).magnitude) > slipAng)  //ŽÎ–Ê‚ÌŠp“x‚ªˆê’èˆÈã‚¾‚Á‚½‚ç
