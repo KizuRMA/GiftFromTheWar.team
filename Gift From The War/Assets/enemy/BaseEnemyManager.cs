@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class BaseEnemyManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected int numberEnemies;
+
+    public void EnemyCounter()
     {
-        
+        numberEnemies += 1;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void EnemyReSpawn()   //“G‚ğƒŠƒXƒ|[ƒ“‚³‚¹‚é’ŠÛ‰»ŠÖ”
     {
-        
+
     }
 }
