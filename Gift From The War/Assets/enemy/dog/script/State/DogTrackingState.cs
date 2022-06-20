@@ -6,6 +6,7 @@ public class DogTrackingState : State<DogState>
 {
     public DogTrackingState(DogState owner) : base(owner) { }
     float time;
+    bool rotateOnly;
 
     // Start is called before the first frame update
     public override void Enter()
@@ -14,27 +15,43 @@ public class DogTrackingState : State<DogState>
         owner.animator.SetFloat("Speed", 1.1f);
         owner.agent.speed = owner.TrakingSpeed;
         time = 0;
+
+
+        rotateOnly = false;
+        owner.agent.updatePosition = true;
+        owner.agent.updateUpAxis = true;
     }
 
     public override void Execute()
     {
+        owner.animator.SetFloat("MoveSpeed",owner.agent.velocity.magnitude);
         owner.agent.destination = owner.player.transform.position;
 
-        if (owner.agent.remainingDistance < 1.5f)
+        float targetDis = Vector3.Distance(owner.dog.transform.position, owner.player.transform.position);
+
+        if (targetDis < 1.5f)
         {
-            owner.agent.updatePosition = false;
-            owner.agent.updateUpAxis = false;
+            if (rotateOnly == false)                                                                             
+            {
+                owner.agent.updatePosition = false;
+                owner.agent.updateUpAxis = false;
+                rotateOnly = true;
+            }
         }
         else
         {
-            owner.agent.updatePosition = true;
-            owner.agent.updateUpAxis = true;
+            if (rotateOnly == true && targetDis >= 1.5f)
+            {
+                owner.agent.Warp(owner.dog.transform.position);
+                rotateOnly = false;
+
+                owner.agent.updatePosition = true;
+                owner.agent.updateUpAxis = true;
+            }
         }
 
-        float targetDis = Vector3.Distance(owner.dog.transform.position,owner.player.transform.position);
-
         //‹——£‚ª‹ß‚¢ó‘Ô‚ª‘±‚¢‚Ä‚¢‚éê‡‚Í•b”‚ğƒJƒEƒ“ƒg‚·‚é
-        if (targetDis <= 2.0f)
+        if (targetDis <= 2.5f)
         {
             time += Time.deltaTime;
         }

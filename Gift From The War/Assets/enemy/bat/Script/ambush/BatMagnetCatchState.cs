@@ -92,6 +92,7 @@ public class BatMagnetCatchState : BaseState
 
     public override void Exit()
     {
+        myController.SetParentManager();
         myController.agent.isStopped = false;
         myController.agent.updatePosition = true;
         myController.agent.updateUpAxis = true;
@@ -111,6 +112,7 @@ public class BatMagnetCatchState : BaseState
 
     private void ReleasedOnce()
     {
+        
         if (myController.animator.GetCurrentAnimatorStateInfo(0).IsName("FoldTheWings") == true)
         {
             foldWingFlg = true;

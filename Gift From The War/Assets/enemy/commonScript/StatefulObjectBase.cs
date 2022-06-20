@@ -9,6 +9,8 @@ public abstract class StatefulObjectBase<T, TEnum> : MonoBehaviour
 
     protected StateMachine<T> stateMachine;
 
+    protected BaseEnemyManager manager;
+
     public virtual void ChangeState(TEnum state)
     {
         if (stateMachine == null || stateList.Count <= 0)

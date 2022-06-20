@@ -45,7 +45,7 @@ public class PatrolBatMagnetCatchState : State<BatPatrolState>
         }
 
         //ŠJ•ú‚³‚ê‚½Žž
-        if (owner.transform.parent == null)
+        if (owner.transform.parent == null || releaseFlg == true)
         {
             if (releaseFlg == false)
             {
@@ -70,6 +70,7 @@ public class PatrolBatMagnetCatchState : State<BatPatrolState>
 
     public override void Exit()
     {
+        owner.SetParentManager();
         owner.agent.isStopped = false;
         owner.agent.updatePosition = true;
         owner.agent.updateUpAxis = true;

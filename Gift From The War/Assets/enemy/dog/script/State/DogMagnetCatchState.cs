@@ -7,6 +7,7 @@ public class DogMagnetCatchState : State<DogState>
     public DogMagnetCatchState(DogState owner) : base(owner) { }
     private Rigidbody rd;
     bool magnetCatchFlg;
+    bool releaseFlg;
 
     public override void Enter()
     {
@@ -16,6 +17,8 @@ public class DogMagnetCatchState : State<DogState>
             //マグネットで捕まっていないことを保存する
             magnetCatchFlg = false;
         }
+
+        releaseFlg = false;
 
         //ナビメッシュを切る
         owner.agent.isStopped = true;
@@ -45,11 +48,18 @@ public class DogMagnetCatchState : State<DogState>
         //開放された時
         if (owner.transform.parent == null)
         {
+            if (releaseFlg == false)
+            {
+                //解放された後一度だけ実行する
+                ReleasedOnce();
+                releaseFlg = true;
+            }
+
             Quaternion rotate = Quaternion.Euler(0,owner.transform.rotation.eulerAngles.y,0);
             owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, rotate, 60.0f * Time.deltaTime);
             Vector3 dif = owner.transform.rotation.eulerAngles - rotate.eulerAngles;
             
-            if (dif.magnitude <= 0)
+            if (dif.magnitude <= 0 && rd.velocity.y >= 0)
             {
                 owner.ChangeState(e_DogState.Tracking);
                 return;
@@ -59,6 +69,7 @@ public class DogMagnetCatchState : State<DogState>
 
     public override void Exit()
     {
+        owner.SetParentManager();
         owner.agent.isStopped = false;
         owner.agent.updatePosition = true;
         owner.agent.updateUpAxis = true;
@@ -72,5 +83,10 @@ public class DogMagnetCatchState : State<DogState>
     private bool IsMagnetCatch()
     {
         return owner.transform.parent != null;
+    }
+
+    private void ReleasedOnce()
+    {
+       
     }
 }

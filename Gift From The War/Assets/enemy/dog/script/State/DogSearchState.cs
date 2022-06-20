@@ -28,12 +28,14 @@ public class DogSearchState : State<DogState>
 
     public override void Execute()
     {
-        if (canSetFlg == true)
+        float dis = Vector3.Distance(owner.player.transform.position, owner.dog.transform.position);
+
+        if (canSetFlg == true && dis <= 75.0f)
         {
             owner.StartCoroutine(TargetCoroutine());
         }
 
-        float dis = Vector3.Distance(owner.player.transform.position, owner.dog.transform.position);
+       
 
         if (dis <= 1.0f)
         {
