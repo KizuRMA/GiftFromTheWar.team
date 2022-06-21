@@ -11,28 +11,36 @@ public enum e_EnemyType
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private EnemySpawnList list = null;
+    [SerializeField] private List<EnemySpawnList> list = null;
     [SerializeField] public GameObject player = null;
     [SerializeField] public WayPoint wayPoints = null;
     public BaseEnemyManager manager = null;
 
     private void Awake()
     {
-        EnemySpawn enemy = list.spawnLists[0];
-
-        int listTypeSize = enemy.spawnTypeLists.Count;
-        int listPosSize = enemy.spawnPosLists.Count;
-
-        if (listTypeSize != listPosSize) return;
-
-        for (int i = 0; i < listTypeSize; i++)
+        foreach (var enemyList in list)
         {
-            GameObject game = Instantiate(enemy.spawnTypeLists[i]);
-            EnemyInterface info = game.GetComponent<EnemyInterface>();
-            SwitchManager(info.enemyType);
-            info.EnemySpawn(enemy.spawnPosLists[i].position);
-            info.EnemyInfo(this);
-            game.transform.parent = manager.transform;
+            int maxIndex = enemyList.spawnLists.Count - 1;
+            if (maxIndex < 0) continue;
+
+            int index = Random.Range(0, maxIndex + 1);
+            EnemySpawn enemy = enemyList.spawnLists[index];
+
+            int listTypeSize = enemy.spawnTypeLists.Count;
+            int listPosSize = enemy.spawnPosLists.Count;
+
+            if (listTypeSize != listPosSize) return;
+
+            for (int i = 0; i < listTypeSize; i++)
+            {
+                GameObject game = Instantiate(enemy.spawnTypeLists[i]);
+                EnemyInterface info = game.GetComponent<EnemyInterface>();
+                SwitchManager(info.enemyType);
+                info.EnemySpawn(enemy.spawnPosLists[i].position);
+                info.EnemyInfo(this);
+                manager.EnemyCounter();
+                game.transform.parent = manager.transform;
+            }
         }
     }
 
@@ -51,5 +59,5 @@ public class EnemyManager : MonoBehaviour
                 break;
         }
     }
-    
+
 }

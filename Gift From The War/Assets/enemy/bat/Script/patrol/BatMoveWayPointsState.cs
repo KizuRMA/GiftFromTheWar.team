@@ -50,14 +50,17 @@ public class BatMoveWayPointsState : State<BatPatrolState>
 
     public override void Execute()
     {
+        Vector3 _nowPos = new Vector3(owner.bat.transform.position.x,agent.destination.y, owner.bat.transform.position.z);
+        float targetDis = Vector3.Distance(_nowPos,agent.destination);
 
         // 目的地点までの距離(remainingDistance)が目的地の手前までの距離(stoppingDistance)以下になったら
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (targetDis <= 0.1f)
         {
             // 目的地の番号を１更新（右辺を剰余演算子にすることで目的地をループさせれる）
             currentWaypointIndex = (currentWaypointIndex + 1) % wayPoint.wayPoints.Count;
             // 目的地を次の場所に設定
             agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
+            Debug.Log(currentWaypointIndex);
         }
 
         float distance = Vector3.Distance(owner.player.transform.position,owner.bat.transform.position);
