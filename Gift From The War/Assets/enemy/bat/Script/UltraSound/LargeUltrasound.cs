@@ -5,6 +5,9 @@ using UnityEngine;
 public class LargeUltrasound : BaseUltrasound
 {
     [SerializeField] private ParticleSystem particle;
+    [SerializeField] public float startCoolTime = 2;
+    [SerializeField] public float CoolTime = 10;
+
     ParticleSystem nowParticleSystem;
     private float minimumRange;
     private float hitRange;
@@ -35,7 +38,7 @@ public class LargeUltrasound : BaseUltrasound
     }
     public override void Start()
     {
-        coolDown = 2;
+        coolDown = startCoolTime;
         time = 0;
         range = 0.0f;
         maxRange = 0.0f;
@@ -47,7 +50,7 @@ public class LargeUltrasound : BaseUltrasound
 
     public override void Init()
     {
-        coolDown = 10;
+        coolDown = CoolTime;
         time = 0;
         range = 0.0f;
         maxRange = 0.0f;
