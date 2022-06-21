@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PatrolBatManager : BaseEnemyManager
 {
@@ -24,11 +25,12 @@ public class PatrolBatManager : BaseEnemyManager
     private void Start()
     {
         SetWayPointRoot();
+        ResetPriority();
     }
 
     private void Update()
     {
-        EnemyReSpawn();
+        EnemyReSpawn();  
     }
 
     protected override void EnemyReSpawn()
@@ -58,6 +60,7 @@ public class PatrolBatManager : BaseEnemyManager
             _state.SetWayPoint(wayPointLists.wayPoints[wayPointIndex]);
             wayPointIndex = (wayPointIndex + 1) % wayPointIndexMax;
         }
+
     }
 
     public IEnumerator RespawnCoroutine()
@@ -73,6 +76,26 @@ public class PatrolBatManager : BaseEnemyManager
         game.transform.parent = this.transform;
 
         SetWayPointRoot();
+        ResetPriority();
         respawnFlg = false;
+    }
+
+    public void ResetPriority()
+    {
+        //子オブジェクトを全て取得する
+        GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            _ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
+        }
+
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            NavMeshAgent _agent = _ChildObjects[i].GetComponent<NavMeshAgent>();
+            if (_agent == null) continue;
+
+            _agent.avoidancePriority = 50;
+            _agent.avoidancePriority += i;
+        }
     }
 }
