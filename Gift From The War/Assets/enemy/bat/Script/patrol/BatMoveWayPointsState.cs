@@ -60,7 +60,6 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             currentWaypointIndex = (currentWaypointIndex + 1) % wayPoint.wayPoints.Count;
             // –Ú“I’n‚ğŸ‚ÌêŠ‚Éİ’è
             agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
-            Debug.Log(currentWaypointIndex);
         }
 
         float distance = Vector3.Distance(owner.player.transform.position,owner.bat.transform.position);

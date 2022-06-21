@@ -7,6 +7,7 @@ public class LargeUltrasound : BaseUltrasound
     [SerializeField] private ParticleSystem particle;
     [SerializeField] public float startCoolTime = 2;
     [SerializeField] public float CoolTime = 10;
+    [SerializeField] public LayerMask layer;
 
     ParticleSystem nowParticleSystem;
     private float minimumRange;
@@ -117,7 +118,17 @@ public class LargeUltrasound : BaseUltrasound
 
         //当たり判定
         Vector3 _firePos = transform.position + (transform.up * 0.3f);
-        Vector3 _targetVec = playerObject.transform.position - _firePos;
+        Vector3 _targetVec = (playerObject.transform.position) - _firePos;
+
+        //レイ判定
+        Ray _ray = new Ray(_firePos,_targetVec);
+        RaycastHit _raycastHit;
+
+        //天井に向かってレイ判定
+        bool hit = Physics.Raycast(_ray, out _raycastHit, range,layer);
+
+        //レイ判定
+        if (hit == false || _raycastHit.collider.tag != "Player") return false;
 
         //超音波の長さに調整する
         _targetVec = _targetVec.normalized * (range - 0.5f);
