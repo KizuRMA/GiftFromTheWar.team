@@ -85,7 +85,7 @@ public class WingFoldState : BaseState
         //í¥âπîgèàóù
         float _ultrasoundCoolTime = ultrasound.coolDown;
         float _playerDis = Vector3.Distance(transform.position, playerCC.transform.position);
-        if (ultrasound != null && _playerDis <= 30.0f && untilLaunch - _ultrasoundCoolTime > 0)
+        if (ultrasound != null && _playerDis <= 20.0f && untilLaunch - _ultrasoundCoolTime > 0)
         {
             ultrasound.Update();
         }
