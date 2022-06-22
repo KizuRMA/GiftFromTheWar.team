@@ -84,10 +84,10 @@ public class WingFoldState : BaseState
 
         //超音波処理
         float _ultrasoundCoolTime = ultrasound.coolDown;
-        if (ultrasound != null && untilLaunch - _ultrasoundCoolTime > 0)
+        float _playerDis = Vector3.Distance(transform.position, playerCC.transform.position);
+        if (ultrasound != null && _playerDis <= 30.0f && untilLaunch - _ultrasoundCoolTime > 0)
         {
             ultrasound.Update();
-            ultrasound.DrawLine();
         }
 
         //現在のアクション状態毎に関数を実行する
