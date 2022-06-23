@@ -23,7 +23,7 @@ public class BatController : MonoBehaviour
 
     [SerializeField] public float defaltHight;
     [SerializeField] public float defaltForwardAngle;
-    [SerializeField] private LayerMask raycastLayerMask;
+    [SerializeField] public LayerMask raycastLayerMask;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public GameObject player;
     [SerializeField] public Animator animator;
@@ -55,11 +55,8 @@ public class BatController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (agent.isOnOffMeshLink == true)
-        {
-
-        }
-        else
+        //ƒRƒEƒ‚ƒŠ‚ª‚Í‚µ‚²‚ğ“o‚Á‚Ä‚¢‚È‚¢
+        if (agent.isOnOffMeshLink == false)
         {
             state.Update();
         }
@@ -93,7 +90,7 @@ public class BatController : MonoBehaviour
             agent.CompleteOffMeshLink();
         }
 
-        //‚Q‰ñˆÈãDeadState‚É‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+        //Life‚ª‚È‚­‚È‚Á‚Ä‚¢‚éó‘Ô‚Åˆ—‚ğ‚µ‚È‚¢‚æ‚¤‚É‚·‚é
         if (life < 0) return;
 
         life -= _damage;

@@ -27,6 +27,7 @@ public class WingFoldState : BaseState
     private float defaltHight;
     private e_Action nowAction;
     private float rotateY;
+    private float time;
     private float untilLaunch;
     private float amountChangeAngX;
     private float amountChangeDis;
@@ -325,7 +326,27 @@ public class WingFoldState : BaseState
                 //プレイヤーとの高さの違い
                 float _playerDifHeight = Mathf.Abs(player.transform.position.y - transform.position.y);
 
-                targetPos += (player.transform.forward * 2.0f) + (Vector3.down * _playerDifHeight);
+                //落下地点を計算
+                targetPos += Vector3.down * _playerDifHeight;
+
+                //プレイヤーの前方に壁がある場合は壁の手前に落ちるようにする
+                Vector3 _playerForward = player.transform.forward;
+                Ray _ray = new Ray(targetPos, _playerForward);
+                RaycastHit _raycastHit;
+                
+                bool _rayHit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, myController.raycastLayerMask);
+
+                if (_raycastHit.distance >= 2.0f)
+                {
+                    _playerForward = _playerForward.normalized * 2.0f;
+                }
+                else
+                {
+                    _playerForward = _playerForward.normalized * _raycastHit.distance;
+                }
+
+                targetPos += _playerForward;
+
                 amountChangeDis = Vector3.Distance(targetPos, transform.position);
                 amountChangeAngX = myController.forwardAngle - 20.0f;
 
@@ -346,6 +367,21 @@ public class WingFoldState : BaseState
     {
         //翼を広げるアニメーションに変更
         Animator animator = GetComponent<Animator>();
+
+        Vector3 _targetVec = player.transform.position - transform.position;
+        _targetVec.y = 0;
+
+        float dot = Vector3.Dot(_targetVec.normalized, Vector3.forward);
+        float degAngle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        Vector3 _cross = Vector3.Cross(Vector3.forward, _targetVec.normalized);
+        float changeAngY = degAngle;
+        if (_cross.y < 0)
+        {
+            changeAngY *= -1;
+        }
+
+        rotateY = changeAngY;
 
         UltrasoundUpdate();
 
@@ -437,5 +473,10 @@ public class WingFoldState : BaseState
             playerAbnormalcondition abnormalcondition = player.GetComponent<playerAbnormalcondition>();
             abnormalcondition.AddHowlingAbnormal();
         }
+    }
+
+    public override void Exit()
+    {
+        myController.WarpPosition(transform.position);
     }
 }
