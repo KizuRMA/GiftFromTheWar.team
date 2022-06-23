@@ -5,41 +5,38 @@ using UnityEngine.AI;
 
 public class OpenNavmeshBake : MonoBehaviour
 {
-    [SerializeField] GameObject leftDoor = null;
-    [SerializeField] GameObject rigitDoor = null;
     private MetalDoorUseInfo info;
     private NavMeshSurface[] navs;
-
+    private bool openFlg = false;
 
     private void Awake()
     {
-        info = transform.parent.GetComponent<MetalDoorUseInfo>();
-        navs = info.navSurfaces;
+        //メタルドアの親の親からステージ情報を取得する
+        info = transform.parent.transform.parent.GetComponent<MetalDoorUseInfo>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        navs = info.navSurfaces;
+        openFlg = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckBake(ref leftDoor);
-        CheckBake(ref rigitDoor);
+        if (openFlg == true) return;
+        CheckBake();
     }
 
-    private void CheckBake(ref GameObject _game)
+    private void CheckBake()
     {
-        if (_game == null) return;
-
         //親オブジェクトが存在する場合は早期リターン
-        if (_game.transform.parent != null) return;
+        if (transform.parent != null) return;
 
-        AddModifier(_game);
+        AddModifier(gameObject);
         NavBake();
-        _game = null;
+        openFlg = true;
     }
 
     private void AddModifier(GameObject _game)
