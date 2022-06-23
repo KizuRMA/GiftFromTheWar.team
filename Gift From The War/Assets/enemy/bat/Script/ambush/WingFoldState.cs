@@ -44,7 +44,7 @@ public class WingFoldState : BaseState
         player = myController.player;
         rotateY = transform.eulerAngles.y;
         nextAnime = false;
-        navmeshOnFlg = true;
+        navmeshOnFlg = false;
         nowAction = e_Action.search;
         untilLaunch = 0;
         distance = 0;
@@ -57,7 +57,7 @@ public class WingFoldState : BaseState
         ChangeUltrasound(GetComponent<SmallUltrasound>());
 
         CurrentState = (int)BatController.e_State.wingFold;
-        myController.OnNavMesh();
+        myController.OffNavMesh();
     }
 
     // Update is called once per frame
@@ -65,7 +65,7 @@ public class WingFoldState : BaseState
     {
         bool _navmeshFlg = navmeshOnFlg;
 
-        if (agent.isStopped == true)
+        if (agent.updateRotation == false)
         {
             //体を回転させる処理
             if (myController.forwardAngle >= 90)
@@ -93,20 +93,20 @@ public class WingFoldState : BaseState
         //現在のアクション状態毎に関数を実行する
         switch (nowAction)
         {
-            //張り付いた状態
-            case e_Action.none:
-                ActionNone();
-                break;
             //張り付く場所を探す
             case e_Action.search:
                 ActionSearch();
                 break;
+            //張り付きにいく状態の時
             case e_Action.move:
                 ActionMove();
                 break;
-            //張り付きにいく状態の時
             case e_Action.sticking:
                 ActionSticking();
+                break;
+            //張り付いた状態
+            case e_Action.none:
+                ActionNone();
                 break;
             //離れる状態の時
             case e_Action.leave:
@@ -149,90 +149,6 @@ public class WingFoldState : BaseState
             else
             {
                 myController.OffNavMesh();
-            }
-        }
-    }
-
-    private void ActionSticking()
-    {
-        Animator animator = GetComponent<Animator>();
-
-        //ターゲットとしている座標までの距離を調べる
-        float _targetDis = Vector3.Distance(transform.position, targetPos);
-
-        //天井との距離が移動量よりも大きい、または逆さまになっていない場合
-        if (_targetDis >= ascendingSpeed || myController.forwardAngle < 180.0f)
-        {
-            //上に移動する処理
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, ascendingSpeed * Time.deltaTime);
-            _targetDis = Vector3.Distance(transform.position, targetPos);
-        }
-        else
-        {
-            //アクション状態を変更する
-            nowAction = e_Action.none;
-            untilLaunch = 0;
-            nextAnime = false;
-            ChangeUltrasound(GetComponent<LargeUltrasound>());
-            ultrasound.Init();
-            return;
-        }
-
-        //天井との高さが近い場合
-        if (_targetDis <= 0.5f)
-        {
-            transform.GetComponent<BoxCollider>().isTrigger = true;
-
-            //コウモリが180度回転していない場合
-            if (myController.forwardAngle < 180.0f)
-            {
-                myController.forwardAngle += (180.0f * 1.5f) * Time.deltaTime;
-
-                if (myController.forwardAngle >= 180.0f)
-                {
-                    myController.forwardAngle = 180.0f;
-                }
-            }
-
-            if (nextAnime == false)
-            {
-                //羽を閉じるアニメーションに切り替える
-                animator.SetInteger("trans", 1);
-                nextAnime = true;
-            }
-        }
-    }
-
-    private void ActionNone()
-    {
-        untilLaunch += Time.deltaTime;
-
-        //超音波のクールタイムが終了している場合
-        float _ultrasoundCoolTime = ultrasound.coolDown;
-        if (untilLaunch - _ultrasoundCoolTime > 0)
-        {
-            //超音波がプレイヤーに当たっている場合
-            if (ultrasound.CheckHit() == true)
-            {
-                //アクション状態を天井から離れる状態に変化
-                nowAction = e_Action.leave;
-
-                //プレイヤーとの高さの違い
-                float _playerDifHeight = Mathf.Abs(player.transform.position.y - transform.position.y);
-
-                targetPos += (player.transform.forward * 2.0f) + (Vector3.down * _playerDifHeight);
-                amountChangeDis = Vector3.Distance(targetPos, transform.position);
-                amountChangeAngX = myController.forwardAngle - 20.0f;
-
-                //プレイヤーをハウリング状態にする
-                player.GetComponent<playerAbnormalcondition>().AddHowlingAbnormal();
-
-                //アニメーションを切り替える
-                Animator animator = GetComponent<Animator>();
-                animator.SetInteger("trans", 2);
-
-                ChangeUltrasound(GetComponent<SmallUltrasound>());
-                return;
             }
         }
     }
@@ -339,6 +255,90 @@ public class WingFoldState : BaseState
             Vector3 _localAngle = transform.localEulerAngles;
             _localAngle.x = myController.forwardAngle;
             transform.localEulerAngles = _localAngle;
+        }
+    }
+
+    private void ActionSticking()
+    {
+        Animator animator = GetComponent<Animator>();
+
+        //ターゲットとしている座標までの距離を調べる
+        float _targetDis = Vector3.Distance(transform.position, targetPos);
+
+        //天井との距離が移動量よりも大きい、または逆さまになっていない場合
+        if (_targetDis >= ascendingSpeed || myController.forwardAngle < 180.0f)
+        {
+            //上に移動する処理
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, ascendingSpeed * Time.deltaTime);
+            _targetDis = Vector3.Distance(transform.position, targetPos);
+        }
+        else
+        {
+            //アクション状態を変更する
+            nowAction = e_Action.none;
+            untilLaunch = 0;
+            nextAnime = false;
+            ChangeUltrasound(GetComponent<LargeUltrasound>());
+            ultrasound.Init();
+            return;
+        }
+
+        //天井との高さが近い場合
+        if (_targetDis <= 0.5f)
+        {
+            transform.GetComponent<BoxCollider>().isTrigger = true;
+
+            //コウモリが180度回転していない場合
+            if (myController.forwardAngle < 180.0f)
+            {
+                myController.forwardAngle += (180.0f * 1.5f) * Time.deltaTime;
+
+                if (myController.forwardAngle >= 180.0f)
+                {
+                    myController.forwardAngle = 180.0f;
+                }
+            }
+
+            if (nextAnime == false)
+            {
+                //羽を閉じるアニメーションに切り替える
+                animator.SetInteger("trans", 1);
+                nextAnime = true;
+            }
+        }
+    }
+
+    private void ActionNone()
+    {
+        untilLaunch += Time.deltaTime;
+
+        //超音波のクールタイムが終了している場合
+        float _ultrasoundCoolTime = ultrasound.coolDown;
+        if (untilLaunch - _ultrasoundCoolTime > 0)
+        {
+            //超音波がプレイヤーに当たっている場合
+            if (ultrasound.CheckHit() == true)
+            {
+                //アクション状態を天井から離れる状態に変化
+                nowAction = e_Action.leave;
+
+                //プレイヤーとの高さの違い
+                float _playerDifHeight = Mathf.Abs(player.transform.position.y - transform.position.y);
+
+                targetPos += (player.transform.forward * 2.0f) + (Vector3.down * _playerDifHeight);
+                amountChangeDis = Vector3.Distance(targetPos, transform.position);
+                amountChangeAngX = myController.forwardAngle - 20.0f;
+
+                //プレイヤーをハウリング状態にする
+                player.GetComponent<playerAbnormalcondition>().AddHowlingAbnormal();
+
+                //アニメーションを切り替える
+                Animator animator = GetComponent<Animator>();
+                animator.SetInteger("trans", 2);
+
+                ChangeUltrasound(GetComponent<SmallUltrasound>());
+                return;
+            }
         }
     }
 
