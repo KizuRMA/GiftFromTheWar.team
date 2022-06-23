@@ -17,7 +17,7 @@ public class WingFoldState : BaseState
     [SerializeField] float ascendingSpeed;
     private Vector3 targetPos;
     private RaycastHit hit;
-    private CharacterController playerCC;
+    private GameObject player;
     private NavMeshAgent agent;
     private GameObject childGameObject;
     private bool nextAnime;
@@ -35,13 +35,13 @@ public class WingFoldState : BaseState
     {
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
-        playerCC = GameObject.Find("player").GetComponent<CharacterController>();
         childGameObject = transform.Find("Capsule").gameObject;
     }
 
     // Start is called before the first frame update
     public override void Start()
     {
+        player = myController.player;
         rotateY = transform.eulerAngles.y;
         nextAnime = false;
         navmeshOnFlg = true;
@@ -84,7 +84,7 @@ public class WingFoldState : BaseState
 
         //超音波処理
         float _ultrasoundCoolTime = ultrasound.coolDown;
-        float _playerDis = Vector3.Distance(transform.position, playerCC.transform.position);
+        float _playerDis = Vector3.Distance(transform.position, player.transform.position);
         if (ultrasound != null && _playerDis <= 20.0f && untilLaunch - _ultrasoundCoolTime > 0)
         {
             ultrasound.Update();
@@ -208,8 +208,6 @@ public class WingFoldState : BaseState
         untilLaunch += Time.deltaTime;
 
         //超音波のクールタイムが終了している場合
-
-
         float _ultrasoundCoolTime = ultrasound.coolDown;
         if (untilLaunch - _ultrasoundCoolTime > 0)
         {
@@ -218,12 +216,16 @@ public class WingFoldState : BaseState
             {
                 //アクション状態を天井から離れる状態に変化
                 nowAction = e_Action.leave;
-                targetPos += Vector3.down * 0.8f;
+
+                //プレイヤーとの高さの違い
+                float _playerDifHeight = Mathf.Abs(player.transform.position.y - transform.position.y);
+
+                targetPos += (player.transform.forward * 2.0f) + (Vector3.down * _playerDifHeight);
                 amountChangeDis = Vector3.Distance(targetPos, transform.position);
                 amountChangeAngX = myController.forwardAngle - 20.0f;
 
                 //プレイヤーをハウリング状態にする
-                playerCC.GetComponent<playerAbnormalcondition>().AddHowlingAbnormal();
+                player.GetComponent<playerAbnormalcondition>().AddHowlingAbnormal();
 
                 //アニメーションを切り替える
                 Animator animator = GetComponent<Animator>();
@@ -432,7 +434,7 @@ public class WingFoldState : BaseState
         bool _hit = ultrasound.CheckHit();
         if (_hit == true)
         {
-            playerAbnormalcondition abnormalcondition = playerCC.GetComponent<playerAbnormalcondition>();
+            playerAbnormalcondition abnormalcondition = player.GetComponent<playerAbnormalcondition>();
             abnormalcondition.AddHowlingAbnormal();
         }
     }
