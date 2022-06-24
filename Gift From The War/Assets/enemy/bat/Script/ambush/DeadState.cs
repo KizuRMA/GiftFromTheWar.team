@@ -25,6 +25,9 @@ public class DeadState : BaseState
         agent.updateUpAxis = false;
         agent.updateRotation = false;
         agent.updatePosition = false;
+
+        //’´‰¹”g‚ğ‰Šú‰»
+        ChangeUltrasound(GetComponent<SmallUltrasound>());
     }
 
     // Update is called once per frame

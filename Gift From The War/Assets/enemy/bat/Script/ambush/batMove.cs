@@ -182,7 +182,7 @@ public class batMove : BaseState
 
     public override void Exit()
     {
-
+        ultrasound.Exit();
     }
 
 }

@@ -478,5 +478,6 @@ public class WingFoldState : BaseState
     public override void Exit()
     {
         myController.WarpPosition(transform.position);
+        ultrasound.Exit();
     }
 }

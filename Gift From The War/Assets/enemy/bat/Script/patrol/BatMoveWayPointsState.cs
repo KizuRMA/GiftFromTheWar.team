@@ -64,9 +64,9 @@ public class BatMoveWayPointsState : State<BatPatrolState>
 
         float distance = Vector3.Distance(owner.player.transform.position,owner.bat.transform.position);
 
+        var target = owner.player.GetComponent<playerAbnormalcondition>();
         if (distance <= 1.0f)
         {
-            var target = owner.player.GetComponent<playerAbnormalcondition>();
             target.AddHowlingAbnormal();
             owner.ChangeState(e_BatPatrolState.Tracking);
             return;
@@ -76,8 +76,12 @@ public class BatMoveWayPointsState : State<BatPatrolState>
 
         if (owner.currentUltrasound.CheckHit() == true)
         {
-            var target = owner.player.GetComponent<playerAbnormalcondition>();
             target.AddHowlingAbnormal();
+            owner.ChangeState(e_BatPatrolState.Tracking);
+        }
+
+        if (target.IsHowling() == true)
+        {
             owner.ChangeState(e_BatPatrolState.Tracking);
         }
 

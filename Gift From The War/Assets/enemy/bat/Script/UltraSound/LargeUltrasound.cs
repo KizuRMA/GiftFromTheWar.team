@@ -65,6 +65,11 @@ public class LargeUltrasound : BaseUltrasound
     {
         if (aliveFlg == false) return;
 
+        if (transform == null)
+        {
+            StopParticle();
+        }
+
         if (range <= 0.0f)
         {
             //’´‰¹”g‚ÌÅ‘å”ÍˆÍ‚ð’²‚×‚é
