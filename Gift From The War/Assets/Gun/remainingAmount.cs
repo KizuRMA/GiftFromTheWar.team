@@ -17,7 +17,6 @@ public class remainingAmount : MonoBehaviour
     [SerializeField] private bulletChange bulletChange;
 
     //エネルギー残量の表示
-    private Vector3 firstPos;                   //基準の位置   
     private float nowRemainingEnergy;           //今の残量
     private float useEnergy;                    //消費量
     private float allRemainingEnergy;           //計算に必要な定数
@@ -35,7 +34,6 @@ public class remainingAmount : MonoBehaviour
 
     void Start()
     {
-        firstPos = transform.position;
         allRemainingEnergy = energyMax - energyMin;
         energyMaxFlg = false;
     }

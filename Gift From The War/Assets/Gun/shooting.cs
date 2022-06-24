@@ -7,8 +7,8 @@ public class shooting : ShootParent
     //弾の発射  
     [SerializeField] private GetItem getItem;
     [SerializeField] private bulletChange bulletChange;
-    private bool shotFlg;                       //発射可能
-    private Quaternion bulletQua;               //発射する弾の向き
+    private bool shotableFlg;   //発射可能
+    public bool  shotFlg;       //発射した
 
     private void Start()
     {
@@ -25,12 +25,15 @@ public class shooting : ShootParent
 
         BulletVecter();
         //エネルギーが必要量あれば
-        shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
+        shotableFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
+
+        shotFlg = false;
 
         //発射キーを押したら
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if (!shotFlg) return;
+            if (!shotableFlg) return;
+            shotFlg = true;
             Shot();
         }
     }
