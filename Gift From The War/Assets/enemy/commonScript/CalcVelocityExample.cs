@@ -19,10 +19,10 @@ public class CalcVelocityExample : MonoBehaviour
     private void Update()
     {
         //1ƒtƒŒ[ƒ€‘O‚©‚ç“®‚¢‚½‹——£‚ðŽæ“¾
-        moveDistance += ((transform.position - _prevPosition) / Time.deltaTime).magnitude;
+        moveDistance += (transform.position - _prevPosition).magnitude;
         timeCounter += Time.deltaTime;
 
-        if (timeCounter >= 0.1f)
+        if (timeCounter >= 1.0f)
         {
             nowSpeed = moveDistance;
             moveDistance = 0;

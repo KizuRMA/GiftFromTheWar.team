@@ -48,6 +48,7 @@ public class DogAttackState : State<DogState>
     {
         owner.agent.isStopped = false;
         owner.agent.updatePosition = true;
+
         owner.agent.updateUpAxis = true;
 
         owner.agent.Warp(owner.dog.transform.position);
