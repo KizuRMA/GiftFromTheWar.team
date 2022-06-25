@@ -28,6 +28,9 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     private string _nextBGMName;
     private string _nextSEName;
 
+    //SEの音量
+    private float _SEVol;
+
     //BGMをフェードアウト中か
     private bool _isFadeOut = false;
 
@@ -107,7 +110,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     /// <summary>
     /// 指定したファイル名のSEを流す。第二引数のdelayに指定した時間だけ再生までの間隔を空ける
     /// </summary>
-    public void PlaySE(string seName, float delay = 0.0f)
+    public void PlaySE(string seName, float delay = 0.0f, float vol = 1.0f)
     {
         if (!_seDic.ContainsKey(seName))
         {
@@ -116,18 +119,24 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         }
 
         _nextSEName = seName;
+        _SEVol = vol;
         Invoke("DelayPlaySE", delay);
     }
 
     private void DelayPlaySE()
     {
-        foreach (AudioSource seSource in _seSourceList)
+        int i = 0;
+        foreach (var seDic in _seDic)
         {
-            if (!seSource.isPlaying)
-            {
-                seSource.PlayOneShot(_seDic[_nextSEName] as AudioClip);
-                return;
-            }
+            if (seDic.Key == _nextSEName) break;
+            i++;
+        }
+
+        if (!_seSourceList[i].isPlaying)
+        {
+            _seSourceList[i].PlayOneShot(_seDic[_nextSEName] as AudioClip);
+            _seSourceList[i].volume = _SEVol;
+            return;
         }
     }
 
@@ -139,10 +148,14 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
             return;
         }
 
-        foreach (AudioSource seSource in _seSourceList)
+        int i = 0;
+        foreach (var seDic in _seDic)
         {
-            seSource.Stop();
+            if (seDic.Key == seName) break;
+            i++;
         }
+
+        _seSourceList[i].Stop();
     }
 
     //=================================================================================
@@ -153,7 +166,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     /// 指定したファイル名のBGMを流す。ただし既に流れている場合は前の曲をフェードアウトさせてから。
     /// 第二引数のfadeSpeedRateに指定した割合でフェードアウトするスピードが変わる
     /// </summary>
-    public void PlayBGM(string bgmName, float fadeSpeedRate = BGM_FADE_SPEED_RATE_HIGH)
+    public void PlayBGM(string bgmName, float fadeSpeedRate = BGM_FADE_SPEED_RATE_HIGH, float vol = 1.0f)
     {
         if (!_bgmDic.ContainsKey(bgmName))
         {
@@ -166,6 +179,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         {
             _nextBGMName = "";
             _bgmSource.clip = _bgmDic[bgmName] as AudioClip;
+            _bgmSource.volume = vol;
             _bgmSource.Play();
         }
         //違うBGMが流れている時は、流れているBGMをフェードアウトさせてから次を流す。同じBGMが流れている時はスルー
