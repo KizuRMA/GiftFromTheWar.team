@@ -43,7 +43,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     //‰Šú‰»
     //=================================================================================
 
-    private void Start()
+    protected override void Awake()
     {
         if (this != Instance)
         {
