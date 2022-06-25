@@ -14,6 +14,7 @@ public class MoveWindGun : MonoBehaviour
     [SerializeField] private playerDied died;
     [SerializeField] private bulletChange bulletChange;
     [SerializeField] private GetItem getItem;
+    [SerializeField] private shooting shoot;
 
     //移動
     [SerializeField] private float movePower;
@@ -112,7 +113,8 @@ public class MoveWindGun : MonoBehaviour
         power.y = 0;
         CC.Move(power);
 
-        energyAmount.GetSetNowAmount = 0;   //エネルギー消費量
+        if (shoot.shotFlg) return;  //弾を発射していたら、エネルギー消費量を0にしない
+        energyAmount.GetSetNowAmount = 0;   //エネルギー消費量を0にする
     }
 
     private void WindMove() //風の移動の処理

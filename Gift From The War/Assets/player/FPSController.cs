@@ -154,6 +154,9 @@ public class FPSController : MonoBehaviour
 
     private void Move()
     {
+        if (moveFlg) AudioManager.Instance.PlaySE("walk");
+        else AudioManager.Instance.StopSE("walk");
+
         //ˆÚ“®•ûŒü‚ðŒvŽZ
         moveVec = cam.transform.forward * moveVelocity.z + cam.transform.right * moveVelocity.x;
         moveVec.y = 0;
