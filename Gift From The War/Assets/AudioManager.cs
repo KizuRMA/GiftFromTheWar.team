@@ -131,6 +131,20 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         }
     }
 
+    public void StopSE(string seName)
+    {
+        if (!_seDic.ContainsKey(seName))
+        {
+            Debug.Log(seName + "‚Æ‚¢‚¤–¼‘O‚ÌSE‚ª‚ ‚è‚Ü‚¹‚ñ");
+            return;
+        }
+
+        foreach (AudioSource seSource in _seSourceList)
+        {
+            seSource.Stop();
+        }
+    }
+
     //=================================================================================
     //BGM
     //=================================================================================
