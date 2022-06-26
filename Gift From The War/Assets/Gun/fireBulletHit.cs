@@ -34,7 +34,7 @@ public class fireBulletHit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Bat" || other.gameObject.tag == "Dog1")
+        if (other.gameObject.tag == "Bat" || other.gameObject.tag == "Dog1" || other.gameObject.tag == "Boss")
         {
             var enemyInter = other.GetComponent<EnemyInterface>();
 

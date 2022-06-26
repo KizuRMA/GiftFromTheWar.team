@@ -7,6 +7,7 @@ public enum e_BossState
 {
     Tracking,
     BomAttack,
+    Stun,
 }
 
 public class BossState : StatefulObjectBase<BossState, e_BossState>
@@ -22,16 +23,19 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     [SerializeField] public float trackingSpeed = 1.0f;
     [SerializeField] public float attackIntervalSecond = 1;
     [SerializeField] public float attackRate = 70;
+    [SerializeField] public float life;
 
     private Vector3 throwTargetPos;
     private int currentWaypointIndex;
-    private GameObject generatedGrenade;
+    public GameObject generatedGrenade;
     private float attackTimeCounter = 0;
+    private Vector3 destination;
 
     void Start()
     {
         stateList.Add(new BossTrackingState(this));
         stateList.Add(new BossBomAttack(this));
+        stateList.Add(new BossStunState(this));
 
         ChangeState(e_BossState.Tracking);
 
@@ -49,6 +53,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     protected override void Update()
     {
+        destination = agent.destination;
         base.Update();
 
         //目的地の更新は常時処理する
@@ -63,6 +68,8 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     private void DestinationUpdate()    //目的値を更新する処理
     {
+        if (IsCurrentState(e_BossState.Stun) == true) return;
+
         Vector3 _nowPos = new Vector3(transform.position.x, agent.destination.y, transform.position.z);
         float targetDis = Vector3.Distance(_nowPos, agent.destination);
 
@@ -79,7 +86,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     public bool IsAttack()
     {
         //ボスが既に攻撃している場合
-        if (IsCurrentState(e_BossState.BomAttack) == true) return false;
+        if (IsCurrentState(e_BossState.BomAttack) == true || IsCurrentState(e_BossState.Stun) == true) return false;
 
        attackTimeCounter += Time.deltaTime;
        if(attackTimeCounter <= attackIntervalSecond) return false;
@@ -120,6 +127,8 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     public void Catch()
     {
+        if (generatedGrenade == null) return;
+
         generatedGrenade.transform.parent = CatchPosition.transform.parent;
         Rigidbody rd = generatedGrenade.GetComponent<Rigidbody>();
         rd.useGravity = false;
@@ -129,6 +138,8 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     public void Throw()
     {
+        if (generatedGrenade == null) return;
+
         generatedGrenade.transform.parent = null;
 
         Rigidbody rd = generatedGrenade.GetComponent<Rigidbody>();
@@ -163,6 +174,17 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
         var vect = new Vector3(random.Next(min, max), random.Next(0, max), random.Next(min, max));
         rd.AddTorque(vect, ForceMode.Impulse);
+        generatedGrenade = null;
+    }
+
+    public void GrenadeRelease()
+    {
+        if (generatedGrenade == null) return;
+
+        generatedGrenade.transform.parent = null;
+        Rigidbody rd = generatedGrenade.GetComponent<Rigidbody>();
+        rd.useGravity = true;
+        rd.isKinematic = false;
     }
 
     private Vector3 CalculateVelocity(Vector3 pointA, Vector3 pointB, float angle)
@@ -188,5 +210,24 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         {
             return (new Vector3(pointB.x - pointA.x, x * Mathf.Tan(rad), pointB.z - pointA.z).normalized * speed);
         }
+    }
+
+    public void ExpDamage(int _damage,Vector3 _hypocenter)
+    {
+        ChangeState(e_BossState.Stun);
+
+        if (life < 0) return;
+
+        life -= _damage;
+
+        if (life > 0) return;
+    }
+
+    public void WarpPosition(Vector3 _pos)
+    {
+        //Warp()関数を仕様するとdestinationも一緒に変更してしまう
+        agent.Warp(_pos);
+        agent.destination = destination;
+        transform.position = _pos;
     }
 }

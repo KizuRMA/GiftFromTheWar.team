@@ -34,7 +34,10 @@ public class BossBomAttack : State<BossState>
 
     public override void Exit()
     {
-
+        if (owner.generatedGrenade != null)
+        {
+            owner.GrenadeRelease();
+        }
     }
 
     void CheckSwitchAnime()
