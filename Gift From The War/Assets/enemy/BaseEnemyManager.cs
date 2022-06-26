@@ -15,4 +15,14 @@ public class BaseEnemyManager : MonoBehaviour
     {
 
     }
+
+    public bool IsEnemysChasing()
+    {
+        return IsChasing();
+    }
+
+    protected virtual bool IsChasing()
+    {
+        return false;
+    }
 }

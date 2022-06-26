@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class PatrolBatManager : BaseEnemyManager
 {
-    [SerializeField] public WayPointList wayPointLists = new WayPointList();
+    [SerializeField] public WayPointList wayPointLists;
     [SerializeField] public GameObject prefab = null;
-    [SerializeField] public List<Transform> respawnPos = new List<Transform>();
+    [SerializeField] public List<Transform> respawnPos;
 
     EnemyManager owner;
     int wayPointIndex;
@@ -71,7 +71,21 @@ public class PatrolBatManager : BaseEnemyManager
 
         GameObject game = Instantiate(prefab);
         EnemyInterface info = game.GetComponent<EnemyInterface>();
-        info.EnemySpawn(respawnPos[0].position);
+
+        int _respawnIndex = 0;
+        float _minDis = float.MaxValue;
+        Vector3 _playerPos = owner.player.transform.position;
+        for (int i = 0; i < respawnPos.Count; i++)
+        {
+            float _dis = Vector2.Distance(new Vector2(respawnPos[i].position.x, respawnPos[i].position.z),new Vector2(_playerPos.x, _playerPos.z));
+            if (_dis < _minDis)
+            {
+                _minDis = _dis;
+                _respawnIndex = i;
+            }
+        }
+
+        info.EnemySpawn(respawnPos[_respawnIndex].position);
         info.EnemyInfo(owner);
         game.transform.parent = this.transform;
 
@@ -97,5 +111,27 @@ public class PatrolBatManager : BaseEnemyManager
             _agent.avoidancePriority = 50;
             _agent.avoidancePriority += i;
         }
+    }
+
+    protected override bool IsChasing()
+    {
+        //子オブジェクトを全て取得する
+        GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            _ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
+        }
+
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            BatPatrolState _state = _ChildObjects[i].GetComponent<BatPatrolState>();
+            if (_state == null) continue;
+
+            if (_state.IsChasing() == true)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -20,9 +20,13 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     [SerializeField] public Animator animator;
     [SerializeField] public WayPoint wayPoint;
     [SerializeField] public float trackingSpeed = 1.0f;
+    [SerializeField] public float attackIntervalSecond = 1;
+    [SerializeField] public float attackRate = 70;
 
+    private Vector3 throwTargetPos;
     private int currentWaypointIndex;
     private GameObject generatedGrenade;
+    private float attackTimeCounter = 0;
 
     void Start()
     {
@@ -74,12 +78,18 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     public bool IsAttack()
     {
+        //ボスが既に攻撃している場合
         if (IsCurrentState(e_BossState.BomAttack) == true) return false;
 
-        CalcVelocityExample example = player.GetComponent<CalcVelocityExample>();
-        float _speed = example.nowSpeed;
+       attackTimeCounter += Time.deltaTime;
+       if(attackTimeCounter <= attackIntervalSecond) return false;
 
-        if (_speed >= 3.0f)
+        attackTimeCounter = 0;
+        int max = 100;
+
+        int random = Random.Range(0,max + 1);
+
+        if (random <= attackRate)
         {
             return true;
         }
@@ -93,6 +103,19 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         generatedGrenade = Instantiate(grenadePrefab);
         generatedGrenade.transform.parent = transform;
         generatedGrenade.transform.position = createPosition.position;
+
+        var random = new System.Random();
+        var min = -3;
+        var max = 3;
+
+        Vector3 _targetVec = player.transform.position - transform.position;
+        throwTargetPos = player.transform.position;
+        _targetVec = _targetVec.normalized * random.Next(1, max + 1);
+
+        Vector3 _randomPos = new Vector3(random.Next(min, max), random.Next(0, max), random.Next(min, max));
+
+        throwTargetPos += _targetVec;
+        throwTargetPos += _randomPos;
     }
 
     public void Catch()
@@ -115,14 +138,21 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         CapsuleCollider collider = generatedGrenade.GetComponent<CapsuleCollider>();
         collider.isTrigger = false;
 
-        // 標的の座標
-        Vector3 targetPosition = player.transform.position;
+        CalcVelocityExample example = player.GetComponent<CalcVelocityExample>();
+        float _speed = example.nowSpeed;
+
+        if (_speed >= 3.0f)
+        {
+            // 標的の座標
+            throwTargetPos = player.transform.position;
+        }
+       
 
         // 射出角度
         float angle = 1.0f;
 
         // 射出速度を算出
-        Vector3 velocity = CalculateVelocity(generatedGrenade.transform.position, targetPosition, angle);
+        Vector3 velocity = CalculateVelocity(generatedGrenade.transform.position, throwTargetPos, angle);
 
         // 射出
         rd.AddForce(velocity * rd.mass, ForceMode.Impulse);

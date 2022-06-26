@@ -310,4 +310,16 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     {
         wayPoint = _wayPoint;
     }
+
+    public bool IsChasing()
+    {
+        if (IsCurrentState(e_BatPatrolState.Attack) ||
+            IsCurrentState(e_BatPatrolState.Tracking) ||
+            IsCurrentState(e_BatPatrolState.MagnetCatch))
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

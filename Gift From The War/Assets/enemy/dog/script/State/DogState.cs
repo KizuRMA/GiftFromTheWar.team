@@ -91,4 +91,15 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     {
         transform.parent = manager.transform;
     }
+
+    public bool IsChasing()
+    {
+        if (IsCurrentState(e_DogState.Attack) ||
+            IsCurrentState(e_DogState.Tracking) ||
+            IsCurrentState(e_DogState.MagnetCatch))
+        {
+            return true;
+        }
+        return false;
+    }
 }

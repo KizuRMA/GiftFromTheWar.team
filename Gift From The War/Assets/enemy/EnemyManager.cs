@@ -60,4 +60,9 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public bool IsChasing(e_EnemyType _type)
+    {
+        SwitchManager(_type);
+        return manager.IsEnemysChasing();
+    }
 }

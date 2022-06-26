@@ -15,6 +15,7 @@ public class WingFoldState : BaseState
     }
 
     [SerializeField] float ascendingSpeed;
+    [SerializeField] LayerMask rideLayer;
     private Vector3 targetPos;
     private RaycastHit hit;
     private GameObject player;
@@ -311,6 +312,7 @@ public class WingFoldState : BaseState
 
     private void ActionNone()
     {
+        //agent.enabled = false;
         untilLaunch += Time.deltaTime;
 
         //超音波のクールタイムが終了している場合
@@ -323,29 +325,7 @@ public class WingFoldState : BaseState
                 //アクション状態を天井から離れる状態に変化
                 nowAction = e_Action.leave;
 
-                //プレイヤーとの高さの違い
-                float _playerDifHeight = Mathf.Abs(player.transform.position.y - transform.position.y);
-
-                //落下地点を計算
-                targetPos += Vector3.down * _playerDifHeight;
-
-                //プレイヤーの前方に壁がある場合は壁の手前に落ちるようにする
-                Vector3 _playerForward = player.transform.forward;
-                Ray _ray = new Ray(targetPos, _playerForward);
-                RaycastHit _raycastHit;
-                
-                bool _rayHit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, myController.raycastLayerMask);
-
-                if (_raycastHit.distance >= 2.0f)
-                {
-                    _playerForward = _playerForward.normalized * 2.0f;
-                }
-                else
-                {
-                    _playerForward = _playerForward.normalized * _raycastHit.distance;
-                }
-
-                targetPos += _playerForward;
+                FallPoint();
 
                 amountChangeDis = Vector3.Distance(targetPos, transform.position);
                 amountChangeAngX = myController.forwardAngle - 20.0f;
@@ -358,8 +338,63 @@ public class WingFoldState : BaseState
                 animator.SetInteger("trans", 2);
 
                 ChangeUltrasound(GetComponent<SmallUltrasound>());
+                //agent.enabled = true;
                 return;
             }
+        }
+    }
+
+    private void FallPoint()    //天井から落ちる際にターゲットとする座標を算出する関数
+    {
+        //プレイヤーとの高さの差
+        float _playerDifHeight = Mathf.Abs(player.transform.position.y - transform.position.y);
+
+        //地面との距離を算出
+        float _rideGroundDis = RideGroundDis();
+        _rideGroundDis = Mathf.Max((_rideGroundDis - 0.4f),0.0f);
+
+        if (_playerDifHeight >= _rideGroundDis)
+        {
+            _playerDifHeight = _rideGroundDis;
+        }
+
+        //落下地点を計算
+        targetPos += Vector3.down * _playerDifHeight;
+
+        //プレイヤーの前方に壁がある場合は壁の手前に落ちるようにする
+        Vector3 _playerForward = player.transform.forward;
+        Ray _ray = new Ray(targetPos, _playerForward);
+        RaycastHit _raycastHit;
+
+        bool _hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, myController.raycastLayerMask);
+
+        if (_raycastHit.distance >= 2.0f)
+        {
+            _playerForward = _playerForward.normalized * 2.0f;
+        }
+        else
+        {
+            _playerForward = _playerForward.normalized * _raycastHit.distance;
+        }
+
+        targetPos += _playerForward;
+    }
+
+    private float RideGroundDis()
+    {
+        Ray _underRay = new Ray(transform.position, Vector3.down);
+        RaycastHit _raycastHit;
+
+        bool _hit = Physics.Raycast(_underRay, out _raycastHit, 1000.0f, rideLayer);
+
+        if (_hit == false)
+        {
+            // レイが当たらない場合は0.0fを返す
+            return 0.0f;
+        }
+        else
+        {
+            return _raycastHit.distance;
         }
     }
 
@@ -406,7 +441,7 @@ public class WingFoldState : BaseState
             animator.SetInteger("trans", 0);
             animator.SetFloat("AnimationSpeed", 1.3f);
 
-           transform.GetComponent<BoxCollider>().isTrigger = false;
+            transform.GetComponent<BoxCollider>().isTrigger = false;
 
             //コウモリを追跡ステートに切り替える
             BatController batCon = gameObject.GetComponent<BatController>();

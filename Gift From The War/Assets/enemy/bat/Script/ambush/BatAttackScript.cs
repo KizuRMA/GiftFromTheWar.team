@@ -137,4 +137,9 @@ public class BatAttackScript : BaseState
             transform.localEulerAngles = _localAngle;
         }
     }
+
+    public override void Exit()
+    {
+        myController.WarpPosition(transform.position);
+    }
 }

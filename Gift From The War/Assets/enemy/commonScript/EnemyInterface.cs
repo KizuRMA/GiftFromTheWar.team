@@ -37,6 +37,7 @@ public class EnemyInterface : MonoBehaviour
         oninfo.Invoke(_info);
     }
 
+
     [Serializable]
     public class EnemyDamageEvent : UnityEvent<int>
     {
@@ -66,5 +67,4 @@ public class EnemyInterface : MonoBehaviour
     {
 
     }
-
 }

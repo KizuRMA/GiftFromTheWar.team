@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class WayPointList : MonoBehaviour
 {
-    [SerializeField] public List<WayPoint> wayPoints = new List<WayPoint>();
+    [SerializeField] public List<WayPoint> wayPoints;
 }

@@ -49,7 +49,7 @@ public class BatController : MonoBehaviour
         height = defaltHight;
         forwardAngle = defaltForwardAngle;
         //ステートを切り替える
-        ChangeState(GetComponent<batMove>());
+        ChangeState(GetComponent<WingFoldState>());
     }
 
     // Update is called once per frame
@@ -228,5 +228,18 @@ public class BatController : MonoBehaviour
     public void SetParentManager()  //マネージャーを親にする
     {
         transform.parent = manager.transform;
+    }
+
+    public bool IsChasing()
+    {
+        if (state == null) return false;
+
+        if ((int)e_State.move == state.CurrentState ||
+            (int)e_State.attack == state.CurrentState ||
+            (int)e_State.magnetCatch == state.CurrentState)
+        {
+            return true;
+        }
+        return false;
     }
 }
