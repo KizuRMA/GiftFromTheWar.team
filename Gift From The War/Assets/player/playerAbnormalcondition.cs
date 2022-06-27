@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class playerAbnormalcondition : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class playerAbnormalcondition : MonoBehaviour
     bool unrivaledFlg;
     Abnormal[] abnormal = new Abnormal[System.Enum.GetValues(typeof(e_Abnormal)).Length];
     [SerializeField]public float life { set; get; }
+    [SerializeField] public PostProcessVolume volume;
 
     // Start is called before the first frame update
     void Start()
@@ -59,8 +60,19 @@ public class playerAbnormalcondition : MonoBehaviour
         if (howling.completeCureFlg == true) return;
 
         howling.time += Time.deltaTime;
+
+        if (volume != null)
+        {
+            volume.weight = (1 - (howling.time / 14.0f));
+        }
+
+
         if (howling.time - howling.complateCureTime > 0)
         {
+            if (volume != null)
+            {
+                volume.enabled = false;
+            }
             howling.time = 0;
             howling.completeCureFlg = true;
         }
@@ -78,6 +90,11 @@ public class playerAbnormalcondition : MonoBehaviour
         howling.time = 0;
         howling.complateCureTime = 10;
         howling.completeCureFlg = false;
+
+        if (volume != null)
+        {
+            volume.enabled = true;
+        }
     }
 
     public void Damage(float _damage)
