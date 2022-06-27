@@ -158,7 +158,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         _nowAudio.maxDistance = maxDistance;
 
         if (isLiner)
-        _nowAudio.rolloffMode = AudioRolloffMode.Linear;
+            _nowAudio.rolloffMode = AudioRolloffMode.Linear;
 
         Invoke("DelayPlaySE", delay);
     }
@@ -177,7 +177,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     {
         audio.volume = _SEVol;
 
-        if(_isLoop)
+        if (_isLoop)
         {
             audio.loop = true;
         }
@@ -190,7 +190,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         audio.maxDistance = 500;
     }
 
-        public void StopSE(string seName)
+    public void StopSE(string seName)
     {
         if (!_seDic.ContainsKey(seName))
         {
@@ -206,6 +206,17 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         }
 
         _seSourceList[i].Stop();
+    }
+
+    public void StopSE(string seName, GameObject obj)
+    {
+        if (!_seDic.ContainsKey(seName))
+        {
+            Debug.Log(seName + "‚Æ‚¢‚¤–¼‘O‚ÌSE‚ª‚ ‚è‚Ü‚¹‚ñ");
+            return;
+        }
+
+        obj.GetComponent<AudioSource>().Stop();
     }
 
     //=================================================================================
