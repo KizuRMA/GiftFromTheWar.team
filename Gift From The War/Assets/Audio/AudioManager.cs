@@ -29,8 +29,8 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     private string _nextSEName;
 
     //SEの設定用変数
+    private AudioSource _nowAudio;
     private float _SEVol;
-    private bool _is3D;
     private bool _isLoop;
 
     //BGMをフェードアウト中か
@@ -113,7 +113,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     /// <summary>
     /// 指定したファイル名のSEを流す。第二引数のdelayに指定した時間だけ再生までの間隔を空ける
     /// </summary>
-    public void PlaySE(string seName, bool is3D = false, bool isLoop = true, float delay = 0.0f, float vol = 1.0f)
+    public void PlaySE(string seName, bool isLoop = true, float delay = 0.0f, float vol = 1.0f)
     {
         if (!_seDic.ContainsKey(seName))
         {
@@ -123,24 +123,52 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
         _nextSEName = seName;
         _SEVol = vol;
-        _is3D = is3D;
         _isLoop = isLoop;
-        Invoke("DelayPlaySE", delay);
-    }
 
-    private void DelayPlaySE()
-    {
         int i = 0;
         foreach (var seDic in _seDic)
         {
             if (seDic.Key == _nextSEName) break;
             i++;
         }
+        _nowAudio = _seSourceList[i];
 
-        if (!_seSourceList[i].isPlaying)
+        Invoke("DelayPlaySE", delay);
+    }
+
+    public void PlaySE(string seName, GameObject obj, float maxDistance = 100, bool isLiner = true, bool isLoop = true, float delay = 0.0f, float vol = 1.0f)
+    {
+        if (!_seDic.ContainsKey(seName))
         {
-            _seSourceList[i].PlayOneShot(_seDic[_nextSEName] as AudioClip);
-            SESetteing(_seSourceList[i]);
+            Debug.Log(seName + "という名前のSEがありません");
+            return;
+        }
+
+        _nextSEName = seName;
+        _SEVol = vol;
+        _isLoop = isLoop;
+
+        if (obj.GetComponent<AudioSource>() == null)
+        {
+            obj.AddComponent<AudioSource>();
+        }
+        _nowAudio = obj.GetComponent<AudioSource>();
+        _nowAudio.spatialBlend = 1;
+
+        _nowAudio.maxDistance = maxDistance;
+
+        if (isLiner)
+        _nowAudio.rolloffMode = AudioRolloffMode.Linear;
+
+        Invoke("DelayPlaySE", delay);
+    }
+
+    private void DelayPlaySE()
+    {
+        if (!_nowAudio.isPlaying)
+        {
+            _nowAudio.PlayOneShot(_seDic[_nextSEName] as AudioClip);
+            SESetteing(_nowAudio);
             return;
         }
     }
@@ -148,15 +176,6 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     private void SESetteing(AudioSource audio)
     {
         audio.volume = _SEVol;
-
-        if(_is3D)
-        {
-            audio.spatialBlend = 1;
-        }
-        else
-        {
-            audio.spatialBlend = 0;
-        }
 
         if(_isLoop)
         {
