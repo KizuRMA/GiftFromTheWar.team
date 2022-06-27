@@ -21,6 +21,7 @@ public class playerAbnormalcondition : MonoBehaviour
     bool unrivaledFlg;
     Abnormal[] abnormal = new Abnormal[System.Enum.GetValues(typeof(e_Abnormal)).Length];
     [SerializeField]public float life { set; get; }
+    [SerializeField] float cureTime;
 
     // Start is called before the first frame update
     void Start()
@@ -76,7 +77,7 @@ public class playerAbnormalcondition : MonoBehaviour
         ref Abnormal howling = ref abnormal[(int)e_Abnormal.howling];
 
         howling.time = 0;
-        howling.complateCureTime = 10;
+        howling.complateCureTime = cureTime;
         howling.completeCureFlg = false;
     }
 

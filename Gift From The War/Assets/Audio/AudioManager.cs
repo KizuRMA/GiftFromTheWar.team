@@ -28,8 +28,10 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     private string _nextBGMName;
     private string _nextSEName;
 
-    //SEの音量
+    //SEの設定用変数
     private float _SEVol;
+    private bool _is3D;
+    private bool _isLoop;
 
     //BGMをフェードアウト中か
     private bool _isFadeOut = false;
@@ -111,7 +113,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     /// <summary>
     /// 指定したファイル名のSEを流す。第二引数のdelayに指定した時間だけ再生までの間隔を空ける
     /// </summary>
-    public void PlaySE(string seName, float delay = 0.0f, float vol = 1.0f)
+    public void PlaySE(string seName, bool is3D = false, bool isLoop = true, float delay = 0.0f, float vol = 1.0f)
     {
         if (!_seDic.ContainsKey(seName))
         {
@@ -121,6 +123,8 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
         _nextSEName = seName;
         _SEVol = vol;
+        _is3D = is3D;
+        _isLoop = isLoop;
         Invoke("DelayPlaySE", delay);
     }
 
@@ -136,13 +140,38 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         if (!_seSourceList[i].isPlaying)
         {
             _seSourceList[i].PlayOneShot(_seDic[_nextSEName] as AudioClip);
-            _seSourceList[i].volume = _SEVol;
-            _seSourceList[i].spatialBlend = 1;
+            SESetteing(_seSourceList[i]);
             return;
         }
     }
 
-    public void StopSE(string seName)
+    private void SESetteing(AudioSource audio)
+    {
+        audio.volume = _SEVol;
+
+        if(_is3D)
+        {
+            audio.spatialBlend = 1;
+        }
+        else
+        {
+            audio.spatialBlend = 0;
+        }
+
+        if(_isLoop)
+        {
+            audio.loop = true;
+        }
+        else
+        {
+            audio.loop = false;
+        }
+
+        audio.minDistance = 1;
+        audio.maxDistance = 500;
+    }
+
+        public void StopSE(string seName)
     {
         if (!_seDic.ContainsKey(seName))
         {
