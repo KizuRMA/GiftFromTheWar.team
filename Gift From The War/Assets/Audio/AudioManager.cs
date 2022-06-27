@@ -46,6 +46,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     //初期化
     //=================================================================================
 
+
     protected override void Awake()
     {
         if (this != Instance)
@@ -54,10 +55,10 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
             return;
         }
 
+
         DontDestroyOnLoad(this.gameObject);
 
         //オーディオリスナーおよびオーディオソースをSE+1(BGMの分)作成
-        gameObject.AddComponent<AudioListener>();
         for (int i = 0; i < SE_SOURCE_NUM + 1; i++)
         {
             gameObject.AddComponent<AudioSource>();
