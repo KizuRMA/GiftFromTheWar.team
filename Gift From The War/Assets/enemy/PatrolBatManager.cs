@@ -7,6 +7,7 @@ public class PatrolBatManager : BaseEnemyManager
 {
     [SerializeField] public WayPointList wayPointLists;
     [SerializeField] public GameObject prefab = null;
+    [SerializeField] public float respawnInterval;
     [SerializeField] public List<Transform> respawnPos;
 
     EnemyManager owner;
@@ -30,7 +31,7 @@ public class PatrolBatManager : BaseEnemyManager
 
     private void Update()
     {
-        EnemyReSpawn();  
+        EnemyReSpawn();
     }
 
     protected override void EnemyReSpawn()
@@ -67,7 +68,7 @@ public class PatrolBatManager : BaseEnemyManager
     {
         respawnFlg = true;
 
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(respawnInterval);
 
         GameObject game = Instantiate(prefab);
         EnemyInterface info = game.GetComponent<EnemyInterface>();

@@ -50,8 +50,8 @@ public class BatMoveWayPointsState : State<BatPatrolState>
 
     public override void Execute()
     {
-        Vector3 _nowPos = new Vector3(owner.bat.transform.position.x,agent.destination.y, owner.bat.transform.position.z);
-        float targetDis = Vector3.Distance(_nowPos,agent.destination);
+        Vector3 _nowPos = new Vector3(owner.bat.transform.position.x, agent.destination.y, owner.bat.transform.position.z);
+        float targetDis = Vector3.Distance(_nowPos, agent.destination);
 
         // 目的地点までの距離(remainingDistance)が目的地の手前までの距離(stoppingDistance)以下になったら
         if (targetDis <= 0.1f)
@@ -62,7 +62,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
         }
 
-        float distance = Vector3.Distance(owner.player.transform.position,owner.bat.transform.position);
+        float distance = Vector3.Distance(owner.player.transform.position, owner.bat.transform.position);
 
         var target = owner.player.GetComponent<playerAbnormalcondition>();
         if (distance <= 1.0f)
@@ -78,11 +78,13 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         {
             target.AddHowlingAbnormal();
             owner.ChangeState(e_BatPatrolState.Tracking);
+            return;
         }
 
-        if (target.IsHowling() == true)
+        if (distance <= 10.0f && target.IsHowling() == true)
         {
             owner.ChangeState(e_BatPatrolState.Tracking);
+            return;
         }
 
         if (owner.currentUltrasound.IsAlive == false)

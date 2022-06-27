@@ -136,7 +136,7 @@ public class LargeUltrasound : BaseUltrasound
         if (hit == false || _raycastHit.collider.tag != "Player") return false;
 
         //’´‰¹”g‚Ì’·‚³‚É’²®‚·‚é
-        _targetVec = _targetVec.normalized * (range - 0.5f);
+        _targetVec = _targetVec.normalized * (range - 0.7f);
 
         //’´‰¹”g–{‘Ì‚ÌÀ•W‚ğZo
         Vector3 _pos = _firePos + _targetVec;
