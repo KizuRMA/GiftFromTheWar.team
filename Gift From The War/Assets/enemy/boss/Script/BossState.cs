@@ -157,7 +157,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
             // 標的の座標
             throwTargetPos = player.transform.position;
         }
-       
+
 
         // 射出角度
         float angle = 1.0f;
@@ -229,5 +229,16 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         agent.Warp(_pos);
         agent.destination = destination;
         transform.position = _pos;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            var target = other.transform.GetComponent<playerAbnormalcondition>();
+            if (null == target) return;
+
+            target.Damage(10.0f);
+        }
     }
 }
