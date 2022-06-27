@@ -136,6 +136,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         {
             _seSourceList[i].PlayOneShot(_seDic[_nextSEName] as AudioClip);
             _seSourceList[i].volume = _SEVol;
+            _seSourceList[i].spatialBlend = 1;
             return;
         }
     }
