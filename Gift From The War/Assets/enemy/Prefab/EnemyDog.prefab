@@ -2312,9 +2312,10 @@ MonoBehaviour:
   player: {fileID: 0}
   dog: {fileID: 4179426876203190226}
   animator: {fileID: 7342884622482396982}
-  SearchSpeed: 0.5
-  TrakingSpeed: 1.8
+  SearchSpeed: 1
+  TrakingSpeed: 5
   life: 1
+  attackJumpPow: 1.5
 --- !u!195 &2247645399667334434
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2326,7 +2327,7 @@ NavMeshAgent:
   m_AgentTypeID: 1479372276
   m_Radius: 1.5
   m_Speed: 1.5
-  m_Acceleration: 20
+  m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360
   m_StoppingDistance: 0

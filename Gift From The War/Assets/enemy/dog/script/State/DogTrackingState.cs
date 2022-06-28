@@ -84,7 +84,7 @@ public class DogTrackingState : State<DogState>
         Vector3 _targetVec = owner.player.transform.position - (_dog.transform.position + new Vector3(0, 0.5f, 0));
         float _dis = _targetVec.magnitude;
 
-        if (_dis >= 3.0f) return false;
+        if (_dis >= 2.0f) return false;
 
         Vector3 _fowardVec = _dog.transform.forward;
         _fowardVec.y = 0;

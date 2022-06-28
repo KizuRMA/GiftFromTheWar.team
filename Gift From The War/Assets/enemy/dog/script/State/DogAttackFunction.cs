@@ -31,8 +31,8 @@ public class DogAttackFunction : MonoBehaviour
 
         rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        Vector3 _upVec = transform.up.normalized * 3.5f;
-        Vector3 _forwardVec = transform.forward.normalized * 4.5f;
+        Vector3 _upVec = transform.up.normalized * (4.0f);
+        Vector3 _forwardVec = transform.forward.normalized * (4.5f * owner.attackJumpPow);
 
         rd.AddForce(_upVec, ForceMode.Impulse);
         rd.AddForce(_forwardVec, ForceMode.Impulse);

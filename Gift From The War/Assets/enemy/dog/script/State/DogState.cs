@@ -23,6 +23,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [SerializeField] public float SearchSpeed;
     [SerializeField] public float TrakingSpeed;
     [SerializeField] public float life = 1.0f;
+    [SerializeField] public float attackJumpPow = 1.0f;
 
     [System.NonSerialized] public Vector3 hypocenter;
     [System.NonSerialized] public bool canVigilance;
