@@ -81,7 +81,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             return;
         }
 
-        if (distance <= 10.0f && target.IsHowling() == true)
+        if (distance <= owner.reactionDis && target.IsHowling() == true)
         {
             owner.ChangeState(e_BatPatrolState.Tracking);
             return;

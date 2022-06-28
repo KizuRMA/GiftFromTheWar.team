@@ -40,6 +40,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [SerializeField] private ParticleSystem windBladeParticle;
     [SerializeField] public float trackingSpeed;
     [SerializeField] public float moveWayPointSpeed;
+    [SerializeField] public float reactionDis;
 
     [System.NonSerialized] public float untilLaunch = 0;
     [System.NonSerialized] public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
