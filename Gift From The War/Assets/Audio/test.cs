@@ -13,6 +13,11 @@ public class test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AudioManager.Instance.PlaySE("MetalDoorSE");
+        if(Input.GetKey(KeyCode.O))
+        {
+            AudioManager.Instance.StopSE("MetalDoorSE", this.gameObject);
+            return;
+        }
+        AudioManager.Instance.PlaySE("MetalDoorSE",this.gameObject ,10);
     }
 }

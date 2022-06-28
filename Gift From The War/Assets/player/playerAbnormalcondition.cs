@@ -22,6 +22,7 @@ public class playerAbnormalcondition : MonoBehaviour
     Abnormal[] abnormal = new Abnormal[System.Enum.GetValues(typeof(e_Abnormal)).Length];
     [SerializeField]public float life { set; get; }
     [SerializeField] public PostProcessVolume volume;
+    [SerializeField] float cureTime;
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +67,6 @@ public class playerAbnormalcondition : MonoBehaviour
             volume.weight = (1 - (howling.time / 14.0f));
         }
 
-
         if (howling.time - howling.complateCureTime > 0)
         {
             if (volume != null)
@@ -88,7 +88,7 @@ public class playerAbnormalcondition : MonoBehaviour
         ref Abnormal howling = ref abnormal[(int)e_Abnormal.howling];
 
         howling.time = 0;
-        howling.complateCureTime = 10;
+        howling.complateCureTime = cureTime;
         howling.completeCureFlg = false;
 
         if (volume != null)

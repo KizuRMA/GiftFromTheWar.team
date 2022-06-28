@@ -28,8 +28,10 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     private string _nextBGMName;
     private string _nextSEName;
 
-    //SEの音量
+    //SEの設定用変数
+    private AudioSource _nowAudio;
     private float _SEVol;
+    private bool _isLoop;
 
     //BGMをフェードアウト中か
     private bool _isFadeOut = false;
@@ -111,7 +113,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     /// <summary>
     /// 指定したファイル名のSEを流す。第二引数のdelayに指定した時間だけ再生までの間隔を空ける
     /// </summary>
-    public void PlaySE(string seName, float delay = 0.0f, float vol = 1.0f)
+    public void PlaySE(string seName, bool isLoop = true, float delay = 0.0f, float vol = 1.0f)
     {
         if (!_seDic.ContainsKey(seName))
         {
@@ -121,25 +123,71 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
         _nextSEName = seName;
         _SEVol = vol;
-        Invoke("DelayPlaySE", delay);
-    }
+        _isLoop = isLoop;
 
-    private void DelayPlaySE()
-    {
         int i = 0;
         foreach (var seDic in _seDic)
         {
             if (seDic.Key == _nextSEName) break;
             i++;
         }
+        _nowAudio = _seSourceList[i];
 
-        if (!_seSourceList[i].isPlaying)
+        Invoke("DelayPlaySE", delay);
+    }
+
+    public void PlaySE(string seName, GameObject obj, float maxDistance = 100, bool isLiner = true, bool isLoop = true, float delay = 0.0f, float vol = 1.0f)
+    {
+        if (!_seDic.ContainsKey(seName))
         {
-            _seSourceList[i].PlayOneShot(_seDic[_nextSEName] as AudioClip);
-            _seSourceList[i].volume = _SEVol;
-            _seSourceList[i].spatialBlend = 1;
+            Debug.Log(seName + "という名前のSEがありません");
             return;
         }
+
+        _nextSEName = seName;
+        _SEVol = vol;
+        _isLoop = isLoop;
+
+        if (obj.GetComponent<AudioSource>() == null)
+        {
+            obj.AddComponent<AudioSource>();
+        }
+        _nowAudio = obj.GetComponent<AudioSource>();
+        _nowAudio.spatialBlend = 1;
+
+        _nowAudio.maxDistance = maxDistance;
+
+        if (isLiner)
+            _nowAudio.rolloffMode = AudioRolloffMode.Linear;
+
+        Invoke("DelayPlaySE", delay);
+    }
+
+    private void DelayPlaySE()
+    {
+        if (!_nowAudio.isPlaying)
+        {
+            _nowAudio.PlayOneShot(_seDic[_nextSEName] as AudioClip);
+            SESetteing(_nowAudio);
+            return;
+        }
+    }
+
+    private void SESetteing(AudioSource audio)
+    {
+        audio.volume = _SEVol;
+
+        if (_isLoop)
+        {
+            audio.loop = true;
+        }
+        else
+        {
+            audio.loop = false;
+        }
+
+        audio.minDistance = 1;
+        audio.maxDistance = 500;
     }
 
     public void StopSE(string seName)
@@ -158,6 +206,17 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         }
 
         _seSourceList[i].Stop();
+    }
+
+    public void StopSE(string seName, GameObject obj)
+    {
+        if (!_seDic.ContainsKey(seName))
+        {
+            Debug.Log(seName + "という名前のSEがありません");
+            return;
+        }
+
+        obj.GetComponent<AudioSource>().Stop();
     }
 
     //=================================================================================
