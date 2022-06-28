@@ -13,8 +13,15 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
         DontDestroyOnLoad(this);
     }
 
-    public void LoadScene(string nextScene)
+    public IEnumerator LoadScene(string nextScene)
     {
+        FadeManager.Instance.fadeOutStart(0, 0, 0, 0);
+
+        while(FadeManager.Instance.isFadeOut)
+        {
+            yield return null;
+        }
+
         SceneManager.LoadScene("Scenes/LoadScene");
         nextSceneName = nextScene;
     }
@@ -32,6 +39,7 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
         yield return new WaitForSeconds(loadTime);
 
         asyncOperation.allowSceneActivation = true;
-        FadeManager.Instance.fadeOutStart(0,0,0,1);
+
+        FadeManager.Instance.fadeInStart(0, 0, 0, 1);
     }
 }

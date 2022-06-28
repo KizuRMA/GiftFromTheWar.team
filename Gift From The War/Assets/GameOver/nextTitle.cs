@@ -7,6 +7,6 @@ public class nextTitle : MonoBehaviour
 {
     public void OnClickStartButton()
     {
-        LoadManager.Instance.LoadScene("Scenes/TitleScene");
+        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/TitleScene"));
     }
 }

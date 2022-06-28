@@ -7,8 +7,7 @@ public class nextScene : MonoBehaviour
 {
     public void OnClickStartButton()
     {
-        //SceneManager.LoadScene("Scenes/SampleScene");
-        LoadManager.Instance.LoadScene("Scenes/SampleScene");
+        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SampleScene"));
         SaveManager.Instance.Restart();
         SaveManager.Instance.WriteFile();
     }

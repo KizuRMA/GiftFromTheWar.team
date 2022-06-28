@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class FadeManager : SingletonMonoBehaviour<FadeManager>
 {
     //フェードアウト処理の開始、完了を管理するフラグ
-    private bool isFadeOut = false;
+    public bool isFadeOut { get; set; }
     //フェードイン処理の開始、完了を管理するフラグ
     private bool isFadeIn = true;
     //透明度が変わるスピード
@@ -22,13 +22,14 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
     {
         DontDestroyOnLoad(this);
         SetRGBA(0, 0, 0, 1);
-        //シーン遷移が完了した際にフェードインを開始するように設定
-        SceneManager.sceneLoaded += fadeInStart;
+        isFadeOut = false;
     }
 
     //シーン遷移が完了した際にフェードインを開始するように設定
-    void fadeInStart(Scene scene, LoadSceneMode mode)
+    public void fadeInStart(int red, int green, int blue, int alfa)
     {
+        SetRGBA(red, green, blue, alfa);
+        SetColor();
         isFadeIn = true;
     }
 
