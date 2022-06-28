@@ -32,5 +32,6 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
         yield return new WaitForSeconds(loadTime);
 
         asyncOperation.allowSceneActivation = true;
+        FadeManager.Instance.fadeOutStart(0,0,0,1);
     }
 }

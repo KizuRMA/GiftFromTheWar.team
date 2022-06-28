@@ -20,7 +20,7 @@ public class playerAbnormalcondition : MonoBehaviour
     float unrivaledTime;
     bool unrivaledFlg;
     Abnormal[] abnormal = new Abnormal[System.Enum.GetValues(typeof(e_Abnormal)).Length];
-    [SerializeField]public float life { set; get; }
+    [SerializeField] public float life;
     [SerializeField] public PostProcessVolume volume;
     [SerializeField] public UltrasoundTex ultrasoundImage;
     [SerializeField] float cureTime;
@@ -31,7 +31,6 @@ public class playerAbnormalcondition : MonoBehaviour
     {
         unrivaledTime = 2.0f;
         unrivaledFlg = false;
-        life = 3;
         for (int i = 0; i < abnormal.Length; i++)
         {
             abnormal[i].time = 0;
