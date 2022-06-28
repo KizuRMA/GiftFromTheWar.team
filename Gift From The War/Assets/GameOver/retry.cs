@@ -7,7 +7,7 @@ public class retry : MonoBehaviour
 {
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene("Scenes/SampleScene");
+        LoadManager.Instance.LoadScene("Scenes/SampleScene");
         SaveManager.Instance.ReadFile();
     }
 }
