@@ -10,7 +10,25 @@ public class nextSelectScene : MonoBehaviour
         //É}ÉEÉX
         if (Input.anyKey)
         {
-            SceneManager.LoadScene("Scenes/TitleScene");
+            StartCoroutine(nextScene());
         }
+    }
+
+    private IEnumerator nextScene()
+    {
+        FadeManager.Instance.fadeOutStart(0, 0, 0, 0);
+
+        var asyncOperation = SceneManager.LoadSceneAsync("Scenes/TitleScene");
+
+        asyncOperation.allowSceneActivation = false;
+
+        while (FadeManager.Instance.isFadeOut)
+        {
+            yield return null;
+        }
+
+        asyncOperation.allowSceneActivation = true;
+
+        FadeManager.Instance.fadeInStart(0, 0, 0, 1);
     }
 }
