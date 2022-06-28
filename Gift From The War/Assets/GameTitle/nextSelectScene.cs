@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class nextSelectScene : MonoBehaviour
 {
-    public void OnClickButton()
+    private void Update()
     {
-        SceneManager.LoadScene("Scenes/TitleScene");
-        SaveManager.Instance.Restart();
-        SaveManager.Instance.WriteFile();
+        //É}ÉEÉX
+        if (Input.anyKey)
+        {
+            SceneManager.LoadScene("Scenes/TitleScene");
+        }
     }
 }
