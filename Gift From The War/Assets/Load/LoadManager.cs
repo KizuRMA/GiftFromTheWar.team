@@ -1,55 +1,36 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadManager : SingletonMonoBehaviour<LoadManager>
 {
-    [SerializeField] private float startLoadTime;
-    [SerializeField] private float finishLoadTime;
-    private string nextScenePath;
-    private bool startLoadFlg = false;
-    private bool finishLoadFlg = false;
-    public bool loadFlg { get; set; }
+    [SerializeField] private float loadRaitomax;
+    [SerializeField] private float loadTime;
+    private string nextSceneName;
 
-    void Start()
+    private void Start()
     {
-
+        DontDestroyOnLoad(this);
     }
 
-    public void Load()
+    public void LoadScene(string nextScene)
     {
-        StartCoroutine("StartLoad");
+        SceneManager.LoadScene("Scenes/LoadScene");
+        nextSceneName = nextScene;
     }
 
-    public void Load(string _nextScenePath)
+    public IEnumerator LoadNextScene()
     {
-        nextScenePath = _nextScenePath;
+        var asyncOperation = SceneManager.LoadSceneAsync(nextSceneName);
 
-        StartCoroutine("FinishLoad");
-    }
+        asyncOperation.allowSceneActivation = false;
+        while (asyncOperation.progress < loadRaitomax)
+        {
+            yield return null;
+        }
 
-    private IEnumerator StartLoad()
-    {
-        startLoadFlg = true;
+        yield return new WaitForSeconds(loadTime);
 
-        yield return new WaitForSeconds(startLoadTime);
-
-        startLoadFlg = false;
-    }
-
-    private IEnumerator FinishLoad()
-    {
-        finishLoadFlg = true;
-
-        yield return new WaitForSeconds(finishLoadTime);
-
-        finishLoadFlg = false;
-        SceneManager.LoadScene(nextScenePath);
-    }
-
-    void Update()
-    {
-        loadFlg = startLoadFlg || finishLoadFlg;
+        asyncOperation.allowSceneActivation = true;
     }
 }
