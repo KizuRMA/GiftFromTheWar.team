@@ -23,11 +23,13 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
         DontDestroyOnLoad(this);
         SetRGBA(0, 0, 0, 1);
         isFadeOut = false;
+        fadeImage.enabled = false;
     }
 
     //シーン遷移が完了した際にフェードインを開始するように設定
     public void fadeInStart(int red, int green, int blue, int alfa)
     {
+        fadeImage.enabled = true;
         SetRGBA(red, green, blue, alfa);
         SetColor();
         isFadeIn = true;
@@ -35,6 +37,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
 
     public void fadeOutStart(int red, int green, int blue, int alfa)
     {
+        fadeImage.enabled = true;
         SetRGBA(red, green, blue, alfa);
         SetColor();
         isFadeOut = true;
@@ -49,7 +52,10 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
             //変更した透明度を画像に反映させる関数を呼ぶ
             SetColor();
             if (alfa <= 0)
+            {
                 isFadeIn = false;
+                fadeImage.enabled = false;
+            }
         }
         if (isFadeOut)
         {
