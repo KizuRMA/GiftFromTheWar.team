@@ -22,6 +22,7 @@ public class playerAbnormalcondition : MonoBehaviour
     Abnormal[] abnormal = new Abnormal[System.Enum.GetValues(typeof(e_Abnormal)).Length];
     [SerializeField]public float life { set; get; }
     [SerializeField] public PostProcessVolume volume;
+    [SerializeField] public UltrasoundTex ultrasoundImage;
     [SerializeField] float cureTime;
     [SerializeField] Material material;
 
@@ -90,15 +91,20 @@ public class playerAbnormalcondition : MonoBehaviour
     {
         ref Abnormal howling = ref abnormal[(int)e_Abnormal.howling];
 
-        howling.time = 0;
-        howling.complateCureTime = cureTime;
-        howling.completeCureFlg = false;
-
         if (volume != null)
         {
             volume.enabled = true;
             material.SetFloat("_Range", 0.05f);
         }
+
+        if (ultrasoundImage != null && howling.completeCureFlg == true)
+        {
+            ultrasoundImage.OnDisplay();
+        }
+
+        howling.time = 0;
+        howling.complateCureTime = cureTime;
+        howling.completeCureFlg = false;
     }
 
     public void Damage(float _damage)
