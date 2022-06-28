@@ -1277,6 +1277,7 @@ GameObject:
   - component: {fileID: 132006901}
   - component: {fileID: 132006900}
   - component: {fileID: 132006899}
+  - component: {fileID: 132006903}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1414,7 +1415,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 5000
+  far clip plane: 200
   field of view: 60
   orthographic: 0
   orthographic size: 10
@@ -1433,6 +1434,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &132006903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132006897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64e888a02036044d944062fee96c8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monoTone: {fileID: 2100000, guid: 7e876bc6a12a89f42bddcf8a1d57bfe8, type: 2}
 --- !u!1001 &135747837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6376,7 +6390,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.14999999
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 99775343f4884ae4285e0bea8fbe6cda, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 3e76128f5e828874fa17c54e43f209c5, type: 2}
 --- !u!114 &634510921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6405,7 +6419,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 1
   m_VoxelSize: 0.07
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: d59b8f75a092bce49958153b36094158, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 796b564fcfd70154a9cac03547b890cf, type: 2}
 --- !u!114 &634510922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6434,7 +6448,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 650ed9a2f1a3d9a4592ec430b0f6f4b4, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 7f8a5fa5d28b5c540b9d7ca6819d7276, type: 2}
 --- !u!4 &634510923
 Transform:
   m_ObjectHideFlags: 0
@@ -37837,6 +37851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   volume: {fileID: 1910506553}
   cureTime: 10
+  material: {fileID: 2100000, guid: 7e876bc6a12a89f42bddcf8a1d57bfe8, type: 2}
 --- !u!114 &2017324117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37979,7 +37994,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017324108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.11, z: 137.02}
+  m_LocalPosition: {x: 35.7, y: -1.11, z: 173.87}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
