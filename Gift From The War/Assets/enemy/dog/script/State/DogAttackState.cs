@@ -6,14 +6,15 @@ using UnityEngine.AI;
 public class DogAttackState : State<DogState>
 {
     public DogAttackState(DogState owner) : base(owner) { }
+    private DogAttackFunction info;
     private Rigidbody rd;
     private GameObject myGame;
     bool switchAnime;
-    bool facingThePlayer;
 
     public override void Enter()
     {
         myGame = owner.dog;
+        info = owner.info;
 
         //アニメーションを変化
         owner.animator.SetInteger("trans", 0);
@@ -38,6 +39,11 @@ public class DogAttackState : State<DogState>
         {
             CheckSwitchAnime();
             return;
+        }
+
+        if (info.isJumpFlg == false)
+        {
+            TurnToPlayer();
         }
 
         if (owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -96,7 +102,6 @@ public class DogAttackState : State<DogState>
         if (_degAng <= _rotSpeed)
         {
             _rotSpeed = _degAng;
-            facingThePlayer = true;
         }
 
         Vector3 _localAngle;

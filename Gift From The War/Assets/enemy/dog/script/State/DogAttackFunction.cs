@@ -7,6 +7,7 @@ public class DogAttackFunction : MonoBehaviour
     [SerializeField] private DogState owner;
     [SerializeField] private Collider attackCollider;
     [SerializeField] private Rigidbody rd;
+    public bool isJumpFlg;
 
     public void OnAttackStart()
     {
@@ -25,8 +26,14 @@ public class DogAttackFunction : MonoBehaviour
         target.Damage(1.0f);
     }
 
+    public void AttackAnimeStart()
+    {
+        isJumpFlg = false;
+    }
+
     public void Jump()
     {
+        isJumpFlg = true;
         owner.animator.SetFloat("Speed", 1.8f);
 
         rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;

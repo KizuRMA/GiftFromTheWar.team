@@ -27,12 +27,15 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
 
     [System.NonSerialized] public Vector3 hypocenter;
     [System.NonSerialized] public bool canVigilance;
+    [System.NonSerialized] public DogAttackFunction info;
 
     public bool IsVigilance => canVigilance == true;
     public bool IsAlive => life > 0.0f;
 
     void Start()
     {
+        info = transform.GetComponent<DogAttackFunction>();
+
         stateList.Add(new DogSearchState(this));
         stateList.Add(new DogTrackingState(this));
         stateList.Add(new DogVigilanceState(this));
