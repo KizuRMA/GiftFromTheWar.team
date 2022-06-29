@@ -7,7 +7,7 @@ public class nextScene : MonoBehaviour
 {
     public void OnClickStartButton()
     {
-        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/MutukiScene"));
+        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SampleScene"));
         SaveManager.Instance.Restart();
         SaveManager.Instance.WriteFile();
     }
