@@ -2909,7 +2909,7 @@ Transform:
   - {fileID: 754959839}
   - {fileID: 1803586986}
   m_Father: {fileID: 634510923}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &265129874
 PrefabInstance:
@@ -3163,7 +3163,7 @@ Transform:
   - {fileID: 1585029397}
   - {fileID: 131863829}
   m_Father: {fileID: 634510923}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &284727850
 MonoBehaviour:
@@ -3963,56 +3963,6 @@ MonoBehaviour:
   m_Area: 3
   m_IgnoreFromBuild: 1
   m_AffectedAgents: a98c17ec
---- !u!1 &344070713
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 344070714}
-  - component: {fileID: 344070715}
-  m_Layer: 0
-  m_Name: DogBranchRoute
-  m_TagString: dogAgent
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &344070714
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 344070713}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 566895020}
-  - {fileID: 2038438562}
-  m_Father: {fileID: 634510923}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &344070715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 344070713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 0
-  m_Area: 0
-  m_IgnoreFromBuild: 1
-  m_AffectedAgents: a98c17ecf46d2d58c3c0608d466f31ca
 --- !u!1001 &347149512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5785,86 +5735,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 422737732210419522, guid: 6e2285949d105de4493ec1bc9004dcfe, type: 3}
   m_PrefabInstance: {fileID: 563189337}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &566895019
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 566895020}
-  - component: {fileID: 566895023}
-  - component: {fileID: 566895022}
-  - component: {fileID: 566895021}
-  m_Layer: 2
-  m_Name: DogAgentArea
-  m_TagString: dogAgent
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &566895020
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566895019}
-  m_LocalRotation: {x: -0, y: 0.5455462, z: -0, w: 0.8380808}
-  m_LocalPosition: {x: -35.16, y: -1.9199998, z: 18.6}
-  m_LocalScale: {x: 1.1875, y: 1, z: 2.3602}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 344070714}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 66.124, z: 0}
---- !u!65 &566895021
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566895019}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 3, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &566895022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566895019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Size: {x: 2.5, y: 3, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
-  m_Area: 3
-  m_AffectedAgents: 
---- !u!114 &566895023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566895019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a83ab9506096c04e82dba762c2c919b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stage: {fileID: 634510919}
-  useAgentNames:
-  - DogAgent
-  - DogAgent2
-  volume: {fileID: 566895022}
 --- !u!1001 &567311811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6488,7 +6358,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 183829524}
-  - {fileID: 344070714}
   - {fileID: 1672864931}
   - {fileID: 284727849}
   - {fileID: 264238742}
@@ -29117,7 +28986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2501994995636935679, guid: 4d9d3118477ce604dbe181ee4a125b63, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2501994995636935679, guid: 4d9d3118477ce604dbe181ee4a125b63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -38187,86 +38056,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3682491023061996462, guid: 96b972b109d87534da6f4b4c2e857a33, type: 3}
   m_PrefabInstance: {fileID: 2026482394}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2038438561
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2038438562}
-  - component: {fileID: 2038438565}
-  - component: {fileID: 2038438564}
-  - component: {fileID: 2038438563}
-  m_Layer: 2
-  m_Name: DogAgentArea (1)
-  m_TagString: dogAgent
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2038438562
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038438561}
-  m_LocalRotation: {x: 0, y: 0.15858026, z: 0, w: 0.9873462}
-  m_LocalPosition: {x: -36.598667, y: -1.8540823, z: 14.036406}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 344070714}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 18.249, z: 0}
---- !u!65 &2038438563
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038438561}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 3, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &2038438564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038438561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Size: {x: 1, y: 3, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
-  m_Area: 3
-  m_AffectedAgents: 
---- !u!114 &2038438565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038438561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a83ab9506096c04e82dba762c2c919b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stage: {fileID: 634510919}
-  useAgentNames:
-  - DogAgent
-  - DogAgent2
-  volume: {fileID: 2038438564}
 --- !u!1001 &2051997858
 PrefabInstance:
   m_ObjectHideFlags: 0
