@@ -133,7 +133,14 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         }
         _nowAudio = _seSourceList[i];
 
-        Invoke("DelayPlaySE", delay);
+        if (delay != 0)
+        {
+            Invoke("DelayPlaySE", delay);
+        }
+        else
+        {
+            DelayPlaySE();
+        }
     }
 
     public void PlaySE(string seName, GameObject obj, float maxDistance = 100, bool isLiner = true, bool isLoop = true, float delay = 0.0f, float vol = 1.0f)
@@ -160,7 +167,14 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         if (isLiner)
             _nowAudio.rolloffMode = AudioRolloffMode.Linear;
 
-        Invoke("DelayPlaySE", delay);
+        if (delay != 0)
+        {
+            Invoke("DelayPlaySE", delay);
+        }
+        else
+        {
+            DelayPlaySE();
+        }
     }
 
     private void DelayPlaySE()
@@ -177,14 +191,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     {
         audio.volume = _SEVol;
 
-        if (_isLoop)
-        {
-            audio.loop = true;
-        }
-        else
-        {
-            audio.loop = false;
-        }
+        audio.loop = _isLoop;
 
         audio.minDistance = 1;
         audio.maxDistance = 500;
