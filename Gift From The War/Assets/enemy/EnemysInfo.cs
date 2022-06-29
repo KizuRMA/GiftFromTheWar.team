@@ -6,6 +6,18 @@ public class EnemysInfo : MonoBehaviour
 {
     [SerializeField] private List<EnemyManager> list = null;
 
+    private void Update()
+    {
+        if (IsEnemysChasing(e_EnemyType.PatrolBat) == true || IsEnemysChasing(e_EnemyType.Bat) == true)
+        {
+            AudioManager.Instance.PlaySE("Heartbeat");
+        }
+        else
+        {
+            AudioManager.Instance.StopSE("Heartbeat");
+        }
+    }
+
     public bool IsEnemysChasing(e_EnemyType _type)
     {
         foreach (var info in list)

@@ -5,18 +5,19 @@ using UnityEngine.AI;
 
 public class DogAgentArea : MonoBehaviour
 {
-    [SerializeField] GameObject stage;
+  
     [SerializeField] List<string> useAgentNames;
     [SerializeField] NavMeshModifierVolume volume;
     GameObject baseDogObject = null;
+    GameObject stage;
 
     NavMeshSurface[] navMesh;
     Dictionary<string,NavMeshSurface> navMeshes = new Dictionary<string,NavMeshSurface>();
 
-
     // Start is called before the first frame update
     void Start()
     {
+        stage = transform.parent.GetComponent<DogAgentAreaRoot>().stage;
         //ステージにある全てのNavMeshSurfaceの情報を取得する
         navMesh = stage.GetComponents<NavMeshSurface>();
 

@@ -37,7 +37,11 @@ public class playerAbnormalcondition : MonoBehaviour
             abnormal[i].complateCureTime = 0;
             abnormal[i].completeCureFlg = true;
         }
-        material.SetFloat("_Range", 0);
+
+        if (material != null)
+        {
+            material.SetFloat("_Range", 0);
+        }
     }
 
     // Update is called once per frame
@@ -67,6 +71,11 @@ public class playerAbnormalcondition : MonoBehaviour
         if (volume != null)
         {
             volume.weight = (1 - (howling.time / 14.0f));
+
+        }
+
+        if (material != null)
+        {
             material.SetFloat("_Range", (1 - (howling.time / howling.complateCureTime)) * 0.05f);
         }
 
@@ -93,6 +102,11 @@ public class playerAbnormalcondition : MonoBehaviour
         if (volume != null)
         {
             volume.enabled = true;
+        }
+
+
+        if (material != null)
+        {
             material.SetFloat("_Range", 0.05f);
         }
 
