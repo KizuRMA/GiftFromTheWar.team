@@ -16,6 +16,7 @@ public class BatDeadState : State<BatPatrolState>
 
     public override void Execute()
     {
+        AudioManager.Instance.PlaySE("BatDown");
         owner.DestroyBat();
     }
 
