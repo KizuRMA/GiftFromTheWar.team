@@ -216,12 +216,14 @@ public class LargeUltrasound : BaseUltrasound
         ParticleSystem particle = nowParticleSystem.transform.GetChild(1).GetComponent<ParticleSystem>();
         particle.Clear();
 
+
         nowParticleSystem = null;
     }
 
     public override void Exit()
     {
         StopParticle();
+        AudioManager.Instance.StopSE("ultrasound1");
     }
 
 }
