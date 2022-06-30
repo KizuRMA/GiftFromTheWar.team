@@ -5,11 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class nextSelectScene : MonoBehaviour
 {
+
+    bool isCalledOnce = false;
+
     private void Update()
     {
         //É}ÉEÉX
-        if (Input.anyKey)
+        if (Input.anyKey && !isCalledOnce)
         {
+            isCalledOnce = true;
             StartCoroutine(nextScene());
         }
     }
