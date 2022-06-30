@@ -244,6 +244,9 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         // パーティクルシステムのインスタンスを生成する。
         ParticleSystem newParticle = Instantiate(windBladeParticle);
 
+        //音を鳴らす
+        AudioManager.Instance.PlaySE("BatCutTheWind",gameObject);
+
         newParticle.transform.position = transform.position + (transform.up * 0.3f);
         newParticle.transform.rotation = transform.rotation * Quaternion.AngleAxis(-15.0f,Vector3.right); ;
 

@@ -64,7 +64,7 @@ public class playerAbnormalcondition : MonoBehaviour
     {
         ref Abnormal howling = ref abnormal[(int)e_Abnormal.howling];
 
-        if (howling.completeCureFlg == true)
+        if (volume != null && howling.completeCureFlg == true)
         {
             if (volume.weight > 0.0f)
             {
