@@ -47,7 +47,7 @@ public class playerAbnormalcondition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i  = 0; i < abnormal.Length; i++)
+        for (int i = 0; i < abnormal.Length; i++)
         {
             e_Abnormal _abnormal = (e_Abnormal)System.Enum.ToObject(typeof(e_Abnormal), i);
 
@@ -64,15 +64,21 @@ public class playerAbnormalcondition : MonoBehaviour
     {
         ref Abnormal howling = ref abnormal[(int)e_Abnormal.howling];
 
-        if (howling.completeCureFlg == true) return;
+        if (volume != null && howling.completeCureFlg == true)
+        {
+            if (volume.weight > 0.0f)
+            {
+                float dif = Time.deltaTime * 3.0f;
+                volume.weight = Mathf.Max(volume.weight - dif, 0.0f);
+                if (volume.weight <= 0.0f)
+                {
+                    volume.enabled = false;
+                }
+            }
+            return;
+        }
 
         howling.time += Time.deltaTime;
-
-        if (volume != null)
-        {
-            volume.weight = (1 - (howling.time / 14.0f));
-
-        }
 
         if (material != null)
         {
@@ -81,10 +87,6 @@ public class playerAbnormalcondition : MonoBehaviour
 
         if (howling.time - howling.complateCureTime > 0)
         {
-            if (volume != null)
-            {
-                volume.enabled = false;
-            }
             howling.time = 0;
             howling.completeCureFlg = true;
         }
@@ -102,8 +104,8 @@ public class playerAbnormalcondition : MonoBehaviour
         if (volume != null)
         {
             volume.enabled = true;
+            volume.weight = 1.0f;
         }
-
 
         if (material != null)
         {
@@ -127,6 +129,8 @@ public class playerAbnormalcondition : MonoBehaviour
         life -= _damage;
         unrivaledFlg = true;
         StartCoroutine(DamageCoroutine());
+        AudioManager.Instance.PlaySE("damage");
+
         if (life > 0) return;
     }
 

@@ -38,11 +38,21 @@ public class DogAttackFunction : MonoBehaviour
 
         rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        Vector3 _upVec = transform.up.normalized * (4.0f);
-        Vector3 _forwardVec = transform.forward.normalized * (4.5f * owner.attackJumpPow);
+        // 射出角度
+        float angle = 30.0f;
 
-        rd.AddForce(_upVec, ForceMode.Impulse);
-        rd.AddForce(_forwardVec, ForceMode.Impulse);
+        Transform _player = owner.player.transform;
+
+        float _playerDis = Vector3.Distance(transform.position,_player.position);
+        Vector3 _targetPos = transform.forward * (_playerDis * 1.2f) + transform.position;
+
+        // 射出速度を算出
+        Vector3 velocity = CalculateVelocity(transform.position, _targetPos, angle);
+
+        Debug.Log(velocity);
+
+        // 射出
+        rd.AddForce(velocity * rd.mass, ForceMode.Impulse);
     }
 
     public void Landing()
@@ -53,6 +63,31 @@ public class DogAttackFunction : MonoBehaviour
     public void Air()
     {
 
+    }
+
+    private Vector3 CalculateVelocity(Vector3 pointA, Vector3 pointB, float angle)
+    {
+        // 射出角をラジアンに変換
+        float rad = angle * Mathf.PI / 180;
+
+        // 水平方向の距離x
+        float x = Vector2.Distance(new Vector2(pointA.x, pointA.z), new Vector2(pointB.x, pointB.z));
+
+        // 垂直方向の距離y
+        float y = pointA.y - pointB.y;
+
+        // 斜方投射の公式を初速度について解く
+        float speed = Mathf.Sqrt(-Physics.gravity.y * Mathf.Pow(x, 2) / (2 * Mathf.Pow(Mathf.Cos(rad), 2) * (x * Mathf.Tan(rad) + y)));
+
+        if (float.IsNaN(speed))
+        {
+            // 条件を満たす初速を算出できなければVector3.zeroを返す
+            return Vector3.zero;
+        }
+        else
+        {
+            return (new Vector3(pointB.x - pointA.x, x * Mathf.Tan(rad), pointB.z - pointA.z).normalized * speed);
+        }
     }
 
 
