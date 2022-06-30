@@ -26,10 +26,12 @@ public class ResetButton : MonoBehaviour
             .Join(FillRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
             .Join(BackRectTransform.DOSizeDelta(endValue: new Vector2(ButtonSizeDelta.x, 455f), duration: 1f).SetEase(Ease.OutCubic))
             .Append(text.DOFade(endValue: 1f, duration: 0.1f))
+            .AppendCallback(() => OnRayCast())
             .SetDelay(2.5f);
-
+    }
+    private void OnRayCast()
+    {
         ListsCanvasGroup.blocksRaycasts = true;
-
     }
 
     private void Initialize()

@@ -9,7 +9,6 @@ public class GameStart : MonoBehaviour
     [SerializeField] private CanvasGroup ButtonCanvasGroup;
     [SerializeField] private RectTransform BoxRectTransform;
     [SerializeField] private RectTransform BlurRectTransform;
-    //[SerializeField] private Image text;
 
     private Vector2 BoxSizeDelta;
 
@@ -25,9 +24,13 @@ public class GameStart : MonoBehaviour
             .Append(BoxRectTransform.DOSizeDelta(endValue: new Vector2(BoxSizeDelta.x, 350.0f), duration: 1f).SetEase(Ease.OutCubic))
             .Join(BlurRectTransform.DOSizeDelta(endValue: new Vector2(BoxSizeDelta.x, 350.0f), duration: 1f).SetEase(Ease.OutCubic))
             .Append(ButtonCanvasGroup.DOFade(endValue: 1f, duration: 0.05f))
-            //.Append(text.DOFade(endValue: 1f, duration: 0.05f))
+            .AppendCallback(() => OnRayCast())
             .SetDelay(1.7f);
 
+    }
+
+    private void OnRayCast()
+    {
         ButtonCanvasGroup.blocksRaycasts = true;
     }
 
