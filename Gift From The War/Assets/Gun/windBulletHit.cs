@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class windBulletHit : MonoBehaviour
 {
+    private shooting shot;
+
+    private void Start()
+    {
+        shot = GameObject.Find("muzzlePos").GetComponent<shooting>();
+    }
+
     public void OnTriggerStay(Collider _collider)
     {
         if (_collider.tag == "Detector") return;
+
+        shot.bulletTuochFlg = true;
 
         Destroy(this.gameObject);
 
