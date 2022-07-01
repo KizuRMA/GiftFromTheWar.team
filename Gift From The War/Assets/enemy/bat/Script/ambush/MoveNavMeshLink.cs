@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class MoveNavMeshLink : MonoBehaviour
 {
-   
+
     [SerializeField]private NavMeshAgent agent;
     [SerializeField] public LayerMask raycastLayerMask;
     private GameObject player;
@@ -25,7 +25,7 @@ public class MoveNavMeshLink : MonoBehaviour
         agent.autoTraverseOffMeshLink = false; // OffMeshLink‚É‚æ‚éˆÚ“®‚ð‹ÖŽ~
 
         StartCoroutine(MoveNormalSpeed(agent));
-       
+
     }
 
     // Update is called once per frame
@@ -52,18 +52,22 @@ public class MoveNavMeshLink : MonoBehaviour
 
             nowPos = transform.position + new Vector3(0, controller.height, 0);
 
+            Vector3 _endPos = agent.currentOffMeshLinkData.endPos;
+
             yield return new WaitWhile(() =>
             {
                 if (IsEnd == true) return false;
 
-                Vector3 _targetPos = agent.currentOffMeshLinkData.endPos;
+                Vector3 _targetPos = _endPos;
 
                 agent.destination = player.transform.position;
 
                 if (_targetPos.y < player.transform.position.y)
                 {
                     _targetPos.y = player.transform.position.y;
-                }         
+                }
+
+                Debug.Log(_targetPos);
 
                 nowPos = Vector3.MoveTowards(nowPos,_targetPos, agent.speed * Time.deltaTime);
                 transform.position = nowPos;

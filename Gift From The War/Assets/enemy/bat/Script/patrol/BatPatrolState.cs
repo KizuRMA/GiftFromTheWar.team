@@ -107,7 +107,6 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
             base.Update();
         }
-
     }
 
     public void AdjustHeight()
@@ -245,7 +244,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         ParticleSystem newParticle = Instantiate(windBladeParticle);
 
         //‰¹‚ð–Â‚ç‚·
-        AudioManager.Instance.PlaySE("BatCutTheWind",gameObject);
+        AudioManager.Instance.PlaySE("BatCutTheWind",gameObject,isLoop:false);
 
         newParticle.transform.position = transform.position + (transform.up * 0.3f);
         newParticle.transform.rotation = transform.rotation * Quaternion.AngleAxis(-15.0f,Vector3.right); ;

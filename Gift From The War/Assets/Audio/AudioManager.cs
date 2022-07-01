@@ -163,9 +163,11 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         _nowAudio.spatialBlend = 1;
 
         _nowAudio.maxDistance = maxDistance;
+        _nowAudio.clip = _seDic[seName];
 
         if (isLiner)
             _nowAudio.rolloffMode = AudioRolloffMode.Linear;
+
 
         if (delay != 0)
         {

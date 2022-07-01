@@ -59,6 +59,8 @@ public class BatAttackScript : BaseState
 
         // パーティクルシステムのインスタンスを生成する。
         ParticleSystem newParticle = Instantiate(particle);
+        //音を鳴らす
+        AudioManager.Instance.PlaySE("BatCutTheWind", gameObject,isLoop: false);
 
         newParticle.transform.position = transform.position + (transform.up * 0.3f);
         newParticle.transform.rotation = transform.rotation * Quaternion.AngleAxis(-15.0f,Vector3.right);

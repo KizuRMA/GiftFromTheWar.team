@@ -30,6 +30,8 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
     {
         while (true)
         {
+            if (IsEnd == true) continue;
+
             // OffmeshLinkに乗るまで普通に移動
             yield return new WaitWhile(() => agent.isOnOffMeshLink == false);
 
@@ -64,7 +66,6 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
                         _targetPos.y = player.transform.position.y;
                     }
 
-
                     nowPos = Vector3.MoveTowards(nowPos, _targetPos, agent.speed * Time.deltaTime);
                     transform.position = nowPos;
                     return Vector3.Distance(nowPos, _targetPos) > 0.05f;
@@ -79,7 +80,7 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
                 }
             });
 
-            if (IsEnd == true) continue;
+            if (IsEnd == true)continue;
 
             //ナビメッシュの影響でY軸の値が地面の座標になっている
             Ray _ray = new Ray(transform.position, Vector3.down);
@@ -93,10 +94,17 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
 
             // NavmeshAgentを到達した事にして、Navmeshを再開
             agent.CompleteOffMeshLink();
-            Debug.Log("ナビメッシュリンク終了");
+
             agent.isStopped = false;
             agent.updateUpAxis = true;
             agent.updatePosition = true;
         }
+    }
+
+    private void NavMeshOn()
+    {
+        agent.isStopped = false;
+        agent.updateUpAxis = true;
+        agent.updatePosition = true;
     }
 }

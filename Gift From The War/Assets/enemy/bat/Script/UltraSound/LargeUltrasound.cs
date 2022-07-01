@@ -96,9 +96,11 @@ public class LargeUltrasound : BaseUltrasound
 
             // パーティクルを発生させる。
             nowParticleSystem.Play();
+
             StartCoroutine(DelayCoroutine());
             range += 0.001f;
         }
+        AudioManager.Instance.PlaySE("ultrasound2", gameObject,maxDistance:10);
 
         //遅延が完了してない場合
         if (delayEnd == false) return;
@@ -223,7 +225,7 @@ public class LargeUltrasound : BaseUltrasound
     public override void Exit()
     {
         StopParticle();
-        AudioManager.Instance.StopSE("ultrasound1");
+        AudioManager.Instance.StopSE("ultrasound2");
     }
 
 }
