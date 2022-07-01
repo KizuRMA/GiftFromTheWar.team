@@ -7,8 +7,12 @@ public class shooting : ShootParent
     //弾の発射  
     [SerializeField] private GetItem getItem;
     [SerializeField] private bulletChange bulletChange;
+    [SerializeField] private GameObject touchEffect;
+    private List<GameObject> touchEffectList = new List<GameObject>();
+    private Vector3 bulletPos;  //弾の場所を保存
     private bool shotableFlg;   //発射可能
     public bool  shotFlg;       //発射した
+    public bool bulletTuochFlg { get; set; }    //発射された
 
     private void Start()
     {
@@ -24,10 +28,21 @@ public class shooting : ShootParent
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind) return;   //今の弾の種類が対応してなかったら
 
         BulletVecter();
+
         //エネルギーが必要量あれば
         shotableFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
 
         shotFlg = false;
+
+        //風が当たったエフェクトの終了処理
+        if (touchEffectList.Count != 0)
+        {
+            if (touchEffectList[0].transform.childCount <= 0)
+            {
+                Destroy(touchEffectList[0]);
+                touchEffectList.RemoveAt(0);
+            }
+        }
 
         //発射キーを押したら
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -36,6 +51,14 @@ public class shooting : ShootParent
             shotFlg = true;
             Shot();
         }
+
+        if (bullet.Count > 0)   //弾の場所を保存しておく
+        {
+            bulletPos = bullet[0].transform.position;
+        }
+
+        if (!bulletTuochFlg) return;
+        TouchBullet();
     }
 
     private void Shot() //弾を打つ処理
@@ -57,5 +80,12 @@ public class shooting : ShootParent
         {
             shotPos = hit.point;
         }
+    }
+
+    private void TouchBullet()  //弾が他のオブジェクトに当たったら
+    {
+        bulletTuochFlg = false;
+
+        touchEffectList.Add((GameObject)Instantiate(touchEffect, bulletPos, Quaternion.identity));
     }
 }
