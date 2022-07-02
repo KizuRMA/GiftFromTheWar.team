@@ -60,10 +60,6 @@ public class BatController : MonoBehaviour
         {
             state.Update();
         }
-        else
-        {
-            int a = 0;
-        }
     }
 
     public void ChangeState(BaseState _state)

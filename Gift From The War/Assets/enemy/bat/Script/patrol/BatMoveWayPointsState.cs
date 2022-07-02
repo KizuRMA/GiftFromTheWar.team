@@ -27,7 +27,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         foreach (var _wayPoint in wayPoint.wayPoints)
         {
             agent.CalculatePath(_wayPoint.position, navMeshPath);
-            float dis = agent.remainingDistance;
+            float dis = 0.0f;
 
             Vector3 corner = _batPos;
             for (int i = 0; i < navMeshPath.corners.Length; i++)
