@@ -39,7 +39,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     //BGM用、SE用に分けてオーディオソースを持つ
     private AudioSource _bgmSource;
     private List<AudioSource> _seSourceList;
-    private const int SE_SOURCE_NUM = 10;
+    private const int SE_SOURCE_NUM = 100;
 
     //全AudioClipを保持
     private Dictionary<string, AudioClip> _bgmDic, _seDic;
@@ -103,7 +103,6 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         {
             _seDic[se.name] = se;
         }
-
     }
 
     //=================================================================================

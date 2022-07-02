@@ -30,11 +30,15 @@ public class Gravity : MonoBehaviour
     [SerializeField] private float slipY;           //スリップの高さ
     [SerializeField] private float slipPower;       //スリップするときの移動量
 
+    bool isLanding;    //着地判定
+    [SerializeField] public LayerMask layer;
+
     void Start()
     {
         trans = transform;
         firstGroundHitFlg = false;
         groundHitFlg = false;
+        isLanding = true;
     }
 
     void Update()
@@ -44,6 +48,32 @@ public class Gravity : MonoBehaviour
         GravityProcess();
 
         CC.Move(moveVec * Time.deltaTime);
+
+        //着地状態かチェック
+        if (isLanding == true)
+        {
+            //重力が0.5f以下ある場合
+            if (nowGravity <= -2.0f)
+            {
+                //着地していない
+                isLanding = false;
+            }
+        }
+        else
+        {
+            Vector3 _pos = trans.position + new Vector3(0, -playerHeight, 0);
+            Ray ray = new Ray(trans.position, Vector3.down);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit, 1000.0f, layer);
+
+            Debug.Log(hit.distance);
+
+            if (nowGravity >= -0.5f && hit.distance <= 1.0f)
+            {
+                AudioManager.Instance.PlaySE("Landing", isLoop: false);
+                isLanding = true;
+            }
+        }
     }
 
     private void GravityProcess()
@@ -65,7 +95,7 @@ public class Gravity : MonoBehaviour
     private void RayJudge() //地面のレイ判定
     {
         Vector3[] edgeTrans = new Vector3[5];
-        for(int i = 0;i < edgeTrans.Length;i++)
+        for (int i = 0; i < edgeTrans.Length; i++)
         {
             edgeTrans[i] = trans.position;
             edgeTrans[i] += new Vector3(0, -playerHeight, 0);
@@ -75,7 +105,7 @@ public class Gravity : MonoBehaviour
         edgeTrans[3] += new Vector3(0, playerHeightGap, playerRadius);
         edgeTrans[4] += new Vector3(0, playerHeightGap, -playerRadius);
 
-        foreach(Vector3 i in edgeTrans)
+        foreach (Vector3 i in edgeTrans)
         {
             Ray ray = new Ray(i, -trans.up);
             RaycastHit hit;
@@ -92,7 +122,7 @@ public class Gravity : MonoBehaviour
 
                 if (i.x == trans.position.x && i.z == trans.position.z) continue;
 
-                if(hit.distance < distanceMin)
+                if (hit.distance < distanceMin)
                 {
                     rayNormal = hit.normal.normalized;
                 }
@@ -112,7 +142,6 @@ public class Gravity : MonoBehaviour
 
         firstGroundHitFlg = false;
         groundHitFlg = false;
-
         nowGravity += gravity * Time.deltaTime;
         moveVec.y += nowGravity;
     }
