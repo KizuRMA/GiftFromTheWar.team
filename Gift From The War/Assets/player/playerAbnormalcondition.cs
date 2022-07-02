@@ -129,7 +129,7 @@ public class playerAbnormalcondition : MonoBehaviour
         life -= _damage;
         unrivaledFlg = true;
         StartCoroutine(DamageCoroutine());
-        AudioManager.Instance.PlaySE("damage2",vol:0.5f);
+        AudioManager.Instance.PlaySE("damage2",vol:0.2f);
 
         if (life > 0) return;
     }

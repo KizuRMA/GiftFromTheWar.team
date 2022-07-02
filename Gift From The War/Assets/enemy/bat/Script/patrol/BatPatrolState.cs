@@ -254,7 +254,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
         // インスタンス化したパーティクルシステムのGameObjectを削除する。(任意)
         // ※第一引数をnewParticleだけにするとコンポーネントしか削除されない。
-        Destroy(newParticle.gameObject, 5.0f);
+        Destroy(newParticle.gameObject, 7.0f);
     }
 
     public void OnAttackFinished()
