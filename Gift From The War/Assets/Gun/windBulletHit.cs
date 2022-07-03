@@ -11,9 +11,32 @@ public class windBulletHit : MonoBehaviour
         shot = GameObject.Find("muzzlePos").GetComponent<shooting>();
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Detector") return;
+
+        Debug.Log(other.gameObject);
+
+        shot.bulletTuochFlg = true;
+
+        Destroy(this.gameObject);
+
+        if (other.tag != "Bat") return;
+
+        if (other.gameObject.tag == "Bat")
+        {
+            var target = other.transform.GetComponent<EnemyInterface>();
+            target.Damage(1);
+        }
+
+        return;
+    }
+
     public void OnTriggerStay(Collider _collider)
     {
         if (_collider.tag == "Detector") return;
+
+        Debug.Log(_collider.gameObject);
 
         shot.bulletTuochFlg = true;
 

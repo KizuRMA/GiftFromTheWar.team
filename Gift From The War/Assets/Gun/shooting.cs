@@ -14,6 +14,8 @@ public class shooting : ShootParent
     public bool  shotFlg;       //発射した
     public bool bulletTuochFlg { get; set; }    //発射された
 
+    [SerializeField] private LayerMask layer;
+
     private void Start()
     {
         trans = transform;
@@ -76,8 +78,9 @@ public class shooting : ShootParent
         //プレイヤーの前にレイ判定を飛ばし、オブジェクトとの距離を求める。
         Ray ray = new Ray(camTrans.position, camTrans.forward);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
         {
+            Debug.Log(hit.point);
             shotPos = hit.point;
         }
     }

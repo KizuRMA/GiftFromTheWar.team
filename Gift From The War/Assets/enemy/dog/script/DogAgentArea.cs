@@ -8,6 +8,7 @@ public class DogAgentArea : MonoBehaviour
   
     [SerializeField] List<string> useAgentNames;
     [SerializeField] NavMeshModifierVolume volume;
+    BoxCollider boxCollider;
     GameObject baseDogObject = null;
     GameObject stage;
 
@@ -17,6 +18,7 @@ public class DogAgentArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        boxCollider = transform.GetComponent<BoxCollider>();
         stage = transform.parent.GetComponent<DogAgentAreaRoot>().stage;
         //ステージにある全てのNavMeshSurfaceの情報を取得する
         navMesh = stage.GetComponents<NavMeshSurface>();
@@ -36,6 +38,10 @@ public class DogAgentArea : MonoBehaviour
                 }
             }
         }
+
+        //ColliderのサイズをNavmeshVolumeに合わせる
+        boxCollider.center = volume.center;
+        boxCollider.size = volume.size;
     }
 
     private void OnTriggerEnter(Collider other)

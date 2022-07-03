@@ -11,6 +11,7 @@ public class fireGun : ShootParent
     private List<GameObject> explosionHitList = new List<GameObject>();         //爆発当たり判定の配列
     [SerializeField] private GetItem getItem; 
     [SerializeField] private bulletChange bulletChange;
+    ///[SerializeField] private LayerMask layer;
     private Vector3 explosionPos;   //爆発位置
     private bool shotFlg;   //発射可能
 
@@ -80,7 +81,15 @@ public class fireGun : ShootParent
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
+            Debug.Log(hit.point);
             shotPos = hit.point;
+        }
+        else //レイ判定が当たっていない場合
+        {
+            Vector3 _targetVec = camTrans.forward * 10.0f;
+            Vector3 _targetPos = camTrans.position + _targetVec;
+            shotPos = _targetPos;
+            Debug.Log(shotPos);
         }
     }
 

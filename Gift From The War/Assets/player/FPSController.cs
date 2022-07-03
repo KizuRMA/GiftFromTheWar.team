@@ -37,6 +37,8 @@ public class FPSController : MonoBehaviour
     [SerializeField] private float minX = -45f, maxX = 45f; //äpìxÇÃêßå¿óp
     private float nowSensityvity;  //ç°ÇÃêUÇËÇﬁÇ´ä¥ìx
 
+    [SerializeField] bool isDebug;
+
     void Start()
     {
         trans = transform;
@@ -44,10 +46,13 @@ public class FPSController : MonoBehaviour
         moveFlg = false;
         dashFlg = false;
 
-        CC.enabled = false;
-        trans.position = SaveManager.Instance.nowSaveData.dataSpotPos;
-        CC.transform.position = SaveManager.Instance.nowSaveData.dataSpotPos;
-        CC.enabled = true;
+        if (isDebug == false)
+        {
+            CC.enabled = false;
+            trans.position = SaveManager.Instance.nowSaveData.dataSpotPos;
+            CC.transform.position = SaveManager.Instance.nowSaveData.dataSpotPos;
+            CC.enabled = true;
+        }
     }
 
     void Update()

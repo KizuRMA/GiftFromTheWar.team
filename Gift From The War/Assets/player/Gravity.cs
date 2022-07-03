@@ -66,8 +66,6 @@ public class Gravity : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(ray, out hit, 1000.0f, layer);
 
-            Debug.Log(hit.distance);
-
             if (nowGravity >= -0.5f && hit.distance <= 1.0f)
             {
                 AudioManager.Instance.PlaySE("Landing", isLoop: false);

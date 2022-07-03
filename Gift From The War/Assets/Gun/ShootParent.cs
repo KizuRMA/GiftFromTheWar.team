@@ -48,6 +48,8 @@ public class ShootParent : MonoBehaviour
         bulletRemainEffect[bulletRemainEffect.Count - 1].transform.LookAt(shotPos);
 
         Destroy(bulletRemainEffect[bulletRemainEffect.Count - 1], range);
+
+       
     }
 
     protected void MoveBullet()   //’e‚ÌˆÚ“®
@@ -58,12 +60,15 @@ public class ShootParent : MonoBehaviour
         {
             if (bullet[i] == null)   //’e‚ª”j‰ó‚³‚ê‚Ä‚¢‚½‚çAƒŠƒXƒg‚©‚çíœ
             {
+                Debug.Log("Á–Å");
                 Destroy(bulletEffect[i]);
                 bullet.RemoveAt(i);
                 bulletEffect.RemoveAt(i);
                 bulletRemainEffect.RemoveAt(i);
                 continue;
             }
+           // Debug.Log(bullet[i].transform.forward);
+
             bullet[i].transform.transform.position += bullet[i].transform.forward * shotSpeed * Time.deltaTime; //ˆÚ“®ˆ—
             bulletEffect[i].transform.transform.position += bulletEffect[i].transform.forward * shotSpeed * Time.deltaTime; //ˆÚ“®ˆ—
             bulletRemainEffect[i].transform.transform.position += bulletRemainEffect[i].transform.forward * shotSpeed * Time.deltaTime; //ˆÚ“®ˆ—
