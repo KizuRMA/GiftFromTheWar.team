@@ -80,7 +80,6 @@ public class shooting : ShootParent
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
         {
-            Debug.Log(hit.point);
             shotPos = hit.point;
         }
     }

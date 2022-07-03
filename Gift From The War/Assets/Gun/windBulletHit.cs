@@ -15,8 +15,6 @@ public class windBulletHit : MonoBehaviour
     {
         if (other.tag == "Detector") return;
 
-        Debug.Log(other.gameObject);
-
         shot.bulletTuochFlg = true;
 
         Destroy(this.gameObject);
@@ -35,8 +33,6 @@ public class windBulletHit : MonoBehaviour
     public void OnTriggerStay(Collider _collider)
     {
         if (_collider.tag == "Detector") return;
-
-        Debug.Log(_collider.gameObject);
 
         shot.bulletTuochFlg = true;
 
