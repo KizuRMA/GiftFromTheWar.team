@@ -2194,6 +2194,7 @@ GameObject:
   - component: {fileID: 1991140970009939068}
   - component: {fileID: 3557861957607458010}
   - component: {fileID: 830117732479454733}
+  - component: {fileID: -7281539897119513637}
   m_Layer: 0
   m_Name: EnemyDog
   m_TagString: Dog1
@@ -2309,6 +2310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 2247645399667334434}
+  controller: {fileID: -7281539897119513637}
   player: {fileID: 0}
   dog: {fileID: 4179426876203190226}
   animator: {fileID: 7342884622482396982}
@@ -2442,6 +2444,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!143 &-7281539897119513637
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179426876203190226}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4250577340151766061
 GameObject:
   m_ObjectHideFlags: 0

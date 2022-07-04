@@ -17,6 +17,7 @@ public enum e_DogState
 public class DogState : StatefulObjectBase<DogState, e_DogState>
 {
     [SerializeField] public NavMeshAgent agent;
+    [SerializeField] public CharacterController controller;
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject dog;
     [SerializeField] public Animator animator;

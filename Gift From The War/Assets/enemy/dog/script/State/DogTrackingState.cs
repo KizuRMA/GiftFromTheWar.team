@@ -1,31 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DogTrackingState : State<DogState>
 {
     public DogTrackingState(DogState owner) : base(owner) { }
+    public NavMeshAgent agent;
     float time;
     bool rotateOnly;
 
     public override void Enter()
     {
+        agent = owner.agent;
         owner.animator.SetInteger("trans", 1);
         owner.animator.SetFloat("Speed", 1.1f);
-        owner.agent.speed = owner.TrakingSpeed;
+        //owner.agent.speed = owner.TrakingSpeed;
         time = 0;
 
-
         rotateOnly = false;
-        owner.agent.updatePosition = true;
-        owner.agent.updateUpAxis = true;
+        agent.updatePosition = false;
+        agent.updateUpAxis = false;
+        agent.updateRotation = false;
+
     }
 
     public override void Execute()
     {
-        owner.animator.SetFloat("MoveSpeed",owner.agent.velocity.magnitude);
-        owner.agent.destination = owner.player.transform.position;
+        owner.animator.SetFloat("MoveSpeed", agent.velocity.magnitude);
+        agent.destination = owner.player.transform.position;
 
+        NavMeshPath navMeshPath = new NavMeshPath();
+
+        //現在地から最も近いWayPointをターゲット座標にする
+        agent.CalculatePath(owner.player.transform.position, navMeshPath);
+
+        Vector3 _dogPos = owner.dog.transform.position;
+
+        if (navMeshPath.corners.Length > 0)
+        {
+            Vector3 corner = navMeshPath.corners[0];
+            Vector3 _targetVec = corner - new Vector3(_dogPos.x, corner.y, _dogPos.z);
+
+            float _angle = Vector3.SignedAngle(owner.dog.transform.forward, _targetVec, Vector3.up);
+
+            Vector3 _localAngle;
+            _localAngle = owner.transform.localEulerAngles;
+            _localAngle.y += _angle;
+            owner.transform.localEulerAngles = _localAngle;
+        }
+
+
+
+
+        /*
         float targetDis = Vector3.Distance(owner.dog.transform.position, owner.player.transform.position);
 
         if (targetDis < 1.5f)
@@ -70,6 +98,7 @@ public class DogTrackingState : State<DogState>
             owner.ChangeState(e_DogState.CheckAround);
             return;
         }
+        */
     }
 
     public override void Exit()
