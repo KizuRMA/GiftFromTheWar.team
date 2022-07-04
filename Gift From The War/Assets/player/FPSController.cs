@@ -42,6 +42,17 @@ public class FPSController : MonoBehaviour
 
     [SerializeField] bool isDebug;
 
+    private void Awake()
+    {
+        if (isDebug)
+        {
+            SaveManager.Instance.nowSaveData.getGunFlg = true;
+            SaveManager.Instance.nowSaveData.getWindFlg = true;
+            SaveManager.Instance.nowSaveData.getMagnetFlg = true;
+            SaveManager.Instance.nowSaveData.getFireFlg = true;
+        }
+    }
+
     void Start()
     {
         //•Ï”‚ğ‰Šú‰»
