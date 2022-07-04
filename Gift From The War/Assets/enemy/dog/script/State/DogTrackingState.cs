@@ -31,7 +31,7 @@ public class DogTrackingState : State<DogState>
 
         if (targetDis < 1.5f)
         {
-            if (rotateOnly == false)                                                                             
+            if (rotateOnly == false)
             {
                 owner.agent.updatePosition = false;
                 owner.agent.updateUpAxis = false;
