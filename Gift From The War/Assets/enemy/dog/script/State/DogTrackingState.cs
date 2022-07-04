@@ -8,7 +8,6 @@ public class DogTrackingState : State<DogState>
     float time;
     bool rotateOnly;
 
-    // Start is called before the first frame update
     public override void Enter()
     {
         owner.animator.SetInteger("trans", 1);
