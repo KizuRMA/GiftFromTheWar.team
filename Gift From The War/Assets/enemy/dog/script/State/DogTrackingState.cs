@@ -7,12 +7,17 @@ public class DogTrackingState : State<DogState>
 {
     public DogTrackingState(DogState owner) : base(owner) { }
     public NavMeshAgent agent;
+    public CharacterController controller;
+    public NavController navController;
     float time;
     bool rotateOnly;
 
     public override void Enter()
     {
+        navController = owner.transform.GetComponent<NavController>();
         agent = owner.agent;
+        controller = owner.controller;
+
         owner.animator.SetInteger("trans", 1);
         owner.animator.SetFloat("Speed", 1.1f);
         //owner.agent.speed = owner.TrakingSpeed;
@@ -37,19 +42,21 @@ public class DogTrackingState : State<DogState>
 
         Vector3 _dogPos = owner.dog.transform.position;
 
-        if (navMeshPath.corners.Length > 0)
-        {
-            Vector3 corner = navMeshPath.corners[0];
-            Vector3 _targetVec = corner - new Vector3(_dogPos.x, corner.y, _dogPos.z);
+        //if (navMeshPath.corners.Length > 0)
+        //{
+        //    Vector3 corner = navMeshPath.corners[0];
+        //    Vector3 _targetVec = corner - new Vector3(_dogPos.x, corner.y, _dogPos.z);
 
-            float _angle = Vector3.SignedAngle(owner.dog.transform.forward, _targetVec, Vector3.up);
+        //    float _angle = Vector3.SignedAngle(owner.dog.transform.forward, _targetVec, Vector3.up);
 
-            Vector3 _localAngle;
-            _localAngle = owner.transform.localEulerAngles;
-            _localAngle.y += _angle;
-            owner.transform.localEulerAngles = _localAngle;
-        }
+        //    Vector3 _localAngle;
+        //    _localAngle = owner.transform.localEulerAngles;
+        //    _localAngle.y += _angle;
+        //    owner.transform.localEulerAngles = _localAngle;
+        //}
 
+        //Vector3 _move = owner.transform.forward * Time.deltaTime;
+        navController.Move(navMeshPath);
 
 
 

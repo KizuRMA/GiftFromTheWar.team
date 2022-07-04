@@ -2195,6 +2195,7 @@ GameObject:
   - component: {fileID: 3557861957607458010}
   - component: {fileID: 830117732479454733}
   - component: {fileID: -7281539897119513637}
+  - component: {fileID: -4865923690861344785}
   m_Layer: 0
   m_Name: EnemyDog
   m_TagString: Dog1
@@ -2462,6 +2463,29 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-4865923690861344785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179426876203190226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77225e9585b780429722dc4c6646257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 2
+  angularSpeed: 200
+  turnAngle: 45
+  turnAngularSpeed: 1000
+  speedDownDistance: 0.5
+  stopDistance: 0.01
+  Speed2Anim: 1
+  stopSpeed: 0.01
+  averageSpeed: 0.5
+  agent: {fileID: 2247645399667334434}
+  chrController: {fileID: -7281539897119513637}
 --- !u!1 &4250577340151766061
 GameObject:
   m_ObjectHideFlags: 0
