@@ -7,10 +7,10 @@ public class bulletChange : MonoBehaviour
     //スクリプト取得
     [SerializeField] private remainingAmount RA;
     [SerializeField] private MoveWindGun moveWind;
-    [SerializeField] private shooting shooting;
-    [SerializeField] private magnet magnet;
-    [SerializeField] private magnetChain magnetChain;
-    [SerializeField] private fireGun fireGun;
+    private shooting shooting;
+    private magnet magnet;
+    private magnetChain magnetChain;
+    private fireGun fireGun;
 
     //武器切り替え
     public enum bulletType
@@ -20,17 +20,23 @@ public class bulletChange : MonoBehaviour
         e_fire
     }
     private float wheel;    //ホイールのスクロール量
-    public bulletType nowBulletType { get; set; } //今の武器 
+    public bulletType nowBulletType { get; set; } //今の武器
 
     //クールタイム
     [SerializeField] private float coolTime;    //エネルギー回復のクールタイム
     private bool changeableFlg = true;          //チェンジ可能かどうか
 
     //スクリプト
-    private bool scriptChangeFlg = true;   //スクリプト切り替えようのフラグ     
+    private bool scriptChangeFlg = true;   //スクリプト切り替えようのフラグ
 
     void Start()
     {
+        Transform _muzzleTrans = transform.Find("muzzlePos");
+        shooting = _muzzleTrans.GetComponent<shooting>();
+        magnet = _muzzleTrans.GetComponent<magnet>();
+        fireGun = _muzzleTrans.GetComponent<fireGun>();
+        magnetChain = _muzzleTrans.GetComponent<magnetChain>();
+
         nowBulletType = bulletType.e_wind;
     }
 

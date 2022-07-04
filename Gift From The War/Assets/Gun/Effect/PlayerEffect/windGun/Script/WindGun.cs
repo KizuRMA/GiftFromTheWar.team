@@ -11,6 +11,13 @@ public class WindGun : MonoBehaviour
 
     void Start()
     {
+        GameObject _parent = transform.parent.gameObject;
+        //親オブジェクトがある場合
+        if (_parent == true)
+        {
+            wind = _parent.GetComponent<WindGunEffectInfo>().gun;
+        }
+
         par = this.GetComponent<ParticleSystem>();
     }
 
@@ -20,7 +27,7 @@ public class WindGun : MonoBehaviour
         {
             effectFlg = false;
             par.Stop();
-            return;    
+            return;
         }
 
         if (effectFlg) return;  //すでにエフェクトを出していたら処理しない

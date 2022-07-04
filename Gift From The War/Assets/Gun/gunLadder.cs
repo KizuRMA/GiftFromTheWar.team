@@ -8,7 +8,7 @@ public class gunLadder : MonoBehaviour
     [SerializeField] private CharacterController playerCC;
     [SerializeField] private playerHundLadder playerHund;
     [SerializeField] private rantanWallTouch rantanWallTouch;
-    [SerializeField] private gunWallTouch gunWallTouch;
+    private gunWallTouch gunWallTouch;
     private Transform trans;
 
     //íÚéqÇè„ÇÈ
@@ -22,6 +22,8 @@ public class gunLadder : MonoBehaviour
     {
         trans = transform;
         firstPos = trans.localPosition;
+
+        gunWallTouch = trans.GetComponent<gunWallTouch>();
     }
 
     void Update()

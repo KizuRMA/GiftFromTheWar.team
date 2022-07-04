@@ -8,13 +8,13 @@ public class MoveWindGun : MonoBehaviour
     private CharacterController CC;
     private Transform trans;
     [SerializeField] private GameObject cam;
-    [SerializeField] private Gravity gravity;
-    [SerializeField] private playerHundLadder ladder;
-    [SerializeField] private remainingAmount energyAmount;
-    [SerializeField] private playerDied died;
-    [SerializeField] private bulletChange bulletChange;
-    [SerializeField] private GetItem getItem;
-    [SerializeField] private shooting shoot;
+    private Gravity gravity;
+    private playerHundLadder ladder;
+    private remainingAmount energyAmount;
+    private playerDied died;
+    private bulletChange bulletChange;
+    private GetItem getItem;
+    private shooting shoot;
 
     //à⁄ìÆ
     [SerializeField] private float movePower;
@@ -37,6 +37,17 @@ public class MoveWindGun : MonoBehaviour
 
     void Start()
     {
+        //ïœêîÇèâä˙âª
+        GunUseInfo _info = transform.GetComponent<GunUseInfo>();
+
+        gravity = transform.GetComponent<Gravity>();
+        ladder = transform.GetComponent<playerHundLadder>();
+        energyAmount = _info.cube.GetComponent<remainingAmount>();
+        died = transform.GetComponent<playerDied>();
+        bulletChange = _info.gunModel.GetComponent<bulletChange>();
+        getItem = transform.GetComponent<GetItem>();
+        shoot = _info.muzzlePos.GetComponent<shooting>();
+
         CC = this.GetComponent<CharacterController>();
         trans = transform;
         upWindFlg = false;
@@ -134,7 +145,7 @@ public class MoveWindGun : MonoBehaviour
         }
 
         //ÉGÉlÉãÉMÅ[è¡îÔ
-        energyAmount.GetSetNowAmount = useEnergyAmount; 
+        energyAmount.GetSetNowAmount = useEnergyAmount;
         energyAmount.useDeltaTime = true;
     }
 

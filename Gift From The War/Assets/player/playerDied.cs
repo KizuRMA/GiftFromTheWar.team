@@ -10,7 +10,7 @@ public class playerDied : MonoBehaviour
     private Transform trans;
     [SerializeField] private Gravity gravity;
     [SerializeField] private GameObject rantan;
-    [SerializeField] private GameObject gun;
+    private GameObject gun;
     private Rigidbody rantanRD;
     private Rigidbody gunRD;
 
@@ -29,7 +29,7 @@ public class playerDied : MonoBehaviour
     private float rotSum = 0;                   //回転の合計値
     [SerializeField] private float gunRotSpeed; //銃の回転スピード
 
-    //目を閉じる  
+    //目を閉じる
     [SerializeField] private GameObject eye;    //目の画像
     [SerializeField] private GameObject eye2;   //目の画像
     [SerializeField] private float eyeCoolTime; //目を閉じるまでの、クールタイム
@@ -41,6 +41,10 @@ public class playerDied : MonoBehaviour
 
     void Start()
     {
+        //変数を初期化
+        GunUseInfo _info = transform.GetComponent<GunUseInfo>();
+        gun = _info.gunModel;
+
         CC = this.GetComponent<CharacterController>();
         trans = transform;
         rantanRD = rantan.GetComponent<Rigidbody>();

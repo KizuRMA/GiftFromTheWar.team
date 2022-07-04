@@ -20,6 +20,13 @@ public class windHitJuge : MonoBehaviour
 
     void Start()
     {
+        GameObject _parent = transform.parent.gameObject;
+        //親オブジェクトがある場合
+        if (_parent == true)
+        {
+            wind = _parent.GetComponent<WindGunEffectInfo>().gun;
+        }
+
         trans = transform;
         firstScale = trans.localScale;
         MC = this.GetComponent<MeshCollider>();
@@ -33,7 +40,7 @@ public class windHitJuge : MonoBehaviour
             nowWindPower = 0;
             nowWindPower2 = 0;
             MC.enabled = false;
-            return;    
+            return;
         }
 
         if(!MC.enabled) MC.enabled = true;  //当たり判定をオンにする

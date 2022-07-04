@@ -7,10 +7,10 @@ public class magnet : ShootParent
     //ゲームオブジェクトやスクリプト
     [SerializeField] private GameObject cameraObj;
     [SerializeField] private GameObject bulletLineEffect;
-    [SerializeField] private GameObject bulletLinePos;
-    [SerializeField] private bulletChange bulletChange;
+    private GameObject bulletLinePos;
+    private bulletChange bulletChange;
     [SerializeField] private GetItem getItem;
-    [SerializeField] private magnetChain magnetChain;
+    private magnetChain magnetChain;
 
     //弾の発射
     private bool shotFlg;                       //発射可能
@@ -31,6 +31,18 @@ public class magnet : ShootParent
 
     private void Start()
     {
+        //変数初期化
+        bulletLinePos = transform.Find("muzzlePosLine").gameObject;
+
+        if (transform.parent != null)
+        {
+            bulletChange = transform.parent.GetComponent<bulletChange>();
+        }
+
+        magnetChain = transform.GetComponent<magnetChain>();
+
+
+
         trans = transform;
         metal = null;
         bulletLineEffect.SetActive(false);
@@ -42,7 +54,7 @@ public class magnet : ShootParent
         {
             metal.transform.parent = null;
             AddInertia();
-        }        
+        }
         metal = null;
         bulletLineEffect.SetActive(false);
         nowReturnSpeed = 0;
@@ -68,7 +80,7 @@ public class magnet : ShootParent
         if (!Input.GetMouseButtonDown(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
         {
             energyAmount.GetSetNowAmount = 0;
-        } 
+        }
 
         //発射キーを押したら
         if (Input.GetMouseButtonDown(1))

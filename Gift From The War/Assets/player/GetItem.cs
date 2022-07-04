@@ -5,7 +5,7 @@ using UnityEngine;
 public class GetItem : MonoBehaviour
 {
     //オブジェクトやスクリプトをとってくる
-    [SerializeField] private GameObject gunObj;
+    private GameObject gunObj;
     [SerializeField] private Transform camTrans;
 
     //レイ判定
@@ -21,6 +21,10 @@ public class GetItem : MonoBehaviour
 
     void Start()
     {
+        //変数を初期化
+        GunUseInfo _info = transform.GetComponent<GunUseInfo>();
+        gunObj = _info.gunModel;
+
         gunObj.SetActive(SaveManager.Instance.nowSaveData.getGunFlg);
         closeItemFlg = false;
         tagName = null;

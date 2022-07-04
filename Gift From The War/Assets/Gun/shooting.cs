@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class shooting : ShootParent
 {
-    //’e‚Ì”­Ë  
+    //’e‚Ì”­Ë
     [SerializeField] private GetItem getItem;
-    [SerializeField] private bulletChange bulletChange;
+    private bulletChange bulletChange;
     [SerializeField] private GameObject touchEffect;
     private List<GameObject> touchEffectList = new List<GameObject>();
     private Vector3 bulletPos;  //’e‚ÌêŠ‚ğ•Û‘¶
@@ -18,6 +18,11 @@ public class shooting : ShootParent
 
     private void Start()
     {
+        if (transform.parent != null)
+        {
+            bulletChange = transform.parent.GetComponent<bulletChange>();
+        }
+
         trans = transform;
     }
 

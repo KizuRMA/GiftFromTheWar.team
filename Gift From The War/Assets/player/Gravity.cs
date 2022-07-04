@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Gravity : MonoBehaviour
 {
-    [SerializeField] private CharacterController CC;
-    [SerializeField] private MoveWindGun moveWindGun;
-    [SerializeField] private playerHundLadder ladder;
-    [SerializeField] private magnet magnet;
-    [SerializeField] private magnetChain magnetChain;
-    [SerializeField] private playerDied died;
+    private CharacterController CC;
+    private MoveWindGun moveWindGun;
+    private playerHundLadder ladder;
+    private magnet magnet;
+    private magnetChain magnetChain;
+    private playerDied died;
 
     public bool firstGroundHitFlg { get; set; }
 
@@ -35,6 +35,16 @@ public class Gravity : MonoBehaviour
 
     void Start()
     {
+        //ïœêîÇèâä˙âª
+        GunUseInfo _info = transform.GetComponent<GunUseInfo>();
+
+        CC = transform.GetComponent<CharacterController>();
+        moveWindGun = transform.GetComponent<MoveWindGun>();
+        ladder = transform.GetComponent<playerHundLadder>();
+        magnet = _info.muzzlePos.GetComponent<magnet>();
+        magnetChain = _info.muzzlePos.GetComponent<magnetChain>();
+        died = transform.GetComponent<playerDied>();
+
         trans = transform;
         firstGroundHitFlg = false;
         groundHitFlg = false;

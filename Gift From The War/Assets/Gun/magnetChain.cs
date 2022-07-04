@@ -5,14 +5,16 @@ using UnityEngine;
 public class magnetChain : ShootParent
 {
     //ゲームオブジェクトやスクリプト
-    [SerializeField] private CharacterController CC;
     [SerializeField] private Transform playerTrans;
-    [SerializeField] private Gravity gravity;
     [SerializeField] private GameObject bulletLineEffect;
-    [SerializeField] private GameObject bulletLinePos;
-    [SerializeField] private bulletChange bulletChange;
-    [SerializeField] private GetItem getItem;
-    [SerializeField] private magnet magnet;
+    private GameObject bulletLinePos;
+    private bulletChange bulletChange;
+    private magnet magnet;
+
+    //プレイヤー関係のパラメータ
+    private CharacterController CC;
+    private GetItem getItem;
+    private Gravity gravity;
 
     //弾の発射
     private bool shotFlg;                       //発射可能
@@ -33,6 +35,20 @@ public class magnetChain : ShootParent
 
     private void Start()
     {
+        CC = playerTrans.GetComponent<CharacterController>();
+        gravity = playerTrans.GetComponent<Gravity>();
+        getItem = playerTrans.GetComponent<GetItem>();
+
+         //変数初期化
+         bulletLinePos = transform.Find("muzzlePosLine").gameObject;
+
+        if (transform.parent != null)
+        {
+            bulletChange = transform.parent.GetComponent<bulletChange>();
+        }
+
+        magnet = transform.GetComponent<magnet>();
+
         trans = transform;
         metalFlg = false;
         bulletLineEffect.SetActive(false);

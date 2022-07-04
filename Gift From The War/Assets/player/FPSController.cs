@@ -5,15 +5,18 @@ using UnityEngine;
 public class FPSController : MonoBehaviour
 {
     //ゲームオブジェクトやスクリプトをとってくる
-    [SerializeField] private CharacterController CC;
+
     [SerializeField] private GameObject ladderHund;
-    [SerializeField] private playerHundLadder ladder;
     [SerializeField] private GameObject cam;
-    [SerializeField] private MoveWindGun moveWind;
-    [SerializeField] private magnet magnet;
-    [SerializeField] private magnetChain magnetChain;
-    [SerializeField] private playerDied died;
-    
+
+
+    private magnet magnet;
+    private magnetChain magnetChain;
+    private playerHundLadder ladder;
+    private playerDied died;
+    private CharacterController CC;
+    private MoveWindGun moveWind;
+
     //カーソルロック
     private bool cursorLock = true;
 
@@ -41,6 +44,16 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
+        //変数を初期化
+        GunUseInfo _info = transform.GetComponent<GunUseInfo>();
+
+        magnet = _info.muzzlePos.GetComponent<magnet>();
+        magnetChain = _info.muzzlePos.GetComponent<magnetChain>();
+        ladder = transform.GetComponent<playerHundLadder>();
+        moveWind = transform.GetComponent<MoveWindGun>();
+        died = transform.GetComponent<playerDied>();
+        CC = transform.GetComponent<CharacterController>();
+
         trans = transform;
         nowMoveSpeed = walkSpeed;
         moveFlg = false;
