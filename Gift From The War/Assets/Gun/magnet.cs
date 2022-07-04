@@ -27,6 +27,7 @@ public class magnet : ShootParent
     private bool cameraOverFlg = false;             //金属がカメラ外にでた時
     [SerializeField] private float cameraOverMax;   //カメラの外の上限
     public float sensityvity;                       //カメラの感度
+    private Vector3 pastPos;                      //過去の座標
 
     private void Start()
     {
@@ -115,6 +116,7 @@ public class magnet : ShootParent
             cameraOverFlg = false;
             metal.transform.parent = cameraObj.gameObject.transform;
             firstPos = metal.transform.localPosition;
+            pastPos = metal.transform.position;
             metal.GetComponent<Rigidbody>().useGravity = false;
             metal.gameObject.AddComponent<metalHitJudge>();
 
@@ -137,6 +139,8 @@ public class magnet : ShootParent
         energyAmount.useDeltaTime = true;
 
         CameraOver();
+
+        ThroughWall();
 
         Relieve();
     }
@@ -189,6 +193,22 @@ public class magnet : ShootParent
     private void CameraOver()   //カメラの外に出る処理
     {
         cameraOverFlg = (metal.transform.localPosition - firstPos).magnitude > cameraOverMax;
+    }
+
+    private void ThroughWall()  //壁を通り抜ける
+    {
+        Vector3 nowPos = metal.transform.position;
+        Vector3 vec = nowPos - pastPos;
+
+        Ray ray = new Ray(pastPos, vec);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, vec.magnitude))
+        {
+            metal.transform.position = pastPos;
+            Debug.Log("a");
+        }
+
+        pastPos = metal.transform.position;
     }
 
     private void Relieve()   //解除処理
