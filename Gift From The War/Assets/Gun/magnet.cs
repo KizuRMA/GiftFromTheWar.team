@@ -27,7 +27,12 @@ public class magnet : ShootParent
     private bool cameraOverFlg = false;             //金属がカメラ外にでた時
     [SerializeField] private float cameraOverMax;   //カメラの外の上限
     public float sensityvity;                       //カメラの感度
-    private Vector3 pastPos;                      //過去の座標
+
+    //壁すり抜け防止
+    private List<GameObject> colliders = new List<GameObject>();    //当たり判定のゲームオブジェクト格納
+    private List<Vector3> pastPosList = new List<Vector3>();        //当たり判定の座標を保存
+    private Vector3 pastPos;                                        //オブジェクトの座標を保存
+    private Quaternion pastQua;                                     //オブジェクトの角度を保存
 
     private void Start()
     {
@@ -40,8 +45,6 @@ public class magnet : ShootParent
         }
 
         magnetChain = transform.GetComponent<magnetChain>();
-
-
 
         trans = transform;
         metal = null;
@@ -85,8 +88,8 @@ public class magnet : ShootParent
         //発射キーを押したら
         if (Input.GetMouseButtonDown(1))
         {
-            if(shotFlg && !magnetFlg)
-            Shot();
+            if (shotFlg && !magnetFlg)
+                Shot();
         }
 
         //発射した弾が金属に当たってなかったら、処理しない
@@ -129,13 +132,16 @@ public class magnet : ShootParent
             metal.transform.parent = cameraObj.gameObject.transform;
             firstPos = metal.transform.localPosition;
             pastPos = metal.transform.position;
+            pastQua = metal.transform.rotation;
             metal.GetComponent<Rigidbody>().useGravity = false;
             metal.gameObject.AddComponent<metalHitJudge>();
 
-            if(metal.GetComponent<Rigidbody>().isKinematic)
+            if (metal.GetComponent<Rigidbody>().isKinematic)
             {
                 metal.GetComponent<Rigidbody>().isKinematic = false;
             }
+
+            ColliderInit();
         }
 
         ReturnMiddle();
@@ -207,20 +213,38 @@ public class magnet : ShootParent
         cameraOverFlg = (metal.transform.localPosition - firstPos).magnitude > cameraOverMax;
     }
 
+    private void ColliderInit() //当たり判定用のゲームオブジェクトの初期化
+    {
+        GameObject colliderChild = metal.transform.Find("collider").gameObject;
+        for (int i = 0; i < colliderChild.transform.childCount; i++)
+        {
+            colliders.Add(colliderChild.transform.GetChild(i).gameObject);
+            pastPosList.Add(colliders[i].transform.position);
+        }
+    }
+
     private void ThroughWall()  //壁を通り抜ける
     {
-        Vector3 nowPos = metal.transform.position;
-        Vector3 vec = nowPos - pastPos;
-
-        Ray ray = new Ray(pastPos, vec);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, vec.magnitude))
+        for (int i = 0; i < colliders.Count; i++)
         {
-            metal.transform.position = pastPos;
-            Debug.Log("a");
+            Vector3 vec = colliders[i].transform.position - pastPosList[i];
+
+            Ray ray = new Ray(pastPosList[i], vec);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, vec.magnitude))
+            {
+                if (hit.collider.gameObject.tag == "cave")
+                {
+                    metal.transform.position = pastPos;
+                    metal.transform.rotation = pastQua;
+                }
+            }
+
+            pastPosList[i] = colliders[i].transform.position;
         }
 
         pastPos = metal.transform.position;
+        pastQua = metal.transform.rotation;
     }
 
     private void Relieve()   //解除処理
@@ -232,6 +256,8 @@ public class magnet : ShootParent
             metal.transform.parent = null;
             AddInertia();
             metal = null;
+            colliders.Clear();
+            pastPosList.Clear();
         }
     }
 }

@@ -86,7 +86,6 @@ public class fireGun : ShootParent
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            Debug.Log(hit.point);
             shotPos = hit.point;
         }
         else //ÉåÉCîªíËÇ™ìñÇΩÇ¡ÇƒÇ¢Ç»Ç¢èÍçá
@@ -94,7 +93,6 @@ public class fireGun : ShootParent
             Vector3 _targetVec = camTrans.forward * 10.0f;
             Vector3 _targetPos = camTrans.position + _targetVec;
             shotPos = _targetPos;
-            Debug.Log(shotPos);
         }
     }
 
