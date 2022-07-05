@@ -21,7 +21,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         Vector3 _batPos = owner.bat.transform.position;
         float _minDistance = float.MaxValue;
 
-        NavMeshPath navMeshPath = new NavMeshPath(); ;
+        NavMeshPath navMeshPath = new NavMeshPath();
 
         //現在地から最も近いWayPointをターゲット座標にする
         foreach (var _wayPoint in wayPoint.wayPoints)

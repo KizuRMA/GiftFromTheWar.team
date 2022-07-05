@@ -1,65 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DogTrackingState : State<DogState>
 {
+    struct NavMeshParameter
+    {
+        public float speed;
+        public float angularSpeed;
+        public float acceleration;
+    }
+
     public DogTrackingState(DogState owner) : base(owner) { }
-    float time;
-    bool rotateOnly;
+    public NavMeshAgent agent;
+    public CharacterController controller;
+    public NavController navController;
+    NavMeshParameter agentParameter;
 
     public override void Enter()
     {
+
+        navController = owner.transform.GetComponent<NavController>();
+        agent = owner.agent;
+        controller = owner.controller;
+
         owner.animator.SetInteger("trans", 1);
         owner.animator.SetFloat("Speed", 1.1f);
-        owner.agent.speed = owner.TrakingSpeed;
-        time = 0;
+        //owner.agent.speed = owner.TrakingSpeed;
 
+        //NavMeshAgentのパラメータを保存しておく
+        agentParameter.speed = agent.speed;
+        agentParameter.angularSpeed = agent.angularSpeed;
+        agentParameter.acceleration = agent.acceleration;
 
-        rotateOnly = false;
-        owner.agent.updatePosition = true;
-        owner.agent.updateUpAxis = true;
+        agent.speed = 0f;
+        agent.angularSpeed = 0f;
+        agent.acceleration = 0f;
+
+        controller.enabled = true;
     }
 
     public override void Execute()
     {
-        owner.animator.SetFloat("MoveSpeed",owner.agent.velocity.magnitude);
-        owner.agent.destination = owner.player.transform.position;
+        owner.animator.SetFloat("MoveSpeed", 1.0f);
+        agent.destination = owner.player.transform.position;
+
+        NavMeshPath navMeshPath = new NavMeshPath();
+
+        //現在地から最も近いWayPointをターゲット座標にする
+        agent.CalculatePath(owner.player.transform.position, navMeshPath);
+        navController.Move(navMeshPath);
+        owner.transform.position = new Vector3(owner.transform.position.x,agent.destination.y,owner.transform.position.z);
 
         float targetDis = Vector3.Distance(owner.dog.transform.position, owner.player.transform.position);
 
-        if (targetDis < 1.5f)
-        {
-            if (rotateOnly == false)
-            {
-                owner.agent.updatePosition = false;
-                owner.agent.updateUpAxis = false;
-                rotateOnly = true;
-            }
-        }
-        else
-        {
-            if (rotateOnly == true && targetDis >= 1.5f)
-            {
-                owner.agent.Warp(owner.dog.transform.position);
-                rotateOnly = false;
-
-                owner.agent.updatePosition = true;
-                owner.agent.updateUpAxis = true;
-            }
-        }
-
-        //距離が近い状態が続いている場合は秒数をカウントする
-        if (targetDis <= 2.5f)
-        {
-            time += Time.deltaTime;
-        }
-        else
-        {
-            time = 0;
-        }
-
-        if (IsPossibleToAttack() == true || time >= 2.0f)
+        if (IsPossibleToAttack() == true)
         {
             owner.ChangeState(e_DogState.Attack);
             return;
@@ -70,11 +66,19 @@ public class DogTrackingState : State<DogState>
             owner.ChangeState(e_DogState.CheckAround);
             return;
         }
+
     }
 
     public override void Exit()
     {
         owner.animator.SetFloat("Speed", 1.0f);
+
+        controller.enabled = false;
+        agent.speed = agentParameter.speed;
+        agent.angularSpeed = agentParameter.angularSpeed;
+        agent.acceleration = agent.acceleration;
+
+        navController.Reset();
     }
 
     private bool IsPossibleToAttack()

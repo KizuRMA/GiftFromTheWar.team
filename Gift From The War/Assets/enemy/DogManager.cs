@@ -9,8 +9,11 @@ public class DogManager : BaseEnemyManager
     private List<GameObject> objects = new List<GameObject>();
     private Dictionary<string, int> agentTypeIdDict = new Dictionary<string, int>();
 
+    bool isResetPriority;
+
     private void Awake()
     {
+        isResetPriority = false;
         for (var i = 0; i < NavMesh.GetSettingsCount(); i++)
         {
             var id = NavMesh.GetSettingsByIndex(i).agentTypeID;
@@ -21,7 +24,11 @@ public class DogManager : BaseEnemyManager
 
     void Update()
     {
-
+        if (!isResetPriority)
+        {
+            ResetPriority();
+            isResetPriority = true;
+        }
         //子オブジェクトを全て取得する
         GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];
         for (int i = 0; i < gameObject.transform.childCount; i++)
@@ -78,6 +85,25 @@ public class DogManager : BaseEnemyManager
                 objects[i].GetComponent<NavMeshAgent>().agentTypeID = agentTypeIdDict["DogAgent"];
                 objects.Remove(objects[i]);
             }
+        }
+    }
+
+    public void ResetPriority()
+    {
+        //子オブジェクトを全て取得する
+        GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            _ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
+        }
+
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            NavMeshAgent _agent = _ChildObjects[i].GetComponent<NavMeshAgent>();
+            if (_agent == null) continue;
+
+            _agent.avoidancePriority = 50;
+            _agent.avoidancePriority += i;
         }
     }
 

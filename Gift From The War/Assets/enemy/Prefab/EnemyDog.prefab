@@ -2194,6 +2194,8 @@ GameObject:
   - component: {fileID: 1991140970009939068}
   - component: {fileID: 3557861957607458010}
   - component: {fileID: 830117732479454733}
+  - component: {fileID: -7281539897119513637}
+  - component: {fileID: -4865923690861344785}
   m_Layer: 0
   m_Name: EnemyDog
   m_TagString: Dog1
@@ -2309,6 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 2247645399667334434}
+  controller: {fileID: -7281539897119513637}
   player: {fileID: 0}
   dog: {fileID: 4179426876203190226}
   animator: {fileID: 7342884622482396982}
@@ -2334,7 +2337,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 5
+  m_Height: 3.92
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -2442,6 +2445,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!143 &-7281539897119513637
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179426876203190226}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 1.67
+  m_SlopeLimit: 0
+  m_StepOffset: 0
+  m_SkinWidth: 0.0001
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 2.36, z: 0}
+--- !u!114 &-4865923690861344785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179426876203190226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77225e9585b780429722dc4c6646257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 3
+  acceleration: 50
+  angularSpeed: 100
+  turnAngle: 10
+  turnAngularSpeed: 300
+  speedDownDistance: 1
+  stopDistance: 0.001
+  Speed2Anim: 1
+  stopSpeed: 0.01
+  averageSpeed: 0.5
+  agent: {fileID: 2247645399667334434}
+  chrController: {fileID: -7281539897119513637}
 --- !u!1 &4250577340151766061
 GameObject:
   m_ObjectHideFlags: 0
