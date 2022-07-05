@@ -43,7 +43,7 @@ public class DogAttackState : State<DogState>
 
         if (info.isJumpFlg == false)
         {
-            TurnToPlayer();
+            //TurnToPlayer();
         }
 
         if (owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)

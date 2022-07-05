@@ -6,8 +6,10 @@ using UnityEngine.AI;
 public class NavController : MonoBehaviour
 {
     [Header("移動")]
-    [TooltipAttribute("歩く速度"), SerializeField]
-    public float walkSpeed = 2f;
+    [TooltipAttribute("最大速度"), SerializeField]
+    public float maxSpeed = 2f;
+    [TooltipAttribute("加速度"), SerializeField]
+    public float acceleration = 1;
     [TooltipAttribute("通常の旋回速度"), SerializeField]
     public float angularSpeed = 200f;
     [TooltipAttribute("ターンする時の角度差"), SerializeField]
@@ -31,6 +33,14 @@ public class NavController : MonoBehaviour
     [SerializeField] public CharacterController chrController;
     NavMeshPath path;
 
+    float lastSpeed;
+    float walkSpeed;
+
+    private void Awake()
+    {
+        walkSpeed = 0f;
+    }
+
     public float DistanceXZ(Vector3 src, Vector3 dst)
     {
         src.y = dst.y;
@@ -49,8 +59,19 @@ public class NavController : MonoBehaviour
         }
     }
 
+    public bool IsReached
+    {
+        get
+        {
+            return Vector3.Distance(transform.position, LastCorner) <= stopDistance;
+        }
+    }
+
     public void Move(NavMeshPath _path)
     {
+        walkSpeed += (acceleration / 10) * Time.deltaTime;
+        walkSpeed = Mathf.Min(maxSpeed,walkSpeed);
+
         path = _path;
 
         Vector3 _move = chrController.velocity;
@@ -72,54 +93,58 @@ public class NavController : MonoBehaviour
         _move.y = 0f;
         float rot = angularSpeed * Time.deltaTime;
 
-        float angle = Vector3.SignedAngle(transform.forward, _move, Vector3.up);
+        if (!IsReached)
+        {
+            float angle = Vector3.SignedAngle(transform.forward, _move, Vector3.up);
 
-        Vector3 _localAngle;
-        _localAngle = transform.localEulerAngles;
-        _localAngle.y += angle;
-        transform.localEulerAngles = _localAngle;
-        //transform.Rotate(0f, rot * Mathf.Sign(angle), 0f);
+            //角度がturnAngleを越えていたら速度0
+            if (Mathf.Abs(angle) > turnAngle)
+            {
+                // 最高速度を越えているのでターンのみ
+                float rotmax = turnAngularSpeed * Time.deltaTime;
+                rot = Mathf.Min(Mathf.Abs(angle), rotmax);
+                transform.Rotate(0f, rot * Mathf.Sign(angle), 0f);
+                _move = Vector3.zero;
+                spd = 0f;
+            }
+            else
+            {
+                // ターンはしない
 
-        // 角度がturnAngleを越えていたら速度0
-        //if (Mathf.Abs(angle) > turnAngle)
-        //{
-        //    // 最高速度を越えているのでターンのみ
-        //    float rotmax = turnAngularSpeed * Time.deltaTime;
-        //    rot = Mathf.Min(Mathf.Abs(angle), rotmax);
-        //    transform.Rotate(0f, rot * Mathf.Sign(angle), 0f);
-        //    _move = Vector3.zero;
-        //    spd = 0f;
-        //}
-        //else
-        //{
-        //    // ターンはしない
+                // ゴール距離がスピードダウンより近い場合、角度の違いの分、前進速度を比例減速する
+                if (DistanceXZ(LastCorner, transform.position) < speedDownDistance)
+                {
+                    spd *= (1f - (Mathf.Abs(angle) / turnAngle));
+                }
 
-        //    // ゴール距離がスピードダウンより近い場合、角度の違いの分、前進速度を比例減速する
-        //    if (DistanceXZ(LastCorner, transform.position) < speedDownDistance)
-        //    {
-        //        spd *= (1f - (Mathf.Abs(angle) / turnAngle));
-        //    }
+                // 1回分の移動をキャンセルする場合、回転速度は制限しない
+                if (_move.magnitude < spd)
+                {
+                    spd = _move.magnitude;
+                    rot = angle;
+                    transform.Rotate(0f, angle, 0f);
+                }
+                else
+                {
+                    // 移動しながらターン
+                    rot = Mathf.Min(Mathf.Abs(angle), rot);
+                    transform.Rotate(0f, rot * Mathf.Sign(angle), 0f);
+                }
 
-        //    // 1回分の移動をキャンセルする場合、回転速度は制限しない
-        //    if (_move.magnitude < spd)
-        //    {
-        //        spd = _move.magnitude;
-        //        rot = angle;
-        //        transform.Rotate(0f, angle, 0f);
-        //    }
-        //    else
-        //    {
-        //        // 移動しながらターン
-        //        rot = Mathf.Min(Mathf.Abs(angle), rot);
-        //        transform.Rotate(0f, rot * Mathf.Sign(angle), 0f);
-        //    }
+                // キャラクターの前方に移動
+                _move = transform.forward * spd;
+            }
+        }
+        else
+        {
+            _move = Vector3.zero;
+        }
 
-        //    // キャラクターの前方に移動
-        //    _move = transform.forward * spd;
-        //}
-
-        _move = transform.forward * (Time.deltaTime * walkSpeed);
         chrController.Move(_move);
+    }
 
+    public void Reset()
+    {
+        walkSpeed = 0f;
     }
 }
