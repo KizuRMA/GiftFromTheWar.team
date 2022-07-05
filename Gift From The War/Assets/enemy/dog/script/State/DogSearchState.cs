@@ -34,14 +34,6 @@ public class DogSearchState : State<DogState>
         {
             owner.StartCoroutine(TargetCoroutine());
         }
-
-       
-
-        if (dis <= 1.0f)
-        {
-            owner.ChangeState(e_DogState.Tracking);
-            return;
-        }
        
         if (owner.canVigilance == true && dis <= 5.0f)
         {
