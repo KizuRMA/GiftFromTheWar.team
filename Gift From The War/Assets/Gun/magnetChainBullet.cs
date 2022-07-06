@@ -15,7 +15,7 @@ public class magnetChainBullet : MonoBehaviour
     {
         if (other.gameObject.tag == "dogAgent" || other.gameObject.tag == "Detector") return; //“–‚½‚Á‚½‚Ì‚ªdogAgent‚¾‚Á‚½‚çˆ—‚µ‚È‚¢
 
-        if (other.gameObject.tag == "metal" || other.gameObject.tag == "fixedMetal" || other.gameObject.tag == "Dog1" || other.gameObject.tag == "valve")
+        if (other.gameObject.tag == "metal" || other.gameObject.tag == "fixedMetal" || other.gameObject.tag == "Dog1" || other.gameObject.tag == "valve" || other.gameObject.tag == "gimmickButton")
         {
             magChain.metalFlg = true;
         }

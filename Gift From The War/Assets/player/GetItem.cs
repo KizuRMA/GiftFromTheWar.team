@@ -15,6 +15,7 @@ public class GetItem : MonoBehaviour
     //アイテム判定
     private string tagName;
     private string objName;
+    private GameObject hitObj;
     public bool windAmmunitionFlg { get; set; }
     public bool magnetAmmunitionFlg { get; set; }
     public bool fireAmmunitionFlg { get; set; }
@@ -48,16 +49,15 @@ public class GetItem : MonoBehaviour
         {
             tagName = hit.collider.gameObject.tag;
             objName = hit.collider.gameObject.name;
+            hitObj = hit.collider.gameObject;
 
-            if (!(tagName == "gun" || tagName == "ammunition")) return;   //触ったのがアイテムでなかったら処理しない
+            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton")) return;   //触ったのがアイテムでなかったら処理しない
 
             closeItemFlg = true;
 
             if (!Input.GetKey(KeyCode.Space)) return;   //スペース押されなかったら、処理しない
 
             closeItemFlg = false;
-
-            hit.collider.gameObject.SetActive(false);
 
             JudgeItem();
         }
@@ -94,6 +94,12 @@ public class GetItem : MonoBehaviour
             fireAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getFireFlg = true;
             SaveManager.Instance.WriteFile();
+            return;
+        }
+
+        if(tagName == "gimmickButton")
+        {
+            hitObj.transform.GetComponent<HandButton>().changeFlg = true;
             return;
         }
     }
