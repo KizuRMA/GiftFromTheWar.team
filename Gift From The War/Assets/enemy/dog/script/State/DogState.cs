@@ -23,10 +23,13 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject dog;
     [SerializeField] public Animator animator;
-    [SerializeField] public float SearchSpeed;
-    [SerializeField] public float TrakingSpeed;
-    [SerializeField] public float life = 1.0f;
-    [SerializeField] public float attackJumpPow = 1.0f;
+
+    [Header("犬のステータスパラメータ")]
+    [TooltipAttribute("捜索する時の速度"), SerializeField] public float SearchSpeed;
+    [TooltipAttribute("追跡する時の速度"),SerializeField] public float TrackingSpeed;
+    [TooltipAttribute("最大ヒットポイント数"),SerializeField] public float life = 1.0f;
+    [TooltipAttribute("プレイヤーを見失う時の距離"),SerializeField] public float loseSightOfDis;
+    [TooltipAttribute("攻撃する時のジャンプの力の割合"),SerializeField] public float attackJumpPow = 1.0f;
 
     [System.NonSerialized] public Vector3 hypocenter;
     [System.NonSerialized] public bool canVigilance;

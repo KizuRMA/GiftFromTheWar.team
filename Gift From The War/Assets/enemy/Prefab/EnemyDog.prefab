@@ -2316,8 +2316,9 @@ MonoBehaviour:
   dog: {fileID: 4179426876203190226}
   animator: {fileID: 7342884622482396982}
   SearchSpeed: 1
-  TrakingSpeed: 5
+  TrackingSpeed: 4
   life: 1
+  loseSightOfDis: 10
   attackJumpPow: 1.5
 --- !u!195 &2247645399667334434
 NavMeshAgent:
@@ -2477,7 +2478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 3
   acceleration: 50
-  angularSpeed: 100
+  angularSpeed: 10
   turnAngle: 10
   turnAngularSpeed: 300
   speedDownDistance: 1

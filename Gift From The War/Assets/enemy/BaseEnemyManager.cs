@@ -25,4 +25,21 @@ public class BaseEnemyManager : MonoBehaviour
     {
         return false;
     }
+
+    public GameObject[] GetEnemys()
+    {
+        return GetChildObjects();
+    }
+
+    protected GameObject[] GetChildObjects()
+    {
+        //子オブジェクトを全て取得する
+        GameObject[] _ChildObjects = new GameObject[transform.childCount];
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            _ChildObjects[i] = transform.GetChild(i).gameObject;
+        }
+
+        return _ChildObjects;
+    }
 }

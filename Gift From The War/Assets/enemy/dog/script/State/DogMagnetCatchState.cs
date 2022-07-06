@@ -58,7 +58,7 @@ public class DogMagnetCatchState : State<DogState>
             Quaternion rotate = Quaternion.Euler(0,owner.transform.rotation.eulerAngles.y,0);
             owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, rotate, 60.0f * Time.deltaTime);
             Vector3 dif = owner.transform.rotation.eulerAngles - rotate.eulerAngles;
-            
+
             if (dif.magnitude <= 0 && rd.velocity.y >= 0)
             {
                 owner.ChangeState(e_DogState.Tracking);
@@ -87,6 +87,6 @@ public class DogMagnetCatchState : State<DogState>
 
     private void ReleasedOnce()
     {
-       
+
     }
 }

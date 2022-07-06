@@ -29,15 +29,12 @@ public class DogManager : BaseEnemyManager
             ResetPriority();
             isResetPriority = true;
         }
+
         //子オブジェクトを全て取得する
-        GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            _ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
-        }
+        GameObject[] _ChildObjects = GetChildObjects();
 
         //追跡している犬を検索
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             DogState _state = _ChildObjects[i].GetComponent<DogState>();
             if (_state == null) continue;
@@ -91,11 +88,7 @@ public class DogManager : BaseEnemyManager
     public void ResetPriority()
     {
         //子オブジェクトを全て取得する
-        GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            _ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
-        }
+        GameObject[] _ChildObjects = GetChildObjects();
 
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
@@ -110,11 +103,7 @@ public class DogManager : BaseEnemyManager
     protected override bool IsChasing()
     {
         //子オブジェクトを全て取得する
-        GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            _ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
-        }
+        GameObject[] _ChildObjects = GetChildObjects();
 
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
@@ -128,4 +117,5 @@ public class DogManager : BaseEnemyManager
         }
         return false;
     }
+
 }

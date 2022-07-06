@@ -47,7 +47,6 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [System.NonSerialized] public Vector3 hypocenter;
     [System.NonSerialized] public BaseUltrasound currentUltrasound;
 
-
     protected List<BaseUltrasound> ultrasoundsList = new List<BaseUltrasound>();
     public bool IsNavMeshON => agent.isStopped == false;
     public bool IsPlayerDiscover => IsCurrentState(e_BatPatrolState.Attack) == true || IsCurrentState(e_BatPatrolState.Tracking) == true;
