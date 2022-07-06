@@ -34,13 +34,15 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [SerializeField] public GameObject bat;
     [SerializeField] public Animator animator;
     [SerializeField] public WayPoint wayPoint;
-    [SerializeField] private LayerMask raycastLayerMask;
     [SerializeField] public GameObject prefab;
     [SerializeField] private Collider attackCollider;
     [SerializeField] private ParticleSystem windBladeParticle;
-    [SerializeField] public float trackingSpeed;
-    [SerializeField] public float moveWayPointSpeed;
-    [SerializeField] public float reactionDis;
+    [SerializeField] private LayerMask raycastLayerMask;
+
+    [Header("パラメータ設定")]
+    [TooltipAttribute("追跡する時の速度"),SerializeField] public float trackingSpeed;
+    [TooltipAttribute("徘徊する時の速度"),SerializeField] public float moveWayPointSpeed;
+    [TooltipAttribute("プレイヤーがハウリング状態に駆けつける距離"),SerializeField] public float reactionDis;
 
     [System.NonSerialized] public float untilLaunch = 0;
     [System.NonSerialized] public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
