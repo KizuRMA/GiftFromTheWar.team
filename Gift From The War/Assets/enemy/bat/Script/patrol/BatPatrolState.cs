@@ -43,6 +43,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [TooltipAttribute("追跡する時の速度"),SerializeField] public float trackingSpeed;
     [TooltipAttribute("徘徊する時の速度"),SerializeField] public float moveWayPointSpeed;
     [TooltipAttribute("プレイヤーがハウリング状態に駆けつける距離"),SerializeField] public float reactionDis;
+    [TooltipAttribute("追跡時のアニメーション速度"),SerializeField] public float trackingAnimSpeed;
 
     [System.NonSerialized] public float untilLaunch = 0;
     [System.NonSerialized] public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
