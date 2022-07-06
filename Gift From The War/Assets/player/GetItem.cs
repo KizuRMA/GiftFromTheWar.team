@@ -49,7 +49,7 @@ public class GetItem : MonoBehaviour
             tagName = hit.collider.gameObject.tag;
             objName = hit.collider.gameObject.name;
 
-            if (!(tagName == "gun" || tagName == "ammunition")) return;   //触ったのがアイテム出なかったら処理しない
+            if (!(tagName == "gun" || tagName == "ammunition")) return;   //触ったのがアイテムでなかったら処理しない
 
             closeItemFlg = true;
 
