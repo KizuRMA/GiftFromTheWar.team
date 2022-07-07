@@ -7,6 +7,7 @@ public class GetItem : MonoBehaviour
     //オブジェクトやスクリプトをとってくる
     private GameObject gunObj;
     [SerializeField] private Transform camTrans;
+    [SerializeField] private Cylinder cylinder;
 
     //レイ判定
     [SerializeField] private float handDis;
@@ -29,9 +30,14 @@ public class GetItem : MonoBehaviour
         gunObj.SetActive(SaveManager.Instance.nowSaveData.getGunFlg);
         closeItemFlg = false;
         tagName = null;
+
         windAmmunitionFlg = SaveManager.Instance.nowSaveData.getWindFlg;
         magnetAmmunitionFlg = SaveManager.Instance.nowSaveData.getMagnetFlg;
         fireAmmunitionFlg = SaveManager.Instance.nowSaveData.getFireFlg;
+
+        cylinder.windAmmo.SetActive(windAmmunitionFlg);
+        cylinder.magnetAmmo.SetActive(magnetAmmunitionFlg);
+        cylinder.fireAmmo.SetActive(fireAmmunitionFlg);
     }
 
     void Update()
@@ -78,6 +84,7 @@ public class GetItem : MonoBehaviour
             windAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getWindFlg = true;
             SaveManager.Instance.WriteFile();
+            cylinder.windAmmo.SetActive(true);
             return;
         }
 
@@ -86,6 +93,7 @@ public class GetItem : MonoBehaviour
             magnetAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getMagnetFlg = true;
             SaveManager.Instance.WriteFile();
+            cylinder.magnetAmmo.SetActive(true);
             return;
         }
 
@@ -94,6 +102,7 @@ public class GetItem : MonoBehaviour
             fireAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getFireFlg = true;
             SaveManager.Instance.WriteFile();
+            cylinder.fireAmmo.SetActive(true);
             return;
         }
 

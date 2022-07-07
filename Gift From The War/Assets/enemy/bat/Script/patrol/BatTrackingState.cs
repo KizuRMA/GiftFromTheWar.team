@@ -9,7 +9,7 @@ public class BatTrackingState : State<BatPatrolState>
     public override void Enter()
     {
         owner.agent.speed = owner.trackingSpeed;
-        owner.animator.SetFloat("AnimationSpeed",1.3f);
+        owner.animator.SetFloat("AnimationSpeed",owner.trackingAnimSpeed);
         owner.ChangeUltrasound(e_UltrasoundState.Beam);
     }
 

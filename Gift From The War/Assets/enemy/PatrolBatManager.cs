@@ -13,11 +13,10 @@ public class PatrolBatManager : BaseEnemyManager
     EnemyManager owner;
     int wayPointIndex;
     int wayPointIndexMax = 0;
-    bool respawnFlg;
+  
 
     private void Awake()
     {
-        respawnFlg = false;
         wayPointIndex = 0;
         wayPointIndexMax = wayPointLists.wayPoints.Count;
         owner = transform.parent.GetComponent<EnemyManager>();
@@ -36,8 +35,7 @@ public class PatrolBatManager : BaseEnemyManager
 
     protected override void EnemyReSpawn()
     {
-        if (numberEnemies <= transform.childCount) return;
-        if (respawnFlg == true) return;
+        if (numberEnemies <= transform.childCount + numberRespawnPlan) return;
 
         //敵をリスポーンさせる
         StartCoroutine(RespawnCoroutine());
@@ -46,11 +44,7 @@ public class PatrolBatManager : BaseEnemyManager
     private void SetWayPointRoot()
     {
         //子オブジェクトを全て取得する
-        GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            _ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
-        }
+        GameObject[] _ChildObjects = GetChildObjects();
 
 
         for (int i = 0; i < gameObject.transform.childCount; i++)
@@ -66,7 +60,7 @@ public class PatrolBatManager : BaseEnemyManager
 
     public IEnumerator RespawnCoroutine()
     {
-        respawnFlg = true;
+        RespawnPlanCounter(1);
 
         yield return new WaitForSeconds(respawnInterval);
 
@@ -90,9 +84,9 @@ public class PatrolBatManager : BaseEnemyManager
         info.EnemyInfo(owner);
         game.transform.parent = this.transform;
 
+        RespawnPlanCounter(-1);
         SetWayPointRoot();
         ResetPriority();
-        respawnFlg = false;
     }
 
     public void ResetPriority()

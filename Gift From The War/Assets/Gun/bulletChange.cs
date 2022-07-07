@@ -7,6 +7,7 @@ public class bulletChange : MonoBehaviour
     //スクリプト取得
     [SerializeField] private remainingAmount RA;
     [SerializeField] private MoveWindGun moveWind;
+    [SerializeField] private Cylinder cylinder;
     private shooting shooting;
     private magnet magnet;
     private magnetChain magnetChain;
@@ -78,7 +79,7 @@ public class bulletChange : MonoBehaviour
 
     private void ControllBulletScript() //スクリプトのオンオフ
     {
-        if (!scriptChangeFlg) return;
+        if (!scriptChangeFlg || cylinder.nowChanging) return;
 
         scriptChangeFlg = false;
 

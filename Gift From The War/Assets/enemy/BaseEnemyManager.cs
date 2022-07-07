@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class BaseEnemyManager : MonoBehaviour
 {
-    protected int numberEnemies;
+    protected int numberEnemies;    //敵の数
+    protected int numberRespawnPlan;  //リスポーンする予定の数
+
+    private void Awake()
+    {
+        numberEnemies = 0;
+        numberRespawnPlan = 0;
+    }
 
     public void EnemyCounter()
     {
         numberEnemies += 1;
+    }
+
+    public void RespawnPlanCounter(int _num)
+    {
+        numberRespawnPlan += _num;
+        numberRespawnPlan = Mathf.Max(numberRespawnPlan, 0);
     }
 
     protected virtual void EnemyReSpawn()   //敵をリスポーンさせる抽象化関数
