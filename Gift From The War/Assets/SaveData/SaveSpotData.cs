@@ -29,4 +29,9 @@ public class SaveSpotData : MonoBehaviour
 
         SaveManager.Instance.WriteFile();
     }
+
+    public SaveManager.SaveSpotNum GetSpotNum()
+    { 
+        return spotNum;
+    }
 }
