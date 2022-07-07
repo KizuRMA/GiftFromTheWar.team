@@ -81,6 +81,8 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))return;
+
         UpdateCursorLock();
 
         if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg)  //ƒvƒŒƒCƒ„[‚ÌˆÚ“®–³Œø‰»
@@ -222,7 +224,10 @@ public class FPSController : MonoBehaviour
 
     private void DashJudge()
     {
-        dashFlg = Input.GetKey(KeyCode.LeftShift);
+        if (Input.GetKeyDown(KeyCode.LeftShift) == true)
+        {
+            dashFlg = !dashFlg;
+        }
     }
 
     private void Dash()
