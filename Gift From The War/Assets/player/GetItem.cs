@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GetItem : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GetItem : MonoBehaviour
     private GameObject gunObj;
     [SerializeField] private Transform camTrans;
     [SerializeField] private Cylinder cylinder;
+    [SerializeField] private Image targetImage;
 
     //ƒŒƒC”»’è
     [SerializeField] private float handDis;
@@ -28,6 +30,8 @@ public class GetItem : MonoBehaviour
         gunObj = _info.gunModel;
 
         gunObj.SetActive(SaveManager.Instance.nowSaveData.getGunFlg);
+        targetImage.enabled = SaveManager.Instance.nowSaveData.getGunFlg;
+
         closeItemFlg = false;
         tagName = null;
 
@@ -76,6 +80,7 @@ public class GetItem : MonoBehaviour
             gunObj.SetActive(true);
             SaveManager.Instance.nowSaveData.getGunFlg = true;
             SaveManager.Instance.WriteFile();
+            targetImage.enabled = true;
             return;
         }
 
