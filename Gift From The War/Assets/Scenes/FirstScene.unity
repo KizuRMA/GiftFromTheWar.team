@@ -7363,7 +7363,7 @@ PrefabInstance:
     - target: {fileID: 223994819128039302, guid: 26ede2f02b66fa741af7e31af967b623, type: 3}
       propertyPath: list.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2023260603}
     - target: {fileID: 223994819128039302, guid: 26ede2f02b66fa741af7e31af967b623, type: 3}
       propertyPath: list.Array.data[1]
       value: 
@@ -15062,6 +15062,10 @@ PrefabInstance:
       propertyPath: magnetAmmo
       value: 
       objectReference: {fileID: 706705960}
+    - target: {fileID: 1221756698719924653, guid: 5371321b8a8670246af4280783241467, type: 3}
+      propertyPath: rotateSpeed
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1221756698719924655, guid: 5371321b8a8670246af4280783241467, type: 3}
       propertyPath: m_Name
       value: Cylinder
@@ -27392,7 +27396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 972552489140318895, guid: e1082631b88f68c488d34ff66acda83d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1927707479701138643, guid: e1082631b88f68c488d34ff66acda83d, type: 3}
       propertyPath: m_Layer
@@ -27487,6 +27491,7 @@ MonoBehaviour:
   RA: {fileID: 1256477971}
   moveWind: {fileID: 2017324117}
   cylinder: {fileID: 706705962}
+  getItem: {fileID: 2017324110}
   coolTime: 0.15
 --- !u!114 &1260692426
 MonoBehaviour:
@@ -47961,6 +47966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTrans: {fileID: 132006898}
   cylinder: {fileID: 706705962}
+  targetImage: {fileID: 1245481344}
   handDis: 1.5
 --- !u!114 &2017324111
 MonoBehaviour:
@@ -48228,6 +48234,7 @@ MonoBehaviour:
   cube: {fileID: 1256477970}
   muzzlePos: {fileID: 1138135012}
   gunModel: {fileID: 1260692424}
+  bulletChange: {fileID: 1260692425}
 --- !u!1001 &2017876306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48413,6 +48420,17 @@ PrefabInstance:
       objectReference: {fileID: 2017324108}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f275899cd66c1604fb9bf0248faa106c, type: 3}
+--- !u!114 &2023260603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6102823931587178918, guid: f275899cd66c1604fb9bf0248faa106c, type: 3}
+  m_PrefabInstance: {fileID: 2023260602}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dea670179f34f479895315a44aa8eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2024261713
 PrefabInstance:
   m_ObjectHideFlags: 0
