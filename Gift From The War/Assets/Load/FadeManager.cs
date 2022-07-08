@@ -20,7 +20,8 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
 
     void Start()
     {
-        Screen.SetResolution(1280, 720, true);
+        Debug.Log(Screen.width);
+        Screen.SetResolution(Screen.width, Screen.height, true);
         DontDestroyOnLoad(this);
         SetRGBA(0, 0, 0, 1);
         isFadeOut = false;
