@@ -102,6 +102,7 @@ public class bulletChange : MonoBehaviour
         //‚Ç‚Á‚¿‚ÉƒXƒNƒ[ƒ‹‚µ‚½‚©
         int _changeNum = wheel > 0 ? 1 : -1;
         int _bulletTypeMax = System.Enum.GetValues(typeof(bulletType)).Length;
+        cylinder.isChanging = true;
 
         while (true)
         {

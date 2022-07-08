@@ -53,8 +53,8 @@ public class playerDied : MonoBehaviour
         nowGravity = gravity.GetGravity * Time.deltaTime;
         eyeRec = eye.GetComponent<RectTransform>();
         eye2Rec = eye2.GetComponent<RectTransform>();
-        eyeRec.localPosition = new Vector3(0 ,720, 0);
-        eye2Rec.localPosition = new Vector3(0, -720, 0);
+        eyeRec.localPosition = new Vector3(0 ,900, 0);
+        eye2Rec.localPosition = new Vector3(0, -900, 0);
     }
 
     void Update()
