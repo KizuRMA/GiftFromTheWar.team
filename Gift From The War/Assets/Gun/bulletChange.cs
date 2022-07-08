@@ -8,6 +8,8 @@ public class bulletChange : MonoBehaviour
     [SerializeField] private remainingAmount RA;
     [SerializeField] private MoveWindGun moveWind;
     [SerializeField] public Cylinder cylinder;
+    [SerializeField] public GetItem getItem;
+
     private shooting shooting;
     private magnet magnet;
     private magnetChain magnetChain;
@@ -34,7 +36,7 @@ public class bulletChange : MonoBehaviour
     {
         get
         {
-            return (shooting.getItem.windAmmunitionFlg || shooting.getItem.magnetAmmunitionFlg || shooting.getItem.fireAmmunitionFlg);
+            return (getItem.windAmmunitionFlg || getItem.magnetAmmunitionFlg || getItem.fireAmmunitionFlg);
         }
     }
 
@@ -54,7 +56,7 @@ public class bulletChange : MonoBehaviour
         //if (!RA.energyMaxFlg) return;   //ÉGÉlÉãÉMÅ[Çè¡îÔÇµÇƒÇ¢ÇΩÇÁÅAêÿÇËë÷Ç¶Ç≈Ç´Ç»Ç¢
         if (!changeableFlg) return;
 
-        wheelBulletChange();
+        WheelBulletChange();
         ControllBulletScript();
     }
 
@@ -65,7 +67,7 @@ public class bulletChange : MonoBehaviour
         changeableFlg = true;
     }
 
-    private void wheelBulletChange()    //íeïœçXÇÃèàóù
+    private void WheelBulletChange()    //íeïœçXÇÃèàóù
     {
         //Ç«ÇÃíeÇ‡éùÇ¡ÇƒÇ¢Ç»Ç¢éû
         if (IsHaveBullet == false) return;
@@ -109,13 +111,13 @@ public class bulletChange : MonoBehaviour
             switch (nowBulletType)
             {
                 case bulletType.e_wind:
-                    if (!shooting.getItem.windAmmunitionFlg)continue;
+                    if (!getItem.windAmmunitionFlg)continue;
                     break;
                 case bulletType.e_magnet:
-                    if (!shooting.getItem.magnetAmmunitionFlg)continue;
+                    if (!getItem.magnetAmmunitionFlg)continue;
                     break;
                 case bulletType.e_fire:
-                    if (!shooting.getItem.fireAmmunitionFlg)continue;
+                    if (!getItem.fireAmmunitionFlg)continue;
                     break;
             }
             break;
@@ -138,13 +140,13 @@ public class bulletChange : MonoBehaviour
             switch (nowBulletType)
             {
                 case bulletType.e_wind:
-                    if (!shooting.getItem.windAmmunitionFlg) continue;
+                    if (!getItem.windAmmunitionFlg) continue;
                     break;
                 case bulletType.e_magnet:
-                    if (!shooting.getItem.magnetAmmunitionFlg) continue;
+                    if (!getItem.magnetAmmunitionFlg) continue;
                     break;
                 case bulletType.e_fire:
-                    if (!shooting.getItem.fireAmmunitionFlg) continue;
+                    if (!getItem.fireAmmunitionFlg) continue;
                     break;
             }
             break;
