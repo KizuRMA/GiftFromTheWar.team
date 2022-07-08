@@ -15062,10 +15062,6 @@ PrefabInstance:
       propertyPath: magnetAmmo
       value: 
       objectReference: {fileID: 706705960}
-    - target: {fileID: 1221756698719924653, guid: 5371321b8a8670246af4280783241467, type: 3}
-      propertyPath: rotateSpeed
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 1221756698719924655, guid: 5371321b8a8670246af4280783241467, type: 3}
       propertyPath: m_Name
       value: Cylinder
@@ -21408,14 +21404,6 @@ PrefabInstance:
     - target: {fileID: 3772852870003064012, guid: 73f98bfda70e0594da8360568d51c858, type: 3}
       propertyPath: m_Name
       value: ClimbWall6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6690293939911038042, guid: 73f98bfda70e0594da8360568d51c858, type: 3}
-      propertyPath: m_StartPoint.x
-      value: 0.000002055182
-      objectReference: {fileID: 0}
-    - target: {fileID: 6690293939911038042, guid: 73f98bfda70e0594da8360568d51c858, type: 3}
-      propertyPath: m_StartPoint.z
-      value: -0.3856528
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73f98bfda70e0594da8360568d51c858, type: 3}
@@ -47973,7 +47961,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTrans: {fileID: 132006898}
   cylinder: {fileID: 706705962}
-  targetImage: {fileID: 1245481344}
   handDis: 1.5
 --- !u!114 &2017324111
 MonoBehaviour:
@@ -48218,7 +48205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017324108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: -1.11, z: 143.4}
+  m_LocalPosition: {x: 3, y: -1.11, z: 1}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -48241,7 +48228,6 @@ MonoBehaviour:
   cube: {fileID: 1256477970}
   muzzlePos: {fileID: 1138135012}
   gunModel: {fileID: 1260692424}
-  bulletChange: {fileID: 1260692425}
 --- !u!1001 &2017876306
 PrefabInstance:
   m_ObjectHideFlags: 0

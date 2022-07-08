@@ -6,9 +6,12 @@ public class SaveMaterialChange : MonoBehaviour
 {
     [SerializeField] private Material nowSpotMat;
     [SerializeField] private Material pastSpotMat;
+    [SerializeField] private GameObject saveEffect;
+    [SerializeField] private float hight;
     private SaveManager.SaveSpotNum spotNum;
     private SaveManager.SaveSpotNum nowSpotNum;
     private bool cameFlg = false;   //’Ê‚Á‚½‚±‚Æ‚ª‚ ‚é‚©
+    private bool effectFlg = false;
 
     void Start()
     {
@@ -24,8 +27,16 @@ public class SaveMaterialChange : MonoBehaviour
         {
             cameFlg = true;
             this.GetComponent<MeshRenderer>().material = nowSpotMat;
+
+            if (effectFlg) return;
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
+            Instantiate(saveEffect, pos, Quaternion.identity);
+            effectFlg = true;
+
             return;
         }
+
+        effectFlg = false;
 
         if (!cameFlg) return;
 
