@@ -112,6 +112,8 @@ public class remainingAmount : MonoBehaviour
 
     private void ColorChange()  //エネルギーの色変更
     {
+        if (bulletChange.cylinder.isChanging == true) return;
+
         Material[] tmp = gameObject.GetComponent<Renderer>().materials;
 
         if (trans.localPosition.z < energyMax)

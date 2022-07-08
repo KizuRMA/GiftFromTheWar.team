@@ -72,7 +72,7 @@ public class magnetChain : ShootParent
 
         MoveBullet();
 
-        if (bulletChange.nowBulletType != bulletChange.bulletType.e_magnet) return; //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç
+        if (bulletChange.nowBulletType != bulletChange.bulletType.e_magnet || bulletChange.cylinder.isChanging == true) return; //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç
 
         //ƒGƒlƒ‹ƒM[‚ª•K—v—Ê‚ ‚ê‚Î
         shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);

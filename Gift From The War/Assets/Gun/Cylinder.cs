@@ -10,7 +10,7 @@ public class Cylinder : MonoBehaviour
     [SerializeField] public GameObject fireAmmo;
     [SerializeField] float rotateSpeed;
     float targetAngle;
-    public bool nowChanging;
+    public bool isChanging;
 
 
     void Update()
@@ -23,11 +23,11 @@ public class Cylinder : MonoBehaviour
 
         if (dif.magnitude <= 0.01f)
         {
-            nowChanging = false;
+            isChanging = false;
         }
         else
         {
-            nowChanging = true;
+            isChanging = true;
         }
     }
 }

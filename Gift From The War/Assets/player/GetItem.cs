@@ -10,6 +10,7 @@ public class GetItem : MonoBehaviour
     [SerializeField] private Transform camTrans;
     [SerializeField] private Cylinder cylinder;
     [SerializeField] private Image targetImage;
+    private bulletChange bulletChange;
 
     //ÉåÉCîªíË
     [SerializeField] private float handDis;
@@ -28,6 +29,7 @@ public class GetItem : MonoBehaviour
         //ïœêîÇèâä˙âª
         GunUseInfo _info = transform.GetComponent<GunUseInfo>();
         gunObj = _info.gunModel;
+        bulletChange = _info.bulletChange;
 
         gunObj.SetActive(SaveManager.Instance.nowSaveData.getGunFlg);
         targetImage.enabled = SaveManager.Instance.nowSaveData.getGunFlg;
@@ -42,6 +44,7 @@ public class GetItem : MonoBehaviour
         cylinder.windAmmo.SetActive(windAmmunitionFlg);
         cylinder.magnetAmmo.SetActive(magnetAmmunitionFlg);
         cylinder.fireAmmo.SetActive(fireAmmunitionFlg);
+        bulletChange.HaveBulletAutoChange();
     }
 
     void Update()
@@ -81,6 +84,7 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.nowSaveData.getGunFlg = true;
             SaveManager.Instance.WriteFile();
             targetImage.enabled = true;
+            bulletChange.HaveBulletAutoChange();
             return;
         }
 
@@ -90,6 +94,7 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.nowSaveData.getWindFlg = true;
             SaveManager.Instance.WriteFile();
             cylinder.windAmmo.SetActive(true);
+            bulletChange.HaveBulletAutoChange();
             return;
         }
 
@@ -99,6 +104,7 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.nowSaveData.getMagnetFlg = true;
             SaveManager.Instance.WriteFile();
             cylinder.magnetAmmo.SetActive(true);
+            bulletChange.HaveBulletAutoChange();
             return;
         }
 
@@ -108,6 +114,7 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.nowSaveData.getFireFlg = true;
             SaveManager.Instance.WriteFile();
             cylinder.fireAmmo.SetActive(true);
+            bulletChange.HaveBulletAutoChange();
             return;
         }
 

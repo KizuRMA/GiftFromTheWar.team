@@ -5,7 +5,7 @@ using UnityEngine;
 public class shooting : ShootParent
 {
     //’e‚Ì”­Ë
-    [SerializeField] private GetItem getItem;
+    [SerializeField] public GetItem getItem;
     private bulletChange bulletChange;
     [SerializeField] private GameObject touchEffect;
     private List<GameObject> touchEffectList = new List<GameObject>();
@@ -32,7 +32,7 @@ public class shooting : ShootParent
 
         MoveBullet();
 
-        if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind) return;   //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç
+        if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind || bulletChange.cylinder.isChanging == true) return;   //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç
 
         BulletVecter();
 

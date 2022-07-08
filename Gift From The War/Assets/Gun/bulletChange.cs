@@ -7,7 +7,7 @@ public class bulletChange : MonoBehaviour
     //スクリプト取得
     [SerializeField] private remainingAmount RA;
     [SerializeField] private MoveWindGun moveWind;
-    [SerializeField] private Cylinder cylinder;
+    [SerializeField] public Cylinder cylinder;
     private shooting shooting;
     private magnet magnet;
     private magnetChain magnetChain;
@@ -29,6 +29,14 @@ public class bulletChange : MonoBehaviour
 
     //スクリプト
     private bool scriptChangeFlg = true;   //スクリプト切り替えようのフラグ
+
+    private bool IsHaveBullet    //弾を持っているか
+    {
+        get
+        {
+            return (shooting.getItem.windAmmunitionFlg || shooting.getItem.magnetAmmunitionFlg || shooting.getItem.fireAmmunitionFlg);
+        }
+    }
 
     void Start()
     {
@@ -59,6 +67,9 @@ public class bulletChange : MonoBehaviour
 
     private void wheelBulletChange()    //弾変更の処理
     {
+        //どの弾も持っていない時
+        if (IsHaveBullet == false) return;
+
         //回転の取得
         wheel = Input.GetAxis("Mouse ScrollWheel");
 
@@ -67,19 +78,14 @@ public class bulletChange : MonoBehaviour
         changeableFlg = false;
         scriptChangeFlg = true;
 
-        //どっちにスクロールしたか
-        nowBulletType += wheel > 0 ? 1 : -1;
-
-        //最大値最小値を超えると、一周回る
-        if (nowBulletType > bulletType.e_fire) nowBulletType = bulletType.e_wind;
-        if (nowBulletType < bulletType.e_wind) nowBulletType = bulletType.e_fire;
+        BulletChange();
 
         StartCoroutine(RecoveryCoolTime());
     }
 
     private void ControllBulletScript() //スクリプトのオンオフ
     {
-        if (!scriptChangeFlg || cylinder.nowChanging) return;
+        if (!scriptChangeFlg || cylinder.isChanging) return;
 
         scriptChangeFlg = false;
 
@@ -87,5 +93,61 @@ public class bulletChange : MonoBehaviour
         moveWind.Finish();
         magnet.Finish();
         magnetChain.Finish();
+    }
+
+    private void BulletChange()
+    {
+        //どっちにスクロールしたか
+        int _changeNum = wheel > 0 ? 1 : -1;
+        int _bulletTypeMax = System.Enum.GetValues(typeof(bulletType)).Length;
+
+        while (true)
+        {
+            //使用する弾を変更
+            nowBulletType = (bulletType)System.Enum.ToObject(typeof(bulletType), (((int)nowBulletType) + _changeNum + _bulletTypeMax) % _bulletTypeMax);
+
+            switch (nowBulletType)
+            {
+                case bulletType.e_wind:
+                    if (!shooting.getItem.windAmmunitionFlg)continue;
+                    break;
+                case bulletType.e_magnet:
+                    if (!shooting.getItem.magnetAmmunitionFlg)continue;
+                    break;
+                case bulletType.e_fire:
+                    if (!shooting.getItem.fireAmmunitionFlg)continue;
+                    break;
+            }
+            break;
+        }
+    }
+
+    public void HaveBulletAutoChange()  //持っている弾に自動的に切り替える
+    {
+        if (IsHaveBullet == false) return;
+
+        //どっちにスクロールしたか
+        int _changeNum = 1;
+        int _bulletTypeMax = System.Enum.GetValues(typeof(bulletType)).Length;
+
+        while (true)
+        {
+            //使用する弾を変更
+            nowBulletType = (bulletType)System.Enum.ToObject(typeof(bulletType), (((int)nowBulletType) + _changeNum + _bulletTypeMax) % _bulletTypeMax);
+
+            switch (nowBulletType)
+            {
+                case bulletType.e_wind:
+                    if (!shooting.getItem.windAmmunitionFlg) continue;
+                    break;
+                case bulletType.e_magnet:
+                    if (!shooting.getItem.magnetAmmunitionFlg) continue;
+                    break;
+                case bulletType.e_fire:
+                    if (!shooting.getItem.fireAmmunitionFlg) continue;
+                    break;
+            }
+            break;
+        }
     }
 }

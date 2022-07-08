@@ -7,4 +7,5 @@ public class GunUseInfo : MonoBehaviour
     [SerializeField] public GameObject cube;
     [SerializeField] public GameObject muzzlePos;
     [SerializeField] public GameObject gunModel;
+    [SerializeField] public bulletChange bulletChange;
 }

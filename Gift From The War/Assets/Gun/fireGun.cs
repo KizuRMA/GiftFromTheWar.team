@@ -31,7 +31,7 @@ public class fireGun : ShootParent
 
         MoveBullet();
 
-        if (bulletChange.nowBulletType != bulletChange.bulletType.e_fire) return;   //今の弾の種類が対応してなかったら
+        if (bulletChange.nowBulletType != bulletChange.bulletType.e_fire || bulletChange.cylinder.isChanging == true) return;   //今の弾の種類が対応してなかったら
 
         BulletVecter();
         //エネルギーが必要量あれば
