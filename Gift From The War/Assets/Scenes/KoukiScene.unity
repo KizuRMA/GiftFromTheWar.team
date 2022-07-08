@@ -9217,7 +9217,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: f28290ded8a51ae4bbc3a1196f731be2, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: d8a96d20448062649be5b9f175ca2259, type: 2}
 --- !u!4 &634510923
 Transform:
   m_ObjectHideFlags: 0
@@ -15048,6 +15048,10 @@ PrefabInstance:
       propertyPath: magnetAmmo
       value: 
       objectReference: {fileID: 706705960}
+    - target: {fileID: 1221756698719924653, guid: 5371321b8a8670246af4280783241467, type: 3}
+      propertyPath: rotateSpeed
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1221756698719924655, guid: 5371321b8a8670246af4280783241467, type: 3}
       propertyPath: m_Name
       value: Cylinder
@@ -47697,6 +47701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTrans: {fileID: 132006898}
   cylinder: {fileID: 706705962}
+  targetImage: {fileID: 1245481344}
   handDis: 1.5
 --- !u!114 &2017324111
 MonoBehaviour:
@@ -47964,6 +47969,7 @@ MonoBehaviour:
   cube: {fileID: 1256477970}
   muzzlePos: {fileID: 1138135012}
   gunModel: {fileID: 1260692424}
+  bulletChange: {fileID: 1260692425}
 --- !u!1001 &2017876306
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -45,6 +45,7 @@ public class BatController : MonoBehaviour
         player = GameObject.Find("player").gameObject;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        animator.Play("FlappingWings");
         life = 1.0f;
         height = defaltHight;
         forwardAngle = defaltForwardAngle;
