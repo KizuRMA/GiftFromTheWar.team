@@ -15,6 +15,7 @@ public class MoveWindGun : MonoBehaviour
     private bulletChange bulletChange;
     private GetItem getItem;
     private shooting shoot;
+    private PlayerStartDown playerStartDown;
 
     //ˆÚ“®
     [SerializeField] private float movePower;
@@ -47,6 +48,7 @@ public class MoveWindGun : MonoBehaviour
         bulletChange = _info.gunModel.GetComponent<bulletChange>();
         getItem = transform.GetComponent<GetItem>();
         shoot = _info.muzzlePos.GetComponent<shooting>();
+        playerStartDown = transform.GetComponent<PlayerStartDown>();
 
         CC = this.GetComponent<CharacterController>();
         trans = transform;
@@ -63,6 +65,7 @@ public class MoveWindGun : MonoBehaviour
     void Update()
     {
         if (!getItem.windAmmunitionFlg) return; //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
+        if (playerStartDown != null && playerStartDown.isAuto == true) return;
 
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind || bulletChange.cylinder.isChanging == true) return;   //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç
 

@@ -22,6 +22,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         public Vector3 dataSpotPos;
         public Vector3 goalPos;
         public bool getGunFlg;
+        public bool getRantanFlg;
         public bool getWindFlg;
         public bool getMagnetFlg;
         public bool getFireFlg;
@@ -66,6 +67,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
             nowSaveData.dataSpotPos = new Vector3((float)reader.ReadDouble(), (float)reader.ReadDouble(), (float)reader.ReadDouble());
             nowSaveData.goalPos = new Vector3((float)reader.ReadDouble(), (float)reader.ReadDouble(), (float)reader.ReadDouble());
             nowSaveData.getGunFlg = reader.ReadBoolean();
+            nowSaveData.getRantanFlg = reader.ReadBoolean();
             nowSaveData.getWindFlg = reader.ReadBoolean();
             nowSaveData.getMagnetFlg = reader.ReadBoolean();
             nowSaveData.getFireFlg = reader.ReadBoolean();
@@ -87,6 +89,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
             writer.Write((double)nowSaveData.goalPos.y);
             writer.Write((double)nowSaveData.goalPos.z);
             writer.Write(nowSaveData.getGunFlg);
+            writer.Write(nowSaveData.getRantanFlg);
             writer.Write(nowSaveData.getWindFlg);
             writer.Write(nowSaveData.getMagnetFlg);
             writer.Write(nowSaveData.getFireFlg);
@@ -99,6 +102,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         nowSaveData.dataSpotPos = Vector3.zero;
         nowSaveData.goalPos = Vector3.zero;
         nowSaveData.getGunFlg = false;
+        nowSaveData.getRantanFlg = false;
         nowSaveData.getWindFlg = false;
         nowSaveData.getMagnetFlg = false;
         nowSaveData.getFireFlg = false;

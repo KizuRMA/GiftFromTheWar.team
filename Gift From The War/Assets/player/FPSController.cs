@@ -9,7 +9,7 @@ public class FPSController : MonoBehaviour
     [SerializeField] private GameObject ladderHund;
     [SerializeField] private GameObject cam;
 
-
+    private PlayerStartDown playerStartDown;
     private magnet magnet;
     private magnetChain magnetChain;
     private playerHundLadder ladder;
@@ -64,6 +64,7 @@ public class FPSController : MonoBehaviour
         moveWind = transform.GetComponent<MoveWindGun>();
         died = transform.GetComponent<playerDied>();
         CC = transform.GetComponent<CharacterController>();
+        playerStartDown = transform.GetComponent<PlayerStartDown>();
 
         trans = transform;
         nowMoveSpeed = walkSpeed;
@@ -82,6 +83,8 @@ public class FPSController : MonoBehaviour
     void Update()
     {
         if (Mathf.Approximately(Time.timeScale, 0f))return;
+        if (playerStartDown != null && playerStartDown.isAuto == true) return;
+
 
         UpdateCursorLock();
 

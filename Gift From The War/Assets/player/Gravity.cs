@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gravity : MonoBehaviour
 {
+    private PlayerStartDown playerStartDown;
     private CharacterController CC;
     private MoveWindGun moveWindGun;
     private playerHundLadder ladder;
@@ -44,6 +45,7 @@ public class Gravity : MonoBehaviour
         magnet = _info.muzzlePos.GetComponent<magnet>();
         magnetChain = _info.muzzlePos.GetComponent<magnetChain>();
         died = transform.GetComponent<playerDied>();
+        playerStartDown = transform.GetComponent<PlayerStartDown>();
 
         trans = transform;
         firstGroundHitFlg = false;
@@ -54,6 +56,7 @@ public class Gravity : MonoBehaviour
     void Update()
     {
         if (ladder.touchLadderFlg || died.diedFlg) return;   //ÉvÉåÉCÉÑÅ[ÇÃà⁄ìÆñ≥å¯âª
+        if (playerStartDown != null && playerStartDown.isAuto == true) return;
 
         GravityProcess();
 

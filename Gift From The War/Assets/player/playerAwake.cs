@@ -11,6 +11,8 @@ public class playerAwake : MonoBehaviour
     private RectTransform eye2Rec;              //目の画像情報
     private bool awakeFinishFlg = false;        //目を覚まし終わったら
 
+    private PlayerStartDown playerStartDown;
+
     void Start()
     {
         if (eye == null) return;
@@ -18,23 +20,37 @@ public class playerAwake : MonoBehaviour
         eye2Rec = eye2.GetComponent<RectTransform>();
         eyeRec.localPosition = new Vector3(0, 0, 0);
         eye2Rec.localPosition = new Vector3(0, 0, 0);
+
+        playerStartDown = transform.GetComponent<PlayerStartDown>();
     }
 
     void Update()
     {
         if (awakeFinishFlg || eyeRec == null) return;
 
-        //瞼を動かす
-        eyeRec.localPosition += new Vector3(0, moveEyeSpeed * Time.deltaTime, 0);
-        eye2Rec.localPosition += new Vector3(0, -moveEyeSpeed * Time.deltaTime, 0);
-
-        //目が開いたら、画像を非表示
-        if (eyeRec.localPosition.y > 720 && eye2Rec.localPosition.y < -720)
+        if (playerStartDown != null && playerStartDown.isAuto == true)
         {
-            eye.SetActive(false);
-            eye2.SetActive(false);
+            if (eyeRec.localPosition.y < 800 && eye2Rec.localPosition.y > -800)
+            {
+                //瞼を動かす
+                eyeRec.localPosition += new Vector3(0, moveEyeSpeed * Time.deltaTime, 0);
+                eye2Rec.localPosition += new Vector3(0, -moveEyeSpeed * Time.deltaTime, 0);
+            }
+        }
+        else
+        {
+            //瞼を動かす
+            eyeRec.localPosition += new Vector3(0, moveEyeSpeed * Time.deltaTime, 0);
+            eye2Rec.localPosition += new Vector3(0, -moveEyeSpeed * Time.deltaTime, 0);
 
-            awakeFinishFlg = true;
+            //目が開いたら、画像を非表示
+            if (eyeRec.localPosition.y > 900 && eye2Rec.localPosition.y < -900)
+            {
+                eye.SetActive(false);
+                eye2.SetActive(false);
+
+                awakeFinishFlg = true;
+            }
         }
     }
 }

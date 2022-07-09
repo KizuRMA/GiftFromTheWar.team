@@ -20,6 +20,7 @@ public class GetItem : MonoBehaviour
     private string tagName;
     private string objName;
     private GameObject hitObj;
+    [SerializeField] private GameObject rantanObj;
     public bool windAmmunitionFlg { get; set; }
     public bool magnetAmmunitionFlg { get; set; }
     public bool fireAmmunitionFlg { get; set; }
@@ -50,7 +51,6 @@ public class GetItem : MonoBehaviour
     void Update()
     {
         closeItemFlg = false;
-
         Ray();
     }
 
@@ -64,7 +64,7 @@ public class GetItem : MonoBehaviour
             objName = hit.collider.gameObject.name;
             hitObj = hit.collider.gameObject;
 
-            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton")) return;   //触ったのがアイテムでなかったら処理しない
+            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan")) return;   //触ったのがアイテムでなかったら処理しない
 
             closeItemFlg = true;
 
@@ -121,6 +121,16 @@ public class GetItem : MonoBehaviour
         if(tagName == "gimmickButton")
         {
             hitObj.transform.GetComponent<HandButton>().changeFlg = true;
+            return;
+        }
+
+        if (tagName == "Rantan")
+        {
+            if (rantanObj == null) return;
+            rantanObj.SetActive(true);
+            SaveManager.Instance.nowSaveData.getRantanFlg = true;
+            SaveManager.Instance.WriteFile();
+            targetImage.enabled = true;
             return;
         }
     }
