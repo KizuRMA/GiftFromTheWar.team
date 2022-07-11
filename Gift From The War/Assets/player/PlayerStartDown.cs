@@ -31,8 +31,7 @@ public class PlayerStartDown : MonoBehaviour
 
     private void Start()
     {
-        isAuto = true;
-
+        isAuto = SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.none;
         if (isAuto == true)
         {
             transform.rotation *= Quaternion.Euler(90.0f, 0, 0);    //ƒvƒŒƒCƒ„[‚ğ‰ñ“]

@@ -33,6 +33,7 @@ public class GetItem : MonoBehaviour
         bulletChange = _info.bulletChange;
 
         gunObj.SetActive(SaveManager.Instance.nowSaveData.getGunFlg);
+        rantanObj.SetActive(SaveManager.Instance.nowSaveData.getRantanFlg);
         targetImage.enabled = SaveManager.Instance.nowSaveData.getGunFlg;
 
         closeItemFlg = false;
