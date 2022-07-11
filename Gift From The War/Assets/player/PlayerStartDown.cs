@@ -84,9 +84,9 @@ public class PlayerStartDown : MonoBehaviour
         angle += Time.deltaTime * 60.0f;
         angle = Mathf.Min(angle,180);
 
-        float rot = (1 - Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * angle))) * 0.1f;
+        float rot = (1 - Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * angle))) * 20.0f;
 
-        transform.rotation *= Quaternion.Euler(0,rot,0);
+        transform.rotation *= Quaternion.Euler(0, rot * Time.deltaTime, 0);
 
         if (angle >= 180.0f)
         {
@@ -100,9 +100,9 @@ public class PlayerStartDown : MonoBehaviour
         angle += Time.deltaTime * 60.0f;
         angle = Mathf.Min(angle, 180);
 
-        float rot = -(1 - Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * angle))) * 0.4f;
+        float rot = -(1 - Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * angle))) * 80.0f;
 
-        transform.rotation *= Quaternion.Euler(0, rot, 0);
+        transform.rotation *= Quaternion.Euler(0, rot * Time.deltaTime, 0);
 
         if (angle >= 180.0f)
         {
@@ -116,9 +116,9 @@ public class PlayerStartDown : MonoBehaviour
         angle += Time.deltaTime * 60.0f;
         angle = Mathf.Min(angle, 180);
 
-        float rot = (1 - Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * angle))) * 0.2f;
+        float rot = (1 - Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * angle))) * 40.0f;
 
-        transform.rotation *= Quaternion.Euler(0, rot, 0);
+        transform.rotation *= Quaternion.Euler(0, rot * Time.deltaTime, 0);
 
         if (angle >= 180.0f)
         {
