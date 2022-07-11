@@ -33,4 +33,9 @@ public class hand : MonoBehaviour
             image.enabled = false;
         }
     }
+
+    public bool GetHandFlg()
+    {
+        return image.enabled;
+    }
 }

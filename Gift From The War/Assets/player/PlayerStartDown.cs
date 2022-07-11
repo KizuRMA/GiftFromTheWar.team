@@ -31,7 +31,7 @@ public class PlayerStartDown : MonoBehaviour
 
     private void Start()
     {
-        isAuto = true;
+        isAuto = false;
 
         if (isAuto == true)
         {
