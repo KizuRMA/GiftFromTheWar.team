@@ -13,7 +13,7 @@ public class UIBlinking : MonoBehaviour
     [Range(0.1f, 10.0f)]
     float duration = 1.0f;
 
-    private bool IsShow = true; //
+    private bool IsShow; //
     private bool IsStart;
 
     Color defaltStartColor;
@@ -42,14 +42,19 @@ public class UIBlinking : MonoBehaviour
 
     private void Start()
     {
+        image.color = new Color(0, 0, 0, 0);
+        image.enabled = false;
         defaltStartColor = startColor;
         defaltEndColor = endColor;
-        IsStart = true;
+        IsStart = false;
+        IsShow = false;
+
         time = 0;
 
         if (explanatoryText != null)
         {
             textColor = explanatoryText.color;
+            explanatoryText.color = new Color(0, 0, 0, 0);
         }
     }
 

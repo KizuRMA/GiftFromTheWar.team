@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerStartDown : MonoBehaviour
 {
+    [SerializeField] UIBlinking text;
+
     private CharacterController characterController;
     public bool isAuto;
-    float rotSpeed;
     float angle;
     float time;
 
@@ -23,7 +24,6 @@ public class PlayerStartDown : MonoBehaviour
     private void Awake()
     {
         characterController = transform.GetComponent<CharacterController>();
-        rotSpeed = 100;
         time = 0;
 
         state = e_AnimState.GetUp;
@@ -41,13 +41,14 @@ public class PlayerStartDown : MonoBehaviour
 
     private void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f)) return;
         if (isAuto == false) return;
         characterController.Move(Vector3.down * 5);
         time += Time.deltaTime;
         if (time < 2.0f) return;
-        
 
-        switch (state) 
+
+        switch (state)
         {
             case e_AnimState.GetUp:
                 GetUp();
@@ -123,6 +124,7 @@ public class PlayerStartDown : MonoBehaviour
         if (angle >= 180.0f)
         {
             isAuto = false;
+            text.SetActive();
         }
     }
 }

@@ -19,9 +19,13 @@ public class Menu : MonoBehaviour
     {
         bool _pauseFlg = pauseFlg;
 
+
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
-            pauseFlg = !pauseFlg;
+            if (SceneManager.GetActiveScene().name == "FirstScene" || SceneManager.GetActiveScene().name == "SecondScene" || SceneManager.GetActiveScene().name == "FinalStage")
+            {
+                pauseFlg = !pauseFlg;
+            }
         }
 
         if (pauseFlg == true)
@@ -49,6 +53,26 @@ public class Menu : MonoBehaviour
 
     public void ChangeTitle()
     {
-        SceneManager.LoadScene("Scenes/TitleScene");
+        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/TitleScene"));
+        pauseFlg = false;
+        image.SetActive(false);
+        Resume();
+    }
+
+    public void BackGame()
+    {
+        Resume();
+        image.SetActive(false);
+        pauseFlg = false;
+    }
+
+    //ゲーム終了
+    public void EndGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+#else
+        Application.Quit();//ゲームプレイ終了
+#endif
     }
 }
