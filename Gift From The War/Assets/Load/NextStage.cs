@@ -23,6 +23,5 @@ public class NextStage : MonoBehaviour
         if (nextStageFlg) return;
         nextStageFlg = true;
         StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SecondStage"));
-        Debug.Log("a");
     }
 }
