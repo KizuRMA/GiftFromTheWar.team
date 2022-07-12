@@ -7,12 +7,14 @@ public class playerHundLadder : MonoBehaviour
     //ゲームオブジェクトやスクリプト
     [SerializeField] private CharacterController playerCC;
     [SerializeField] private GameObject playerCamera;
+    [SerializeField] private UIBlinking gimmickBlink;
     private Transform playerTrans;
     private Transform camTrans;
 
     //フラグ関係
     public bool closeLadderFlg { get; set; }    //梯子の近くにいるかどうか
     public bool touchLadderFlg { get; set; }    //梯子に触れているか
+    public bool touchedFlg { get; set; }
 
     private bool moveBeforeFlg = false;     //梯子の前までいったか
     private bool rotXBeforeFlg = false;     //梯子の方に向いているか
@@ -34,6 +36,7 @@ public class playerHundLadder : MonoBehaviour
 
     void Start()
     {
+        touchedFlg = !(SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.none);
         playerTrans = playerCC.transform;
         camTrans = playerCamera.transform;
 
@@ -93,6 +96,12 @@ public class playerHundLadder : MonoBehaviour
         {
             if (hit.collider.tag != "ladder") return;
             if (closeLadderFlg) return; //すでに情報を入力していたら処理しない
+
+            if (touchedFlg == false)
+            {
+                gimmickBlink.SetActive();
+                touchedFlg = true;
+            }
 
             //梯子の情報を入力
             ladderStartPos = hit.collider.gameObject.transform.GetChild(2).gameObject.transform.position;

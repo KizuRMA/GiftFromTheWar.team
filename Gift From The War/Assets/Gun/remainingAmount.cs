@@ -36,10 +36,17 @@ public class remainingAmount : MonoBehaviour
     {
         allRemainingEnergy = energyMax - energyMin;
         energyMaxFlg = false;
+
+        nowRemainingEnergy = 1.0f - (energyMax - trans.localPosition.z) / allRemainingEnergy;
     }
 
     void Update()
     {
+        if (bulletChange.IsHaveBullet == false)
+        {
+            useEnergy = -1;
+        }
+
         if (useEnergy == 0) //ÉGÉlÉãÉMÅ[è¡îÔÇ™Ç»Ç©Ç¡ÇΩÇÁ
         {
             NoUseEnergy();

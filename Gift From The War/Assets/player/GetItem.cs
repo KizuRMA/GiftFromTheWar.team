@@ -10,7 +10,7 @@ public class GetItem : MonoBehaviour
     [SerializeField] private Transform camTrans;
     [SerializeField] private Cylinder cylinder;
     [SerializeField] private Image targetImage;
-    [SerializeField] private UIBlinking blinking;
+    [SerializeField] private UIBlinking itemBlinking;
 
     private bulletChange bulletChange;
 
@@ -74,9 +74,10 @@ public class GetItem : MonoBehaviour
 
             closeItemFlg = true;
 
-            if (touchedItemFlg == false)
+            //チュートリアル表示
+            if (touchedItemFlg == false && (tagName == "gun" || tagName == "ammunition" || tagName == "Rantan"))
             {
-                blinking.SetActive();
+                itemBlinking.SetActive();
                 touchedItemFlg = true;
             }
 
