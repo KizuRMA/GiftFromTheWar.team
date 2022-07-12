@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStartDown : MonoBehaviour
 {
     [SerializeField] UIBlinking text;
+    [SerializeField] bool isDebug = false;
 
     private CharacterController characterController;
     public bool isAuto;
@@ -31,7 +32,7 @@ public class PlayerStartDown : MonoBehaviour
 
     private void Start()
     {
-        isAuto = SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.none;
+        isAuto = SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.none && isDebug == false;
         if (isAuto == true)
         {
             transform.rotation *= Quaternion.Euler(90.0f, 0, 0);    //ƒvƒŒƒCƒ„[‚ğ‰ñ“]
