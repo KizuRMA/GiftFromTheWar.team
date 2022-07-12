@@ -130,7 +130,7 @@ public class FPSController : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
-            cursorLock = true;
+           // cursorLock = true;
         }
 
         if (cursorLock)
