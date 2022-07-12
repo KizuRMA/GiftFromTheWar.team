@@ -13,7 +13,7 @@ public class ESCExit : MonoBehaviour
     [SerializeField] private CanvasGroup PanelCanvasGroup;
     [SerializeField] private RectTransform ImageTransform;
 
-    private Vector3 ImageSizeDelta3;
+    private Vector3 ImageSizeDelta;
 
     //ゲーム開始時に呼ばれる
     private void Start()
@@ -38,7 +38,7 @@ public class ESCExit : MonoBehaviour
             //パネルアニメーション
             var sequence = DOTween.Sequence()
                 .Append(PanelCanvasGroup.DOFade(endValue: 1f, duration: 0.5f))
-                .Join(ImageTransform.DOScale(endValue: new Vector3(ImageSizeDelta3.x, ImageSizeDelta3.y,ImageSizeDelta3.z), duration: 0.5f).SetEase(Ease.OutCubic))
+                .Join(ImageTransform.DOScale(endValue: new Vector3(ImageSizeDelta.x, ImageSizeDelta.y,ImageSizeDelta.z), duration: 0.5f).SetEase(Ease.OutCubic))
                 .AppendCallback(() => OnRayCast())
                 .Play();
 
@@ -48,10 +48,16 @@ public class ESCExit : MonoBehaviour
     //パネルを閉じる
     public void ClosePanel()
     {
+        //パネルを非表示、無効化
         ConfirmationPanel.SetActive(false);
-        PanelCanvasGroup.DOFade(endValue: 0f, duration: 0.2f);
-        ImageTransform.localScale = new Vector3(ImageSizeDelta3.x - 2, ImageSizeDelta3.y - 2, ImageSizeDelta3.z - 2);
+        PanelCanvasGroup.DOFade(endValue: 0f, duration: 0.1f);
+
+        //アニメーション初期化
+        ImageTransform.localScale = new Vector3(ImageSizeDelta.x - 2, ImageSizeDelta.y - 2, ImageSizeDelta.z - 2);
+        
+        //パネルを触れないようにする
         PanelCanvasGroup.blocksRaycasts = false;
+        //他UIを触れるようにする
         FalseCanvasGroup.blocksRaycasts = true;
 
     }
@@ -60,9 +66,12 @@ public class ESCExit : MonoBehaviour
     {
         //確認パネルを非表示
         ConfirmationPanel.SetActive(false);
+        //誤タッチ防止
         PanelCanvasGroup.blocksRaycasts = false;
-        ImageSizeDelta3 = ImageTransform.localScale;
-        ImageTransform.localScale = new Vector3(ImageSizeDelta3.x - 2, ImageSizeDelta3.y -2, ImageSizeDelta3.z -2);
+        
+        //アニメーションをするスケール値を設定
+        ImageSizeDelta = ImageTransform.localScale;
+        ImageTransform.localScale = new Vector3(ImageSizeDelta.x - 2, ImageSizeDelta.y -2, ImageSizeDelta.z -2);
     }
 
     private void OnRayCast()
