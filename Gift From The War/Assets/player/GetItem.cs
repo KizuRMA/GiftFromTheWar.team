@@ -10,11 +10,14 @@ public class GetItem : MonoBehaviour
     [SerializeField] private Transform camTrans;
     [SerializeField] private Cylinder cylinder;
     [SerializeField] private Image targetImage;
+    [SerializeField] private UIBlinking blinking;
+
     private bulletChange bulletChange;
 
     //レイ判定
     [SerializeField] private float handDis;
     public bool closeItemFlg { get; set; }
+    public bool touchedItemFlg { get; set; }
 
     //アイテム判定
     private string tagName;
@@ -32,7 +35,10 @@ public class GetItem : MonoBehaviour
         gunObj = _info.gunModel;
         bulletChange = _info.bulletChange;
 
+        touchedItemFlg = !(SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.none);
+
         gunObj.SetActive(SaveManager.Instance.nowSaveData.getGunFlg);
+        rantanObj.SetActive(SaveManager.Instance.nowSaveData.getRantanFlg);
         targetImage.enabled = SaveManager.Instance.nowSaveData.getGunFlg;
 
         closeItemFlg = false;
@@ -67,6 +73,12 @@ public class GetItem : MonoBehaviour
             if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan")) return;   //触ったのがアイテムでなかったら処理しない
 
             closeItemFlg = true;
+
+            if (touchedItemFlg == false)
+            {
+                blinking.SetActive();
+                touchedItemFlg = true;
+            }
 
             if (!Input.GetKey(KeyCode.Space)) return;   //スペース押されなかったら、処理しない
 

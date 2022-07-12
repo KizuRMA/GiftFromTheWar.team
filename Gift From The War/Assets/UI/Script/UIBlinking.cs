@@ -13,7 +13,7 @@ public class UIBlinking : MonoBehaviour
     [Range(0.1f, 10.0f)]
     float duration = 1.0f;
 
-    private bool IsShow; //
+    public bool IsShow; //
     private bool IsStart;
 
     Color defaltStartColor;
@@ -32,6 +32,8 @@ public class UIBlinking : MonoBehaviour
     [SerializeField] KeyCode key = KeyCode.None;
     [SerializeField] TextMeshProUGUI explanatoryText = null;
     Color textColor;
+
+    [TooltipAttribute("同時に表示できないUI"), SerializeField] List<Image> nonTogetherImages = null;
 
 
     void Awake()
@@ -67,6 +69,7 @@ public class UIBlinking : MonoBehaviour
 
         if (IsShow == true) //表示状態の時
         {
+            NonTogetherImagesUpdate();
             KeyUpdate();
             image.color = Color.Lerp(startColor, endColor, Mathf.PingPong(time / duration, 1.0f));
             return;
@@ -101,21 +104,19 @@ public class UIBlinking : MonoBehaviour
 
     private void KeyUpdate()
     {
-        if (key == KeyCode.None) return;
+        if (key == KeyCode.None || IsShow == false) return;
 
         IsShow = !Input.GetKeyDown(key);
         if (IsShow == false)    //非表示にする場合
         {
             //スタートとエンドを変更する
-            startColor = image.color;
-            endColor = new Color(endColor.r, endColor.g, endColor.b, 0);
-            time = 0;
+            NonShow();
         }
     }
 
     public void SetActive() //画像を表示状態にする
     {
-        if (IsShow == true || IsStart == true) return;
+        if (IsShow == true || IsStart == true || image.enabled == true) return;
 
         image.enabled = true;
         image.color = new Color(startColor.r, startColor.g, startColor.b, 0);
@@ -158,5 +159,28 @@ public class UIBlinking : MonoBehaviour
                 explanatoryText.color = textColor;
             }
         }
+    }
+
+    private void NonTogetherImagesUpdate()
+    {
+        if (nonTogetherImages != null)
+        {
+            foreach (var image in nonTogetherImages)
+            {
+                if (image.enabled == true)
+                {
+                    IsShow = false;
+                    NonShow();
+                }
+            }
+        }
+    }
+
+    private void NonShow()
+    {
+        //スタートとエンドを変更する
+        startColor = image.color;
+        endColor = new Color(endColor.r, endColor.g, endColor.b, 0);
+        time = 0;
     }
 }
