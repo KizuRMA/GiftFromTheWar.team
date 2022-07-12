@@ -30,8 +30,6 @@ public class Menu : MonoBehaviour
 
         if (pauseFlg == true)
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
             Pause();
         }
         else
