@@ -41,6 +41,7 @@ public class FPSController : MonoBehaviour
     private float nowSensityvity;  //ç°ÇÃêUÇËÇﬁÇ´ä¥ìx
 
     [SerializeField] bool isDebug;
+    [SerializeField] bool useUI;
 
     private void Awake()
     {
@@ -130,7 +131,10 @@ public class FPSController : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
-           // cursorLock = true;
+            if (useUI == false)
+            {
+                cursorLock = true;
+            }
         }
 
         if (cursorLock)
