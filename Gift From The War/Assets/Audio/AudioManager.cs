@@ -307,16 +307,31 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     /// <summary>
     /// BGMとSEのボリュームを別々に変更&保存
     /// </summary>
-    public void ChangeVolume(float BGMVolume, float SEVolume)
+    public void ChangeBGMVolume(float BGMVolume)
     {
         _bgmSource.volume = BGMVolume;
+
+        PlayerPrefs.SetFloat(BGM_VOLUME_KEY, BGMVolume);
+    }
+
+    public void ChangeSEVolume(float SEVolume)
+    {
         foreach (AudioSource seSource in _seSourceList)
         {
             seSource.volume = SEVolume;
         }
 
-        PlayerPrefs.SetFloat(BGM_VOLUME_KEY, BGMVolume);
         PlayerPrefs.SetFloat(SE_VOLUME_KEY, SEVolume);
+    }
+
+    public float GetBGMVolume()
+    {
+        return _bgmSource.volume;
+    }
+
+    public float GetSEVolume()
+    {
+        return _seSourceList[0].volume;
     }
 
 }
