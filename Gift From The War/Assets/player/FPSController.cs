@@ -125,27 +125,8 @@ public class FPSController : MonoBehaviour
     //--------------------------------------------------------------------
     private void UpdateCursorLock()  //カーソル表示切り替え
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            cursorLock = false;
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            if (useUI == false)
-            {
-                cursorLock = true;
-            }
-        }
-
-        if (cursorLock)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else if (!cursorLock)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void AssignTmpRot()    //計算するために回転量を保持する
