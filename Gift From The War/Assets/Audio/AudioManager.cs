@@ -31,7 +31,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     //SEの設定用変数
     private AudioSource _nowAudio;
     private float _SEVol;
-    private float _SEVolSetting;
+    private float _SEVolSetting = SE_VOLUME_DEFULT;
     private bool _isLoop;
 
     //BGMをフェードアウト中か
@@ -329,7 +329,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
     public float GetSEVolume()
     {
-        return _seSourceList[0].volume;
+        return _SEVolSetting;
     }
 
 }

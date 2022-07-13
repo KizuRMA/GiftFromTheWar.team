@@ -141,8 +141,6 @@ public class FPSController : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
-
-        Debug.Log(Cursor.visible);
     }
 
     private void AssignTmpRot()    //ŒvZ‚·‚é‚½‚ß‚É‰ñ“]—Ê‚ğ•Û‚·‚é
