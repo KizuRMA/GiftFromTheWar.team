@@ -17,9 +17,6 @@ public class FPSController : MonoBehaviour
     private CharacterController CC;
     private MoveWindGun moveWind;
 
-    //カーソルロック
-    private bool cursorLock = true;
-
     //プレイヤーのXZ移動
     private Transform trans;
     [SerializeField] private float walkSpeed;       //歩行速度
@@ -71,6 +68,7 @@ public class FPSController : MonoBehaviour
         nowMoveSpeed = walkSpeed;
         moveFlg = false;
         dashFlg = false;
+        CursorManager.Instance.cursorLock = true;
 
         if (isDebug == false)
         {
@@ -83,7 +81,7 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
-        if (Mathf.Approximately(Time.timeScale, 0f))return;
+        if (Time.timeScale <= 0f)return;
         if (playerStartDown != null && playerStartDown.isAuto == true) return;
 
 
@@ -125,27 +123,14 @@ public class FPSController : MonoBehaviour
     //--------------------------------------------------------------------
     private void UpdateCursorLock()  //カーソル表示切り替え
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            cursorLock = false;
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            if (useUI == false)
-            {
-                cursorLock = true;
-            }
-        }
-
-        if (cursorLock)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else if (!cursorLock)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    CursorManager.Instance.cursorLock = false;
+        //}
+        //else if (Input.GetMouseButton(0))
+        //{
+        //    CursorManager.Instance.cursorLock = true;
+        //}
     }
 
     private void AssignTmpRot()    //計算するために回転量を保持する

@@ -36,6 +36,8 @@ public class remainingAmount : MonoBehaviour
     {
         allRemainingEnergy = energyMax - energyMin;
         energyMaxFlg = false;
+
+        nowRemainingEnergy = 1.0f - (energyMax - trans.localPosition.z) / allRemainingEnergy;
     }
 
     void Update()
@@ -159,6 +161,21 @@ public class remainingAmount : MonoBehaviour
     public float GetSetNowAmount
     {
         get { return nowRemainingEnergy; }
-        set { useEnergy = value; }
+        set
+        {
+            if (bulletChange.IsHaveBullet == false)
+            {
+                useEnergy = -1;
+            }
+            else
+            {
+                useEnergy = value;
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        useEnergy = -1;
     }
 }

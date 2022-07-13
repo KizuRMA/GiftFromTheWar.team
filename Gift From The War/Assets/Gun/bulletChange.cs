@@ -32,7 +32,7 @@ public class bulletChange : MonoBehaviour
     //スクリプト
     private bool scriptChangeFlg = true;   //スクリプト切り替えようのフラグ
 
-    private bool IsHaveBullet    //弾を持っているか
+    public bool IsHaveBullet    //弾を持っているか
     {
         get
         {

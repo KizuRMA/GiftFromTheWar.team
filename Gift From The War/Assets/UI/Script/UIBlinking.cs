@@ -27,6 +27,9 @@ public class UIBlinking : MonoBehaviour
     [Header("ループ終了時の色")]
     [SerializeField]
     Color endColor = new Color(1, 1, 1, 0.64f);
+    [Header("出現する速さ")]
+    [SerializeField] public float showSpeed = 5;
+
 
     [Header("必要なら設定する項目(設定しなくてもいい)")]
     [SerializeField] KeyCode key = KeyCode.None;
@@ -131,7 +134,9 @@ public class UIBlinking : MonoBehaviour
     {
         if (image.enabled == false) return;
 
-        time += Time.deltaTime;
+        KeyUpdate();
+
+        time += Time.deltaTime * showSpeed;
         //透明状態から徐々に不透明にしていく
         image.color = Color.Lerp(endColor, startColor, Mathf.PingPong(time / duration, 1.0f));
 
@@ -143,7 +148,7 @@ public class UIBlinking : MonoBehaviour
             explanatoryText.color = Color.Lerp(_endColor, _startColor, Mathf.PingPong(time / duration, 1.0f));
         }
 
-        if (image.color.a >= startColor.a - 0.01f)
+        if (time >= 1.0f)
         {
             //エンドカラーをデフォルトに戻す
             endColor = defaltEndColor;
