@@ -84,7 +84,6 @@ public class FPSController : MonoBehaviour
         if (Time.timeScale <= 0f)return;
         if (playerStartDown != null && playerStartDown.isAuto == true) return;
 
-
         UpdateCursorLock();
 
         if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg)  //ƒvƒŒƒCƒ„[‚ÌˆÚ“®–³Œø‰»

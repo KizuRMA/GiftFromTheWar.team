@@ -31,7 +31,8 @@ public class Gravity : MonoBehaviour
     [SerializeField] private float slipY;           //スリップの高さ
     [SerializeField] private float slipPower;       //スリップするときの移動量
 
-    bool isLanding;    //着地判定
+    bool isLanding;     //着地判定
+    bool isSoundOn;     //着地サウンド発生
     [SerializeField] public LayerMask layer;
 
     void Start()
@@ -51,6 +52,7 @@ public class Gravity : MonoBehaviour
         firstGroundHitFlg = false;
         groundHitFlg = false;
         isLanding = true;
+        isSoundOn = false;
     }
 
     void Update()
@@ -63,27 +65,22 @@ public class Gravity : MonoBehaviour
         CC.Move(moveVec * Time.deltaTime);
 
         //着地状態かチェック
-        if (isLanding == true)
-        {
-            //重力が0.5f以下ある場合
-            if (nowGravity <= -2.0f)
-            {
-                //着地していない
-                isLanding = false;
-            }
-        }
-        else
-        {
-            Vector3 _pos = trans.position + new Vector3(0, -playerHeight, 0);
-            Ray ray = new Ray(trans.position, Vector3.down);
-            RaycastHit hit;
-            Physics.Raycast(ray, out hit, 1000.0f, layer);
+        Vector3 _pos = trans.position + new Vector3(0, -playerHeight, 0);
+        Ray ray = new Ray(trans.position, Vector3.down);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit, Mathf.Infinity, layer);
 
-            if (nowGravity >= -0.5f && hit.distance <= 1.0f)
-            {
-                AudioManager.Instance.PlaySE("Landing", isLoop: false);
-                isLanding = true;
-            }
+        if (groundHitFlg && isSoundOn)
+        {
+            AudioManager.Instance.PlaySE("Landing", isLoop: false);
+            isLanding = true;
+            isSoundOn = false;
+        }
+
+        if(nowGravity <= -5.0f)
+        {
+            isSoundOn = true;
+            isLanding = false;
         }
     }
 
@@ -105,6 +102,8 @@ public class Gravity : MonoBehaviour
 
     private void RayJudge() //地面のレイ判定
     {
+        groundHitFlg = false;
+
         Vector3[] edgeTrans = new Vector3[5];
         for (int i = 0; i < edgeTrans.Length; i++)
         {
@@ -152,7 +151,6 @@ public class Gravity : MonoBehaviour
         if (distanceMin != float.MaxValue) return;
 
         firstGroundHitFlg = false;
-        groundHitFlg = false;
         nowGravity += gravity * Time.deltaTime;
         moveVec.y += nowGravity;
     }
