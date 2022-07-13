@@ -31,7 +31,6 @@ public class CloseButtonTest : MonoBehaviour
     private void Initialize()
     {
         ButtonSizeDelta = ButtonRectTransform.sizeDelta;
-        //ButtonRectTransform.sizeDelta = Vector2.zero;
     }
 
 }

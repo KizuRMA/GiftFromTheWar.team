@@ -28,7 +28,6 @@ public class OpenMessageBox : MonoBehaviour
             .Join(BlurRectTransform.DOSizeDelta(endValue: new Vector2(BoxSizeDelta.x, y: 2), duration: 1f).SetEase(Ease.OutCubic))
             .Append(BoxRectTransform.DOSizeDelta(endValue: new Vector2(BoxSizeDelta.x, 350.0f), duration: 1f).SetEase(Ease.OutCubic))
             .Join(BlurRectTransform.DOSizeDelta(endValue: new Vector2(BoxSizeDelta.x, 350.0f), duration: 1f).SetEase(Ease.OutCubic))
-            //.Append(text.DOFade(endValue: 1f, duration: 0.05f))
             .Append(TMP.DOColor(RollOverTextColor, duration: 0.25f)).Play()
             .SetDelay(1.7f);
 

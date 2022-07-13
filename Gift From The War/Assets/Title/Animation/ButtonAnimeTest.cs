@@ -25,7 +25,6 @@ public class ButtonAnimeTest : UIBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         FillImage.DOFillAmount(endValue: 1f, duration: 0.25f).SetEase(Ease.OutCubic).Play();
         emiOnEvent.Invoke();
-        //TMP.DOColor(RollOverTextColor, duration: 0.25f).Play();
     }
 
     //マウスがボタンにかぶっていなかったら
@@ -33,7 +32,6 @@ public class ButtonAnimeTest : UIBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         FillImage.DOFillAmount(endValue: 0f, duration: 0.25f).SetEase(Ease.OutCubic).Play();
         emiOffEvent.Invoke();
-        //TMP.DOColor(BaseTextColor, duration: 0.25f).Play();
     }
 
 }
