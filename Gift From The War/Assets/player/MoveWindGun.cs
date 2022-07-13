@@ -75,6 +75,12 @@ public class MoveWindGun : MonoBehaviour
         KnowViewpoint();
 
         Move();
+
+        if (Input.GetMouseButton(0))
+        {
+            AudioManager.Instance.PlaySE("Wind", isLoop: false);
+        }
+      
     }
 
     private void KnowViewpoint() //‚Ç‚±‚Þ‚¢‚Ä‚¢‚é‚©
