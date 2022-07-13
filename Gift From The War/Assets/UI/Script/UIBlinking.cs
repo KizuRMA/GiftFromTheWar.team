@@ -148,7 +148,7 @@ public class UIBlinking : MonoBehaviour
             explanatoryText.color = Color.Lerp(_endColor, _startColor, Mathf.PingPong(time / duration, 1.0f));
         }
 
-        if (image.color.a >= startColor.a - 0.01f)
+        if (time >= 1.0f)
         {
             //エンドカラーをデフォルトに戻す
             endColor = defaltEndColor;

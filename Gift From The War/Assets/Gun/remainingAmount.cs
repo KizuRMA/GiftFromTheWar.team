@@ -42,11 +42,6 @@ public class remainingAmount : MonoBehaviour
 
     void Update()
     {
-        if (bulletChange.IsHaveBullet == false)
-        {
-            useEnergy = -1;
-        }
-
         if (useEnergy == 0) //ÉGÉlÉãÉMÅ[è¡îÔÇ™Ç»Ç©Ç¡ÇΩÇÁ
         {
             NoUseEnergy();
@@ -166,6 +161,21 @@ public class remainingAmount : MonoBehaviour
     public float GetSetNowAmount
     {
         get { return nowRemainingEnergy; }
-        set { useEnergy = value; }
+        set
+        {
+            if (bulletChange.IsHaveBullet == false)
+            {
+                useEnergy = -1;
+            }
+            else
+            {
+                useEnergy = value;
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        useEnergy = -1;
     }
 }

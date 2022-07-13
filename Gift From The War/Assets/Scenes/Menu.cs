@@ -17,8 +17,9 @@ public class Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool _pauseFlg = pauseFlg;
+        //Cursor.lockState = CursorLockMode.None;
 
+        bool _pauseFlg = pauseFlg;
 
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
@@ -30,25 +31,32 @@ public class Menu : MonoBehaviour
 
         if (pauseFlg == true)
         {
-            Pause();
+            if (_pauseFlg != pauseFlg)
+            {
+                Pause();
+            }
         }
         else
         {
-            if(_pauseFlg != pauseFlg) Resume();
+            if (_pauseFlg != pauseFlg)
+            {
+                Resume();
+            }
         }
-
     }
 
     private void Pause()
     {
         Time.timeScale = 0;  // éûä‘í‚é~
         image.SetActive(true);
+        CursorManager.Instance.cursorLock = false;
     }
 
     private void Resume()
     {
         Time.timeScale = 1;  // çƒäJ
         image.SetActive(false);
+        CursorManager.Instance.cursorLock = true;
     }
 
     public void ChangeTitle()
@@ -56,6 +64,7 @@ public class Menu : MonoBehaviour
         StartCoroutine(LoadManager.Instance.LoadScene("Scenes/TitleScene"));
         pauseFlg = false;
         image.SetActive(false);
+        CursorManager.Instance.cursorLock = false;
         Resume();
     }
 
@@ -64,6 +73,7 @@ public class Menu : MonoBehaviour
         Resume();
         image.SetActive(false);
         pauseFlg = false;
+        CursorManager.Instance.cursorLock = true;
     }
 
     //ÉQÅ[ÉÄèIóπ
