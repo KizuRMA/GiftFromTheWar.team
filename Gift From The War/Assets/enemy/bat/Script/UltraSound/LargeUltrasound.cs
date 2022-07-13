@@ -138,7 +138,7 @@ public class LargeUltrasound : BaseUltrasound
         if (hit == false || _raycastHit.collider.tag != "Player") return false;
 
         //’´‰¹”g‚Ì’·‚³‚É’²®‚·‚é
-        _targetVec = _targetVec.normalized * (range - 0.7f);
+        _targetVec = _targetVec.normalized * (range * 0.8f);
 
         //’´‰¹”g–{‘Ì‚ÌÀ•W‚ğZo
         Vector3 _pos = _firePos + _targetVec;
@@ -180,6 +180,8 @@ public class LargeUltrasound : BaseUltrasound
         {
             maxRange = minimumRange;
         }
+
+        maxRange *= 0.9f;
     }
 
     public override void DrawLine()
