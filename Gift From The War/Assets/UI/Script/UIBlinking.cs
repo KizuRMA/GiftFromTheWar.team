@@ -11,10 +11,11 @@ public class UIBlinking : MonoBehaviour
     [Header("1ループの長さ(秒単位)")]
     [SerializeField]
     [Range(0.1f, 10.0f)]
-    float duration = 1.0f;
 
+    float duration = 1.0f;
     public bool IsShow; //
     private bool IsStart;
+    private bool IsPressKeyCord;
 
     Color defaltStartColor;
     Color defaltEndColor;
@@ -53,6 +54,8 @@ public class UIBlinking : MonoBehaviour
         defaltEndColor = endColor;
         IsStart = false;
         IsShow = false;
+        IsPressKeyCord = false;
+
 
         time = 0;
 
@@ -110,10 +113,11 @@ public class UIBlinking : MonoBehaviour
         if (key == KeyCode.None || IsShow == false) return;
 
         IsShow = !Input.GetKeyDown(key);
-        if (IsShow == false)    //非表示にする場合
+        if (IsShow == false || IsPressKeyCord == true)    //非表示にする場合
         {
             //スタートとエンドを変更する
             NonShow();
+            IsPressKeyCord = false;
         }
     }
 
@@ -134,8 +138,6 @@ public class UIBlinking : MonoBehaviour
     {
         if (image.enabled == false) return;
 
-        KeyUpdate();
-
         time += Time.deltaTime * showSpeed;
         //透明状態から徐々に不透明にしていく
         image.color = Color.Lerp(endColor, startColor, Mathf.PingPong(time / duration, 1.0f));
@@ -148,7 +150,13 @@ public class UIBlinking : MonoBehaviour
             explanatoryText.color = Color.Lerp(_endColor, _startColor, Mathf.PingPong(time / duration, 1.0f));
         }
 
-        if (time >= 1.0f)
+        //
+        if (key != KeyCode.None && IsPressKeyCord == false)
+        {
+            IsPressKeyCord = Input.GetKeyDown(key);
+        }
+
+        if (time >= 0.9f)
         {
             //エンドカラーをデフォルトに戻す
             endColor = defaltEndColor;
