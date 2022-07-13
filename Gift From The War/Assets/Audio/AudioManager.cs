@@ -31,6 +31,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     //SEの設定用変数
     private AudioSource _nowAudio;
     private float _SEVol;
+    private float _SEVolSetting;
     private bool _isLoop;
 
     //BGMをフェードアウト中か
@@ -190,7 +191,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
     private void SESetteing(AudioSource audio)
     {
-        audio.volume = _SEVol;
+        audio.volume = _SEVol * _SEVolSetting;
 
         audio.loop = _isLoop;
 
@@ -316,10 +317,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
     public void ChangeSEVolume(float SEVolume)
     {
-        foreach (AudioSource seSource in _seSourceList)
-        {
-            seSource.volume = SEVolume;
-        }
+        _SEVolSetting = SEVolume;
 
         PlayerPrefs.SetFloat(SE_VOLUME_KEY, SEVolume);
     }
