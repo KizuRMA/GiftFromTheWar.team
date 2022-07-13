@@ -61,11 +61,12 @@ public class Menu : MonoBehaviour
 
     public void ChangeTitle()
     {
+        Resume();
         StartCoroutine(LoadManager.Instance.LoadScene("Scenes/TitleScene"));
         pauseFlg = false;
         image.SetActive(false);
         CursorManager.Instance.cursorLock = false;
-        Resume();
+        
     }
 
     public void BackGame()
