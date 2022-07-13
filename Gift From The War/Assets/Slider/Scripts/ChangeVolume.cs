@@ -17,13 +17,13 @@ public class ChangeVolume : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //スライドバー操作
     public void SoundSliderOnValueChange(float newSliderValue)
     {
         // スライドバーで音量を調整
-        AudioManager.Instance.ChangeVolume(newSliderValue, newSliderValue);
+        //AudioManager.Instance.ChangeVolume(newSliderValue, newSliderValue);
     }
 }
