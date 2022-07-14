@@ -99,7 +99,7 @@ public class LargeUltrasound : BaseUltrasound
             StartCoroutine(DelayCoroutine());
             range += 0.001f;
         }
-        AudioManager.Instance.PlaySE("ultrasound2", gameObject,maxDistance:5);
+        AudioManager.Instance.PlaySE("ultrasound2", gameObject,maxDistance:5,isLiner:false);
 
         //’x‰„‚ªŠ®—¹‚µ‚Ä‚È‚¢ê‡
         if (delayEnd == false) return;
