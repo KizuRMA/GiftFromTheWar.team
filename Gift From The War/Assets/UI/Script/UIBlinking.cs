@@ -112,11 +112,11 @@ public class UIBlinking : MonoBehaviour
     {
         if (key == KeyCode.None || IsShow == false) return;
 
-        IsShow = !Input.GetKeyDown(key);
-        if (IsShow == false || IsPressKeyCord == true)    //非表示にする場合
+        if (Input.GetKeyDown(key) || IsPressKeyCord == true)    //非表示にする場合
         {
             //スタートとエンドを変更する
             NonShow();
+            IsShow = false;
             IsPressKeyCord = false;
         }
     }
@@ -151,9 +151,9 @@ public class UIBlinking : MonoBehaviour
         }
 
         //
-        if (key != KeyCode.None && IsPressKeyCord == false)
+        if (key != KeyCode.None && Input.GetKeyDown(key) && IsPressKeyCord == false)
         {
-            IsPressKeyCord = Input.GetKeyDown(key);
+            IsPressKeyCord = true;
         }
 
         if (time >= 0.9f)

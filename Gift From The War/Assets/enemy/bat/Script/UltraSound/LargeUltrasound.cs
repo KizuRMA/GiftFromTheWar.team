@@ -23,6 +23,8 @@ public class LargeUltrasound : BaseUltrasound
         var main = particle.main;
         duration = main.duration;
         duration += 2.0f;
+
+        //拡大速度 = 最大拡大率 / 生存時間
         velocity = main.startSize.constant / main.startLifetime.constant;
 
         delay = 3.0f;
@@ -44,7 +46,7 @@ public class LargeUltrasound : BaseUltrasound
         range = 0.0f;
         maxRange = 0.0f;
         minimumRange = 5.0f;
-        hitRange = 0.5f;
+        hitRange = 0.3f;
         aliveFlg = true;
         delayEnd = false;
     }
@@ -88,8 +90,8 @@ public class LargeUltrasound : BaseUltrasound
 
                 nowParticleSystem.transform.position = transform.position + (transform.up * 0.3f);
 
+                //パーティクルのパラメータを触る
                 var main = nowParticleSystem.main;
-
                 main.startSize = maxRange * 2;
                 main.startLifetime = maxRange / velocity;
             }
@@ -100,7 +102,7 @@ public class LargeUltrasound : BaseUltrasound
             StartCoroutine(DelayCoroutine());
             range += 0.001f;
         }
-        AudioManager.Instance.PlaySE("ultrasound2", gameObject,maxDistance:10);
+        AudioManager.Instance.PlaySE("ultrasound2", gameObject,maxDistance:5);
 
         //遅延が完了してない場合
         if (delayEnd == false) return;
@@ -137,18 +139,8 @@ public class LargeUltrasound : BaseUltrasound
         //レイ判定
         if (hit == false || _raycastHit.collider.tag != "Player") return false;
 
-        //超音波の長さに調整する
-        _targetVec = _targetVec.normalized * (range * 0.8f);
-
-        //超音波本体の座標を算出
-        Vector3 _pos = _firePos + _targetVec;
-
-        //超音波本体とプレイヤーの距離を調べる
-        _targetVec = playerObject.transform.position - _pos;
-
         float _distance = _targetVec.magnitude;
-
-        if (_distance <= hitRange)
+        if (_distance <= (range * 0.9f))
         {
             StopParticle();
             aliveFlg = false;

@@ -45,6 +45,7 @@ public class FPSController : MonoBehaviour
         if (isDebug)
         {
             SaveManager.Instance.nowSaveData.getGunFlg = true;
+            SaveManager.Instance.nowSaveData.getRantanFlg = true;
             SaveManager.Instance.nowSaveData.getWindFlg = true;
             SaveManager.Instance.nowSaveData.getMagnetFlg = true;
             SaveManager.Instance.nowSaveData.getFireFlg = true;

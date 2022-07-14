@@ -43,6 +43,7 @@ public class DeadState : BaseState
             dead.ExpBlownAway(myController.hypocenter);
         }
 
+        AudioManager.Instance.PlaySE("BatDead", gameObject, isLoop: false);
         Destroy(gameObject);
     }
 }
