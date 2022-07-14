@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class ButtonAnimeTest : UIBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonAnimeTest : UIBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private Image FillImage;
     //[SerializeField] private TextMeshProUGUI TMP;
@@ -25,6 +25,7 @@ public class ButtonAnimeTest : UIBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         FillImage.DOFillAmount(endValue: 1f, duration: 0.25f).SetEase(Ease.OutCubic).Play();
         emiOnEvent.Invoke();
+        AudioManager.Instance.PlaySE("カーソル移動8", isLoop: false);
     }
 
     //マウスがボタンにかぶっていなかったら
@@ -32,6 +33,11 @@ public class ButtonAnimeTest : UIBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         FillImage.DOFillAmount(endValue: 0f, duration: 0.25f).SetEase(Ease.OutCubic).Play();
         emiOffEvent.Invoke();
+        AudioManager.Instance.StopSE("カーソル移動8");
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        AudioManager.Instance.PlaySE("決定ボタンを押す14", isLoop: false);
+    }
 }

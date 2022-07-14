@@ -14,6 +14,7 @@ public class ESCExit : MonoBehaviour
     [SerializeField] private RectTransform ImageTransform;
 
     private Vector3 ImageSizeDelta;
+    private bool openPanel = false;
 
     //ゲーム開始時に呼ばれる
     private void Start()
@@ -29,8 +30,9 @@ public class ESCExit : MonoBehaviour
     public void Confirmation()
     {
         //Escが押された時
-        if (Input.GetKey(KeyCode.Escape))
+        if (!openPanel && Input.GetKey(KeyCode.Escape))
         {
+            openPanel = true;
             FalseCanvasGroup.blocksRaycasts = false;//他UIの誤タッチ防止
             
             ConfirmationPanel.SetActive(true); //確認パネル表示
@@ -51,6 +53,7 @@ public class ESCExit : MonoBehaviour
         //パネルを非表示、無効化
         ConfirmationPanel.SetActive(false);
         PanelCanvasGroup.DOFade(endValue: 0f, duration: 0.1f);
+        openPanel = false;
 
         //アニメーション初期化
         ImageTransform.localScale = new Vector3(ImageSizeDelta.x - 2, ImageSizeDelta.y - 2, ImageSizeDelta.z - 2);
