@@ -48,9 +48,14 @@ public class cameraMove : MonoBehaviour
         }
 
         //Å‘å’l‚Ü‚ÅˆÚ“®‚µ‚½‚çAŒü‚«‚ð‹t‚É‚·‚é
-        if (Mathf.Abs(posY) > Mathf.Abs(maxPosY))
+        if (posY > maxPosY)
         {
-            upDown *= -1;
+            upDown = -1;
+        }
+
+        if (posY < -maxPosY)
+        {
+            upDown = 1;
         }
     }
 

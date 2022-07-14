@@ -82,9 +82,14 @@ public class rantanMove : MonoBehaviour
 
     private void Move() //ランタンの移動
     {
-        if (Mathf.Abs(trans.localPosition.y - firstPos.y) > Mathf.Abs(maxPosY))   //上下の移動のチェンジ
+        if ((trans.localPosition.y - firstPos.y) > maxPosY)   //上下の移動のチェンジ
         {
-            upDown *= -1;
+            upDown = -1;
+        }
+
+        if ((trans.localPosition.y - firstPos.y) < -maxPosY)   //上下の移動のチェンジ
+        {
+            upDown = 1;
         }
 
         if (fpsC.dashFlg)  //プレイヤーが走っているか
@@ -117,7 +122,7 @@ public class rantanMove : MonoBehaviour
         {
             upDown = -1;
             trans.localPosition = firstPos;
-            return;
+            posY = 0;
         }
     }
 }
