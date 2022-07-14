@@ -59,10 +59,10 @@ public class playerDied : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    CC.GetComponent<playerAbnormalcondition>().life = 0;
-        //}
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            CC.GetComponent<playerAbnormalcondition>().life = 0;
+        }
 
         if (CC.GetComponent<playerAbnormalcondition>().life <= 0)   //HP‚ª‚O‚É‚È‚Á‚Ä‚¢‚½‚ç
         {

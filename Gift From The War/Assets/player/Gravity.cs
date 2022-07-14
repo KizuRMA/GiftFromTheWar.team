@@ -31,7 +31,6 @@ public class Gravity : MonoBehaviour
     [SerializeField] private float slipY;           //スリップの高さ
     [SerializeField] private float slipPower;       //スリップするときの移動量
 
-    bool isLanding;     //着地判定
     bool isSoundOn;     //着地サウンド発生
     [SerializeField] private float soundOnHeight;
     [SerializeField] public LayerMask layer;
@@ -52,7 +51,6 @@ public class Gravity : MonoBehaviour
         trans = transform;
         firstGroundHitFlg = false;
         groundHitFlg = false;
-        isLanding = true;
         isSoundOn = false;
     }
 
@@ -74,14 +72,12 @@ public class Gravity : MonoBehaviour
         if (groundHitFlg && isSoundOn)
         {
             AudioManager.Instance.PlaySE("Landing", isLoop: false);
-            isLanding = true;
             isSoundOn = false;
         }
 
         if(nowGravity <= soundOnHeight)
         {
             isSoundOn = true;
-            isLanding = false;
         }
     }
 

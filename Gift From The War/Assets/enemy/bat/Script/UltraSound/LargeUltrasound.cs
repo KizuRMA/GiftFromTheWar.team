@@ -11,7 +11,6 @@ public class LargeUltrasound : BaseUltrasound
 
     ParticleSystem nowParticleSystem;
     private float minimumRange;
-    private float hitRange;
     float delay;
     bool delayEnd;
 
@@ -46,7 +45,6 @@ public class LargeUltrasound : BaseUltrasound
         range = 0.0f;
         maxRange = 0.0f;
         minimumRange = 5.0f;
-        hitRange = 0.3f;
         aliveFlg = true;
         delayEnd = false;
     }
@@ -58,7 +56,6 @@ public class LargeUltrasound : BaseUltrasound
         range = 0.0f;
         maxRange = 0.0f;
         minimumRange = 5.0f;
-        hitRange = 0.5f;
         aliveFlg = true;
         delayEnd = false;
     }
