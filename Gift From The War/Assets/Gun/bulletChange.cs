@@ -79,6 +79,7 @@ public class bulletChange : MonoBehaviour
 
         changeableFlg = false;
         scriptChangeFlg = true;
+        AudioManager.Instance.PlaySE("Clinder1", isLoop: false);
 
         BulletChange();
 

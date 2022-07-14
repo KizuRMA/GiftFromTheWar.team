@@ -16,8 +16,6 @@ public class shooting : ShootParent
 
     [SerializeField] private LayerMask layer;
 
-    [SerializeField] public string SE;
-
     private void Start()
     {
         if (transform.parent != null)
@@ -59,7 +57,7 @@ public class shooting : ShootParent
             if (!shotableFlg) return;
             shotFlg = true;
             Shot();
-            AudioManager.Instance.PlaySE(SE, isLoop: false);
+            AudioManager.Instance.PlaySE("Wind1", isLoop: false);
 
         }
 

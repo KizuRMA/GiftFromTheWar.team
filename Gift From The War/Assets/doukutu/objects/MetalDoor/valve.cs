@@ -31,5 +31,7 @@ public class valve : MonoBehaviour
         door1.localEulerAngles += new Vector3(0, door1Speed * Time.deltaTime, 0);
         door2.localEulerAngles += new Vector3(0, door2Speed * Time.deltaTime, 0);
         sumAng += Mathf.Abs(door1Speed * Time.deltaTime);
+        AudioManager.Instance.PlaySE("Valve2", isLoop: false);
+
     }
 }
