@@ -33,6 +33,7 @@ public class Gravity : MonoBehaviour
 
     bool isLanding;     //着地判定
     bool isSoundOn;     //着地サウンド発生
+    [SerializeField] private float soundOnHeight;
     [SerializeField] public LayerMask layer;
 
     void Start()
@@ -77,7 +78,7 @@ public class Gravity : MonoBehaviour
             isSoundOn = false;
         }
 
-        if(nowGravity <= -5.0f)
+        if(nowGravity <= soundOnHeight)
         {
             isSoundOn = true;
             isLanding = false;
