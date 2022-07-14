@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ReturnButton : MonoBehaviour
+public class ReturnButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private CanvasGroup CanvasGroup;
 
@@ -26,6 +27,12 @@ public class ReturnButton : MonoBehaviour
     {
         CanvasGroup.DOFade(endValue: 0f, duration: 0.2f);
         CanvasGroup.blocksRaycasts = false;
+    }
+
+    //ボタンが押されたら
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        AudioManager.Instance.PlaySE("キャンセル1", isLoop: false);
     }
 
 }

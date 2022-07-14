@@ -14,12 +14,14 @@ public class nextSelectScene : MonoBehaviour
         if (Input.anyKey && !isCalledOnce)
         {
             isCalledOnce = true;
+            AudioManager.Instance.PlaySE("Œˆ’èƒ{ƒ^ƒ“‚ð‰Ÿ‚·10", isLoop: false);
             StartCoroutine(nextScene());
         }
     }
 
     private IEnumerator nextScene()
     {
+
         FadeManager.Instance.fadeOutStart(0, 0, 0, 0);
 
         var asyncOperation = SceneManager.LoadSceneAsync("Scenes/TitleScene");
