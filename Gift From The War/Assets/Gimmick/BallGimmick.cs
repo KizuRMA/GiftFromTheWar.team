@@ -12,6 +12,7 @@ public class BallGimmick : MonoBehaviour
     [SerializeField] private float maxPos;
     private float nowPower;
     private float sumPos;
+    private bool switchFlg = false;
 
     void Start()
     {
@@ -51,12 +52,22 @@ public class BallGimmick : MonoBehaviour
     private void OpneDoor()
     {
         if (sumPos >= maxPos) return;
-        nowPower = movePower * Time.deltaTime;      
+        nowPower = movePower * Time.deltaTime;
+
+        if(!switchFlg)
+        {
+            AudioManager.Instance.PlaySE("BallPlate", isLoop: false);
+            switchFlg = true;
+        }
+
+        AudioManager.Instance.PlaySE("OpenDoor", isLoop: false);
     }
 
     private void CloseDoor()
     {
         if (sumPos <= 0) return;
         nowPower = -movePower * Time.deltaTime;
+        AudioManager.Instance.PlaySE("OpenDoor", isLoop: false);
+        switchFlg = false;
     }
 }
