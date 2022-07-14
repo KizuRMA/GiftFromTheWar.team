@@ -53,6 +53,8 @@ public class OpenMetalDoor : MonoBehaviour
         {
             closeValveFlg = false;
             touchValveFlg = false;
+            AudioManager.Instance.StopSE("Valve2");
+
         }
     }
 
@@ -62,10 +64,12 @@ public class OpenMetalDoor : MonoBehaviour
         {
             touchValveFlg = true;
             valve.Open();
+           // AudioManager.Instance.PlaySE("Valve2", isLoop: false);
         }
         else
         {
             touchValveFlg = false;
+            AudioManager.Instance.StopSE("Valve2");
         }
     }
 }

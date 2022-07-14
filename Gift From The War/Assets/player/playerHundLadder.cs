@@ -68,6 +68,7 @@ public class playerHundLadder : MonoBehaviour
         if (closeLadderFlg && Input.GetKeyDown(KeyCode.Space))
         {
             touchLadderFlg = true;
+            AudioManager.Instance.PlaySE("Ladder", isLoop: false);
         }
 
         if (!touchLadderFlg) return;

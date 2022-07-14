@@ -75,12 +75,6 @@ public class MoveWindGun : MonoBehaviour
         KnowViewpoint();
 
         Move();
-
-        if (Input.GetMouseButton(0))
-        {
-            AudioManager.Instance.PlaySE("Wind", isLoop: false);
-        }
-      
     }
 
     private void KnowViewpoint() //‚Ç‚±‚Ş‚¢‚Ä‚¢‚é‚©
@@ -91,6 +85,8 @@ public class MoveWindGun : MonoBehaviour
 
         viewpoint = Quaternion.Euler(cam.transform.localRotation.eulerAngles.x, trans.localRotation.eulerAngles.y, 0);  //Œü‚¢‚Ä‚¢‚é•ûŒüŒvZ
         effectFlg = true;
+        AudioManager.Instance.PlaySE("Wind", isLoop: false);
+
     }
 
     private void Move() //ˆÚ“®‚Ìˆ—

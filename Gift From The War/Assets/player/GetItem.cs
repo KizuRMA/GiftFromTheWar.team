@@ -144,6 +144,7 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.nowSaveData.getRantanFlg = true;
             SaveManager.Instance.WriteFile();
             targetImage.enabled = true;
+            AudioManager.Instance.PlaySE("GetRantan", isLoop: false);
             return;
         }
     }
