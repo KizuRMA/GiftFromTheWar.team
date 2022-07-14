@@ -27,7 +27,7 @@ public class SaveSpotData : MonoBehaviour
         SaveManager.Instance.nowSaveData.dataSpotPos = dataSpotTrans.position;
         SaveManager.Instance.nowSaveData.goalPos = goalTrans.position;
 
-        AudioManager.Instance.PlaySE("SaveSpot1", isLoop: false);
+        AudioManager.Instance.PlaySE("SaveSpot", isLoop: false);
 
         SaveManager.Instance.WriteFile();
     }
