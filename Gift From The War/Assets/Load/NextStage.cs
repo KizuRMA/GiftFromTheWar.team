@@ -14,7 +14,7 @@ public class NextStage : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -22,6 +22,6 @@ public class NextStage : MonoBehaviour
         if (other.gameObject.tag != "Player") return;
         if (nextStageFlg) return;
         nextStageFlg = true;
-        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SecondStage"));
+        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/GameClearScene"));
     }
 }

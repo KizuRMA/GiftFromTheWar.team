@@ -7,13 +7,11 @@ using UnityEngine.UI;
 public class ButtonReactionAnime : UIBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image ReactionImage;
-    
 
-   
     protected override void Start()
     {
         base.Start();
-        
+
     }
 
     //マウスがボタンの上に来たら
@@ -29,5 +27,5 @@ public class ButtonReactionAnime : UIBehaviour, IPointerEnterHandler, IPointerEx
         ReactionImage.DOFade(endValue: 0f, duration: 0.25f).SetEase(Ease.OutCubic).Play();
     }
 
-    
+
 }

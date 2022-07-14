@@ -66,7 +66,6 @@ public class Menu : MonoBehaviour
         pauseFlg = false;
         image.SetActive(false);
         CursorManager.Instance.cursorLock = false;
-        
     }
 
     public void BackGame()
