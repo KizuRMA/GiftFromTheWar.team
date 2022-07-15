@@ -10,13 +10,13 @@ public class EnemysInfo : MonoBehaviour
     {
         if (IsEnemysChasing(e_EnemyType.PatrolBat) == true || IsEnemysChasing(e_EnemyType.Bat) == true)
         {
-            //AudioManager.Instance.PlaySE("Heartbeat");
-            //AudioManager.Instance.PlayBGM("FANTASY-04");
+            AudioManager.Instance.PlaySE("Heartbeat");
+            AudioManager.Instance.PlayBGM("FANTASY-04", vol: 0.3f);
         }
         else
         {
-            //AudioManager.Instance.StopSE("Heartbeat");
-            //AudioManager.Instance.PlayBGM("abc");
+            AudioManager.Instance.StopSE("Heartbeat");
+            AudioManager.Instance.PlayBGM("abc");
         }
     }
 

@@ -36,6 +36,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
     //BGMをフェードアウト中か
     private bool _isFadeOut = false;
+    private float _nextVol;
 
     //BGM用、SE用に分けてオーディオソースを持つ
     private AudioSource _bgmSource;
@@ -255,6 +256,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         else if (_bgmSource.clip.name != bgmName)
         {
             _nextBGMName = bgmName;
+            _nextVol = vol;
             FadeOutBGM(fadeSpeedRate);
         }
     }
@@ -294,7 +296,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
             if (!string.IsNullOrEmpty(_nextBGMName))
             {
-                PlayBGM(_nextBGMName);
+                PlayBGM(_nextBGMName, vol: _nextVol);
             }
         }
 
