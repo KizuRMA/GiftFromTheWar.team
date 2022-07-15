@@ -40,10 +40,10 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     [SerializeField] private LayerMask raycastLayerMask;
 
     [Header("パラメータ設定")]
-    [TooltipAttribute("追跡する時の速度"),SerializeField] public float trackingSpeed;
-    [TooltipAttribute("徘徊する時の速度"),SerializeField] public float moveWayPointSpeed;
-    [TooltipAttribute("プレイヤーがハウリング状態に駆けつける距離"),SerializeField] public float reactionDis;
-    [TooltipAttribute("追跡時のアニメーション速度"),SerializeField] public float trackingAnimSpeed;
+    [TooltipAttribute("追跡する時の速度"), SerializeField] public float trackingSpeed;
+    [TooltipAttribute("徘徊する時の速度"), SerializeField] public float moveWayPointSpeed;
+    [TooltipAttribute("プレイヤーがハウリング状態に駆けつける距離"), SerializeField] public float reactionDis;
+    [TooltipAttribute("追跡時のアニメーション速度"), SerializeField] public float trackingAnimSpeed;
 
     [System.NonSerialized] public float untilLaunch = 0;
     [System.NonSerialized] public e_CauseOfDead causeOfDead = e_CauseOfDead.None;
@@ -84,7 +84,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     protected override void Update()
     {
         float coolDown = currentUltrasound.coolDown;
-        float _playerDis = Vector3.Distance(transform.position,player.transform.position);
+        float _playerDis = Vector3.Distance(transform.position, player.transform.position);
         if (currentUltrasound != null && _playerDis <= 30.0f && untilLaunch - coolDown >= 0)
         {
             currentUltrasound.Update();
@@ -93,6 +93,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         {
             untilLaunch += Time.deltaTime;
         }
+
 
         if (agent.isOnOffMeshLink == false)
         {
@@ -246,10 +247,10 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         ParticleSystem newParticle = Instantiate(windBladeParticle);
 
         //音を鳴らす
-        AudioManager.Instance.PlaySE("BatCutTheWind",gameObject,isLoop:false);
+        AudioManager.Instance.PlaySE("BatCutTheWind", gameObject, isLoop: false);
 
         newParticle.transform.position = transform.position + (transform.up * 0.3f);
-        newParticle.transform.rotation = transform.rotation * Quaternion.AngleAxis(-15.0f,Vector3.right); ;
+        newParticle.transform.rotation = transform.rotation * Quaternion.AngleAxis(-15.0f, Vector3.right); ;
 
         // パーティクルを発生させる。
         newParticle.Play();
@@ -327,4 +328,14 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         return false;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != "Player") return;
+
+        playerHundLadder _ladder = player.GetComponent<playerHundLadder>();
+        if (_ladder.touchedFlg == true)
+        {
+           _ladder.DescendLadder();
+        }
+    }
 }

@@ -243,4 +243,15 @@ public class BatController : MonoBehaviour
         }
         return false;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != "Player") return;
+
+        playerHundLadder _ladder = player.GetComponent<playerHundLadder>();
+        if (_ladder.touchedFlg == true)
+        {
+            _ladder.DescendLadder();
+        }
+    }
 }

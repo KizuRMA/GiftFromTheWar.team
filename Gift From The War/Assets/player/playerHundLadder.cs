@@ -263,7 +263,7 @@ public class playerHundLadder : MonoBehaviour
         playerCC.Move(climbVec * Time.deltaTime);
     }
 
-    private void DescendLadder()    //’òq‚ğ~‚è‚éˆ—
+    public void DescendLadder()    //’òq‚ğ~‚è‚éˆ—
     {
         if (!playerCC.isGrounded) return;
 
