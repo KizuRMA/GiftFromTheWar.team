@@ -43,7 +43,7 @@ Shader "Custom/Outline" {
             }
 
             CGPROGRAM
-            #pragma surface surf Lambert
+            #pragma surface surf Standard
 
             sampler2D _MainTex;
 
@@ -51,8 +51,9 @@ Shader "Custom/Outline" {
                 float2 uv_MainTex;
             };
 
-            void surf(Input IN, inout SurfaceOutput o) {
+            void surf(Input IN, inout SurfaceOutputStandard o) {
                 o.Albedo = tex2D(_MainTex, IN.uv_MainTex);
+                o.Alpha = 0.0f;
             }
 
             ENDCG
