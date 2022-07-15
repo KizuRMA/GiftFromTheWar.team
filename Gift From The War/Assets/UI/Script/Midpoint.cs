@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class Midpoint : MonoBehaviour
 {
     [SerializeField] private Image image;
+    [SerializeField] private Image target;
     [SerializeField] private hand Hand;
+    [SerializeField] private PlayerStartDown player;
 
     void Start()
     {
@@ -15,12 +17,12 @@ public class Midpoint : MonoBehaviour
 
     void Update()
     {
-        if (!SaveManager.Instance.nowSaveData.getGunFlg)
+        if (!SaveManager.Instance.nowSaveData.getGunFlg && player.isAuto == false)
         {
             image.enabled = true;
         }
 
-        if (Hand.GetHandFlg())
+        if (Hand.GetHandFlg() || target.enabled == true)
         {
             image.enabled = false;
         }

@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     [SerializeField] GameObject image;
+    [SerializeField] List<ButtonReactionAnime> list;
+
 
     private bool pauseFlg;
     void Start()
@@ -57,6 +59,11 @@ public class Menu : MonoBehaviour
         Time.timeScale = 1;  // ÄŠJ
         image.SetActive(false);
         CursorManager.Instance.cursorLock = true;
+
+        foreach (var lists in list)
+        {
+            lists.AnimReset();
+        }
     }
 
     public void ChangeTitle()

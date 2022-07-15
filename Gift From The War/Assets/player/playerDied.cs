@@ -38,6 +38,7 @@ public class playerDied : MonoBehaviour
     private RectTransform eyeRec;               //目の画像情報
     private RectTransform eye2Rec;              //目の画像情報
     private bool eyeCloseFlg = false;           //目を閉じるフラグ
+    private float eyeTime = 0;  //倒れて数秒後目を閉じる処理に使用する
 
     void Start()
     {
@@ -67,6 +68,8 @@ public class playerDied : MonoBehaviour
         if (CC.GetComponent<playerAbnormalcondition>().life <= 0)   //HPが０になっていたら
         {
             diedFlg = true;
+            playerHundLadder _ladder = transform.GetComponent<playerHundLadder>();
+            _ladder.FinishLadder();
 
             CC.height = height;
 
@@ -97,10 +100,11 @@ public class playerDied : MonoBehaviour
     {
         if (groundFlg) return;  //地面についていたら通らない
 
+        eyeTime += Time.deltaTime;
         //レイ判定で地面に着いたか確認する
         Ray ray = new Ray(trans.position, -transform.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, downMax))
+        if (Physics.Raycast(ray, out hit, downMax) || eyeTime >= 2.0f)
         {
             groundFlg = true;
             StartCoroutine(EyeCoolTime());

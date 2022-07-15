@@ -234,7 +234,7 @@ public class playerHundLadder : MonoBehaviour
         return true;
     }
 
-    private void FinishLadder() //梯子上り終える
+    public void FinishLadder() //梯子上り終える
     {
         closeLadderFlg = false;
         touchLadderFlg = false;
