@@ -251,7 +251,7 @@ public class BatController : MonoBehaviour
         playerHundLadder _ladder = player.GetComponent<playerHundLadder>();
         if (_ladder.touchedFlg == true)
         {
-            _ladder.DescendLadder();
+            _ladder.FinishLadder();
         }
     }
 }

@@ -37,4 +37,9 @@ public class ButtonReactionAnime : UIBehaviour, IPointerEnterHandler, IPointerEx
         AudioManager.Instance.PlaySE("Œˆ’èƒ{ƒ^ƒ“‚ð‰Ÿ‚·14", isLoop: false);
     }
 
+    public void AnimReset()
+    {
+        ReactionImage.DOFade(endValue: 0f, duration: 0f).SetEase(Ease.OutCubic).SetUpdate(true).Play();
+    }
+
 }

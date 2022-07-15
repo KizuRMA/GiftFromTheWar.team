@@ -335,7 +335,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
         playerHundLadder _ladder = player.GetComponent<playerHundLadder>();
         if (_ladder.touchedFlg == true)
         {
-           _ladder.DescendLadder();
+           _ladder.FinishLadder();
         }
     }
 }

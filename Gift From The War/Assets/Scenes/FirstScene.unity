@@ -30510,7 +30510,7 @@ MonoBehaviour:
   turnSpeed: 750
   minX: -60
   maxX: 60
-  isDebug: 1
+  isDebug: 0
   useUI: 0
 --- !u!143 &2017324120
 CharacterController:
@@ -30625,7 +30625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1284577509}
-  isDebug: 1
+  isDebug: 0
   isAuto: 0
 --- !u!1001 &2017876306
 PrefabInstance:
@@ -31408,7 +31408,7 @@ GameObject:
   - component: {fileID: 2047411097}
   - component: {fileID: 2047411099}
   m_Layer: 5
-  m_Name: target (1)
+  m_Name: Midpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31485,7 +31485,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 2047411097}
+  target: {fileID: 1245481344}
   Hand: {fileID: 1794998981}
+  player: {fileID: 2017324125}
 --- !u!1001 &2049489021
 PrefabInstance:
   m_ObjectHideFlags: 0
