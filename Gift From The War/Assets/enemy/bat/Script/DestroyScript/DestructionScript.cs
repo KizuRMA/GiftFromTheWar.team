@@ -39,6 +39,11 @@ public class DestructionScript : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        AudioManager.Instance.PlaySE("BatDead", isLoop: false);
+    }
+
     // Update is called once per frame
     void Update()
     {
