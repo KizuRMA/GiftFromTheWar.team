@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 2739756531650388032}
   - component: {fileID: 2658630595769106241}
   - component: {fileID: 3738747726637635441}
+  - component: {fileID: 8622745176427672324}
   m_Layer: 17
   m_Name: Cylinder
   m_TagString: metal
@@ -273,6 +274,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8622745176427672324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264620035433544442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4716609c8dc304e93eb3879ae2f3da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SEName: Metal
+  minVol: 0.1
+  velocityVolRaito: 0.1
+  volDis: 10
 --- !u!1 &3328173472953904572
 GameObject:
   m_ObjectHideFlags: 0

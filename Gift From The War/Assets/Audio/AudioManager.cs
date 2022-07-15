@@ -196,7 +196,6 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         audio.loop = _isLoop;
 
         audio.minDistance = 1;
-        audio.maxDistance = 500;
     }
 
     public void StopSE(string seName)
