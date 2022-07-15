@@ -16,9 +16,10 @@ public class DestructionScript : MonoBehaviour
             ChildObjects[i] = gameObject.transform.GetChild(i).gameObject;
             ChildObjects[i].AddComponent<Rigidbody>();
             ChildObjects[i].GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            ChildObjects[i].AddComponent<MeshCollider>();
+            ChildObjects[i].AddComponent<BoxCollider>();
             ChildObjects[i].AddComponent<NotSeeObjectDelete>();
-            ChildObjects[i].GetComponent<MeshCollider>().convex = true;
+            //ChildObjects[i].GetComponent<MeshCollider>().convex = true;
+            //ChildObjects[i].GetComponent<BoxCollider>().convex = true;
         }
 
         var random = new System.Random();
