@@ -57,7 +57,7 @@ public class shooting : ShootParent
             if (!shotableFlg) return;
             shotFlg = true;
             Shot();
-            AudioManager.Instance.PlaySE("Wind1", isLoop: false);
+            AudioManager.Instance.PlaySE("Wind1", isLoop: false, vol:0.3f);
 
         }
 

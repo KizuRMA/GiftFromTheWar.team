@@ -16,6 +16,7 @@ public class BallGimmick : MonoBehaviour
     [SerializeField] private float maxPos;
     private float nowPower;
     private float sumPos;
+    private bool switchFlg = false;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class BallGimmick : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -61,16 +62,25 @@ public class BallGimmick : MonoBehaviour
     {
         if (sumPos >= maxPos) return;
         nowPower = movePower * Time.deltaTime;
+
         //âπÇçƒê∂
-        AudioManager.Instance.PlaySE("BallPlate",ballPlate, isLoop: false);
-        AudioManager.Instance.PlaySE("OpenDoor",ruinsDoor, isLoop: false);
+        if(!switchFlg)
+        {
+            AudioManager.Instance.PlaySE("BallPlate", isLoop: false);
+            switchFlg = true;
+        }
+
+        AudioManager.Instance.PlaySE("OpenDoor", isLoop: false);
+
     }
 
     private void CloseDoor()
     {
         if (sumPos <= 0) return;
         nowPower = -movePower * Time.deltaTime;
+
         //âπÇçƒê∂
-        AudioManager.Instance.PlaySE("CloseDoor", ruinsDoor, isLoop: false);
+        AudioManager.Instance.PlaySE("OpenDoor", isLoop: false);
+        switchFlg = false;
     }
 }

@@ -65,6 +65,7 @@ public class MoveWindGun : MonoBehaviour
     void Update()
     {
         if (!getItem.windAmmunitionFlg) return; //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
+        if (Time.timeScale <= 0f) return;
         if (playerStartDown != null && playerStartDown.isAuto == true) return;
 
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_wind || bulletChange.cylinder.isChanging == true) return;   //¡‚Ì’e‚Ìí—Ş‚ª‘Î‰‚µ‚Ä‚È‚©‚Á‚½‚ç
@@ -85,7 +86,7 @@ public class MoveWindGun : MonoBehaviour
 
         viewpoint = Quaternion.Euler(cam.transform.localRotation.eulerAngles.x, trans.localRotation.eulerAngles.y, 0);  //Œü‚¢‚Ä‚¢‚é•ûŒüŒvZ
         effectFlg = true;
-        AudioManager.Instance.PlaySE("Wind", isLoop: false);
+        AudioManager.Instance.PlaySE("Wind", isLoop: false, vol: 0.3f);
 
     }
 

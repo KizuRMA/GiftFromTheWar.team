@@ -98,6 +98,7 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.WriteFile();
             targetImage.enabled = true;
             bulletChange.HaveBulletAutoChange();
+
             //‰¹‚ğÄ¶
             AudioManager.Instance.PlaySE("GetGun", isLoop: false);
             return;
