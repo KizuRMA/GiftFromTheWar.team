@@ -39,7 +39,7 @@ public class ButtonReactionAnime : UIBehaviour, IPointerEnterHandler, IPointerEx
 
     public void AnimReset()
     {
-        ReactionImage.DOFade(endValue: 0f, duration: 0f).SetEase(Ease.OutCubic).SetUpdate(true).Play();
+        ReactionImage.color = new Color(ReactionImage.color.r, ReactionImage.color.g, ReactionImage.color.b, 0);
     }
 
 }

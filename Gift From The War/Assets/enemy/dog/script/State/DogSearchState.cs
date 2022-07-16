@@ -30,6 +30,11 @@ public class DogSearchState : State<DogState>
     {
         float dis = Vector3.Distance(owner.player.transform.position, owner.dog.transform.position);
 
+        if (Input.GetKey(KeyCode.Return))
+        {
+            agent.Move(owner.player.transform.forward * 0.1f);
+        }
+
         if (canSetFlg == true && dis <= 75.0f)
         {
             owner.StartCoroutine(TargetCoroutine());

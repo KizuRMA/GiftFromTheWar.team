@@ -83,6 +83,8 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
 
     protected override void Update()
     {
+        if (Time.timeScale <= 0f) return;
+
         float coolDown = currentUltrasound.coolDown;
         float _playerDis = Vector3.Distance(transform.position, player.transform.position);
         if (currentUltrasound != null && _playerDis <= 30.0f && untilLaunch - coolDown >= 0)

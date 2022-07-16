@@ -20,7 +20,7 @@ public class TargetSetting : MonoBehaviour
             image.enabled = true;
         }
 
-        if(Hand.GetHandFlg())
+        if(Hand.GetHandFlg() || SystemSetting.Instance.topPriorityUI == true)
         {
             image.enabled = false;
         }

@@ -124,7 +124,10 @@ public class PlayerStartDown : MonoBehaviour
         if (angle >= 180.0f)
         {
             isAuto = false;
-            text.SetActive();
+            if (text != null)
+            {
+                text.SetActive();
+            }
         }
     }
 }

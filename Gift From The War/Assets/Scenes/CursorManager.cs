@@ -32,9 +32,6 @@ public class CursorManager : SingletonMonoBehaviour<CursorManager>
         }
     }
 
-
-
-
     void ChangeCursor()
     {
         //Cursor.SetCursor(handCursor, Vector2.zero, CursorMode.Auto);

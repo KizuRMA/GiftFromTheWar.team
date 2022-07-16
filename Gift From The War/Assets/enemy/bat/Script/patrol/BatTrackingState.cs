@@ -21,6 +21,12 @@ public class BatTrackingState : State<BatPatrolState>
         Vector3 _batPos = owner.bat.transform.position + (owner.bat.transform.forward * 0.5f);
         float distance = Vector3.Distance(_batPos,owner.player.transform.position);
 
+        //コウモリのソナーの当たり判定
+        if (owner.currentUltrasound.CheckHit() == true)
+        {
+            target.AddHowlingAbnormal();
+        }
+
         if (distance <= 1.0f)
         {
             target.AddHowlingAbnormal();

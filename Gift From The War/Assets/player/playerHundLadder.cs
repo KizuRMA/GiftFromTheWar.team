@@ -98,7 +98,7 @@ public class playerHundLadder : MonoBehaviour
             if (hit.collider.tag != "ladder") return;
             if (closeLadderFlg) return; //‚·‚Å‚Éî•ñ‚ğ“ü—Í‚µ‚Ä‚¢‚½‚çˆ—‚µ‚È‚¢
 
-            if (touchedFlg == false)
+            if (gimmickBlink != null && touchedFlg == false)
             {
                 gimmickBlink.SetActive();
                 touchedFlg = true;

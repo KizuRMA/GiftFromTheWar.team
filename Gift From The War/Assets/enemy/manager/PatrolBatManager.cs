@@ -18,12 +18,12 @@ public class PatrolBatManager : BaseEnemyManager
     private void Awake()
     {
         wayPointIndex = 0;
-        wayPointIndexMax = wayPointLists.wayPoints.Count;
         owner = transform.parent.GetComponent<EnemyManager>();
     }
 
     private void Start()
     {
+        wayPointIndexMax = wayPointLists.wayPoints.Count;
         SetWayPointRoot();
         ResetPriority();
     }
@@ -68,14 +68,14 @@ public class PatrolBatManager : BaseEnemyManager
         EnemyInterface info = game.GetComponent<EnemyInterface>();
 
         int _respawnIndex = 0;
-        float _minDis = float.MaxValue;
+        float _maxDis = 0;
         Vector3 _playerPos = owner.player.transform.position;
         for (int i = 0; i < respawnPos.Count; i++)
         {
             float _dis = Vector2.Distance(new Vector2(respawnPos[i].position.x, respawnPos[i].position.z),new Vector2(_playerPos.x, _playerPos.z));
-            if (_dis < _minDis)
+            if (_dis > _maxDis)
             {
-                _minDis = _dis;
+                _maxDis = _dis;
                 _respawnIndex = i;
             }
         }
@@ -89,7 +89,7 @@ public class PatrolBatManager : BaseEnemyManager
         ResetPriority();
     }
 
-    public void ResetPriority()
+    public void ResetPriority() //コウモリの優先度をリセット
     {
         //子オブジェクトを全て取得する
         GameObject[] _ChildObjects = new GameObject[gameObject.transform.childCount];

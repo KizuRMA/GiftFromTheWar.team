@@ -49,14 +49,14 @@ public class Menu : MonoBehaviour
 
     private void Pause()
     {
-        Time.timeScale = 0;  // ŠÔ’â~
+        SystemSetting.Instance.Pause(); // ŠÔ’â~
         image.SetActive(true);
         CursorManager.Instance.cursorLock = false;
     }
 
     private void Resume()
     {
-        Time.timeScale = 1;  // ÄŠJ
+        SystemSetting.Instance.Resume();  // ÄŠJ
         image.SetActive(false);
         CursorManager.Instance.cursorLock = true;
 

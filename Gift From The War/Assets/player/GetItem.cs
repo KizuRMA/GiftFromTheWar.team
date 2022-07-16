@@ -77,7 +77,11 @@ public class GetItem : MonoBehaviour
             //チュートリアル表示
             if (touchedItemFlg == false && (tagName == "gun" || tagName == "ammunition" || tagName == "Rantan"))
             {
-                itemBlinking.SetActive();
+                if (itemBlinking != null)
+                {
+                    itemBlinking.SetActive();
+                }
+               
                 touchedItemFlg = true;
             }
 
