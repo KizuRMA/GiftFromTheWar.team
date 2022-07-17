@@ -11,6 +11,7 @@ public class ShootParent : MonoBehaviour
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected GameObject bulletEffectPrefab;
     [SerializeField] protected GameObject bulletRemainEffectPrefab;
+    [SerializeField] protected GameObject targetImage;
 
     //弾の発射  
     [SerializeField] protected float shotSpeed;   //発射スピード
@@ -22,10 +23,12 @@ public class ShootParent : MonoBehaviour
     protected List<GameObject> bulletRemainEffect = new List<GameObject>();   //弾の残留エフェクト
     protected Vector3 shotPos;                    //着弾点
 
-    protected void CreateBullet() //プレハブから弾を作る
+    protected virtual GameObject CreateBullet() //プレハブから弾を作る
     {
+        GameObject _obj = (GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.identity);
+
         //リストに弾を追加
-        bullet.Add((GameObject)Instantiate(bulletPrefab, trans.position, Quaternion.identity));
+        bullet.Add(_obj);
 
         //目的地に球を方向転換
         bullet[bullet.Count - 1].transform.LookAt(shotPos);
@@ -49,7 +52,7 @@ public class ShootParent : MonoBehaviour
 
         Destroy(bulletRemainEffect[bulletRemainEffect.Count - 1], range);
 
-       
+        return _obj;
     }
 
     protected void MoveBullet()   //弾の移動

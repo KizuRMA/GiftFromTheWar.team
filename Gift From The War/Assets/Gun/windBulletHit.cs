@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class windBulletHit : MonoBehaviour
 {
     private shooting shot;
+    public GameObject targetImageObj = null;
 
     private void Start()
     {
@@ -44,6 +46,11 @@ public class windBulletHit : MonoBehaviour
         {
             var target = _collider.transform.GetComponent<EnemyInterface>();
             target.Damage(1);
+
+            if (targetImageObj != null)
+            {
+                targetImageObj.GetComponent<TargetSetting>().HitAnime();
+            }
         }
 
         return;

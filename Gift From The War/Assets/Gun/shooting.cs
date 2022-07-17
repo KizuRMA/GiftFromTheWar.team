@@ -97,4 +97,12 @@ public class shooting : ShootParent
 
         touchEffectList.Add((GameObject)Instantiate(touchEffect, bulletPos, Quaternion.identity));
     }
+
+    protected override GameObject CreateBullet()
+    {
+        GameObject _obj = base.CreateBullet();
+
+        _obj.transform.GetComponent<windBulletHit>().targetImageObj = targetImage;
+        return _obj;
+    }
 }
