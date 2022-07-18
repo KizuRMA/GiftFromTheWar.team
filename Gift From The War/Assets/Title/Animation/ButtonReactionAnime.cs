@@ -16,6 +16,7 @@ public class ButtonReactionAnime : UIBehaviour, IPointerEnterHandler, IPointerEx
         
     }
 
+  
     //マウスがボタンの上に来たら
     public void OnPointerEnter(PointerEventData eventData)
     {
