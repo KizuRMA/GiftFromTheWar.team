@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 25aa44ad192704644b17fd3f6b5e8c33, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -282,11 +282,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 0}
-  windBullet: {fileID: 1221756700134338866}
-  magnetBullet: {fileID: 1221756698584539901}
-  fireBullet: {fileID: 1221756698554729964}
+  windAmmo: {fileID: 0}
+  magnetAmmo: {fileID: 0}
+  fireAmmo: {fileID: 0}
   rotateSpeed: 150
-  nowChanging: 0
+  isChanging: 0
 --- !u!1 &1221756699242781322
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,7 +597,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0926dccfee72d0649a4d04a37d33e387, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -880,7 +880,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 093e321e755684f45866f7b3cef397c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
