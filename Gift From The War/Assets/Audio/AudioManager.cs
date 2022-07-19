@@ -36,6 +36,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
     //BGMをフェードアウト中か
     private bool _isFadeOut = false;
+    private float _BGMVolSetting = BGM_VOLUME_DEFULT;
     private float _nextVol;
 
     //BGM用、SE用に分けてオーディオソースを持つ
@@ -249,7 +250,8 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         {
             _nextBGMName = "";
             _bgmSource.clip = _bgmDic[bgmName] as AudioClip;
-            _bgmSource.volume = vol;
+            _nextVol = vol;
+            _bgmSource.volume = vol * _BGMVolSetting;
             _bgmSource.Play();
         }
         //違うBGMが流れている時は、流れているBGMをフェードアウトさせてから次を流す。同じBGMが流れている時はスルー
@@ -296,7 +298,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
             if (!string.IsNullOrEmpty(_nextBGMName))
             {
-                PlayBGM(_nextBGMName, vol: _nextVol);
+                PlayBGM(_nextBGMName, vol: _nextVol * _BGMVolSetting);
             }
         }
 
@@ -311,7 +313,8 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     /// </summary>
     public void ChangeBGMVolume(float BGMVolume)
     {
-        _bgmSource.volume = BGMVolume;
+        _BGMVolSetting = BGMVolume;
+        _bgmSource.volume = _nextVol * _BGMVolSetting;
 
         PlayerPrefs.SetFloat(BGM_VOLUME_KEY, BGMVolume);
     }
@@ -325,7 +328,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 
     public float GetBGMVolume()
     {
-        return _bgmSource.volume;
+        return _BGMVolSetting;
     }
 
     public float GetSEVolume()
