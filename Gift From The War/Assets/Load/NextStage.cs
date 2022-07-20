@@ -30,7 +30,7 @@ public class NextStage : MonoBehaviour
         else
         {
             TimeAttackManager.Instance.timerStopFlg = true;
-            TimeAttackManager.Instance.enabled = false;
+            TimeAttackManager.Instance.TimerHide();
             SceneManager.LoadScene("TimeAttackResult");
         }
     }

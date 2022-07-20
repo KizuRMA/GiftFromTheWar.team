@@ -24,11 +24,11 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
 
     void Update()
     {
+        Debug.Log(timeAttackFlg);
+
         if (!timeAttackFlg) return;
 
         if (!timerStartFlg) return;
-
-        Debug.Log(timerStopFlg);
 
         if (!timerStopFlg)
         {
@@ -72,6 +72,11 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
     public void TimerReset()
     {
         countTime = 0;
+    }
+
+    public void TimerHide()
+    {
+        timer.enabled = false;
     }
 
     public float Result()
