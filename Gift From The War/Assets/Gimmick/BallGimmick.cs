@@ -66,11 +66,11 @@ public class BallGimmick : MonoBehaviour
         //âπÇçƒê∂
         if(!switchFlg)
         {
-            AudioManager.Instance.PlaySE("BallPlate", isLoop: false);
+            AudioManager.Instance.PlaySE("BallPlate",ballPlate, isLoop: false);
             switchFlg = true;
         }
 
-        AudioManager.Instance.PlaySE("OpenDoor", isLoop: false);
+        AudioManager.Instance.PlaySE("OpenDoor1",ruinsDoor, isLoop: false);
 
     }
 
@@ -80,7 +80,7 @@ public class BallGimmick : MonoBehaviour
         nowPower = -movePower * Time.deltaTime;
 
         //âπÇçƒê∂
-        AudioManager.Instance.PlaySE("OpenDoor", isLoop: false);
+        AudioManager.Instance.PlaySE("OpenDoor1",ruinsDoor, isLoop: false);
         switchFlg = false;
     }
 }
