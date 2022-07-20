@@ -60,10 +60,10 @@ public class playerDied : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    CC.GetComponent<playerAbnormalcondition>().life = 0;
-        //}
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            CC.GetComponent<playerAbnormalcondition>().life = 0;
+        }
 
         if (CC.GetComponent<playerAbnormalcondition>().life <= 0)   //HPが０になっていたら
         {
@@ -83,6 +83,14 @@ public class playerDied : MonoBehaviour
             //移動角度制限削除
             rantanRD.constraints = RigidbodyConstraints.None;
             gunRD.constraints = RigidbodyConstraints.None;
+
+            //タイムアタック関係
+            if (TimeAttackManager.Instance.timeAttackFlg)
+            {
+                TimeAttackManager.Instance.timerStopFlg = true;
+                TimeAttackManager.Instance.timerStartFlg = false;
+                TimeAttackManager.Instance.enabled = false;
+            }
         }
 
         if (!diedFlg) return;
@@ -152,6 +160,14 @@ public class playerDied : MonoBehaviour
         yield return new WaitForSeconds(sceneCoolTime);  //クールタイム分待つ
 
         CursorManager.Instance.cursorLock = false;
-        SceneManager.LoadScene("GameOverScene");
+
+        if (!TimeAttackManager.Instance.timeAttackFlg)
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("TimeAttackResult");
+        }
     }
 }

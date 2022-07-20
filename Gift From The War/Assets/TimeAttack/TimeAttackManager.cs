@@ -12,7 +12,6 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
     private float countTime = 0;
     private float countSecond = 0;
     private int countMinute = 0;
-    private int countHour = 0;
 
     void Start()
     {
@@ -29,6 +28,8 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
 
         if (!timerStartFlg) return;
 
+        Debug.Log(timerStopFlg);
+
         if (!timerStopFlg)
         {
             Timer();
@@ -39,13 +40,13 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
 
     private void Timer()
     {
+        if (countMinute >= 99) return;
+
         // countTime‚ÉAƒQ[ƒ€‚ªŠJn‚µ‚Ä‚©‚ç‚Ì•b”‚ğŠi”[
         countTime += Time.deltaTime;
 
         //countTime‚©‚çŒo‰ßŠÔ‚ğZo
         float time = countTime;
-        countHour = (int)time / 3600;
-        time = time % 3600;
         countMinute = (int)time / 60;
         time = time % 60;
         countSecond = time;
@@ -56,19 +57,25 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
         timer.enabled = true;
 
         // ¬”2Œ…‚É‚µ‚Ä•\¦
-        timer.SetText(countHour.ToString("00") + ":" + countMinute.ToString("00") + ":" + countSecond.ToString("00.00"));
+        timer.SetText(countMinute.ToString("00") + ":" + countSecond.ToString("00.00"));
     }
 
     public void TimerFinish()
     {
+        TimerReset();
+        timer.enabled = false;
         timeAttackFlg = false;
         timerStartFlg = false;
         timerStopFlg = false;
-        timer.enabled = false;
     }
 
     public void TimerReset()
     {
         countTime = 0;
+    }
+
+    public float Result()
+    {
+        return countTime;
     }
 }

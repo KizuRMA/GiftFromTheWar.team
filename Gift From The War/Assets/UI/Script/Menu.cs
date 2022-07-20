@@ -19,8 +19,6 @@ public class Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Cursor.lockState = CursorLockMode.None;
-
         bool _pauseFlg = pauseFlg;
 
         if (Input.GetKeyDown(KeyCode.Escape) == true)
@@ -73,6 +71,8 @@ public class Menu : MonoBehaviour
         pauseFlg = false;
         image.SetActive(false);
         CursorManager.Instance.cursorLock = false;
+
+        if (TimeAttackManager.Instance.timerStartFlg) TimeAttackManager.Instance.TimerFinish();
     }
 
     public void BackGame()

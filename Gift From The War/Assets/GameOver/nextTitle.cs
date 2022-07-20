@@ -7,6 +7,8 @@ public class nextTitle : MonoBehaviour
 {
     public void OnClickStartButton()
     {
+        if (TimeAttackManager.Instance.timeAttackFlg) TimeAttackManager.Instance.TimerFinish();
+
         StartCoroutine(LoadManager.Instance.LoadScene("Scenes/TitleScene"));
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerStartDown : MonoBehaviour
 {
     [SerializeField] UIBlinking text;
-    [SerializeField] bool isDebug = false;
+    [SerializeField] public bool isDebug = false;
 
     private CharacterController characterController;
     public bool isAuto;

@@ -22,6 +22,16 @@ public class NextStage : MonoBehaviour
         if (other.gameObject.tag != "Player") return;
         if (nextStageFlg) return;
         nextStageFlg = true;
-        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/GameClearScene"));
+
+        if (!TimeAttackManager.Instance.timeAttackFlg)
+        {
+            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/GameClearScene"));
+        }
+        else
+        {
+            TimeAttackManager.Instance.timerStopFlg = true;
+            TimeAttackManager.Instance.enabled = false;
+            SceneManager.LoadScene("TimeAttackResult");
+        }
     }
 }
