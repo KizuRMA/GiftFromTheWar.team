@@ -89,6 +89,7 @@ public class playerDied : MonoBehaviour
             {
                 TimeAttackManager.Instance.timerStopFlg = true;
                 TimeAttackManager.Instance.timerStartFlg = false;
+                TimeAttackManager.Instance.playerDiedFlg = true;
                 TimeAttackManager.Instance.TimerHide();
             }
         }

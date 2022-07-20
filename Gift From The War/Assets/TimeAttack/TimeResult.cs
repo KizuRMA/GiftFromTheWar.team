@@ -20,6 +20,12 @@ public class TimeResult : MonoBehaviour
 
         resultFlg = false;
 
+        if(TimeAttackManager.Instance.playerDiedFlg)
+        {
+            timer.SetText("You Died");
+            return;
+        }
+
         //countTime‚©‚çŒo‰ßŠÔ‚ğZo
         float time = TimeAttackManager.Instance.Result();
         float countMinute = (int)time / 60;

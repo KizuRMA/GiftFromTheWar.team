@@ -8,6 +8,7 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
     public bool timeAttackFlg { get; set; } //タイムアタックを行うかどうか
     public bool timerStartFlg { get; set; } //タイマーをいつスタートするか
     public bool timerStopFlg { get; set; } //タイマーをいつスタートするか
+    public bool playerDiedFlg { get; set; } //プレイヤーが死んだかどうか
     [SerializeField] private TextMeshProUGUI timer;
     private float countTime = 0;
     private float countSecond = 0;
@@ -19,13 +20,12 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
         timeAttackFlg = false;
         timerStartFlg = false;
         timerStopFlg = false;
+        playerDiedFlg = false;
         timer.enabled = false;
     }
 
     void Update()
     {
-        Debug.Log(timeAttackFlg);
-
         if (!timeAttackFlg) return;
 
         if (!timerStartFlg) return;
@@ -67,6 +67,7 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
         timeAttackFlg = false;
         timerStartFlg = false;
         timerStopFlg = false;
+        playerDiedFlg = false;
     }
 
     public void TimerReset()
