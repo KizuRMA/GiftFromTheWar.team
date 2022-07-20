@@ -36,6 +36,7 @@ public class DogAttackFunction : MonoBehaviour
         isJumpFlg = true;
         owner.animator.SetFloat("Speed", 1.8f);
 
+
         rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         // 射出角度
@@ -44,7 +45,7 @@ public class DogAttackFunction : MonoBehaviour
         Transform _player = owner.player.transform;
 
         float _playerDis = Vector3.Distance(transform.position,_player.position);
-        Vector3 _targetPos = transform.forward * (_playerDis * 1.2f) + transform.position;
+        Vector3 _targetPos = transform.forward * (_playerDis * 1.5f) + transform.position;
 
         // 射出速度を算出
         Vector3 velocity = CalculateVelocity(transform.position, _targetPos, angle);
@@ -55,14 +56,14 @@ public class DogAttackFunction : MonoBehaviour
         rd.AddForce(velocity * rd.mass, ForceMode.Impulse);
     }
 
-    public void Landing()
+    public void Air()
     {
 
     }
 
-    public void Air()
+    public void Landing()
     {
-
+        owner.animator.SetFloat("Speed", 0.9f);
     }
 
     private Vector3 CalculateVelocity(Vector3 pointA, Vector3 pointB, float angle)

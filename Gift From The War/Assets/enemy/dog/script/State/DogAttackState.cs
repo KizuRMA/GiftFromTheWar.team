@@ -43,7 +43,7 @@ public class DogAttackState : State<DogState>
 
         if (info.isJumpFlg == false)
         {
-            //TurnToPlayer();
+            TurnToPlayer();
         }
 
         if (owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -97,7 +97,7 @@ public class DogAttackState : State<DogState>
         dot = Vector3.Dot(_targetVec, _forwardVec);
         _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-        float _rotSpeed = 360.0f * Time.deltaTime;
+        float _rotSpeed = 160.0f * Time.deltaTime;
 
         if (_degAng <= _rotSpeed)
         {
