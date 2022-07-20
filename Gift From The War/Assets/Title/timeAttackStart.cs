@@ -9,6 +9,7 @@ public class timeAttackStart : MonoBehaviour
         StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
         TimeAttackManager.Instance.timeAttackFlg = true;
         TimeAttackManager.Instance.timerStopFlg = false;
+        TimeAttackManager.Instance.playerDiedFlg = false;
         TimeAttackManager.Instance.TimerReset();
         SaveManager.Instance.Restart();
         SaveManager.Instance.WriteFile();
