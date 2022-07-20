@@ -14,6 +14,8 @@ public class NavController : MonoBehaviour
     public float angularSpeed = 200f;
     [TooltipAttribute("ターンする時の角度差"), SerializeField]
     public float turnAngle = 45f;
+    [TooltipAttribute("ターンを終了する時の角度差"), SerializeField]
+    public float turnEndAngle = 45f;
     [TooltipAttribute("ターン時の旋回速度"), SerializeField]
     public float turnAngularSpeed = 1000f;
     [TooltipAttribute("スピードを落とす距離。目的地がこの距離以内になったら、旋回角度に応じた減速をする"), SerializeField]
@@ -36,9 +38,12 @@ public class NavController : MonoBehaviour
     float lastSpeed;
     float walkSpeed;
 
+    bool turnFlg;
+
     private void Awake()
     {
         walkSpeed = 0f;
+        turnFlg = false;
     }
 
     public float DistanceXZ(Vector3 src, Vector3 dst)
@@ -98,7 +103,7 @@ public class NavController : MonoBehaviour
             float angle = Vector3.SignedAngle(transform.forward, _move, Vector3.up);
 
             //角度がturnAngleを越えていたら速度0
-            if (Mathf.Abs(angle) > turnAngle)
+            if (Mathf.Abs(angle) > turnAngle || turnFlg == true)
             {
                 // 最高速度を越えているのでターンのみ
                 float rotmax = turnAngularSpeed * Time.deltaTime;
@@ -106,6 +111,11 @@ public class NavController : MonoBehaviour
                 transform.Rotate(0f, rot * Mathf.Sign(angle), 0f);
                 _move = Vector3.zero;
                 spd = 0f;
+                turnFlg = true;
+                if (angle <= turnEndAngle)
+                {
+                    turnFlg = false;
+                }
             }
             else
             {
@@ -137,7 +147,8 @@ public class NavController : MonoBehaviour
         }
         else
         {
-            _move = Vector3.zero;
+            _move = LastCorner - transform.position;
+            _move.y = 0f;
         }
 
         chrController.Move(_move);
