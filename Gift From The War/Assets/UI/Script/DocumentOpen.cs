@@ -51,17 +51,7 @@ public class DocumentOpen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            if (openFlg == true)
-            {
-                Close();
-            }
-            else
-            {
-                Open();
-            }
-        }
+
     }
 
     public void Open()  //‘—¿‚ğŠJ‚­ŠÖ”
