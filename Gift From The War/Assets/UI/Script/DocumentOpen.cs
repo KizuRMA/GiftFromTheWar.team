@@ -11,6 +11,7 @@ public class DocumentOpen : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TextMeshProUGUI pageNumberText;
     private Image image;
+    private CanvasGroup showCanvas;
 
     private bool openFlg { get; set; }
     private int imageIndex;
@@ -23,6 +24,7 @@ public class DocumentOpen : MonoBehaviour
         if (images.Count >= 1)
         {
             image = images[imageIndex];
+            showCanvas = images[imageIndex].GetComponent<CanvasGroup>();
         }
 
         foreach (var _images in images)
@@ -37,9 +39,10 @@ public class DocumentOpen : MonoBehaviour
 
         image.rectTransform.anchoredPosition = new Vector3(0,-1200.0f,0);
 
-        image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
+        //image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
         backGroundImage.color = new Color(backGroundImage.color.r, backGroundImage.color.g, backGroundImage.color.b, 0);
         canvasGroup.alpha = 0;
+        showCanvas.alpha = 0;
 
         UpdateText();
     }
@@ -75,7 +78,7 @@ public class DocumentOpen : MonoBehaviour
         //アニメーション実行
         image.rectTransform.DOLocalMoveY(0f, 1.5f).SetEase(Ease.OutQuart).SetUpdate(true).OnComplete(() => canvasGroup.DOFade(1.0f, 0.5f).SetUpdate(true).Play()).Play();
         image.rectTransform.DOLocalMoveY(0f, 1.5f).SetEase(Ease.OutQuart).SetUpdate(true).Play();
-        image.DOFade(1f,1.0f).SetEase(Ease.InQuart).SetUpdate(true).Play();
+        showCanvas.DOFade(1f,1.0f).SetEase(Ease.InQuart).SetUpdate(true).Play();
         backGroundImage.DOFade(0.5f,0.25f).SetEase(Ease.InQuart).SetUpdate(true).Play();
         openFlg = true;
 
@@ -97,7 +100,7 @@ public class DocumentOpen : MonoBehaviour
         canvasGroup.interactable = false;
 
         //アニメーション実行
-        image.DOFade(0f,0.5f).SetEase(Ease.InQuart).SetUpdate(true).Play();
+        showCanvas.DOFade(0f,0.5f).SetEase(Ease.InQuart).SetUpdate(true).Play();
         image.rectTransform.DOLocalMoveY(-1200.0f, 0.8f).SetEase(Ease.InQuart).SetUpdate(true).Play();
         backGroundImage.DOFade(0f,0.5f).SetEase(Ease.InQuart).SetUpdate(true).OnComplete(() => SystemSetting.Instance.topPriorityUI = false).Play();
         canvasGroup.DOFade(0.0f, 0.5f).SetUpdate(true).Play();
@@ -106,10 +109,15 @@ public class DocumentOpen : MonoBehaviour
 
     public void NextPage()
     {
-        if (imageIndex >= images.Count - 1) return;
+        if (imageIndex >= images.Count - 1)
+        {
+            Close();
+            return;
+        }
         imageIndex = imageIndex + 1;
         image.gameObject.SetActive(false);
         image = images[imageIndex];
+        showCanvas = images[imageIndex].GetComponent<CanvasGroup>();
         image.gameObject.SetActive(true);
 
         UpdateText();
@@ -121,6 +129,7 @@ public class DocumentOpen : MonoBehaviour
         image.gameObject.SetActive(false);
         imageIndex = imageIndex - 1;
         image = images[imageIndex];
+        showCanvas = images[imageIndex].GetComponent<CanvasGroup>();
         image.gameObject.SetActive(true);
 
         UpdateText();
