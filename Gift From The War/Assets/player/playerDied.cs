@@ -60,10 +60,10 @@ public class playerDied : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            CC.GetComponent<playerAbnormalcondition>().life = 0;
-        }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    CC.GetComponent<playerAbnormalcondition>().life = 0;
+        //}
 
         if (CC.GetComponent<playerAbnormalcondition>().life <= 0)   //HPが０になっていたら
         {
@@ -87,6 +87,8 @@ public class playerDied : MonoBehaviour
             //タイムアタック関係
             if (TimeAttackManager.Instance.timeAttackFlg)
             {
+                SaveManager.Instance.Restart();
+                SaveManager.Instance.WriteFile();
                 TimeAttackManager.Instance.timerStopFlg = true;
                 TimeAttackManager.Instance.timerStartFlg = false;
                 TimeAttackManager.Instance.playerDiedFlg = true;

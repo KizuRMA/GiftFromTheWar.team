@@ -29,6 +29,8 @@ public class NextStage : MonoBehaviour
         }
         else
         {
+            SaveManager.Instance.Restart();
+            SaveManager.Instance.WriteFile();
             TimeAttackManager.Instance.timerStopFlg = true;
             TimeAttackManager.Instance.timerStartFlg = false;
             TimeAttackManager.Instance.TimerHide();
