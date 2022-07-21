@@ -29,7 +29,7 @@ public class NextStage : MonoBehaviour
         }
         else
         {
-            SaveManager.Instance.Restart();
+            SaveManager.Instance.nowSaveData = TimeAttackManager.Instance.saveData;
             SaveManager.Instance.WriteFile();
             TimeAttackManager.Instance.timerStopFlg = true;
             TimeAttackManager.Instance.timerStartFlg = false;
