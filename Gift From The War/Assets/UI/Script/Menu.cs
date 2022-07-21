@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SystemSetting.Instance.pauseType != SystemSetting.e_PauseType.Select) return;
+        if (SystemSetting.Instance.pauseType == SystemSetting.e_PauseType.Document) return;
 
         bool _pauseFlg = pauseFlg;
 
