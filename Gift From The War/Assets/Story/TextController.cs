@@ -21,7 +21,7 @@ public class TextController : MonoBehaviour
 
 	//	uiText‚Ö‚ÌQÆ
 	[SerializeField]
-	private Text _uiText;
+	private Text[] _uiText;
 
 	//	•¶š‚Ì•\¦‚ªŠ®—¹‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	public bool IsCompleteDisplayText
@@ -56,7 +56,10 @@ public class TextController : MonoBehaviour
 		int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * currentText.Length);
 		if (displayCharacterCount != lastUpdateCharacter)
 		{
-			_uiText.text = currentText.Substring(0, displayCharacterCount);
+			foreach (var t in _uiText)
+			{
+				t.text = currentText.Substring(0, displayCharacterCount);
+			}
 			lastUpdateCharacter = displayCharacterCount;
 		}
 	}

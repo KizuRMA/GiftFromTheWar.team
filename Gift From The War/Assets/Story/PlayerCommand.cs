@@ -13,7 +13,11 @@ public class PlayerCommand : MonoBehaviour
     //レイ判定
     [SerializeField] private float handDis;
 
+    private bool hitFlg;
+
     private string objName;
+
+    private GameObject neziKun=null;
 
     //　コマンド用UI
     [SerializeField]
@@ -28,40 +32,54 @@ public class PlayerCommand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //　コマンドUIの表示・非表示の切り替え
-        if (Input.GetKeyDown(KeyCode.Space)&&Ray(true))
-        {
-            //　コマンド
-            if (!commandUI.activeSelf)
-            {
-               
-            }
-            else
-            {
-                ExitCommand();
-            }
-            //　コマンドUIのオン・オフ
-            commandUI.SetActive(!commandUI.activeSelf);
-            CursorManager.Instance.cursorLock = false;
+        //  レイ判定
+        Ray();
 
+        //　コマンドUIの表示
+        if(hitFlg)
+        {
+            //　コマンドUIのオン
+            commandUI.SetActive(true);
+            CursorManager.Instance.cursorLock = false;
+            hitFlg = false;
         }
+
+        EndCommand();
     }
 
     //レイ判定
-    private bool Ray(bool value)
+    private void Ray()
     {
+        //  スペースキーを押したとき
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+
         Ray ray = new Ray(camTrans.position, camTrans.forward);
         RaycastHit hit;
+
+        //  レイ投射
         if (Physics.Raycast(ray, out hit, handDis))
         {
-            objName = hit.collider.gameObject.name;
+            //  衝突しているオブジェクトのタグ名を取得
+            objName = hit.collider.gameObject.tag;
+            neziKun = hit.collider.gameObject;
 
-            if(objName=="NeziKun")
+            //  衝突しているオブジェクトがネジ君だったら
+            if(objName=="Nezi")
             {
-                return true;
+                hitFlg = true;
             }
+        }     
+    }
+
+    //  コマンドの終了時
+    void EndCommand()
+    {
+        if (ScenarioManager.Instance.endFlg)
+        {
+            neziKun.SetActive(false);
+            commandUI.SetActive(false);
+            ScenarioManager.Instance.endFlg = false;
         }
-            return false;
     }
 
 
@@ -69,6 +87,6 @@ public class PlayerCommand : MonoBehaviour
     public void ExitCommand()
     {
         EventSystem.current.SetSelectedGameObject(null);
-        Debug.Log("Call");
+        CursorManager.Instance.cursorLock = true;
     }
 }

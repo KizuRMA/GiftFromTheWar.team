@@ -9,20 +9,22 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 {
     public string loadFileName;
 
+    //  前のパネルに戻るかどうか
+    public bool backPanelFlg = false;
+
+    //  文章を読み終わっているかどうか
+    public bool endFlg=false;
+
     //  シナリオを格納する
     private string[] scenarios;
     //  現在の行番号
     private int currentLine = 0;
-    //  最大の行番号
-    private int maxLine;
-
+   
     private bool isCallPreload = false;
 
     //
     private TextController textController;
     private CommandController commandController;
-  
-    private GameObject neziKun;
 
     void RequestNextLine()
     {
@@ -85,10 +87,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
         textController = GetComponent<TextController>();
         commandController = GetComponent<CommandController>();
 
-        neziKun = GameObject.Find("NeziKun");
-
-        maxLine = 3;
-
         UpdateLines(loadFileName);
         RequestNextLine();
     }
@@ -99,12 +97,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
         // 文字の表示が完了してるならクリック時に次の行を表示する
         if (textController.IsCompleteDisplayText)
         {
-            if (currentLine >= maxLine)
-            {
-                currentLine = 0;
-                neziKun.SetActive(false);
-            }
-
             if (currentLine < scenarios.Length)
             {
                 if (!isCallPreload)
@@ -118,6 +110,10 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
                     RequestNextLine();
                 }
             }
+            else
+            {
+                ResetText();
+            }
 
 
         }
@@ -129,11 +125,25 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
                 textController.ForceCompleteDisplayText();
             }
         }
-    }
 
-    void CheckEndText()
+        if(backPanelFlg)
+        {
+            currentLine = 0;
+            backPanelFlg = false;
+        }
+
+    }
+    //  文章が終了していたらウィンドウを削除する
+    private void ResetText()
     {
-        Debug.Log("End");
+        //  左クリック
+        if (Input.GetMouseButtonDown(0))
+        {
+            endFlg = true;
+            //  行番号をリセット
+            currentLine = 0;
+            CursorManager.Instance.cursorLock = true;
+        }
     }
 
     #endregion

@@ -104,6 +104,7 @@ public class Command : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(selectedGameObjectStack.Pop());
                 commandPanelCanvasGroup.interactable = true;
                 commandPanel.SetActive(true);
+                ScenarioManager.Instance.backPanelFlg = true;
 
                 currentCommand = CommandMode.CommandPanel;
             }
@@ -116,6 +117,7 @@ public class Command : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(selectedGameObjectStack.Pop());
                 commandPanelCanvasGroup.interactable = true;
                 commandPanel.SetActive(true);
+                ScenarioManager.Instance.backPanelFlg = true;
 
                 currentCommand = CommandMode.CommandPanel;
             }
@@ -128,6 +130,7 @@ public class Command : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(selectedGameObjectStack.Pop());
                 commandPanelCanvasGroup.interactable = true;
                 commandPanel.SetActive(true);
+                ScenarioManager.Instance.backPanelFlg = true;
 
                 currentCommand = CommandMode.CommandPanel;
             }
@@ -153,8 +156,6 @@ public class Command : MonoBehaviour
         textPanelCanvasGroup.interactable = false;
         textPanelCanvasGroup1.interactable = false;
         textPanelCanvasGroup2.interactable = false;
-
-        EventSystem.current.SetSelectedGameObject(firstSelectButton);
     }
 
     //　選択したコマンドで処理分け
@@ -173,7 +174,7 @@ public class Command : MonoBehaviour
             textPanel.transform.SetAsLastSibling();
             textPanel.SetActive(true);
             textPanelCanvasGroup.interactable = true;
-            EventSystem.current.SetSelectedGameObject(textPanel1.transform.GetChild(0).gameObject);
+            EventSystem.current.SetSelectedGameObject(textPanel.transform.GetChild(0).gameObject);
         }
         else if(command=="Button1")
         {
