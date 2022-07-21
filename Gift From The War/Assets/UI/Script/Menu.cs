@@ -19,6 +19,8 @@ public class Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SystemSetting.Instance.pauseType != SystemSetting.e_PauseType.Select) return;
+
         bool _pauseFlg = pauseFlg;
 
         if (Input.GetKeyDown(KeyCode.Escape) == true)
@@ -47,7 +49,7 @@ public class Menu : MonoBehaviour
 
     private void Pause()
     {
-        SystemSetting.Instance.Pause(); // ŽžŠÔ’âŽ~
+        SystemSetting.Instance.Pause(SystemSetting.e_PauseType.Select); // ŽžŠÔ’âŽ~
         image.SetActive(true);
         CursorManager.Instance.cursorLock = false;
     }

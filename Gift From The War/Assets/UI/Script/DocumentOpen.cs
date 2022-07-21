@@ -51,7 +51,12 @@ public class DocumentOpen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SystemSetting.Instance.pauseType != SystemSetting.e_PauseType.Document) return;
 
+        if (Input.GetKeyDown(KeyCode.Escape) == true)
+        {
+            Close();
+        }
     }
 
     public void Open()  //‘—¿‚ğŠJ‚­ŠÖ”
@@ -59,7 +64,7 @@ public class DocumentOpen : MonoBehaviour
         if (openFlg == true) return;
 
         //ŠÔ‚ğ’â~‚·‚é
-        SystemSetting.Instance.Pause();
+        SystemSetting.Instance.Pause(SystemSetting.e_PauseType.Document);
 
         CursorManager.Instance.cursorLock = false;
 

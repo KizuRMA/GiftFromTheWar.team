@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class SystemSetting : SingletonMonoBehaviour<SystemSetting>
 {
+    public enum e_PauseType
+    {
+        None,
+        Select,
+        Document,
+    }
+
     [SerializeField] int FrameRate = 60;
-    public bool topPriorityUI; //最優先で表示するUIが有効か無効
+    [System.NonSerialized]public bool topPriorityUI; //最優先で表示するUIが有効か無効
+    [System.NonSerialized]public e_PauseType pauseType; 
 
     private void Start()
     {
+        pauseType = e_PauseType.None;
         topPriorityUI = false;
         DontDestroyOnLoad(this);
         Screen.SetResolution(Screen.width, Screen.height, true);
@@ -20,13 +29,15 @@ public class SystemSetting : SingletonMonoBehaviour<SystemSetting>
         
     }
 
-    public void Pause()
+    public void Pause(e_PauseType _type)
     {
+        pauseType = _type;
         Time.timeScale = 0;  // 時間停止
     }
 
     public void Resume()
     {
+        pauseType = e_PauseType.None;
         Time.timeScale = 1;  // 再開
     }
 }
