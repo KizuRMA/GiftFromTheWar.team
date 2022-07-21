@@ -9,6 +9,7 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
     public bool timerStartFlg { get; set; } //タイマーをいつスタートするか
     public bool timerStopFlg { get; set; } //タイマーをいつスタートするか
     public bool playerDiedFlg { get; set; } //プレイヤーが死んだかどうか
+    public SaveManager.SaveData saveData { get; set; }  //メインストーリーのセーブデータを保存
     [SerializeField] private TextMeshProUGUI timer;
     private float countTime = 0;
     private float countSecond = 0;
@@ -62,6 +63,8 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
 
     public void TimerFinish()
     {
+        SaveManager.Instance.nowSaveData = TimeAttackManager.Instance.saveData;
+        SaveManager.Instance.WriteFile();
         TimerReset();
         timer.enabled = false;
         timeAttackFlg = false;
