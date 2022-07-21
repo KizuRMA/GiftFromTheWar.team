@@ -36,6 +36,7 @@ public class DocumentOpen : MonoBehaviour
         backGroundImage.gameObject.SetActive(true);
         canvasGroup.gameObject.SetActive(true);
         canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
 
         image.rectTransform.anchoredPosition = new Vector3(0,-1200.0f,0);
 
@@ -74,6 +75,7 @@ public class DocumentOpen : MonoBehaviour
 
         //ボタンを有効にする
         canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
 
         //アニメーション実行
         image.rectTransform.DOLocalMoveY(0f, 1.5f).SetEase(Ease.OutQuart).SetUpdate(true).OnComplete(() => canvasGroup.DOFade(1.0f, 0.5f).SetUpdate(true).Play()).Play();
@@ -98,6 +100,8 @@ public class DocumentOpen : MonoBehaviour
         CursorManager.Instance.cursorLock = true;
 
         canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+
 
         //アニメーション実行
         showCanvas.DOFade(0f,0.5f).SetEase(Ease.InQuart).SetUpdate(true).Play();

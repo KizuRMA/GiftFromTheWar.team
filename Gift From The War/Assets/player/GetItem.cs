@@ -11,7 +11,8 @@ public class GetItem : MonoBehaviour
     [SerializeField] private Cylinder cylinder;
     [SerializeField] private Image targetImage;
     [SerializeField] private UIBlinking itemBlinking;
-    [SerializeField] private DocumentOpen document;
+    [SerializeField] private DocumentOpen gunDocument;
+    [SerializeField] private DocumentOpen gunAmmDocument;
 
     private bulletChange bulletChange;
 
@@ -107,7 +108,7 @@ public class GetItem : MonoBehaviour
             //âπÇçƒê∂
             AudioManager.Instance.PlaySE("GetGun", isLoop: false);
 
-            document.Open();
+            gunDocument.Open();
 
             return;
         }
@@ -121,6 +122,8 @@ public class GetItem : MonoBehaviour
             bulletChange.HaveBulletAutoChange();
             //âπÇçƒê∂
             AudioManager.Instance.PlaySE("GetWindBullet", isLoop: false);
+
+            gunAmmDocument.Open();
             return;
         }
 
