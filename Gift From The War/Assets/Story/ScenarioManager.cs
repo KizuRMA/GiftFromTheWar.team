@@ -7,7 +7,7 @@ using System.Text;
 [RequireComponent(typeof(TextController))]
 public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 {
-    public string loadFileName;
+    public string[] loadFileName=null;
 
     //  前のパネルに戻るかどうか
     public bool backPanelFlg = false;
@@ -25,8 +25,9 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     //
     private TextController textController;
     private CommandController commandController;
+    private Scenario scenario;
 
-    void RequestNextLine()
+    public void RequestNextLine()
     {
         var currentText = scenarios[currentLine];
 
@@ -86,8 +87,13 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 
         textController = GetComponent<TextController>();
         commandController = GetComponent<CommandController>();
+        scenario = GetComponent<Scenario>();
 
-        UpdateLines(loadFileName);
+        for (int i = 0; i < loadFileName.Length; i++)
+        {
+            UpdateLines(loadFileName[i]);
+            Debug.Log("" + loadFileName[i]);
+        }
         RequestNextLine();
     }
 
@@ -112,6 +118,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             }
             else
             {
+                //  文章を読み終わった
                 ResetText();
             }
 
@@ -126,14 +133,16 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             }
         }
 
+        //  前のパネルに戻る
         if(backPanelFlg)
         {
+            //  行番号をリセット
             currentLine = 0;
             backPanelFlg = false;
         }
 
     }
-    //  文章が終了していたらウィンドウを削除する
+    //  文章を読み終わっていたらウィンドウを削除する
     private void ResetText()
     {
         //  左クリック
@@ -142,7 +151,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             endFlg = true;
             //  行番号をリセット
             currentLine = 0;
-            CursorManager.Instance.cursorLock = true;
         }
     }
 
