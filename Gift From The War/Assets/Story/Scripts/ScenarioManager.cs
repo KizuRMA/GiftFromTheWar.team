@@ -7,6 +7,7 @@ using System.Text;
 [RequireComponent(typeof(TextController))]
 public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 {
+    public int storyNum=0;
     public string[] loadFileName=null;
 
     //  前のパネルに戻るかどうか
@@ -17,6 +18,12 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 
     //  シナリオを格納する
     private string[] scenarios;
+
+    private string[] scenarios1;
+
+    private string[] scenarios2;
+
+
     //  現在の行番号
     private int currentLine = 0;
    
@@ -27,17 +34,17 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     private CommandController commandController;
     private Scenario scenario;
 
-    public void RequestNextLine()
-    {
-        var currentText = scenarios[currentLine];
+    public void RequestNextLine(string fileName,string[] _scenarios)
+    { 
+        fileName = _scenarios[currentLine];
 
-        textController.SetNextLine(CommandProcess(currentText));
+        textController.SetNextLine(CommandProcess(fileName));
         currentLine++;
    
         isCallPreload = false;
     }
 
-    public void UpdateLines(string fileName)
+    public string[] UpdateLines(string fileName)
     {
         var scenarioText = Resources.Load<TextAsset>("Scenario/" + fileName);
 
@@ -46,12 +53,30 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             Debug.LogError("シナリオファイルが見つかりませんでした");
             Debug.LogError("ScenarioManagerを無効化します");
             enabled = false;
-            return;
+            return null;
         }
-        scenarios = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
+
+        if (fileName == "Test")
+        {
+            scenarios = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
+            return scenarios;
+        }
+        else if(fileName=="Test1")
+        {
+            scenarios1 = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
+            return scenarios1;
+        }
+        else if (fileName == "Test2")
+        {
+            scenarios2 = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
+            return scenarios2;
+        }
+
         currentLine = 0;
 
         Resources.UnloadAsset(scenarioText);
+        return null;
+        
     }
 
     private string CommandProcess(string line)
@@ -87,18 +112,38 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 
         textController = GetComponent<TextController>();
         commandController = GetComponent<CommandController>();
-        scenario = GetComponent<Scenario>();
+        scenario = GameObject.Find("ScenarioManager/Scenario").GetComponent<Scenario>();
 
         for (int i = 0; i < loadFileName.Length; i++)
         {
             UpdateLines(loadFileName[i]);
-            Debug.Log("" + loadFileName[i]);
         }
-        RequestNextLine();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        //  前のパネルに戻る
+        if (backPanelFlg)
+        {
+            //  行番号をリセット
+            currentLine = 0;
+            backPanelFlg = false;
+        }
+    }
+    //  文章を読み終わっていたらウィンドウを削除する
+    private void ResetText()
+    {
+        //  左クリック
+        if (Input.GetMouseButtonDown(0))
+        {
+            endFlg = true;
+            //  行番号をリセット
+            currentLine = 0;
+        }
+    }
+
+    public void TextUpdate(string[] scenarios)
     {
         // 文字の表示が完了してるならクリック時に次の行を表示する
         if (textController.IsCompleteDisplayText)
@@ -113,7 +158,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    RequestNextLine();
+                    RequestNextLine(loadFileName[storyNum], scenarios);
                 }
             }
             else
@@ -131,26 +176,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             {
                 textController.ForceCompleteDisplayText();
             }
-        }
-
-        //  前のパネルに戻る
-        if(backPanelFlg)
-        {
-            //  行番号をリセット
-            currentLine = 0;
-            backPanelFlg = false;
-        }
-
-    }
-    //  文章を読み終わっていたらウィンドウを削除する
-    private void ResetText()
-    {
-        //  左クリック
-        if (Input.GetMouseButtonDown(0))
-        {
-            endFlg = true;
-            //  行番号をリセット
-            currentLine = 0;
         }
     }
 

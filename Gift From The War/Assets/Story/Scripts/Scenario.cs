@@ -10,7 +10,9 @@ public class Scenario : MonoBehaviour
     [SerializeField] private Transform camTrans;
 
     //  プレイヤー関係
-    private FPSController fpsController;
+    [SerializeField]
+    private FPSController fpsC;
+
     private MoveWindGun moveWindGun;
 
     //  レイ判定
@@ -32,7 +34,7 @@ public class Scenario : MonoBehaviour
 
     private void Awake()
     {
-        fpsController = GameObject.FindGameObjectWithTag("Player").GetComponent<FPSController>();
+       // fpsC = GetComponent<FPSController>();
         moveWindGun = GameObject.FindGameObjectWithTag("Player").GetComponent<MoveWindGun>();
     }
 
@@ -53,13 +55,13 @@ public class Scenario : MonoBehaviour
         {
             //  コマンド画面を表示
             OpenCommand();
-           
+
             //  コマンド画面表示中はプレイヤーの動作をオフにする
-            fpsController.enabled = false;
+            fpsC.enabled = false;
             moveWindGun.enabled = false;
 
             count++;
-
+           
             hitFlg = false;
         }
 
@@ -111,7 +113,7 @@ public class Scenario : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         CursorManager.Instance.cursorLock = true;
-        fpsController.enabled = true;
+        fpsC.enabled = true;
         moveWindGun.enabled = true;
     }
 
@@ -127,7 +129,7 @@ public class Scenario : MonoBehaviour
         //1秒停止
         yield return new WaitForSeconds(0.5f);
 
-        fpsController.enabled = true;
+        fpsC.enabled = true;
         moveWindGun.enabled = true;
 
     }

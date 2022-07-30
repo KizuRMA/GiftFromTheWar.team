@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Command : MonoBehaviour
 {
@@ -23,16 +24,27 @@ public class Command : MonoBehaviour
     //  テキストパネル
     private GameObject textPanel;
 
-
     //　コマンドパネルのCanvasGroup
     private CanvasGroup commandPanelCanvasGroup;
 
     //　テキストパネルのCanvasGroup
     private CanvasGroup textPanelCanvasGroup;
 
+    //　キャラクター選択のボタンのプレハブ
+    [SerializeField]
+    private GameObject textButtonPrefab = null;
+
+    //　パーティーステータス
+    [SerializeField]
+    private PartyStatus partyStatus = null;
+
+    [SerializeField]
+    private ButtonStatus[] buttonStatus = null;
+
     //　最後に選択していたゲームオブジェクトをスタック
     private Stack<GameObject> selectedGameObjectStack = new Stack<GameObject>();
 
+    public string[] scenarios;
     private void Awake()
     {
         //　コマンド画面を開く処理をしているScenarioを取得
@@ -45,7 +57,6 @@ public class Command : MonoBehaviour
         commandPanel = transform.Find("CommandPanel").gameObject;
         textPanel = transform.Find("TextPanel").gameObject;
 
-
         //　CanvasGroup
         commandPanelCanvasGroup = commandPanel.GetComponent<CanvasGroup>();
         textPanelCanvasGroup = textPanel.GetComponent<CanvasGroup>();
@@ -54,6 +65,18 @@ public class Command : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ボタンのプレハブからインスタンス生成
+        GameObject[] textButtonIns=new GameObject[3];
+
+        for(int i=0;i<partyStatus.GetButtonStatus().Count;i++)
+        {
+            textButtonIns[i] = Instantiate<GameObject>(textButtonPrefab, commandPanel.transform);
+            textButtonIns[i].GetComponentInChildren<Text>().text = buttonStatus[i].GetButtonName();
+            textButtonIns[i].GetComponentInChildren<Text>().name = "Text" + i;
+            textButtonIns[i].name = "Button"+i;
+        }
+
+        scenarios = ScenarioManager.Instance.UpdateLines("Test");
 
     }
 
@@ -84,6 +107,8 @@ public class Command : MonoBehaviour
                 currentCommand = CommandMode.CommandPanel;
             }
         }
+
+        ScenarioManager.Instance.TextUpdate(scenarios);
     }
 
 
@@ -105,7 +130,7 @@ public class Command : MonoBehaviour
     //　選択したコマンドで処理分け
     public void SelectCommand(string command)
     {
-        if (command == "Button1")
+        if (command == "Button")
         {
             currentCommand = CommandMode.TextPanel;
             //　UIのオン・オフや選択アイコンの設定
