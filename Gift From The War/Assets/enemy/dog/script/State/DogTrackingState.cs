@@ -18,19 +18,19 @@ public class DogTrackingState : State<DogState>
     public NavController navController;
     NavMeshParameter agentParameter;
 
+    //プレイヤーを見失う距離
     float loseSightOfDis;
 
     private bool IsTracking //追跡を続ける場合の前提条件
     {
         get
         {
-            if (owner.transform.parent == null ||
-                Vector3.Distance(owner.transform.position,owner.player.transform.position) >= loseSightOfDis)
+            if (owner.transform.parent != null &&
+                Vector3.Distance(owner.transform.position, owner.player.transform.position) <= loseSightOfDis)
             {
-                return false;
+                return true;
             }
-
-            return true;
+            return false;
         }
     }
     public override void Enter()
@@ -62,12 +62,9 @@ public class DogTrackingState : State<DogState>
 
         NavMeshPath navMeshPath = new NavMeshPath();
 
-        //現在地から最も近いWayPointをターゲット座標にする
         agent.CalculatePath(owner.player.transform.position, navMeshPath);
         navController.Move(navMeshPath);
-        owner.transform.position = new Vector3(owner.transform.position.x,agent.destination.y,owner.transform.position.z);
-
-        float targetDis = Vector3.Distance(owner.dog.transform.position, owner.player.transform.position);
+        owner.transform.position = new Vector3(owner.transform.position.x, agent.destination.y, owner.transform.position.z);
 
         //攻撃する条件
         if (IsPossibleToAttack() == true)
@@ -77,7 +74,7 @@ public class DogTrackingState : State<DogState>
         }
 
         //見失う条件
-        if (IsTraking() == true)
+        if (IsTraking() == false)
         {
             owner.ChangeState(e_DogState.CheckAround);
             return;
@@ -120,7 +117,7 @@ public class DogTrackingState : State<DogState>
     private bool IsTraking()    //犬が追跡するか
     {
         //親オブジェクトがあるか確認する
-        if (IsTracking) return false;
+        if (IsTracking) return true;
 
         DogManager _dogManager = owner.transform.parent.GetComponent<DogManager>();
         GameObject[] _objects = _dogManager.GetEnemys();
@@ -130,25 +127,21 @@ public class DogTrackingState : State<DogState>
 
         foreach (var objs in _objects)
         {
-            //自分とは判定を行わない
             if (owner.gameObject == objs) continue;
 
             DogState _state = objs.GetComponent<DogState>();
-            if (_state == null) continue;
+            if (_state == null || _state.IsChasing() == false) continue;
 
-            if (_state.IsChasing() == true)
+            float _dis = Vector3.Distance(owner.player.transform.position, _state.transform.position);
+            if (_dis <= _minDis)
             {
-                float _dis = Vector3.Distance(owner.player.transform.position,_state.transform.position);
-                if (_dis <= _minDis)
-                {
-                    _minDis = _dis;
-                }
+                _minDis = _dis;
             }
         }
 
         //別の犬とプレイヤーの距離が見失う距離よりも小さい場合
-        if (_minDis <= loseSightOfDis) return false;
+        if (_minDis >= loseSightOfDis) return true;
 
-        return true;
+        return false;
     }
 }

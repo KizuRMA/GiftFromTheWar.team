@@ -2317,9 +2317,11 @@ MonoBehaviour:
   animator: {fileID: 7342884622482396982}
   SearchSpeed: 1
   TrackingSpeed: 4
+  attackRotSpeed: 360
   life: 1
   loseSightOfDis: 10
   attackJumpPow: 1.5
+  startPos: {x: 0, y: 0, z: 0}
 --- !u!195 &2247645399667334434
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2329,7 +2331,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4179426876203190226}
   m_Enabled: 1
   m_AgentTypeID: 1479372276
-  m_Radius: 1.5
+  m_Radius: 1
   m_Speed: 1.5
   m_Acceleration: 6
   avoidancePriority: 50
@@ -2457,13 +2459,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Height: 1
-  m_Radius: 1.67
+  m_Height: 3
+  m_Radius: 0.05
   m_SlopeLimit: 0
   m_StepOffset: 0
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 2.36, z: 0}
+  m_Center: {x: 0, y: 2.03, z: 0}
 --- !u!114 &-4865923690861344785
 MonoBehaviour:
   m_ObjectHideFlags: 0

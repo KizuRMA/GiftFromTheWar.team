@@ -68,21 +68,6 @@ public class DogManager : BaseEnemyManager
                     break;
             }
         }
-
-        ////管理している配列ないに追跡していない敵がいる場合
-        //for (int i = 0; i < objects.Count; i++)
-        //{
-        //    DogState _state = objects[i].GetComponent<DogState>();
-        //    if (_state == null) continue;
-
-        //    //現在参照している敵が追跡状態でない時
-        //    if (_state.IsCurrentState(e_DogState.Tracking) == false)
-        //    {
-        //        //エージェントタイプを変更して配列から削除する
-        //        objects[i].GetComponent<NavMeshAgent>().agentTypeID = agentTypeIdDict["DogAgent"];
-        //        objects.Remove(objects[i]);
-        //    }
-        //}
     }
 
     public void ResetPriority()

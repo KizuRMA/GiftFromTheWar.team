@@ -35,7 +35,7 @@ public class DogSearchState : State<DogState>
             agent.Move(owner.player.transform.forward * 0.1f);
         }
 
-        if (canSetFlg == true && dis <= 75.0f)
+        if (canSetFlg == true)
         {
             owner.StartCoroutine(TargetCoroutine());
         }

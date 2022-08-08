@@ -40,7 +40,7 @@ public class DogAttackFunction : MonoBehaviour
         rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         // éÀèoäpìx
-        float angle = 30.0f;
+        float angle = 25.0f;
 
         Transform _player = owner.player.transform;
 
@@ -53,7 +53,7 @@ public class DogAttackFunction : MonoBehaviour
         Debug.Log(velocity);
 
         // éÀèo
-        rd.AddForce(velocity * rd.mass, ForceMode.Impulse);
+        rd.AddForce(velocity * rd.mass, ForceMode.VelocityChange);
     }
 
     public void Air()
@@ -63,7 +63,7 @@ public class DogAttackFunction : MonoBehaviour
 
     public void Landing()
     {
-        owner.animator.SetFloat("Speed", 0.9f);
+        owner.animator.SetFloat("Speed", 0.6f);
     }
 
     private Vector3 CalculateVelocity(Vector3 pointA, Vector3 pointB, float angle)

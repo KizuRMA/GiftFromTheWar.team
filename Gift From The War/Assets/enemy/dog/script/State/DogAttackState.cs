@@ -27,6 +27,7 @@ public class DogAttackState : State<DogState>
         owner.agent.isStopped = true;
         owner.agent.updatePosition = false;
         owner.agent.updateUpAxis = false;
+        owner.agent.updateRotation = false;
 
         rd.isKinematic = false;
         rd.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -97,7 +98,7 @@ public class DogAttackState : State<DogState>
         dot = Vector3.Dot(_targetVec, _forwardVec);
         _degAng = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-        float _rotSpeed = 160.0f * Time.deltaTime;
+        float _rotSpeed = owner.attackRotSpeed * Time.deltaTime;
 
         if (_degAng <= _rotSpeed)
         {

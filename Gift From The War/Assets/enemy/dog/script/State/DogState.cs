@@ -12,6 +12,7 @@ public enum e_DogState
     CheckAround,
     MagnetCatch,
     BlowedAway,
+    Wait,
 }
 
 public class DogState : StatefulObjectBase<DogState, e_DogState>
@@ -27,6 +28,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [Header("犬のステータスパラメータ")]
     [TooltipAttribute("捜索する時の速度"), SerializeField] public float SearchSpeed;
     [TooltipAttribute("追跡する時の速度"),SerializeField] public float TrackingSpeed;
+    [TooltipAttribute("攻撃の予備動作中の回転速度"),SerializeField] public float attackRotSpeed;
     [TooltipAttribute("最大ヒットポイント数"),SerializeField] public float life = 1.0f;
     [TooltipAttribute("プレイヤーを見失う時の距離"),SerializeField] public float loseSightOfDis;
     [TooltipAttribute("攻撃する時のジャンプの力の割合"),SerializeField] public float attackJumpPow = 1.0f;
@@ -34,9 +36,12 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [System.NonSerialized] public Vector3 hypocenter;
     [System.NonSerialized] public bool canVigilance;
     [System.NonSerialized] public DogAttackFunction info;
+    [System.NonSerialized] public DogTerritory territory;
 
     public bool IsVigilance => canVigilance == true;
     public bool IsAlive => life > 0.0f;
+
+    public Vector3 startPos;
 
     void Start()
     {
@@ -49,12 +54,28 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         stateList.Add(new DogCheckAroundState(this));
         stateList.Add(new DogMagnetCatchState(this));
         stateList.Add(new DogBlowedAwayState(this));
+        stateList.Add(new DogWaitState(this));
 
         stateMachine = new StateMachine<DogState>();
 
-        ChangeState(e_DogState.Search);
+        ChangeState(e_DogState.Wait);
 
         canVigilance = true;
+
+        startPos = transform.position;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (territory.isPlayerJoin == false)
+        {
+            if (IsCurrentState(e_DogState.Wait) == false)
+            {
+                ChangeState(e_DogState.Wait);
+            }
+        }
     }
 
     public void EndAnimation()
@@ -95,6 +116,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     {
         player = _info.player;
         manager = _info.manager;
+        territory = _info.territory;
     }
 
     public void SetParentManager()  //マネージャーを親にする
