@@ -27,8 +27,11 @@ public class DogWaitState : State<DogState>
         agent = owner.agent;
         controller = owner.controller;
 
-        owner.animator.Play("metarig|action_Run");
+        owner.animator.SetInteger("trans", 1);
         owner.animator.SetFloat("Speed", 1.1f);
+        owner.animator.SetFloat("MoveSpeed", 1.0f);
+
+        agent.destination = owner.startPos;
 
         //NavMeshAgentのパラメータを保存しておく
         agentParameter.speed = agent.speed;
@@ -41,22 +44,22 @@ public class DogWaitState : State<DogState>
 
         controller.enabled = true;
         switchAnime = false;
+        Debug.Log(owner.startPos);
     }
 
     public override void Execute()
     {
-        owner.animator.SetFloat("MoveSpeed", 1.0f);
-        agent.destination = owner.startPos;
-
         NavMeshPath navMeshPath = new NavMeshPath();
 
+        //移動処理
         agent.CalculatePath(owner.startPos, navMeshPath);
         navController.Move(navMeshPath);
         owner.transform.position = new Vector3(owner.transform.position.x, agent.destination.y, owner.transform.position.z);
 
-        float _targetDis = Vector2.Distance(new Vector2(owner.startPos.x, owner.startPos.z),
+        //ターゲットまでの距離を算出
+        float _targetDis = Vector2.Distance(new Vector2(agent.destination.x,agent.destination.z),
                                             new Vector2(owner.transform.position.x, owner.transform.position.z));
-
+        Debug.Log(_targetDis);
         if (_targetDis <= 1.0f)
         {
             if (switchAnime == false)

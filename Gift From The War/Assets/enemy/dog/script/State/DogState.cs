@@ -47,6 +47,8 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     {
         info = transform.GetComponent<DogAttackFunction>();
 
+        startPos = transform.position;
+
         stateList.Add(new DogSearchState(this));
         stateList.Add(new DogTrackingState(this));
         stateList.Add(new DogVigilanceState(this));
@@ -62,7 +64,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
 
         canVigilance = true;
 
-        startPos = transform.position;
+      
     }
 
     protected override void Update()
@@ -71,7 +73,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
 
         if (territory.isPlayerJoin == false)
         {
-            if (IsCurrentState(e_DogState.Wait) == false)
+            if (IsCurrentState(e_DogState.Search) == true)
             {
                 ChangeState(e_DogState.Wait);
             }
