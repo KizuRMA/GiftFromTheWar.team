@@ -59,7 +59,6 @@ public class UltraSoundBeam : BaseUltrasound
 
         //超音波ビームを長くする
         range += velocity * Time.deltaTime;
-        //range = Mathf.Min(range, maxRange);
 
         if (time - duration < 0) return;
         aliveFlg = false;
@@ -68,6 +67,8 @@ public class UltraSoundBeam : BaseUltrasound
 
     public override bool CheckHit()
     {
+        if (aliveFlg == false) return false;
+
         //当たり判定
         Vector3 _firePos = transform.position + (transform.up * 0.3f);
         Vector3 _targetVec = playerObject.transform.position - _firePos;
@@ -80,7 +81,7 @@ public class UltraSoundBeam : BaseUltrasound
             float withinRange = range / dot;
 
             //超音波の範囲ないにプレイヤーがいるか確認する
-            if (_targetVec.magnitude - withinRange < 0)
+            if (_targetVec.magnitude - (withinRange * 0.9f) < 0)
             {
                 Ray _ray = new Ray(_firePos, _targetVec);
                 RaycastHit _raycastHit;

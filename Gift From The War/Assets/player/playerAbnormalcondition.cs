@@ -112,7 +112,8 @@ public class playerAbnormalcondition : MonoBehaviour
             material.SetFloat("_Range", 0.05f);
         }
 
-        if (ultrasoundImage != null && howling.completeCureFlg == true)
+        //if (ultrasoundImage != null && howling.completeCureFlg == true)
+        if (ultrasoundImage != null && howling.time >= (howling.complateCureTime * 0.2f))
         {
             ultrasoundImage.OnDisplay();
         }
