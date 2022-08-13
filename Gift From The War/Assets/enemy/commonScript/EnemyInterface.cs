@@ -7,6 +7,7 @@ public class EnemyInterface : MonoBehaviour
     [SerializeField] public e_EnemyType enemyType;
     [SerializeField] private EnemyDamageEvent onDamage = new EnemyDamageEvent();
     [SerializeField] private EnemyMagnetCatch onMagnetCatch = new EnemyMagnetCatch();
+    [SerializeField] private EnemyMagnetCatch onLavaDamage = new EnemyMagnetCatch();
     [SerializeField] private EnemyExplosionDamage onExpDamge = new EnemyExplosionDamage();
     [SerializeField] private  EnemySpawnPos onSpawn = new EnemySpawnPos();
     [SerializeField] private  EnemySerializeInfo oninfo = new EnemySerializeInfo();
@@ -25,6 +26,11 @@ public class EnemyInterface : MonoBehaviour
     public void ExpDamage(int _damage,Vector3 _pos)
     {
         onExpDamge.Invoke(_damage, _pos);
+    }
+
+    public void LavaDamage()
+    {
+        onLavaDamage.Invoke();
     }
 
     public void EnemySpawn(Vector3 _pos)

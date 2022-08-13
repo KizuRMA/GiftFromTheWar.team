@@ -56,31 +56,10 @@ public class DogManager : BaseEnemyManager
         //敵リスポーン
         EnemyReSpawn();
 
-        //子オブジェクトを全て取得する
-        GameObject[] _ChildObjects = GetChildObjects();
-
-        //追跡している犬を検索
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            DogState _state = _ChildObjects[i].GetComponent<DogState>();
-            if (_state == null) continue;
-
-            //現在参照している敵が追跡状態である時
-            if (_state.IsCurrentState(e_DogState.Tracking) == true || _state.IsCurrentState(e_DogState.Search) == true)
-            {
-                //追跡状態の敵を管理している配列に現在参照している敵が入っていない時
-                if (objects.Contains(_ChildObjects[i]) == false)
-                {
-                    //追加する
-                    objects.Add(_ChildObjects[i]);
-                }
-            }
-        }
-
         //現在管理している配列の敵のAgentTypeを変更する
-        for (int i = 0; i < objects.Count; i++)
+        for (int i = 0; i < dogs.Count; i++)
         {
-            NavMeshAgent navMesh = objects[i].GetComponent<NavMeshAgent>();
+            NavMeshAgent navMesh = dogs[i].GetComponent<NavMeshAgent>();
 
             switch (i % 3)
             {

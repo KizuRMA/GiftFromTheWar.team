@@ -98,6 +98,15 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         ChangeState(e_DogState.MagnetCatch);
     }
 
+    public void LavaDamage()
+    {
+        if (IsAlive == false) return;
+        life = 0;
+
+        hypocenter = new Vector3(0,1,0);
+        ChangeState(e_DogState.BlowedAway);
+    }
+
     public void ExplosionHit(int _damage,Vector3 _hypocenter)
     {
         if (IsAlive == false) return;

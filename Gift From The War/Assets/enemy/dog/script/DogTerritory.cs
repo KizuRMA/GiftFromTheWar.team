@@ -20,7 +20,6 @@ public class DogTerritory : MonoBehaviour
         if (other.gameObject.tag != "Player") return;
 
         isPlayerJoin = true;
-        Debug.Log(isPlayerJoin);
     }
 
     private void OnTriggerExit(Collider other)
@@ -28,6 +27,5 @@ public class DogTerritory : MonoBehaviour
         if (other.gameObject.tag != "Player") return;
 
         isPlayerJoin = false;
-        Debug.Log(isPlayerJoin);
     }
 }

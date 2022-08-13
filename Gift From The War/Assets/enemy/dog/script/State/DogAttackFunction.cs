@@ -50,8 +50,6 @@ public class DogAttackFunction : MonoBehaviour
         // 射出速度を算出
         Vector3 velocity = CalculateVelocity(transform.position, _targetPos, angle);
 
-        Debug.Log(velocity);
-
         // 射出
         rd.AddForce(velocity * rd.mass, ForceMode.VelocityChange);
     }
