@@ -44,7 +44,6 @@ public class DogWaitState : State<DogState>
 
         controller.enabled = true;
         switchAnime = false;
-        Debug.Log(owner.startPos);
     }
 
     public override void Execute()
@@ -57,9 +56,8 @@ public class DogWaitState : State<DogState>
         owner.transform.position = new Vector3(owner.transform.position.x, agent.destination.y, owner.transform.position.z);
 
         //ターゲットまでの距離を算出
-        float _targetDis = Vector2.Distance(new Vector2(agent.destination.x,agent.destination.z),
+        float _targetDis = Vector2.Distance(new Vector2(owner.startPos.x, owner.startPos.z),
                                             new Vector2(owner.transform.position.x, owner.transform.position.z));
-        Debug.Log(_targetDis);
         if (_targetDis <= 1.0f)
         {
             if (switchAnime == false)

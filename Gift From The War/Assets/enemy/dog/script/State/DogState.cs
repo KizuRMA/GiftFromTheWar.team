@@ -136,4 +136,9 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         }
         return false;
     }
+
+    public void SetStartPos(Vector3 _startPos)
+    {
+        startPos = _startPos;
+    }
 }
