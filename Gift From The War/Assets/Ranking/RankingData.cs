@@ -11,6 +11,6 @@ public class RankingData
 
     public static RankingData[] Deserialize(string json)
     {
-       return JsonUtility.FromJson<RankingData[]>(json);
+        return JsonHelper.FromJson<RankingData>(json);
     }
 }
