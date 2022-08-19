@@ -32,6 +32,14 @@ public class DogBlowedAwayState : State<DogState>
 
         owner.gameObject.AddComponent<MeshRenderer>();
         owner.gameObject.AddComponent<NotSeeObjectDelete>();
+
+        //if (owner.button != null)
+        //{
+        //    owner.button.transform.parent = null;
+        //    Rigidbody _rd = owner.button.GetComponent<Rigidbody>();
+        //    _rd.useGravity = true;
+        //    _rd.isKinematic = false;
+        //}
     }
 
 

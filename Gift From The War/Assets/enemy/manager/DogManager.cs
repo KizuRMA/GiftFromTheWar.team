@@ -13,6 +13,7 @@ public class DogManager : BaseEnemyManager
     [SerializeField] public float respawnInterval;
     [SerializeField] public List<Transform> respawnPos = null;
     [SerializeField] public List<Transform> startPosList = null;
+    [SerializeField] public HandGimmick gimmick = null;
 
     public List<GameObject> dogs = null;
 
@@ -30,6 +31,20 @@ public class DogManager : BaseEnemyManager
             var id = NavMesh.GetSettingsByIndex(i).agentTypeID;
             var name = NavMesh.GetSettingsNameFromID(id);
             agentTypeIdDict.Add(name, id);
+        }
+
+        //既に子オブジェクトに犬が配置されている時
+        GameObject[] _ChildObjects = GetChildObjects();
+        EnemyManager _manager = transform.parent.GetComponent<EnemyManager>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject game = _ChildObjects[i];
+            EnemyInterface info = game.GetComponent<EnemyInterface>();
+            _manager.SwitchManager(info.enemyType);
+            info.EnemyInfo(_manager);
+            EnemyCounter();
+            game.transform.parent = transform;
         }
     }
 
@@ -49,6 +64,7 @@ public class DogManager : BaseEnemyManager
     {
         if (!isResetPriority)
         {
+            ResetButtonGimmick();
             ResetPriority();
             isResetPriority = true;
         }
@@ -151,10 +167,12 @@ public class DogManager : BaseEnemyManager
         info.EnemySpawn(respawnPos[_respawnIndex].position);
         info.EnemyInfo(owner);
         game.transform.parent = this.transform;
+        dogs.Add(game);
 
         RespawnPlanCounter(-1);
         ResetStartPos();
         ResetPriority();
+        ResetButtonGimmick();
     }
 
     private void ResetStartPos()
@@ -169,6 +187,29 @@ public class DogManager : BaseEnemyManager
 
             _state.SetStartPos(startPosList[i].transform.position);
         }
+    }
 
+    private void ResetButtonGimmick()   //ボタンギミックの対応ギミックをリセットする
+    {
+        if (gimmick == null) return;
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            HandButton _button = dogs[i].transform.Find("DogButton 1").GetComponent<HandButton>();
+            if (_button == null) continue;
+
+            if (gimmick.button1 == null)
+            {
+                gimmick.button1 = _button;
+            }
+            else if (gimmick.button2 == null)
+            {
+                gimmick.button2 = _button;
+            }
+            else if (gimmick.button3 == null)
+            {
+                gimmick.button3 = _button;
+            }
+        }
     }
 }

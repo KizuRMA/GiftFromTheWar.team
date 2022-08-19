@@ -64,7 +64,7 @@ public class DogTrackingState : State<DogState>
 
         agent.CalculatePath(owner.player.transform.position, navMeshPath);
         navController.Move(navMeshPath);
-        owner.transform.position = new Vector3(owner.transform.position.x, agent.destination.y, owner.transform.position.z);
+        owner.transform.position = new Vector3(owner.transform.position.x, owner.transform.position.y, owner.transform.position.z);
 
         //çUåÇÇ∑ÇÈèåè
         if (IsPossibleToAttack() == true)

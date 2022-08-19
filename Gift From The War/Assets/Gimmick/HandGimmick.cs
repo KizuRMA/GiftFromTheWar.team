@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class HandGimmick : MonoBehaviour
 {
-    [SerializeField] private HandButton button1;
-    [SerializeField] private HandButton button2;
-    [SerializeField] private HandButton button3;
+    [SerializeField] public HandButton button1;
+    [SerializeField] public HandButton button2;
+    [SerializeField] public HandButton button3;
     [SerializeField] private GameObject light1;
     [SerializeField] private GameObject light2;
     [SerializeField] private GameObject light3;
-    [SerializeField] private Material mat;
+    [SerializeField] private Material onMat;
+    [SerializeField] private Material offMat;
 
     //ドアを開ける
     [SerializeField] private GameObject rightDoor;
@@ -31,6 +32,25 @@ public class HandGimmick : MonoBehaviour
 
     void Update()
     {
+        if (button1 == null || button2 == null || button3 == null)
+        {
+            if (button1 == null)
+            {
+                light1.GetComponent<MeshRenderer>().material = offMat;
+            }
+
+            if (button2 == null)
+            {
+                light2.GetComponent<MeshRenderer>().material = offMat;
+            }
+
+            if (button3 == null)
+            {
+                light3.GetComponent<MeshRenderer>().material = offMat;
+            }
+            return;
+        }
+
         //何個ボタンが押されているか
         changeCount = 0;
         if (button1.changeFlg) changeCount++;
@@ -40,17 +60,17 @@ public class HandGimmick : MonoBehaviour
         //ライトを光らせる処理
         if(changeCount >= 1)
         {
-            light1.GetComponent<MeshRenderer>().material = mat;
+            light1.GetComponent<MeshRenderer>().material = onMat;
         }
 
         if(changeCount >= 2)
         {
-            light2.GetComponent<MeshRenderer>().material = mat;
+            light2.GetComponent<MeshRenderer>().material = onMat;
         }
 
         if (changeCount >= 3)
         {
-            light3.GetComponent<MeshRenderer>().material = mat;
+            light3.GetComponent<MeshRenderer>().material = onMat;
             openFlg = true;
         }
 
