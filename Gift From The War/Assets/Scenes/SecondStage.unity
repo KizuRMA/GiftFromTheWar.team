@@ -2321,7 +2321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 7760404644088603017, guid: bc172babf5b402a458e11016944e663f, type: 3}
-  respawnInterval: 10
+  respawnInterval: 0
   respawnPos:
   - {fileID: 543315067}
   - {fileID: 661726783}
@@ -8262,6 +8262,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1539748244}
     m_Modifications:
+    - target: {fileID: 1082630291799215699, guid: a6d5e5a79dd56014c89f0b78e93f536f, type: 3}
+      propertyPath: onGimmickButtonMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 89f32e80c1f113b4cbe5b76e57285b7f, type: 2}
     - target: {fileID: 3589147707785602191, guid: a6d5e5a79dd56014c89f0b78e93f536f, type: 3}
       propertyPath: m_Name
       value: DogButton 1
@@ -21724,7 +21728,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672619647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 312.4, y: -0.38, z: 0.6}
+  m_LocalPosition: {x: 312.74, y: -0.57, z: 0.6}
   m_LocalScale: {x: 3, y: 0.1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21743,6 +21747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6ec46cde0aeda44ac7d87f6565f141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDebug: 0
 --- !u!65 &1672619650
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26372,6 +26377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6ec46cde0aeda44ac7d87f6565f141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDebug: 0
 --- !u!4 &1998091743 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3078009493693572447, guid: b819edf75faa27043b664013b1b47e6f, type: 3}
@@ -28113,6 +28119,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyManager 2-1 new
       objectReference: {fileID: 0}
+    - target: {fileID: 8614093159569905560, guid: ab4651f20ecb31548a749dd0190d26ce, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 79e29bafb7ff3be4182d0b316ed2920b, type: 2}
+    - target: {fileID: 8614093159569905561, guid: ab4651f20ecb31548a749dd0190d26ce, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 67fe4dd7949151940af46f133a90fcf9, type: 2}
     - target: {fileID: 8614093159569905563, guid: ab4651f20ecb31548a749dd0190d26ce, type: 3}
       propertyPath: m_Size.x
       value: 101.38858

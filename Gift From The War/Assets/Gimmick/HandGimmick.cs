@@ -25,6 +25,24 @@ public class HandGimmick : MonoBehaviour
 
     private int changeCount;
 
+    private void Awake()
+    {
+        if (button1 != null)
+        {
+            button1.gimmick = this;
+        }
+
+        if (button2 != null)
+        {
+            button2.gimmick = this;
+        }
+
+        if (button3 != null)
+        {
+            button3.gimmick = this;
+        }
+    }
+
     void Start()
     {
         
@@ -101,5 +119,21 @@ public class HandGimmick : MonoBehaviour
     {
         if (sumPos <= 0) return;
         nowPower = -movePower * Time.deltaTime;
+    }
+
+    public void HandButtonChange(ref HandButton _useButton,ref HandButton _putInButton)
+    {
+        if (_useButton == null)
+        {
+            _useButton = _putInButton;
+            _useButton.gimmick = this;
+        }
+        else
+        {
+            _useButton.gimmick = null;
+
+            _useButton = _putInButton;
+            _useButton.gimmick = this;
+        }
     }
 }

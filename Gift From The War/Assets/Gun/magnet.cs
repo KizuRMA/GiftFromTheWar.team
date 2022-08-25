@@ -135,10 +135,8 @@ public class magnet : ShootParent
             pastQua = metal.transform.rotation;
 
             Rigidbody _rd = metal.GetComponent<Rigidbody>();
-            if (_rd == null)
-            {
-                _rd = metal.gameObject.AddComponent<Rigidbody>();
-            }
+                
+            if (_rd == null) _rd = metal.gameObject.AddComponent<Rigidbody>();
 
             _rd.useGravity = false;
             metal.gameObject.AddComponent<metalHitJudge>();

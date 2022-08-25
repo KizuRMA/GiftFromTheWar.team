@@ -198,18 +198,48 @@ public class DogManager : BaseEnemyManager
             HandButton _button = dogs[i].transform.Find("DogButton 1").GetComponent<HandButton>();
             if (_button == null) continue;
 
-            if (gimmick.button1 == null)
+            if (ButtonGimmickChange(ref gimmick.button1, ref _button)) { }
+            else if (ButtonGimmickChange(ref gimmick.button2, ref _button)) { }
+            else if (ButtonGimmickChange(ref gimmick.button3, ref _button)) { }
+        }
+    }
+
+    private bool ButtonGimmickChange(ref HandButton gimmickButton, ref HandButton dogButton) //GimmickDoorに犬のボタンをセットする関数
+    {
+        if (gimmickButton == null)
+        {
+            gimmick.HandButtonChange(ref gimmickButton,ref dogButton);
+            return true;
+        }
+        else
+        {
+            //親Objがある　かつ　ボタンがおされている時はセットし直さない
+            if (gimmickButton.transform.parent != null && gimmickButton.changeFlg == true) return false;
+            if (gimmick.button1 == null || gimmick.button2 == null || gimmick.button3 == null) return false;
+
+            int count = 0;
+            int buttonMax = 3;
+
+            //生存していて、ボタンを背負っている犬が
+            for (int i = 0; i < dogs.Count; i++)
             {
-                gimmick.button1 = _button;
+                if (dogs[i] == null) continue;
+
+                DogState _state = dogs[i].GetComponent<DogState>();
+                if (_state == null) continue;
+
+                HandButton _button = dogs[i].transform.Find("DogButton 1").GetComponent<HandButton>();
+
+                if (_state.IsAlive == true && _button != null)
+                {
+                    count++;
+                }
             }
-            else if (gimmick.button2 == null)
-            {
-                gimmick.button2 = _button;
-            }
-            else if (gimmick.button3 == null)
-            {
-                gimmick.button3 = _button;
-            }
+
+            if (count < buttonMax) return false;
+
+            gimmick.HandButtonChange(ref gimmickButton, ref dogButton);
+            return true;
         }
     }
 }

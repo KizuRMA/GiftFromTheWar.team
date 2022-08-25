@@ -4,11 +4,26 @@ using UnityEngine;
 
 public class LavaScript : MonoBehaviour
 {
+    public bool playerDebug;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "Dog1") return;
+        if (other.gameObject.tag == "Dog1")                                 //犬
+        {
+            var target = other.transform.GetComponent<EnemyInterface>();
+            target.LavaDamage();
+        }
+        else if (other.gameObject.tag == "Player" && playerDebug == false)  //プレイヤー
+        {
+            var target = other.transform.GetComponent<playerAbnormalcondition>();
+            if (null == target) return;
+            target.Damage(1.0f);
+        }
+        else if (other.gameObject.tag == "gimmickButton")                   //ボタン
+        {   
+            Destroy(other.transform.gameObject);
+        }
 
-        var target = other.transform.GetComponent<EnemyInterface>();
-        target.LavaDamage();
+
     }
 }

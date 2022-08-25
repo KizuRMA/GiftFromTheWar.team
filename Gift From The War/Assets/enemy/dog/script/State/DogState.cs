@@ -28,11 +28,11 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
 
     [Header("犬のステータスパラメータ")]
     [TooltipAttribute("捜索する時の速度"), SerializeField] public float SearchSpeed;
-    [TooltipAttribute("追跡する時の速度"),SerializeField] public float TrackingSpeed;
-    [TooltipAttribute("攻撃の予備動作中の回転速度"),SerializeField] public float attackRotSpeed;
-    [TooltipAttribute("最大ヒットポイント数"),SerializeField] public float life = 1.0f;
-    [TooltipAttribute("プレイヤーを見失う時の距離"),SerializeField] public float loseSightOfDis;
-    [TooltipAttribute("攻撃する時のジャンプの力の割合"),SerializeField] public float attackJumpPow = 1.0f;
+    [TooltipAttribute("追跡する時の速度"), SerializeField] public float TrackingSpeed;
+    [TooltipAttribute("攻撃の予備動作中の回転速度"), SerializeField] public float attackRotSpeed;
+    [TooltipAttribute("最大ヒットポイント数"), SerializeField] public float life = 1.0f;
+    [TooltipAttribute("プレイヤーを見失う時の距離"), SerializeField] public float loseSightOfDis;
+    [TooltipAttribute("攻撃する時のジャンプの力の割合"), SerializeField] public float attackJumpPow = 1.0f;
 
     [System.NonSerialized] public Vector3 hypocenter;
     [System.NonSerialized] public bool canVigilance;
@@ -65,7 +65,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
 
         canVigilance = true;
 
-      
+
     }
 
     protected override void Update()
@@ -104,11 +104,11 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         if (IsAlive == false) return;
         life = 0;
 
-        hypocenter = new Vector3(0,1,0);
+        hypocenter = new Vector3(0, 1, 0);
         ChangeState(e_DogState.BlowedAway);
     }
 
-    public void ExplosionHit(int _damage,Vector3 _hypocenter)
+    public void ExplosionHit(int _damage, Vector3 _hypocenter)
     {
         if (IsAlive == false) return;
         life -= _damage;
