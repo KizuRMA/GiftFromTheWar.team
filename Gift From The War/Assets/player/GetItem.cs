@@ -149,7 +149,12 @@ public class GetItem : MonoBehaviour
 
         if(tagName == "gimmickButton")
         {
-            hitObj.transform.GetComponent<HandButton>().changeFlg = true;
+            HandButton handButton = hitObj.transform.GetComponent<HandButton>();
+            if (handButton.changeFlg == false)
+            {
+                handButton.changeFlg = true;
+                AudioManager.Instance.PlaySE("HandGimmickSE", hitObj, isLoop: false,vol:0.2f);
+            }
             return;
         }
 

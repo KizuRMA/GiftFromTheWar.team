@@ -64,7 +64,7 @@ public class DogManager : BaseEnemyManager
     {
         if (!isResetPriority)
         {
-            ResetButtonGimmick();
+            ResetGimmick();
             ResetPriority();
             isResetPriority = true;
         }
@@ -172,7 +172,10 @@ public class DogManager : BaseEnemyManager
         RespawnPlanCounter(-1);
         ResetStartPos();
         ResetPriority();
-        ResetButtonGimmick();
+
+        //ボタンをリセット
+        ResetButton();
+        SetButton(game);
     }
 
     private void ResetStartPos()
@@ -183,63 +186,117 @@ public class DogManager : BaseEnemyManager
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
             DogState _state = _ChildObjects[i].GetComponent<DogState>();
-            if (_state == null || startPosList == null) continue;
+            if (_state == null || startPosList[i] == null) continue;
 
             _state.SetStartPos(startPosList[i].transform.position);
         }
     }
 
-    private void ResetButtonGimmick()   //ボタンギミックの対応ギミックをリセットする
+    private void ResetGimmick()
     {
         if (gimmick == null) return;
 
-        for (int i = 0; i < transform.childCount; i++)
+        //生存していて、ボタンを背負っている犬が
+        for (int i = 0; i < dogs.Count; i++)
         {
-            HandButton _button = dogs[i].transform.Find("DogButton 1").GetComponent<HandButton>();
-            if (_button == null) continue;
-
-            if (ButtonGimmickChange(ref gimmick.button1, ref _button)) { }
-            else if (ButtonGimmickChange(ref gimmick.button2, ref _button)) { }
-            else if (ButtonGimmickChange(ref gimmick.button3, ref _button)) { }
+            if (dogs[i] == null) continue;
+            SetButton(dogs[i]);
         }
     }
 
-    private bool ButtonGimmickChange(ref HandButton gimmickButton, ref HandButton dogButton) //GimmickDoorに犬のボタンをセットする関数
+    private void SetButton(GameObject _game)
     {
-        if (gimmickButton == null)
+        if (_game == null || gimmick == null) return;
+
+        HandButton _button = _game.transform.Find("DogButton 1").GetComponent<HandButton>();
+
+        if (_button == null) return;
+
+        if (gimmick.button1 == null)
         {
-            gimmick.HandButtonChange(ref gimmickButton,ref dogButton);
-            return true;
+            gimmick.HandButtonChange(ref gimmick.button1, ref _button);
         }
-        else
+        else if (gimmick.button2 == null)
         {
-            //親Objがある　かつ　ボタンがおされている時はセットし直さない
-            if (gimmickButton.transform.parent != null && gimmickButton.changeFlg == true) return false;
-            if (gimmick.button1 == null || gimmick.button2 == null || gimmick.button3 == null) return false;
-
-            int count = 0;
-            int buttonMax = 3;
-
-            //生存していて、ボタンを背負っている犬が
-            for (int i = 0; i < dogs.Count; i++)
-            {
-                if (dogs[i] == null) continue;
-
-                DogState _state = dogs[i].GetComponent<DogState>();
-                if (_state == null) continue;
-
-                HandButton _button = dogs[i].transform.Find("DogButton 1").GetComponent<HandButton>();
-
-                if (_state.IsAlive == true && _button != null)
-                {
-                    count++;
-                }
-            }
-
-            if (count < buttonMax) return false;
-
-            gimmick.HandButtonChange(ref gimmickButton, ref dogButton);
-            return true;
+            gimmick.HandButtonChange(ref gimmick.button2, ref _button);
+        }
+        else if (gimmick.button3 == null)
+        {
+            gimmick.HandButtonChange(ref gimmick.button3, ref _button);
         }
     }
+
+    public void ResetButton()   //既にセットされている機能してないボタンを除く
+    {
+        if (gimmick == null) return;
+
+        if (gimmick.button1 != null)
+        {
+            //ボタンが犬から離れていて、押されてないなら
+            if (gimmick.button1.transform.parent == null && gimmick.button1.changeFlg == false)
+            {
+                gimmick.HandButtonDelete(ref gimmick.button1);
+            }
+        }
+
+        if (gimmick.button2 != null)
+        {
+            if (gimmick.button2.transform.parent == null && gimmick.button2.changeFlg == false)
+            {
+                gimmick.HandButtonDelete(ref gimmick.button2);
+            }
+        }
+
+        if (gimmick.button3 != null)
+        {
+            if (gimmick.button3.transform.parent == null && gimmick.button3.changeFlg == false)
+            {
+                gimmick.HandButtonDelete(ref gimmick.button3);
+            }
+        }
+    }
+
+    //private bool ButtonGimmickChange(ref HandButton gimmickButton, ref HandButton dogButton) //GimmickDoorに犬のボタンをセットする関数
+    //{
+    //    //ボタンをセットした:True　しない:False
+
+    //    if (gimmickButton == null)
+    //    {
+    //        gimmick.HandButtonChange(ref gimmickButton,ref dogButton);
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        //親Objがある　かつ　ボタンがおされている時はセットし直さない
+    //        if (gimmickButton.transform.parent != null && gimmickButton.changeFlg == true) return false;
+    //        if (gimmick.button1 == null || gimmick.button2 == null || gimmick.button3 == null) return false;
+
+    //        int count = 0;
+    //        int buttonMax = 3;
+
+    //        //生存していて、ボタンを背負っている犬が
+    //        for (int i = 0; i < dogs.Count; i++)
+    //        {
+    //            if (dogs[i] == null) continue;
+
+    //            DogState _state = dogs[i].GetComponent<DogState>();
+    //            if (_state == null) continue;
+
+    //            HandButton _button = dogs[i].transform.Find("DogButton 1").GetComponent<HandButton>();
+
+    //            if (_state.IsAlive == true && _button != null)
+    //            {
+    //                count++;
+    //            }
+    //        }
+
+    //        if (count < buttonMax) return false;
+
+    //        gimmick.HandButtonChange(ref gimmickButton, ref dogButton);
+
+    //        true;
+    //    }
+    //}
+
+
 }

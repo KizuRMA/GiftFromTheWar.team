@@ -31,7 +31,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [TooltipAttribute("追跡する時の速度"), SerializeField] public float TrackingSpeed;
     [TooltipAttribute("攻撃の予備動作中の回転速度"), SerializeField] public float attackRotSpeed;
     [TooltipAttribute("最大ヒットポイント数"), SerializeField] public float life = 1.0f;
-    [TooltipAttribute("プレイヤーを見失う時の距離"), SerializeField] public float loseSightOfDis;
+    [TooltipAttribute("プレイヤーを見失う時の距離"), SerializeField] public float trackingRange;
     [TooltipAttribute("攻撃する時のジャンプの力の割合"), SerializeField] public float attackJumpPow = 1.0f;
 
     [System.NonSerialized] public Vector3 hypocenter;

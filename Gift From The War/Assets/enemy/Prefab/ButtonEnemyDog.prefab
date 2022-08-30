@@ -3991,6 +3991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGimmickButtonMat: {fileID: 2100000, guid: 89f32e80c1f113b4cbe5b76e57285b7f, type: 2}
   offGimmickButtonMat: {fileID: 2100000, guid: 50d0de542e7ec1d45aec743992cc4d15, type: 2}
+  clearGimmickButtonMat: {fileID: 2100000, guid: 1bc26b366d88fc948909a7f6a8b98ec6, type: 2}
   stopGimmickButtonMat: {fileID: 2100000, guid: cf8b976deec75f44595822490b7d5c1c, type: 2}
   gimmick: {fileID: 0}
 --- !u!1 &6528033451854562549
@@ -4932,7 +4933,7 @@ MonoBehaviour:
   TrackingSpeed: 4
   attackRotSpeed: 360
   life: 1
-  loseSightOfDis: 10
+  trackingRange: 10
   attackJumpPow: 1.5
   startPos: {x: 0, y: 0, z: 0}
 --- !u!195 &5657380833582447481
@@ -4944,7 +4945,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7760404644088603017}
   m_Enabled: 1
   m_AgentTypeID: 1479372276
-  m_Radius: 1
+  m_Radius: 2
   m_Speed: 1.5
   m_Acceleration: 6
   avoidancePriority: 50

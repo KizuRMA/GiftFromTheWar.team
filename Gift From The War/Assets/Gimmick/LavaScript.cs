@@ -12,16 +12,23 @@ public class LavaScript : MonoBehaviour
         {
             var target = other.transform.GetComponent<EnemyInterface>();
             target.LavaDamage();
+            //音を鳴らす
+            AudioManager.Instance.PlaySE("BurnLava", gameObject, isLoop: false);
         }
         else if (other.gameObject.tag == "Player" && playerDebug == false)  //プレイヤー
         {
             var target = other.transform.GetComponent<playerAbnormalcondition>();
             if (null == target) return;
             target.Damage(1.0f);
+            //音を鳴らす
+            AudioManager.Instance.PlaySE("BurnLava", gameObject, isLoop: false);
         }
         else if (other.gameObject.tag == "gimmickButton")                   //ボタン
         {   
+
             Destroy(other.transform.gameObject);
+            //音を鳴らす
+            AudioManager.Instance.PlaySE("BurnLava", gameObject, isLoop: false);
         }
 
 

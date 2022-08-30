@@ -33,6 +33,7 @@ public class DogAttackFunction : MonoBehaviour
 
     public void Jump()
     {
+        AudioManager.Instance.PlaySE("DogJumpSE", gameObject, isLoop: false);
         isJumpFlg = true;
         owner.animator.SetFloat("Speed", 1.8f);
 
@@ -56,12 +57,13 @@ public class DogAttackFunction : MonoBehaviour
 
     public void Air()
     {
-
+        AudioManager.Instance.PlaySE("DogVoiceSE", gameObject, isLoop: false);
     }
 
     public void Landing()
     {
         owner.animator.SetFloat("Speed", 0.6f);
+       
     }
 
     private Vector3 CalculateVelocity(Vector3 pointA, Vector3 pointB, float angle)

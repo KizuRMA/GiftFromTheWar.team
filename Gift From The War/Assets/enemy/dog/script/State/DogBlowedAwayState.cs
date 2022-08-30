@@ -9,6 +9,7 @@ public class DogBlowedAwayState : State<DogState>
 
     public override void Enter()
     {
+        AudioManager.Instance.PlaySE("DogDeadSE", owner.dog, isLoop: false);
         owner.animator.Play("metarig|action_Sniff");
         owner.animator.speed = 0.5f;
 
