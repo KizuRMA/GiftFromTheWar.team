@@ -8,19 +8,18 @@ using UnityEngine.UI;
 public class PopUpOut : MonoBehaviour
 {
 
-    [SerializeField] private GameObject PanelObject;
-    [SerializeField] private CanvasGroup PanelCanvasGroup;
-    [SerializeField] private RectTransform ImageTransform;
-    //[SerializeField] public float duration;
-
-
+    public GameObject PanelObject;
+    public CanvasGroup PanelCanvasGroup;
+    public RectTransform ImageTransform;
     public float upDuration;
     public float outDuration;
+    public bool forceOpen = false;
 
     public enum EaseType
     {
         Linear, InCubic, OutCubic, InOutCubic, OutQuad, OutBounce
     }
+
     //現在の種類
     public EaseType PopUpEaseType;
     public EaseType PopOutEaseType;
@@ -28,18 +27,23 @@ public class PopUpOut : MonoBehaviour
     private Vector3 ImageSizeDelta;
     private Ease upEaseType;
     private Ease outEaseType;
-    //private bool openPanel = false;
     
 
     //ゲーム開始時に呼ばれる
     private void Start()
     {
         Initialize();
+
+        //シーン遷移時強制的にポップアップするかどうか
+        if(forceOpen)
+        {
+            OpenPanel();
+        }
     }
 
     void Update()
     {
-
+        //デバッグ用
         if (Input.GetKeyDown(KeyCode.O))
         {
             OpenPanel();
@@ -49,6 +53,7 @@ public class PopUpOut : MonoBehaviour
             ClosePanel();
         }
 
+        //選択したイージングを設定する
         switch (PopUpEaseType)
         {
             case EaseType.Linear:
@@ -134,7 +139,6 @@ public class PopUpOut : MonoBehaviour
 
         //アニメーションをするスケール値を設定
         ImageSizeDelta = ImageTransform.localScale;
-        //ImageTransform.localScale = new Vector3(ImageSizeDelta.x - 2, ImageSizeDelta.y - 2, ImageSizeDelta.z - 2);
         ImageTransform.localScale = new Vector3(0, 0, 0);
 
     }
@@ -148,13 +152,10 @@ public class PopUpOut : MonoBehaviour
     {
         //パネルを非表示、無効化
         PanelObject.SetActive(false);
-        //PanelCanvasGroup.DOFade(endValue: 0f, duration: 0.1f);
-        //openPanel = false;
 
         //アニメーション初期化
         ImageTransform.localScale = new Vector3(0, 0, 0);
 
-        
     }
 
 }

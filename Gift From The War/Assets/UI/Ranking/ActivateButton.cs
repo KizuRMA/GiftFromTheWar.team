@@ -21,6 +21,7 @@ public class ActivateButton : MonoBehaviour
     void Start()
     {
 		EventSystem.current.SetSelectedGameObject(firstSelect);
+	
 	}
 
     void OnEnable()
@@ -37,7 +38,6 @@ public class ActivateButton : MonoBehaviour
 		if (flag)
 		{
 			EventSystem.current.SetSelectedGameObject(firstSelect);
-			//firstSelect.onClick.Invoke();
 		}
 	}
 }
