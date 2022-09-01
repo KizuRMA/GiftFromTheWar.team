@@ -8,6 +8,14 @@ public class ObjActiveOnOff : MonoBehaviour
     [SerializeField]
     private GameObject gameobject;
 
+    void Update()
+    {
+        //デバッグ用
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            gameobject.SetActive(false);
+        }
+    }
 
     public void ActiveOnOff(bool flag)
     {
