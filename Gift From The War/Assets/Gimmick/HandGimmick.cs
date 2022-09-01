@@ -12,11 +12,12 @@ public class HandGimmick : MonoBehaviour
     [SerializeField] private GameObject light3;
     [SerializeField] private Material onMat;
     [SerializeField] private Material offMat;
+    [SerializeField] private Material clearMat;
 
     //ドアを開ける
     [SerializeField] private GameObject rightDoor;
     [SerializeField] private GameObject leftDoor;
-    private bool openFlg = false;
+    [System.NonSerialized]public bool openFlg = false;
 
     [SerializeField] private float movePower;
     [SerializeField] private float maxPos;
@@ -25,6 +26,24 @@ public class HandGimmick : MonoBehaviour
 
     private int changeCount;
 
+    private void Awake()
+    {
+        if (button1 != null)
+        {
+            button1.gimmick = this;
+        }
+
+        if (button2 != null)
+        {
+            button2.gimmick = this;
+        }
+
+        if (button3 != null)
+        {
+            button3.gimmick = this;
+        }
+    }
+
     void Start()
     {
         
@@ -32,46 +51,36 @@ public class HandGimmick : MonoBehaviour
 
     void Update()
     {
-        if (button1 == null || button2 == null || button3 == null)
-        {
-            if (button1 == null)
-            {
-                light1.GetComponent<MeshRenderer>().material = offMat;
-            }
-
-            if (button2 == null)
-            {
-                light2.GetComponent<MeshRenderer>().material = offMat;
-            }
-
-            if (button3 == null)
-            {
-                light3.GetComponent<MeshRenderer>().material = offMat;
-            }
-            return;
-        }
-
         //何個ボタンが押されているか
         changeCount = 0;
-        if (button1.changeFlg) changeCount++;
-        if (button2.changeFlg) changeCount++;
-        if (button3.changeFlg) changeCount++;
+        if (button1 != null && button1.changeFlg) changeCount++;
+        if (button2 != null && button2.changeFlg) changeCount++;
+        if (button3 != null && button3.changeFlg) changeCount++;
 
-        //ライトを光らせる処理
-        if(changeCount >= 1)
+        switch (changeCount)
         {
-            light1.GetComponent<MeshRenderer>().material = onMat;
-        }
+            case 0:
+                light1.GetComponent<MeshRenderer>().material = offMat;
+                light2.GetComponent<MeshRenderer>().material = offMat;
+                light3.GetComponent<MeshRenderer>().material = offMat;
+                break;
+            case 1:
+                light1.GetComponent<MeshRenderer>().material = onMat;
+                light2.GetComponent<MeshRenderer>().material = offMat;
+                light3.GetComponent<MeshRenderer>().material = offMat;
+                break;
+            case 2:
+                light1.GetComponent<MeshRenderer>().material = onMat;
+                light2.GetComponent<MeshRenderer>().material = onMat;
+                light3.GetComponent<MeshRenderer>().material = offMat;
+                break;
+            case 3:
+                light1.GetComponent<MeshRenderer>().material = onMat;
+                light2.GetComponent<MeshRenderer>().material = onMat;
+                light3.GetComponent<MeshRenderer>().material = onMat;
+                Open();
+                break;
 
-        if(changeCount >= 2)
-        {
-            light2.GetComponent<MeshRenderer>().material = onMat;
-        }
-
-        if (changeCount >= 3)
-        {
-            light3.GetComponent<MeshRenderer>().material = onMat;
-            openFlg = true;
         }
 
         //ドアを開ける
@@ -101,5 +110,39 @@ public class HandGimmick : MonoBehaviour
     {
         if (sumPos <= 0) return;
         nowPower = -movePower * Time.deltaTime;
+    }
+
+    public void HandButtonChange(ref HandButton _useButton,ref HandButton _putInButton)
+    {
+        if (_useButton == null)
+        {
+            _useButton = _putInButton;
+            _useButton.gimmick = this;
+        }
+        else
+        {
+            _useButton.gimmick = null;
+
+            _useButton = _putInButton;
+            _useButton.gimmick = this;
+        }
+    }
+
+    public void HandButtonDelete(ref HandButton _useButton)
+    {
+        if (_useButton != null)
+        {
+            _useButton.gimmick = null;
+            _useButton = null;
+        }
+    }
+
+    public void Open()
+    {
+        openFlg = true;
+
+        light1.GetComponent<MeshRenderer>().material = clearMat;
+        light2.GetComponent<MeshRenderer>().material = clearMat;
+        light3.GetComponent<MeshRenderer>().material = clearMat;
     }
 }

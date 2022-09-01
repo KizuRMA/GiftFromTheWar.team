@@ -42,6 +42,7 @@ public class DogVigilanceState : State<DogState>
 
         if (CheckVisibility() == true)
         {
+            AudioManager.Instance.PlaySE("DogDiscoverSE", owner.dog, isLoop: false);
             owner.ChangeState(e_DogState.Tracking);
             return;
         }
