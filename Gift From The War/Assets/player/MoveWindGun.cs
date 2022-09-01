@@ -50,7 +50,12 @@ public class MoveWindGun : MonoBehaviour
         getItem = transform.GetComponent<GetItem>();
         shoot = _info.muzzlePos.GetComponent<shooting>();
         playerStartDown = transform.GetComponent<PlayerStartDown>();
-        scenario = GameObject.FindGameObjectWithTag("Scenario").GetComponent<Scenario>();
+
+        GameObject _game = GameObject.FindGameObjectWithTag("Scenario");
+        if (_game != null)
+        {
+            scenario = _game.GetComponent<Scenario>(); ;
+        }
 
         CC = this.GetComponent<CharacterController>();
         trans = transform;
@@ -66,6 +71,8 @@ public class MoveWindGun : MonoBehaviour
 
     void Update()
     {
+        if (scenario == null) return;
+
         if (!getItem.windAmmunitionFlg) return; //íeÇèEÇ¡ÇƒÇ»Ç©Ç¡ÇΩÇÁèàóùÇµÇ»Ç¢
         if (Time.timeScale <= 0f) return;
         if (playerStartDown != null && playerStartDown.isAuto == true) return;
