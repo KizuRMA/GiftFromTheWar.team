@@ -16,6 +16,7 @@ public class FPSController : MonoBehaviour
     private playerDied died;
     private CharacterController CC;
     private MoveWindGun moveWind;
+    private Scenario scenario;
 
     //プレイヤーのXZ移動
     private Transform trans;
@@ -64,6 +65,7 @@ public class FPSController : MonoBehaviour
         died = transform.GetComponent<playerDied>();
         CC = transform.GetComponent<CharacterController>();
         playerStartDown = transform.GetComponent<PlayerStartDown>();
+        scenario = GameObject.FindGameObjectWithTag("Scenario").GetComponent<Scenario>();
 
         trans = transform;
         nowMoveSpeed = walkSpeed;
@@ -87,7 +89,7 @@ public class FPSController : MonoBehaviour
 
         UpdateCursorLock();
 
-        if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg)  //プレイヤーの移動無効化
+        if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg||scenario.scenarioFlg)  //プレイヤーの移動無効化
         {
             moveFlg = false;
             return;
