@@ -39,7 +39,16 @@ public class Ranking_Text_Time : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            rank_time[i] = time[i].ToString(".0");
+            //rank_time[i] = time[i].ToString(".0");
+
+            //countTime‚©‚çŒo‰ßŽžŠÔ‚ðŽZo
+            double countMinute;
+            double countSecond;
+            double _time = time[i];
+            countMinute = (int)_time / 60;
+            _time = _time % 60;
+            countSecond = _time;
+            rank_time[i] = (countMinute.ToString("00") + ":" + countSecond.ToString("00.00"));
         }
 
         RankText.text = rank_time[index];
