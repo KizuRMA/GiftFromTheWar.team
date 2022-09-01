@@ -23,6 +23,12 @@ public class NextStage : MonoBehaviour
         if (nextStageFlg) return;
         nextStageFlg = true;
 
+        if (!AchievementManager.Instance.nowAchievementData.badData)
+        {
+            AchievementManager.Instance.nowAchievementData.badData = true;
+            AchievementManager.Instance.WriteFile();
+        }
+
         if (!TimeAttackManager.Instance.timeAttackFlg)
         {
             StartCoroutine(LoadManager.Instance.LoadScene("Scenes/GameClearScene"));
