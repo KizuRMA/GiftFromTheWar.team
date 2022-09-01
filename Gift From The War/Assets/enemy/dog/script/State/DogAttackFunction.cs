@@ -62,8 +62,8 @@ public class DogAttackFunction : MonoBehaviour
 
     public void Landing()
     {
-        owner.animator.SetFloat("Speed", 0.6f);
-       
+        owner.animator.SetFloat("Speed", 0.3f);
+
     }
 
     private Vector3 CalculateVelocity(Vector3 pointA, Vector3 pointB, float angle)

@@ -26,7 +26,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 
     //  åªç›ÇÃçsî‘çÜ
     private int currentLine = 0;
-   
+
     private bool isCallPreload = false;
 
     //
@@ -35,12 +35,12 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     private Scenario scenario;
 
     public void RequestNextLine(string fileName,string[] _scenarios)
-    { 
+    {
         fileName = _scenarios[currentLine];
 
         textController.SetNextLine(CommandProcess(fileName));
         currentLine++;
-   
+
         isCallPreload = false;
     }
 
@@ -76,7 +76,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 
         Resources.UnloadAsset(scenarioText);
         return null;
-        
     }
 
     private string CommandProcess(string line)
