@@ -9,7 +9,7 @@ public class SESlider : MonoBehaviour
 
     void Start()
     {
-        slider = GetComponent<Slider>();
+        slider = this.GetComponent<Slider>();
 
         //スライダー現在値の設定
         slider.value = AudioManager.Instance.GetSEVolume();
@@ -18,6 +18,11 @@ public class SESlider : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            slider.value = AudioManager.Instance.GetSEVolume();
+        }
+
         AudioManager.Instance.ChangeSEVolume(slider.value);
     }
 }

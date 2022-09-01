@@ -314,9 +314,12 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     public void ChangeBGMVolume(float BGMVolume)
     {
         _BGMVolSetting = BGMVolume;
-        _bgmSource.volume = _nextVol * _BGMVolSetting;
 
         PlayerPrefs.SetFloat(BGM_VOLUME_KEY, BGMVolume);
+
+        if (_isFadeOut) return;
+
+        _bgmSource.volume = _nextVol * _BGMVolSetting;
     }
 
     public void ChangeSEVolume(float SEVolume)
