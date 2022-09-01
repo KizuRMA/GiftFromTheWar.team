@@ -16,6 +16,7 @@ public class MoveWindGun : MonoBehaviour
     private GetItem getItem;
     private shooting shoot;
     private PlayerStartDown playerStartDown;
+    private Scenario scenario;
 
     //移動
     [SerializeField] private float movePower;
@@ -49,6 +50,7 @@ public class MoveWindGun : MonoBehaviour
         getItem = transform.GetComponent<GetItem>();
         shoot = _info.muzzlePos.GetComponent<shooting>();
         playerStartDown = transform.GetComponent<PlayerStartDown>();
+        scenario = GameObject.FindGameObjectWithTag("Scenario").GetComponent<Scenario>();
 
         CC = this.GetComponent<CharacterController>();
         trans = transform;
@@ -72,6 +74,9 @@ public class MoveWindGun : MonoBehaviour
 
         if (died.diedFlg) return;
         if (ladder.touchLadderFlg) return;
+
+        // ネジ君と会話中は処理しない
+        if (scenario.scenarioFlg) return;
 
         KnowViewpoint();
 

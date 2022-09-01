@@ -11,7 +11,7 @@ public class TextController : MonoBehaviour
 	public float intervalForCharacterDisplay = 0.05f;
 
 	//	現在の文字列
-	private string currentText = string.Empty;
+	private string currentText;
 	//	表示にかかる時間
 	private float timeUntilDisplay = 0;
 	//	文字列の表示を開始した時間
@@ -52,12 +52,16 @@ public class TextController : MonoBehaviour
 
 	void Update()
 	{
-		//表示文字数が前回の表示文字数と異なるならテキストを更新する
-		int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * currentText.Length);
-		if (displayCharacterCount != lastUpdateCharacter)
+		if (currentText != null)
 		{
-			_uiText.text = currentText.Substring(0, displayCharacterCount);
-			lastUpdateCharacter = displayCharacterCount;
+			//表示文字数が前回の表示文字数と異なるならテキストを更新する
+			int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * currentText.Length);
+			if (displayCharacterCount != lastUpdateCharacter)
+			{
+				_uiText.text = currentText.Substring(0, displayCharacterCount);
+
+				lastUpdateCharacter = displayCharacterCount;
+			}
 		}
 	}
 

@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-
-public class CheckEndScenario : MonoBehaviour
+[Serializable]
+[CreateAssetMenu(fileName = "ButtonStatus", menuName = "CreateButtonStatus")]
+public class ButtonStatus : BaseStatus
 {
     // Start is called before the first frame update
     void Start()
     {
-       
+        
     }
 
     // Update is called once per frame
