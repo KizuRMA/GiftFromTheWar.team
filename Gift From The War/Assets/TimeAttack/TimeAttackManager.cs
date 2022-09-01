@@ -11,7 +11,7 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
     public bool playerDiedFlg { get; set; } //プレイヤーが死んだかどうか
     public SaveManager.SaveData saveData { get; set; }  //メインストーリーのセーブデータを保存
     [SerializeField] private TextMeshProUGUI timer;
-    private float countTime = 0;
+    public float countTime = 0;
     private float countSecond = 0;
     private int countMinute = 0;
 

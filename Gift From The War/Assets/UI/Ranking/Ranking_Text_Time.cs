@@ -24,22 +24,18 @@ public class Ranking_Text_Time : MonoBehaviour
     void Start()
     {
         //rank_time[0] = "aiueo";
+        StartCoroutine(GetData());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(GetData());
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    StartCoroutine(GetData());
+        //}
 
         index = Obj.transform.GetSiblingIndex();
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log(index);
-        }
 
         for (int i = 0; i < 10; i++)
         {

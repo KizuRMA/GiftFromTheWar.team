@@ -35,7 +35,7 @@ public class FocusRequired : MonoBehaviour
     /// </summary>
     private GameObject[] _selectables;
 
-    private void Awake()
+    private void OnEnable()
     {
         // すべての Selectable を取得する
         var selectableList = (FindObjectsOfType(typeof(Selectable)) as Selectable[]).ToList();
@@ -61,6 +61,12 @@ public class FocusRequired : MonoBehaviour
 
         // フォーカス制御用コルーチンをスタート
         StartCoroutine(RestrictSelection());
+    }
+
+    void Update()
+    {
+        // フォーカス制御用コルーチンをスタート
+        //StartCoroutine(RestrictSelection());
     }
 
     /// <summary>

@@ -9,7 +9,7 @@ public class ActiveOff : MonoBehaviour
     private CanvasGroup canvasGroup;
 
 
-    public void ButtonPushed()
+    public void ActiveOnOff()
     {
         if(canvasGroup.interactable == false)
         {

@@ -27,10 +27,10 @@ public class Ranking_Text : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(GetData());
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    StartCoroutine(GetData());
+        //}
 
         index = Obj.transform.GetSiblingIndex();
 

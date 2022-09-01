@@ -34,7 +34,7 @@ public class Ranking_Input : MonoBehaviour
         Debug.Log(name);
 
         //データを送る（タイムはまだ。）
-        StartCoroutine(SendData(name, 3));
+        StartCoroutine(SendData(name, TimeAttackManager.Instance.countTime));
 
 
     }

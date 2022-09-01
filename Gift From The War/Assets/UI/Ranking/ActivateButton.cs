@@ -7,9 +7,9 @@ public class ActivateButton : MonoBehaviour
 {
 
 	[SerializeField] private GameObject firstSelect;
-	//[SerializeField] private Button firstSelect;
-	//[SerializeField] private Color buttonColor;
-	private CanvasGroup canvasGroup;
+	[SerializeField] private CanvasGroup canvasGroup;
+	
+	//private CanvasGroup canvasGroup;
 
 	public void ButtonPushed()
 	{
@@ -24,13 +24,13 @@ public class ActivateButton : MonoBehaviour
 	
 	}
 
-    void OnEnable()
-	{
-		if (canvasGroup == null)
-		{
-			canvasGroup = GetComponent<CanvasGroup>();
-		}
-	}
+ //   void OnEnable()
+	//{
+	//	if (canvasGroup == null)
+	//	{
+	//		canvasGroup = GetComponent<CanvasGroup>();
+	//	}
+	//}
 
 	public void ActivateOrNotActivate(bool flag)
 	{
