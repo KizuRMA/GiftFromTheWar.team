@@ -72,7 +72,7 @@ public class DogManager : BaseEnemyManager
         //敵リスポーン
         EnemyReSpawn();
 
-        //現在管理している配列の敵のAgentTypeを変更する
+        //現在管理している敵のAgentTypeを変更する
         for (int i = 0; i < dogs.Count; i++)
         {
             NavMeshAgent navMesh = dogs[i].GetComponent<NavMeshAgent>();
