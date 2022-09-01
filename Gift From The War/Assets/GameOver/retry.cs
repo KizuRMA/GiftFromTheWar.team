@@ -7,7 +7,21 @@ public class retry : MonoBehaviour
 {
     public void OnClickStartButton()
     {
-        StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
-        SaveManager.Instance.ReadFile();
+        if(TimeAttackManager.Instance.timeAttackFlg)
+        {
+            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
+            TimeAttackManager.Instance.timeAttackFlg = true;
+            TimeAttackManager.Instance.timerStopFlg = false;
+            TimeAttackManager.Instance.playerDiedFlg = false;
+            TimeAttackManager.Instance.TimerReset();
+            TimeAttackManager.Instance.saveData = SaveManager.Instance.nowSaveData;
+            SaveManager.Instance.Restart();
+            SaveManager.Instance.WriteFile();
+        }
+        else
+        {
+            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
+            SaveManager.Instance.ReadFile();
+        }
     }
 }
