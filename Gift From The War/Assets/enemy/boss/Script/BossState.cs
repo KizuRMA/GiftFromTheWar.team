@@ -29,6 +29,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     [System.NonSerialized] public int currentWaypointIndex;
     [System.NonSerialized] public GameObject generatedGrenade;
+    [System.NonSerialized] public bool attackStart;
 
     private Vector3 throwTargetPos;
     private float attackTimeCounter = 0;
@@ -49,6 +50,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         //=============
         //変数の初期化
         //=============
+        attackStart = false;
         currentWaypointIndex = 0;
         agent.speed = trackingSpeed;
     }
@@ -71,6 +73,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     private void DestinationUpdate()    //目的値を更新する処理
     {
         if (IsCurrentState(e_BossState.Stun) == true || IsCurrentState(e_BossState.Wait) == true || IsCurrentState(e_BossState.Crash) == true) return;
+        if (attackStart == false) return;
 
         Vector3 _nowPos = new Vector3(transform.position.x, agent.destination.y, transform.position.z);
         float targetDis = Vector3.Distance(_nowPos, agent.destination);
@@ -88,7 +91,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     public bool IsAttack()
     {
         //ボス攻撃中　または　スタン中　または　待機状態である時は早期リターン
-        if (IsCurrentState(e_BossState.Tracking) == false) return false;
+        if (IsCurrentState(e_BossState.Tracking) == false || attackStart == false) return false;
 
        attackTimeCounter += Time.deltaTime;
        if(attackTimeCounter <= attackIntervalSecond) return false;

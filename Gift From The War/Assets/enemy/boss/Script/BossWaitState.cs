@@ -26,9 +26,4 @@ public class BossWaitState : State<BossState>
     {
 
     }
-
-    void CheckSwitchAnime()
-    {
-
-    }
 }
