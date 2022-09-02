@@ -27,6 +27,8 @@ public class Scenario : MonoBehaviour
     // 話しかける時のアイコン用
     [SerializeField] GameObject talkIcon;
 
+    private bool talkFlg = false;
+
     // 話しかけた回数
     public int talkCount=0;
 
@@ -48,6 +50,7 @@ public class Scenario : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetTalkIcon();
         //  レイ判定
         Ray();
 
@@ -58,6 +61,8 @@ public class Scenario : MonoBehaviour
 
             hitFlg = false;
         }
+
+
         //  コマンド画面終了
         EndCommand();
     }
@@ -66,7 +71,7 @@ public class Scenario : MonoBehaviour
     private void Ray()
     {
         //  スペースキーを押したとき
-       // if (!Input.GetKeyDown(KeyCode.Space)) return;
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
 
         Ray ray = new Ray(camTrans.position, camTrans.forward);
         RaycastHit hit;
@@ -82,14 +87,33 @@ public class Scenario : MonoBehaviour
             if (objName == "Nezi")
             {
                 hitFlg = true;
-                talkCount++;
-
-                // 会話可能アイコン表示
-                talkIcon.SetActive(true);
-
             }
+        }
+    }
 
+    void SetTalkIcon()
+    {
+        if (scenarioFlg) return;
 
+        Ray ray = new Ray(camTrans.position, camTrans.forward);
+        RaycastHit hit;
+
+        //  レイ投射
+        if (Physics.Raycast(ray, out hit, handDis))
+        {
+            //  衝突しているオブジェクトの各情報を取得
+            objName = hit.collider.gameObject.tag;
+            neziKun = hit.collider.gameObject;
+
+            //  衝突しているオブジェクトがネジ君だったら
+            if (objName == "Nezi")
+            {
+                talkIcon.SetActive(true);
+            }
+        }
+        else
+        {
+            talkIcon.SetActive(false);
         }
     }
 
@@ -100,12 +124,13 @@ public class Scenario : MonoBehaviour
 
         image.SetActive(false);
         neziKun.SetActive(false);
+        talkCount++;
+     
 
-        ScenarioManager.Instance.endFlg = false;
         CursorManager.Instance.cursorLock = true;
 
         scenarioFlg = false;
-       
+        ScenarioManager.Instance.endFlg = false;
     }
 
     //　CommandScriptから呼び出すコマンド画面の終了
@@ -115,7 +140,7 @@ public class Scenario : MonoBehaviour
         CursorManager.Instance.cursorLock = true;
 
         scenarioFlg = false;
-        talkCount = 0;
+       
     }
 
     //  コマンド画面表示

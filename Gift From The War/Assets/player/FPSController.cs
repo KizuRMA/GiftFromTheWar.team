@@ -93,7 +93,7 @@ public class FPSController : MonoBehaviour
 
         UpdateCursorLock();
 
-        if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg && scenario != null && scenario.scenarioFlg)  //プレイヤーの移動無効化
+        if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg || scenario != null && scenario.scenarioFlg)  //プレイヤーの移動無効化
         {
             moveFlg = false;
             return;

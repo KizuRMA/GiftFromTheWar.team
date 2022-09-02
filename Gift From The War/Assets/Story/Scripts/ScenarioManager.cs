@@ -34,6 +34,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     private CommandController commandController;
     private Scenario scenario;
 
+    //  次のテキストに更新するためにtextControllerに依頼する
     public void RequestNextLine(string fileName,string[] _scenarios)
     {
         fileName = _scenarios[currentLine];
@@ -142,6 +143,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
         }
     }
 
+    //  テキストを更新する
     public void TextUpdate(string[] scenarios)
     {
         if (!scenario.scenarioFlg) return;
