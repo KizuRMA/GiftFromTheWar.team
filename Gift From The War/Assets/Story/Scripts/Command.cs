@@ -75,9 +75,6 @@ public class Command : MonoBehaviour
             textButtonIns[i].GetComponentInChildren<Text>().name = "Text" + i;
             textButtonIns[i].name = "Button"+i;
         }
-
-        scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
-
     }
 
     // Update is called once per frame
@@ -108,6 +105,18 @@ public class Command : MonoBehaviour
             }
         }
 
+        // ネジ君に話しかけた回数によってテキストの内容を変更する
+        if (scenario.talkCount == 0)
+        {
+            scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
+            ScenarioManager.Instance.storyNum = 0;
+        }
+        else if (scenario.talkCount == 1)
+        {
+            scenarios = ScenarioManager.Instance.UpdateLines("Scenario2");
+            ScenarioManager.Instance.storyNum = 1;
+        }
+        // テキストを更新する
         ScenarioManager.Instance.TextUpdate(scenarios);
     }
 
@@ -116,15 +125,19 @@ public class Command : MonoBehaviour
     {
         //　現在のコマンドの初期化
         currentCommand = CommandMode.CommandPanel;
-        commandPanel.SetActive(true);
+        //commandPanel.SetActive(true);
+        textPanel.SetActive(true);
+
 
         //　コマンドメニュー表示時に他のパネルは非表示にする
-        textPanel.SetActive(false);
+       //textPanel.SetActive(false);
 
         selectedGameObjectStack.Clear();
 
-        commandPanelCanvasGroup.interactable = true;
-        textPanelCanvasGroup.interactable = false;
+       //commandPanelCanvasGroup.interactable = true;
+       //textPanelCanvasGroup.interactable = false;
+       textPanelCanvasGroup.interactable = true;
+
     }
 
     //　選択したコマンドで処理分け

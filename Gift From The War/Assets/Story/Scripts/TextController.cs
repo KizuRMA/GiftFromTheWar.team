@@ -23,6 +23,8 @@ public class TextController : MonoBehaviour
 	[SerializeField]
 	private Text _uiText;
 
+	Scenario scenario;
+
 	//	文字の表示が完了しているかどうか
 	public bool IsCompleteDisplayText
 	{
@@ -42,14 +44,21 @@ public class TextController : MonoBehaviour
 
 		//	想定時間と現在の時刻をキャッシュ
 		timeUntilDisplay = currentText.Length * intervalForCharacterDisplay;
+
 		timeElapsed = Time.time;
 
 		//	文字カウントを初期化
 		lastUpdateCharacter = -1;
 	}
 
-	#region UNITY_CALLBACK	
+    #region UNITY_CALLBACK	
 
+    private void Awake()
+    {
+		//	シナリオクラス
+		scenario = GameObject.FindGameObjectWithTag("Scenario").GetComponent<Scenario>();
+	}
+    
 	void Update()
 	{
 		if (currentText != null)
@@ -63,6 +72,12 @@ public class TextController : MonoBehaviour
 				lastUpdateCharacter = displayCharacterCount;
 			}
 		}
+
+		// シナリオを読み始める時のテキストに変更する
+		if(scenario.scenarioFlg==false)
+        {
+			_uiText.text ="左クリックでストーリーを読む";
+        }
 	}
 
 	#endregion
