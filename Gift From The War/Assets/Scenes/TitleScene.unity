@@ -1418,8 +1418,6 @@ RectTransform:
   - {fileID: 1094306458}
   - {fileID: 2121368878}
   - {fileID: 571761627}
-  - {fileID: 464297355}
-  - {fileID: 1903607439}
   m_Father: {fileID: 957705403}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7358,9 +7356,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 369753083}
-        m_TargetAssemblyTypeName: OpenMessageBox, Assembly-CSharp
-        m_MethodName: OpenBoxAnimate
+      - m_Target: {fileID: 387085753}
+        m_TargetAssemblyTypeName: ArrowAnime, Assembly-CSharp
+        m_MethodName: AppArrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7370,9 +7368,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 387085753}
-        m_TargetAssemblyTypeName: ArrowAnime, Assembly-CSharp
-        m_MethodName: AppArrow
+      - m_Target: {fileID: 1062235131}
+        m_TargetAssemblyTypeName: GameStart, Assembly-CSharp
+        m_MethodName: OpenAnimate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9879,15 +9877,15 @@ RectTransform:
   m_GameObject: {fileID: 464297354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12.794427, y: 12.794427, z: 12.794427}
+  m_LocalScale: {x: 12.794428, y: 12.794428, z: 12.794428}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1317544602}
   - {fileID: 1690197781}
   - {fileID: 598049479}
   - {fileID: 1190469267}
-  m_Father: {fileID: 189880486}
-  m_RootOrder: 5
+  m_Father: {fileID: 1062235133}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9953,7 +9951,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.399
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -11623,9 +11621,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 369753082}
-        m_TargetAssemblyTypeName: CloseMessageBox, Assembly-CSharp
-        m_MethodName: CloseBoxAnimate
+      - m_Target: {fileID: 387085753}
+        m_TargetAssemblyTypeName: ArrowAnime, Assembly-CSharp
+        m_MethodName: DeleteArrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11635,9 +11633,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 387085753}
-        m_TargetAssemblyTypeName: ArrowAnime, Assembly-CSharp
-        m_MethodName: DeleteArrow
+      - m_Target: {fileID: 1062235131}
+        m_TargetAssemblyTypeName: GameStart, Assembly-CSharp
+        m_MethodName: CloseAnimate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14531,6 +14529,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041709997}
   m_CullTransparentMesh: 1
+--- !u!1 &1062235130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062235133}
+  - component: {fileID: 1062235132}
+  - component: {fileID: 1062235131}
+  m_Layer: 5
+  m_Name: Option
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1062235131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062235130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a6d95284830a047bf9e6ccc62d02a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoxCanvasGroup: {fileID: 1237461122}
+  ButtonCanvasGroup: {fileID: 1062235132}
+  BoxRectTransform: {fileID: 369753079}
+  BlurRectTransform: {fileID: 997353994}
+--- !u!225 &1062235132
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062235130}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!224 &1062235133
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062235130}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 464297355}
+  - {fileID: 1903607439}
+  m_Father: {fileID: 1094306458}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1065838899
 GameObject:
   m_ObjectHideFlags: 0
@@ -14795,6 +14861,7 @@ RectTransform:
   - {fileID: 1237461121}
   - {fileID: 1682669468}
   - {fileID: 1403462917}
+  - {fileID: 1062235133}
   m_Father: {fileID: 189880486}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19591,15 +19658,15 @@ RectTransform:
   m_GameObject: {fileID: 1903607438}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12.794427, y: 12.794427, z: 12.794427}
+  m_LocalScale: {x: 12.794428, y: 12.794428, z: 12.794428}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1273842502}
   - {fileID: 440328665}
   - {fileID: 754226382}
   - {fileID: 248678554}
-  m_Father: {fileID: 189880486}
-  m_RootOrder: 6
+  m_Father: {fileID: 1062235133}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -19665,7 +19732,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.675
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
