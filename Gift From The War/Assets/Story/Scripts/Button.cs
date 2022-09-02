@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Button : MonoBehaviour
 {
+    Scenario scenario;
     Command command;
     private GameObject pointerGameObject;
 
@@ -14,6 +15,7 @@ public class Button : MonoBehaviour
     private void Start()
     {
         command = GameObject.Find("ScenarioManager/Command").GetComponent<Command>();
+        scenario = GameObject.Find("ScenarioManager/Scenario").GetComponent<Scenario>();
     }
 
     //マウスオーバーされているオブジェクトの情報を取得する
@@ -25,20 +27,40 @@ public class Button : MonoBehaviour
     //選択肢によって表示するテキストを変更する
     public void StoryCommand()
     {
-        if (pointerGameObject.name == "Text0")
+        if (scenario.talkCount == 1)
         {
-            command.scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
-            ScenarioManager.Instance.storyNum = 0;
-        }
-        else if(pointerGameObject.name=="Text1")
+            if (pointerGameObject.name == "Text0")
+            {
+                command.scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
+                ScenarioManager.Instance.storyNum = 0;
+            }
+            else if (pointerGameObject.name == "Text1")
+            {
+                command.scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
+                ScenarioManager.Instance.storyNum = 1;
+            }
+            else if (pointerGameObject.name == "Text2")
+            {
+                command.scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
+                ScenarioManager.Instance.storyNum = 2;
+            }
+        }else if(scenario.talkCount==2)
         {
-            command.scenarios = ScenarioManager.Instance.UpdateLines("Test1");
-            ScenarioManager.Instance.storyNum = 1;
-        }
-        else if(pointerGameObject.name=="Text2")
-        {
-            command.scenarios = ScenarioManager.Instance.UpdateLines("Test2");
-            ScenarioManager.Instance.storyNum = 2;
+            if (pointerGameObject.name == "Text0")
+            {
+                command.scenarios = ScenarioManager.Instance.UpdateLines("Scenario2");
+                ScenarioManager.Instance.storyNum = 0;
+            }
+            else if (pointerGameObject.name == "Text1")
+            {
+                command.scenarios = ScenarioManager.Instance.UpdateLines("Scenario2");
+                ScenarioManager.Instance.storyNum = 1;
+            }
+            else if (pointerGameObject.name == "Text2")
+            {
+                command.scenarios = ScenarioManager.Instance.UpdateLines("Scenario2");
+                ScenarioManager.Instance.storyNum = 2;
+            }
         }
     }
 
