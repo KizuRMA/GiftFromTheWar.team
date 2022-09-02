@@ -8,7 +8,8 @@ public class BossTrackingState : State<BossState>
 
     public override void Enter()
     {
-
+        //追いかけるターゲットを設定
+        owner.agent.destination = owner.wayPoint.wayPoints[owner.currentWaypointIndex].position;
     }
 
     public override void Execute()

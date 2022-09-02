@@ -8,6 +8,8 @@ public enum e_BossState
     Tracking,
     BomAttack,
     Stun,
+    Wait,
+    Crash,
 }
 
 public class BossState : StatefulObjectBase<BossState, e_BossState>
@@ -25,30 +27,30 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     [SerializeField] public float attackRate = 70;
     [SerializeField] public float life;
 
+    [System.NonSerialized] public int currentWaypointIndex;
+    [System.NonSerialized] public GameObject generatedGrenade;
+
     private Vector3 throwTargetPos;
-    private int currentWaypointIndex;
-    public GameObject generatedGrenade;
     private float attackTimeCounter = 0;
     private Vector3 destination;
 
     void Start()
     {
+        stateMachine = new StateMachine<BossState>();
+
         stateList.Add(new BossTrackingState(this));
         stateList.Add(new BossBomAttack(this));
         stateList.Add(new BossStunState(this));
+        stateList.Add(new BossWaitState(this));
+        stateList.Add(new BossCrashState(this));
 
-        ChangeState(e_BossState.Tracking);
-
-        stateMachine = new StateMachine<BossState>();
+        ChangeState(e_BossState.Wait);
 
         //=============
         //変数の初期化
         //=============
         currentWaypointIndex = 0;
         agent.speed = trackingSpeed;
-
-        //追いかけるターゲットを設定
-        agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
     }
 
     protected override void Update()
@@ -68,7 +70,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     private void DestinationUpdate()    //目的値を更新する処理
     {
-        if (IsCurrentState(e_BossState.Stun) == true) return;
+        if (IsCurrentState(e_BossState.Stun) == true || IsCurrentState(e_BossState.Wait) == true || IsCurrentState(e_BossState.Crash) == true) return;
 
         Vector3 _nowPos = new Vector3(transform.position.x, agent.destination.y, transform.position.z);
         float targetDis = Vector3.Distance(_nowPos, agent.destination);
@@ -85,8 +87,8 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     public bool IsAttack()
     {
-        //ボスが既に攻撃している場合
-        if (IsCurrentState(e_BossState.BomAttack) == true || IsCurrentState(e_BossState.Stun) == true) return false;
+        //ボス攻撃中　または　スタン中　または　待機状態である時は早期リターン
+        if (IsCurrentState(e_BossState.Tracking) == false) return false;
 
        attackTimeCounter += Time.deltaTime;
        if(attackTimeCounter <= attackIntervalSecond) return false;
