@@ -13,7 +13,12 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         s1p2,
         s1p3,
         s1p4,
-        s1p5
+        s1p5,
+        s2p1,
+        s2p2,
+        s2p3,
+        s2p4,
+        s2p5
     }
 
     public struct SaveData
