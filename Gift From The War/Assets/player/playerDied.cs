@@ -164,13 +164,6 @@ public class playerDied : MonoBehaviour
 
         CursorManager.Instance.cursorLock = false;
 
-        if (!TimeAttackManager.Instance.timeAttackFlg)
-        {
-            SceneManager.LoadScene("GameOverScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOverScene");
-        }
+        SceneManager.LoadScene("GameOverScene");
     }
 }
