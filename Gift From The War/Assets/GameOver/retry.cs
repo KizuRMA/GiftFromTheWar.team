@@ -7,7 +7,9 @@ public class retry : MonoBehaviour
 {
     public void OnClickStartButton()
     {
-        if(TimeAttackManager.Instance.timeAttackFlg)
+        SaveManager.Instance.ReadFile();
+
+        if (TimeAttackManager.Instance.timeAttackFlg)
         {
             StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
             TimeAttackManager.Instance.timeAttackFlg = true;
@@ -19,8 +21,16 @@ public class retry : MonoBehaviour
             SaveManager.Instance.WriteFile();
         }
         else
-        {
-            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
+        {           
+            if (SaveManager.Instance.nowSaveData.saveSpotNum < SaveManager.SaveSpotNum.s2p1)
+            {
+                StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
+            }
+            else
+            {
+                StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SecondStage"));
+            }
+
             SaveManager.Instance.ReadFile();
         }
     }

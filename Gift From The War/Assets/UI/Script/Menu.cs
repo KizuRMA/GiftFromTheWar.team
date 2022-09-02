@@ -25,7 +25,7 @@ public class Menu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
-            if (SceneManager.GetActiveScene().name == "FirstScene" || SceneManager.GetActiveScene().name == "SecondScene" || SceneManager.GetActiveScene().name == "FinalStage")
+            if (SceneManager.GetActiveScene().name == "FirstScene" || SceneManager.GetActiveScene().name == "SecondStage" || SceneManager.GetActiveScene().name == "FinalStage")
             {
                 pauseFlg = !pauseFlg;
             }
