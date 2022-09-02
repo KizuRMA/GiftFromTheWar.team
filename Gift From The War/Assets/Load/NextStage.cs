@@ -23,7 +23,7 @@ public class NextStage : MonoBehaviour
         if (nextStageFlg) return;
         nextStageFlg = true;
 
-        if (!AchievementManager.Instance.nowAchievementData.badData)
+        if (AchievementManager.Instance != null && !AchievementManager.Instance.nowAchievementData.badData)
         {
             AchievementManager.Instance.nowAchievementData.badData = true;
             AchievementManager.Instance.WriteFile();
@@ -31,7 +31,8 @@ public class NextStage : MonoBehaviour
 
         if (!TimeAttackManager.Instance.timeAttackFlg)
         {
-            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/GameClearScene"));
+            if(LoadManager.Instance != null)
+            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SecondStage"));
         }
         else
         {
