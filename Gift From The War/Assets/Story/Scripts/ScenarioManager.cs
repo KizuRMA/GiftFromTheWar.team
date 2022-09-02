@@ -61,12 +61,12 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             scenarios = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
             return scenarios;
         }
-        else if(fileName=="Test1")
+        else if(fileName== "Scenario2")
         {
             scenarios1 = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
             return scenarios1;
         }
-        else if (fileName == "Test2")
+        else if (fileName == "Scenario3")
         {
             scenarios2 = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
             return scenarios2;
