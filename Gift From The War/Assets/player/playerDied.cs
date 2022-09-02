@@ -170,7 +170,7 @@ public class playerDied : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("TimeAttackResult");
+            SceneManager.LoadScene("GameOverScene");
         }
     }
 }
