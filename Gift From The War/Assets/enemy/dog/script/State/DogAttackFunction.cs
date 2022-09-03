@@ -62,7 +62,7 @@ public class DogAttackFunction : MonoBehaviour
 
     public void Landing()
     {
-        owner.animator.SetFloat("Speed", 0.3f);
+        owner.animator.SetFloat("Speed", 0.6f);
 
     }
 

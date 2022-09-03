@@ -57,13 +57,25 @@ public class DogTrackingState : State<DogState>
 
     public override void Execute()
     {
+
+
         owner.animator.SetFloat("MoveSpeed", 1.0f);
         agent.destination = owner.player.transform.position;
 
         NavMeshPath navMeshPath = new NavMeshPath();
-
         agent.CalculatePath(owner.player.transform.position, navMeshPath);
-        navController.Move(navMeshPath);
+
+        float dis = 0.0f;
+
+        Vector3 corner = owner.transform.position; ;
+        for (int i = 0; i < navMeshPath.corners.Length; i++)
+        {
+            Vector3 corner2 = navMeshPath.corners[i];
+            dis += Vector3.Distance(corner, corner2);
+            corner = corner2;
+        }
+
+        navController.Move(navMeshPath, dis / 20.0f);
         owner.transform.position = new Vector3(owner.transform.position.x, agent.destination.y, owner.transform.position.z);
 
         //UŒ‚‚·‚éðŒ

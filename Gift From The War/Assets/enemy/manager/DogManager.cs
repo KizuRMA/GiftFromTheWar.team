@@ -14,10 +14,13 @@ public class DogManager : BaseEnemyManager
     [SerializeField] public List<Transform> respawnPos = null;
     [SerializeField] public List<Transform> startPosList = null;
     [SerializeField] public HandGimmick gimmick = null;
+    [SerializeField] public Transform warpPos;
+
 
     public List<GameObject> dogs = null;
 
     bool isResetPriority;
+    bool warpFlg;
 
     EnemyManager owner;
 
@@ -25,6 +28,7 @@ public class DogManager : BaseEnemyManager
     {
         owner = transform.parent.GetComponent<EnemyManager>();
 
+        warpFlg = false;
         isResetPriority = false;
         for (var i = 0; i < NavMesh.GetSettingsCount(); i++)
         {
@@ -254,6 +258,32 @@ public class DogManager : BaseEnemyManager
                 gimmick.HandButtonDelete(ref gimmick.button3);
             }
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag != "Player" || warpPos == null || warpFlg == true) return;
+
+
+
+        for (int i = 0; i < dogs.Count; i++)
+        {
+            DogState _state = dogs[i].GetComponent<DogState>();
+            if (_state == null) continue;
+
+            Transform playerTrans = GameObject.Find("player").transform;
+
+            float dist = Vector2.Distance(new Vector2(_state.transform.position.x, _state.transform.position.z),
+                new Vector2(playerTrans.position.x, playerTrans.position.z));
+
+            if (_state.IsCurrentState(e_DogState.Search) == true &&
+                dist >= 20.0f)
+            {
+                _state.WarpPosition(warpPos.position);
+                warpFlg = true;
+            }
+        }
+
     }
 
     //private bool ButtonGimmickChange(ref HandButton gimmickButton, ref HandButton dogButton) //GimmickDoorに犬のボタンをセットする関数
