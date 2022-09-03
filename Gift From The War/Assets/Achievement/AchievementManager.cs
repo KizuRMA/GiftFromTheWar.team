@@ -37,6 +37,8 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
 
     public bool achievementJudgeStartFlg;
 
+    private bool firstWriteFlg = false; //最初にファイルを作成した時に、書き込む処理
+
     void Start()
     {
         directoryName = "binaryFolder";
@@ -60,7 +62,7 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
             nowAchievementData.noMagnetFlg = false;
             nowAchievementData.noFireFlg = false;
             nowAchievementData.timeAttackAFlg = false;
-            //WriteFile();
+            StartCoroutine(FirstWrite());
         }
         else
         {
@@ -72,10 +74,10 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.H))
+        if(firstWriteFlg)
         {
-            Debug.Log("a");
-            WriteFile();
+            
+            firstWriteFlg = false;
         }
 
         if(achievementJudgeStartFlg)
@@ -120,5 +122,12 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
             writer.Write(nowAchievementData.noFireFlg);
             writer.Write(nowAchievementData.timeAttackAFlg);
         }
+    }
+
+    private IEnumerator FirstWrite()
+    {
+        yield return new WaitForSeconds(1);
+
+        WriteFile();
     }
 }
