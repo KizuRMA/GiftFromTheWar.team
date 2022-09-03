@@ -37,8 +37,6 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
 
     public bool achievementJudgeStartFlg;
 
-    private bool firstWriteFlg = false; //最初にファイルを作成した時に、書き込む処理
-
     void Start()
     {
         directoryName = "binaryFolder";
@@ -74,12 +72,6 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
 
     void Update()
     {
-        if(firstWriteFlg)
-        {
-            
-            firstWriteFlg = false;
-        }
-
         if(achievementJudgeStartFlg)
         {
             //アチーブメントを判定するための変数をリセット
