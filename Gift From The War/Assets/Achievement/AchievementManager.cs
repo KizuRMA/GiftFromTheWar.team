@@ -51,6 +51,16 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
         if (!System.IO.File.Exists(path))
         {
             System.IO.File.Create(path);
+
+            nowAchievementData.badData = false;
+            nowAchievementData.dogData = false;
+            nowAchievementData.bossData = false;
+            nowAchievementData.noGunFlg = false;
+            nowAchievementData.noWindFlg = false;
+            nowAchievementData.noMagnetFlg = false;
+            nowAchievementData.noFireFlg = false;
+            nowAchievementData.timeAttackAFlg = false;
+            //WriteFile();
         }
         else
         {
@@ -64,7 +74,8 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
     {
         if(Input.GetKey(KeyCode.H))
         {
-            Debug.Log(nowAchievementData.badData);
+            Debug.Log("a");
+            WriteFile();
         }
 
         if(achievementJudgeStartFlg)
