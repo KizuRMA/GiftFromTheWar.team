@@ -22,6 +22,8 @@ public class BossTrackingState : State<BossState>
             //追いかけるターゲットを設定
             owner.agent.destination = owner.player.transform.position;
         }
+
+
     }
 
     public override void Exit()
