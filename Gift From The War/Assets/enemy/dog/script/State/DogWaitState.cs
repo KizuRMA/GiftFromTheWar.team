@@ -52,7 +52,7 @@ public class DogWaitState : State<DogState>
 
         //移動処理
         agent.CalculatePath(owner.startPos, navMeshPath);
-        navController.Move(navMeshPath);
+        navController.Move(navMeshPath,0);
         owner.transform.position = new Vector3(owner.transform.position.x, agent.destination.y, owner.transform.position.z);
 
         //ターゲットまでの距離を算出

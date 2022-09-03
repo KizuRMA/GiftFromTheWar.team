@@ -72,10 +72,10 @@ public class NavController : MonoBehaviour
         }
     }
 
-    public void Move(NavMeshPath _path)
+    public void Move(NavMeshPath _path,float _addMoveSpeed)
     {
         walkSpeed += (acceleration / 10) * Time.deltaTime;
-        walkSpeed = Mathf.Min(maxSpeed,walkSpeed);
+        walkSpeed = Mathf.Min(maxSpeed + _addMoveSpeed, walkSpeed);
 
         path = _path;
 

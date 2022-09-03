@@ -71,6 +71,7 @@ public class FPSController : MonoBehaviour
         {
             scenario = _game.GetComponent<Scenario>(); ;
         }
+
         trans = transform;
         nowMoveSpeed = walkSpeed;
         moveFlg = false;
@@ -129,14 +130,14 @@ public class FPSController : MonoBehaviour
     //--------------------------------------------------------------------
     private void UpdateCursorLock()  //カーソル表示切り替え
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    CursorManager.Instance.cursorLock = false;
-        //}
-        //else if (Input.GetMouseButton(0))
-        //{
-        //    CursorManager.Instance.cursorLock = true;
-        //}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CursorManager.Instance.cursorLock = false;
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            CursorManager.Instance.cursorLock = true;
+        }
     }
 
     private void AssignTmpRot()    //計算するために回転量を保持する
