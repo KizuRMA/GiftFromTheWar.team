@@ -6,13 +6,19 @@ public class Bom : MonoBehaviour
 {
     [SerializeField] GameObject prefab;
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameObject game = Instantiate(prefab, transform.position, transform.rotation);
-            Destroy(gameObject);
-        }
+        if (collision.gameObject.tag != "Boss") return;
+
+        GameObject game = Instantiate(prefab, transform);
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag != "Boss") return;
+
+        GameObject game = Instantiate(prefab, transform);
+        Destroy(gameObject);
     }
 }

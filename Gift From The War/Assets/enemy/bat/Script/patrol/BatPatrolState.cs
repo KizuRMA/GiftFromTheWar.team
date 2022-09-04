@@ -204,6 +204,7 @@ public class BatPatrolState : StatefulObjectBase<BatPatrolState, e_BatPatrolStat
     public void DestroyBat()
     {
         GameObject game = Instantiate(prefab, transform.position, transform.rotation);
+        //GameObject game = Instantiate(prefab, transform);
 
         //“|‚³‚ê‚½Œ´ˆö‚ª”š”­‚ÌŽž
         if (causeOfDead == e_CauseOfDead.Explosion)
