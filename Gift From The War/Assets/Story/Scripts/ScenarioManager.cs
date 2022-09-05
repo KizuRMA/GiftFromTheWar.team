@@ -19,11 +19,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     //  シナリオを格納する
     private string[] scenarios;
 
-    private string[] scenarios1;
-
-    private string[] scenarios2;
-
-
     //  現在の行番号
     private int currentLine = 0;
 
@@ -32,13 +27,16 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     //
     private TextController textController;
     private CommandController commandController;
+
     private Scenario scenario;
+
+    public int talkCount;
 
     //  次のテキストに更新するためにtextControllerに依頼する
     public void RequestNextLine(string fileName,string[] _scenarios)
     {
         fileName = _scenarios[currentLine];
-
+        
         textController.SetNextLine(CommandProcess(fileName));
         currentLine++;
 
@@ -57,26 +55,9 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             return null;
         }
 
-        if (fileName == "Scenario1")
-        {
-            scenarios = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
-            return scenarios;
-        }
-        else if(fileName== "Scenario2")
-        {
-            scenarios1 = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
-            return scenarios1;
-        }
-        else if (fileName == "Scenario3")
-        {
-            scenarios2 = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
-            return scenarios2;
-        }
 
-        currentLine = 0;
-
-        Resources.UnloadAsset(scenarioText);
-        return null;
+        scenarios = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
+        return scenarios;  
     }
 
     private string CommandProcess(string line)
@@ -112,12 +93,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 
         textController = GetComponent<TextController>();
         commandController = GetComponent<CommandController>();
-        scenario = GameObject.Find("ScenarioManager/Scenario").GetComponent<Scenario>();
-
-        for (int i = 0; i < loadFileName.Length; i++)
-        {
-            UpdateLines(loadFileName[i]);
-        }
+        scenario = GetComponent<Scenario>();
     }
 
     // Update is called once per frame

@@ -56,7 +56,7 @@ public class TextController : MonoBehaviour
     private void Awake()
     {
 		//	シナリオクラス
-		scenario = GameObject.FindGameObjectWithTag("Scenario").GetComponent<Scenario>();
+		scenario = GameObject.Find("ScenarioManager").GetComponent<Scenario>();
 	}
     
 	void Update()

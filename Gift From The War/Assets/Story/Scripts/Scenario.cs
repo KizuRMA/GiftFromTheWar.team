@@ -6,33 +6,18 @@ using UnityEngine.EventSystems;
 
 public class Scenario : MonoBehaviour
 {
-    //オブジェクトやスクリプトをとってくる
-    [SerializeField] private Transform camTrans;
-
-    //  レイ判定
-    [SerializeField] private float handDis;
-
-    //  レイが衝突しているかどうか
-    private bool hitFlg;
-
-    //  衝突したオブジェクトの情報を保持しておく
-    private string objName;
-
-    //  会話する相手
-    private GameObject neziKun = null;
-
     //  コマンドオブジェクト参照用
     [SerializeField] GameObject image;
 
     // 話しかける時のアイコン用
     [SerializeField] GameObject talkIcon;
 
-    private bool talkFlg = false;
-
     // 話しかけた回数
-    public int talkCount=0;
+    public int talkCount = 0;
 
-    public bool scenarioFlg=false;
+    public bool scenarioFlg = false;
+
+    StoryManager storyManager;
 
     private void Awake()
     {
@@ -41,81 +26,27 @@ public class Scenario : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    { 
-        //  コマンド画面を閉じておく
-        image.SetActive(false);
-        talkIcon.SetActive(false);
+    {
+        storyManager = GameObject.Find("NeziKunGroup").GetComponent<StoryManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetTalkIcon();
-        //  レイ判定
-        Ray();
+       // Ray();
 
-        if (hitFlg==true)
+        if (storyManager.hitFlg == true)
         {
             //  コマンド画面を表示
             OpenCommand();
 
-            hitFlg = false;
+            storyManager.hitFlg = false;
         }
-
 
         //  コマンド画面終了
         EndCommand();
     }
 
-    //レイ判定
-    private void Ray()
-    {
-        //  スペースキーを押したとき
-        if (!Input.GetKeyDown(KeyCode.Space)) return;
-
-        Ray ray = new Ray(camTrans.position, camTrans.forward);
-        RaycastHit hit;
-
-        //  レイ投射
-        if (Physics.Raycast(ray, out hit, handDis))
-        {
-            //  衝突しているオブジェクトの各情報を取得
-            objName = hit.collider.gameObject.tag;
-            neziKun = hit.collider.gameObject;
-
-            //  衝突しているオブジェクトがネジ君だったら
-            if (objName == "Nezi")
-            {
-                hitFlg = true;
-            }
-        }
-    }
-
-    void SetTalkIcon()
-    {
-        if (scenarioFlg) return;
-
-        Ray ray = new Ray(camTrans.position, camTrans.forward);
-        RaycastHit hit;
-
-        //  レイ投射
-        if (Physics.Raycast(ray, out hit, handDis))
-        {
-            //  衝突しているオブジェクトの各情報を取得
-            objName = hit.collider.gameObject.tag;
-            neziKun = hit.collider.gameObject;
-
-            //  衝突しているオブジェクトがネジ君だったら
-            if (objName == "Nezi")
-            {
-                talkIcon.SetActive(true);
-            }
-        }
-        else
-        {
-            talkIcon.SetActive(false);
-        }
-    }
 
     //  文章を読み終わったらコマンド画面を終了させる
     void EndCommand()
@@ -123,9 +54,10 @@ public class Scenario : MonoBehaviour
         if (!ScenarioManager.Instance.endFlg) return;
 
         image.SetActive(false);
-        neziKun.SetActive(false);
-        talkCount++;
-     
+        storyManager.neziKun.SetActive(false);
+
+        ScenarioManager.Instance.talkCount++;
+
 
         CursorManager.Instance.cursorLock = true;
 
@@ -140,11 +72,11 @@ public class Scenario : MonoBehaviour
         CursorManager.Instance.cursorLock = true;
 
         scenarioFlg = false;
-       
+
     }
 
     //  コマンド画面表示
-    private void OpenCommand()
+    public void OpenCommand()
     {
         image.SetActive(true);
         talkIcon.SetActive(false);

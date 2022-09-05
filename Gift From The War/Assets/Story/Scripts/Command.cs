@@ -48,7 +48,7 @@ public class Command : MonoBehaviour
     private void Awake()
     {
         //　コマンド画面を開く処理をしているScenarioを取得
-        scenario = GameObject.FindGameObjectWithTag("Scenario").GetComponent<Scenario>();
+        scenario = GameObject.Find("ScenarioManager").GetComponent<Scenario>();
 
         //　現在のコマンドを初期化
         currentCommand = CommandMode.CommandPanel;
@@ -66,14 +66,14 @@ public class Command : MonoBehaviour
     void Start()
     {
         //ボタンのプレハブからインスタンス生成
-        GameObject[] textButtonIns=new GameObject[3];
+        GameObject[] textButtonIns = new GameObject[3];
 
-        for(int i=0;i<partyStatus.GetButtonStatus().Count;i++)
+        for (int i = 0; i < partyStatus.GetButtonStatus().Count; i++)
         {
             textButtonIns[i] = Instantiate<GameObject>(textButtonPrefab, commandPanel.transform);
             textButtonIns[i].GetComponentInChildren<Text>().text = buttonStatus[i].GetButtonName();
             textButtonIns[i].GetComponentInChildren<Text>().name = "Text" + i;
-            textButtonIns[i].name = "Button"+i;
+            textButtonIns[i].name = "Button" + i;
         }
     }
 
@@ -106,15 +106,30 @@ public class Command : MonoBehaviour
         }
 
         // ネジ君に話しかけた回数によってテキストの内容を変更する
-        if (scenario.talkCount == 0)
+
+        switch (ScenarioManager.Instance.talkCount)
         {
-            scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
-            ScenarioManager.Instance.storyNum = 0;
-        }
-        else if (scenario.talkCount == 1)
-        {
-            scenarios = ScenarioManager.Instance.UpdateLines("Scenario2");
-            ScenarioManager.Instance.storyNum = 1;
+            case 0:
+                scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
+                ScenarioManager.Instance.storyNum = 0;
+                break;
+            case 1:
+                scenarios = ScenarioManager.Instance.UpdateLines("Scenario2");
+                ScenarioManager.Instance.storyNum = 1;
+                break;
+            case 2:
+                scenarios = ScenarioManager.Instance.UpdateLines("Scenario3");
+                ScenarioManager.Instance.storyNum = 2;
+                break;
+            case 3:
+                scenarios = ScenarioManager.Instance.UpdateLines("Scenario4");
+                ScenarioManager.Instance.storyNum = 3;
+                break;
+            case 4:
+                scenarios = ScenarioManager.Instance.UpdateLines("Scenario5");
+                ScenarioManager.Instance.storyNum = 4;
+                break;
+
         }
         // テキストを更新する
         ScenarioManager.Instance.TextUpdate(scenarios);
