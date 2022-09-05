@@ -9,12 +9,14 @@ public class BossCrashState : State<BossState>
     public override void Enter()
     {
         time = 0;
+        owner.agent.isStopped = true;
+        owner.agent.updatePosition = false;
     }
 
     public override void Execute()
     {
         time += Time.deltaTime;
-        if (time <= 1.0f)
+        //f (time >= 1.0f)
         {
             owner.ChangeState(e_BossState.Tracking);
         }
@@ -22,6 +24,7 @@ public class BossCrashState : State<BossState>
 
     public override void Exit()
     {
-        owner.WarpPosition(owner.transform.position);
+        owner.agent.isStopped = false;
+        owner.agent.updatePosition = true;
     }
 }

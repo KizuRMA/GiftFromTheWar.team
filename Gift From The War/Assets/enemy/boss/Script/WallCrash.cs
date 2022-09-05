@@ -13,7 +13,7 @@ public class WallCrash : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) == true)
         {
             if (obstacle == null) return;
-            obstacle.carving = false;
+            obstacle.enabled= false;
         }
     }
 }

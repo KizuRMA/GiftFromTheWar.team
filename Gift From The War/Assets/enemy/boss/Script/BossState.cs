@@ -10,6 +10,7 @@ public enum e_BossState
     Stun,
     Wait,
     Crash,
+    Sleep,
 }
 
 public class BossState : StatefulObjectBase<BossState, e_BossState>
@@ -44,8 +45,9 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         stateList.Add(new BossStunState(this));
         stateList.Add(new BossWaitState(this));
         stateList.Add(new BossCrashState(this));
+        stateList.Add(new BossSleepState(this));
 
-        ChangeState(e_BossState.Wait);
+        ChangeState(e_BossState.Sleep);
 
         //=============
         //変数の初期化
@@ -72,7 +74,10 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
     private void DestinationUpdate()    //目的値を更新する処理
     {
-        if (IsCurrentState(e_BossState.Stun) == true || IsCurrentState(e_BossState.Wait) == true || IsCurrentState(e_BossState.Crash) == true) return;
+        if (IsCurrentState(e_BossState.Stun) == true ||
+            IsCurrentState(e_BossState.Wait) == true ||
+            IsCurrentState(e_BossState.Crash) == true||
+            IsCurrentState(e_BossState.Sleep) == true) return;
         if (attackStart == false) return;
 
         Vector3 _nowPos = new Vector3(transform.position.x, agent.destination.y, transform.position.z);

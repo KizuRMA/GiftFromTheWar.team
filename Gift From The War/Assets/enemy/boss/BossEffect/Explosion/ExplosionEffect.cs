@@ -11,7 +11,8 @@ public class ExplosionEffect : MonoBehaviour
 
     void Start()
     {
-        
+        explosionEffectList.Add((GameObject)Instantiate(explosionEffect, transform));
+        explosionHitList.Add((GameObject)Instantiate(explosionHit, transform));
     }
 
     void Update()
@@ -28,11 +29,9 @@ public class ExplosionEffect : MonoBehaviour
             }
         }
 
-        if(Input.GetKey(KeyCode.E))
+        if(explosionEffectList.Count == 0)
         {
-            if (explosionEffectList.Count >= 1) return;
-            explosionEffectList.Add((GameObject)Instantiate(explosionEffect, new Vector3 (-73.49f, -1.59f, 231.56f), Quaternion.identity));
-            explosionHitList.Add((GameObject)Instantiate(explosionHit, new Vector3(-73.49f, -1.59f, 231.56f), Quaternion.identity));
+            Destroy(gameObject);
         }
     }
 }

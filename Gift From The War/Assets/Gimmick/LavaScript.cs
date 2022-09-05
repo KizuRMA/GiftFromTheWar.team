@@ -8,29 +8,29 @@ public class LavaScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Dog1")                                 //犬
+        //犬
+        if (other.gameObject.tag == "Dog1")
         {
             var target = other.transform.GetComponent<EnemyInterface>();
             target.LavaDamage();
-            //音を鳴らす
-            AudioManager.Instance.PlaySE("BurnLava", gameObject, isLoop: false);
         }
-        else if (other.gameObject.tag == "Player" && playerDebug == false)  //プレイヤー
+
+        //プレイヤー
+       if (other.gameObject.tag == "Player" && playerDebug == false)
         {
             var target = other.transform.GetComponent<playerAbnormalcondition>();
             if (null == target) return;
             target.Damage(1.0f);
-            //音を鳴らす
-            AudioManager.Instance.PlaySE("BurnLava", gameObject, isLoop: false);
         }
-        else if (other.gameObject.tag == "gimmickButton")                   //ボタン
-        {   
 
+        //ボタン
+        if (other.gameObject.tag == "gimmickButton")
+        {
             Destroy(other.transform.gameObject);
-            //音を鳴らす
-            AudioManager.Instance.PlaySE("BurnLava", gameObject, isLoop: false);
         }
 
+        //音を鳴らす
+        AudioManager.Instance.PlaySE("BurnLava", gameObject, isLoop: false);
 
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossGrenadeScript : MonoBehaviour
 {
     [SerializeField] public float expRange;
+    [SerializeField] public GameObject expParticle;
 
     private void OnCollisionEnter(Collision _collision)
     {
@@ -19,10 +20,11 @@ public class BossGrenadeScript : MonoBehaviour
                 var target = _player.transform.GetComponent<playerAbnormalcondition>();
                 if (null == target) return;
 
-                target.Damage(10.0f);
+                //target.Damage(10.0f);
             }
         }
 
+        Instantiate(expParticle, transform.position,transform.rotation);
         Destroy(gameObject);
     }
 }
