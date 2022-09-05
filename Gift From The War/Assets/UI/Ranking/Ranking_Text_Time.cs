@@ -12,6 +12,8 @@ public class Ranking_Text_Time : MonoBehaviour
     [SerializeField]
     private GameObject Obj;
 
+    [SerializeField]
+    SelectRanking selectRanking;
 
     private string[] rank_time = new string[10];
     private double[] time = new double[10];
@@ -54,9 +56,36 @@ public class Ranking_Text_Time : MonoBehaviour
         RankText.text = rank_time[index];
     }
 
-    IEnumerator GetData()
+    public void InVokeGetData()
     {
-        UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php");
+        StartCoroutine(GetData());
+    }
+
+    public IEnumerator GetData()
+    {
+        UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking1");
+
+        switch (selectRanking.rankingType)
+        {
+            case 0:
+                request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking1");
+                break;
+
+            case 1:
+                request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking2");
+                break;
+
+            case 2:
+                request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking3");
+                break;
+
+            case 3:
+                request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking4");
+                break;
+        }
+
+        //UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking2");
+        
         yield return request.SendWebRequest();
         var rankingData = RankingData.Deserialize(request.downloadHandler.text);
 
