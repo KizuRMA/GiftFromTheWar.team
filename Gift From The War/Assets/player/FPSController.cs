@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FPSController : MonoBehaviour
 {
@@ -78,7 +79,7 @@ public class FPSController : MonoBehaviour
         dashFlg = false;
         CursorManager.Instance.cursorLock = true;
 
-        if (isDebug == false &&  SaveManager.Instance.nowSaveData.saveSpotNum != SaveManager.SaveSpotNum.s1p5)
+        if (isDebug == false && !(SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.s1p5 && SceneManager.GetActiveScene().name == "SecondStage"))
         {
             CC.enabled = false;
             trans.position = SaveManager.Instance.nowSaveData.dataSpotPos;
