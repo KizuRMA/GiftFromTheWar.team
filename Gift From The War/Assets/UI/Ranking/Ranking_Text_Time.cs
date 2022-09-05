@@ -56,7 +56,7 @@ public class Ranking_Text_Time : MonoBehaviour
 
     IEnumerator GetData()
     {
-        UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php");
+        UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking2");
         yield return request.SendWebRequest();
         var rankingData = RankingData.Deserialize(request.downloadHandler.text);
 

@@ -34,7 +34,5 @@ public class ExplosionEffect : MonoBehaviour
             explosionEffectList.Add((GameObject)Instantiate(explosionEffect, new Vector3 (-73.49f, -1.59f, 231.56f), Quaternion.identity));
             explosionHitList.Add((GameObject)Instantiate(explosionHit, new Vector3(-73.49f, -1.59f, 231.56f), Quaternion.identity));
         }
-
-        Debug.Log(explosionEffectList.Count);
     }
 }

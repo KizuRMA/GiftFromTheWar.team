@@ -44,6 +44,7 @@ public class Ranking_Input : MonoBehaviour
         WWWForm wwwform = new WWWForm();
         wwwform.AddField("UserName", userName);
         wwwform.AddField("ClearTime", clearTime.ToString());
+        wwwform.AddField("TableName", "GftWRanking2");
 
         UnityWebRequest request = UnityWebRequest.Post("https://gftw.soyoshigure.jp/register_score.php", wwwform);
         request.downloadHandler = new DownloadHandlerBuffer();

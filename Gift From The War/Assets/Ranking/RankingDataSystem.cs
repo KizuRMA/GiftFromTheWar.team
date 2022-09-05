@@ -7,17 +7,12 @@ public class RankingDataSystem : MonoBehaviour
 {
     void Start()
     {
-        //StartCoroutine(SendData("aaa", 1));
 
-        //StartCoroutine(GetData());
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(GetData());
-        }
+
     }
 
     IEnumerator SendData(string userName, double clearTime)
@@ -33,7 +28,7 @@ public class RankingDataSystem : MonoBehaviour
 
     IEnumerator GetData()
     {
-        UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php");
+        UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking");
         yield return request.SendWebRequest();
         var rankingData = RankingData.Deserialize(request.downloadHandler.text);
 
