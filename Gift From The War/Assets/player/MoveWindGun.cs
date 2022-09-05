@@ -51,7 +51,7 @@ public class MoveWindGun : MonoBehaviour
         shoot = _info.muzzlePos.GetComponent<shooting>();
         playerStartDown = transform.GetComponent<PlayerStartDown>();
 
-        GameObject _game = GameObject.FindGameObjectWithTag("Scenario");
+        GameObject _game = GameObject.Find("ScenarioManager");
         if (_game != null)
         {
             scenario = _game.GetComponent<Scenario>(); ;
