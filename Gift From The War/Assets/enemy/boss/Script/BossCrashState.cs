@@ -22,11 +22,6 @@ public class BossCrashState : State<BossState>
 
     public override void Exit()
     {
-
-    }
-
-    void CheckSwitchAnime()
-    {
-
+        owner.WarpPosition(owner.transform.position);
     }
 }

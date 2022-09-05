@@ -28,11 +28,11 @@ public class CageMetalScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != "Boss") return;
-        if (obstacle == null || obstacle.carving == true) return;
+        //if (obstacle == null || obstacle.carving == true) return;
 
         var random = new System.Random();
-        var min = 2;
-        var max = 5;
+        var min = 5;
+        var max = 7;
 
         Rigidbody rd = GetComponent<Rigidbody>();
         BoxCollider collider = GetComponent<BoxCollider>();
@@ -40,7 +40,7 @@ public class CageMetalScript : MonoBehaviour
         if (rd != null && collider != null)
         {
             rd.isKinematic = false;
-            collider.isTrigger = false;
+            //collider.isTrigger = false;
 
             var vect = transform.position - other.transform.position;
             vect = vect.normalized * random.Next(min, max);

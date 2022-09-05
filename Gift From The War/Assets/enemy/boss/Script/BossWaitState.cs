@@ -24,6 +24,6 @@ public class BossWaitState : State<BossState>
 
     public override void Exit()
     {
-
+        owner.WarpPosition(owner.transform.position);
     }
 }
