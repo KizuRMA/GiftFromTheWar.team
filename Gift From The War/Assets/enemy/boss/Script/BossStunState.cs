@@ -10,12 +10,11 @@ public class BossStunState : State<BossState>
     public override void Enter()
     {
         owner.animator.SetTrigger("Stun");
-        
+
         switchAnime = true;
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("Stun") == false) switchAnime = false;
 
         owner.agent.isStopped = true;
-        //owner.agent.updatePosition = false;
     }
 
     public override void Execute()
