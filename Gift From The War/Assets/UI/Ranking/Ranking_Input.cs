@@ -31,12 +31,8 @@ public class Ranking_Input : MonoBehaviour
         //string型に変換
         string name = _inputField.text;
 
-        Debug.Log(name);
-
         //データを送る（タイムはまだ。）
         StartCoroutine(SendData(name, TimeAttackManager.Instance.countTime));
-
-
     }
 
     IEnumerator SendData(string userName, double clearTime)

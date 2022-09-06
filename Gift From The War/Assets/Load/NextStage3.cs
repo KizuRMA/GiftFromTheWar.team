@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NextStage2 : MonoBehaviour
+public class NextStage3 : MonoBehaviour
 {
     private bool nextStageFlg;
 
@@ -29,7 +29,7 @@ public class NextStage2 : MonoBehaviour
             AchievementManager.Instance.WriteFile();
         }
 
-        if (TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.ALL || !TimeAttackManager.Instance.timeAttackFlg)
+        if (!TimeAttackManager.Instance.timeAttackFlg)
         {
             if(LoadManager.Instance != null)
             StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FinalStage"));
