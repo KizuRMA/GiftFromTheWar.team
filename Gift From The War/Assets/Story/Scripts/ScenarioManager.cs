@@ -8,6 +8,7 @@ using System.Text;
 public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 {
     public int storyNum=0;
+    public int neziKunNum = 0;
     public string[] loadFileName=null;
 
     //  ‘O‚Ìƒpƒlƒ‹‚É–ß‚é‚©‚Ç‚¤‚©
