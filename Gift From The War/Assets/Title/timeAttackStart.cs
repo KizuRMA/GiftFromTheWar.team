@@ -8,7 +8,10 @@ public class timeAttackStart : MonoBehaviour
 
     public void OnClickStartButton()
     {
-        TimeAttackManager.Instance.nowStage = thisStageNum;
+        if (thisStageNum != TimeAttackManager.selectStage.NULL)
+        {
+            TimeAttackManager.Instance.nowStage = thisStageNum;
+        }
 
         switch ((int)TimeAttackManager.Instance.nowStage)
         {

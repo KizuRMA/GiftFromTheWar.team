@@ -10,7 +10,8 @@ public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
         FIRST,
         SECOND,
         FINAL,
-        ALL
+        ALL,
+        NULL
     }
 
     public selectStage nowStage;

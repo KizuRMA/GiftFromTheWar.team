@@ -11,13 +11,11 @@ public class Ranking_Input : MonoBehaviour
 
     TMP_InputField _inputField;
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -40,7 +38,25 @@ public class Ranking_Input : MonoBehaviour
         WWWForm wwwform = new WWWForm();
         wwwform.AddField("UserName", userName);
         wwwform.AddField("ClearTime", clearTime.ToString());
-        wwwform.AddField("TableName", "GftWRanking2");
+
+        switch ((int)TimeAttackManager.Instance.nowStage)
+        {
+            case 0:
+                wwwform.AddField("TableName", "GftWRanking1");
+                break;
+
+            case 1:
+                wwwform.AddField("TableName", "GftWRanking2");
+                break;
+
+            case 2:
+                wwwform.AddField("TableName", "GftWRanking3");
+                break;
+
+            case 3:
+                wwwform.AddField("TableName", "GftWRanking4");
+                break;
+        }
 
         UnityWebRequest request = UnityWebRequest.Post("https://gftw.soyoshigure.jp/register_score.php", wwwform);
         request.downloadHandler = new DownloadHandlerBuffer();

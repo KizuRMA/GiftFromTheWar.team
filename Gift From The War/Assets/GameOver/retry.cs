@@ -12,7 +12,25 @@ public class retry : MonoBehaviour
 
         if (TimeAttackManager.Instance.timeAttackFlg)
         {
-            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
+            switch ((int)TimeAttackManager.Instance.nowStage)
+            {
+                case 0:
+                    StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
+                    break;
+
+                case 1:
+                    StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SecondStage"));
+                    break;
+
+                case 2:
+                    StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FinalStage"));
+                    break;
+
+                case 3:
+                    StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
+                    break;
+            }
+
             TimeAttackManager.Instance.timeAttackFlg = true;
             TimeAttackManager.Instance.timerStopFlg = false;
             TimeAttackManager.Instance.playerDiedFlg = false;
