@@ -38,6 +38,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
     }
 
     public SaveData nowSaveData;
+    private SaveData subData;
 
     private string directoryName;
     private string fileSaveSpotName;
