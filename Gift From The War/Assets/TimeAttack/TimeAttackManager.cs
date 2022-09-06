@@ -5,6 +5,16 @@ using TMPro;
 
 public class TimeAttackManager : SingletonMonoBehaviour<TimeAttackManager>
 {
+    public enum selectStage
+    {
+        FIRST,
+        SECOND,
+        FINAL,
+        ALL
+    }
+
+    public selectStage nowStage;
+
     public bool timeAttackFlg { get; set; } //タイムアタックを行うかどうか
     public bool timerStartFlg { get; set; } //タイマーをいつスタートするか
     public bool timerStopFlg { get; set; } //タイマーをいつスタートするか
