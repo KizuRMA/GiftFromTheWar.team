@@ -10,6 +10,8 @@ public class Endingroll : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    [SerializeField]
+    private bool spaceSkip = true;
 
 
     // Start is called before the first frame update
@@ -26,8 +28,24 @@ public class Endingroll : MonoBehaviour
 
         if (rectTransform.anchoredPosition.y < Endpos)
         {
+            
 
-            Staffrollposition.y += speed;
+            if(spaceSkip)//スペースキーでスキップ可能な場合
+            {
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    Staffrollposition.y += speed * 2.5f;
+                }
+                else
+                {
+                    Staffrollposition.y += speed;
+                }
+            }
+            else
+            {
+                Staffrollposition.y += speed;
+            }
+            
             rectTransform.anchoredPosition = Staffrollposition;
         }
 
