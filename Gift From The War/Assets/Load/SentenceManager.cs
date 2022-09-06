@@ -14,7 +14,7 @@ public class SentenceManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void SelectSentence()
@@ -24,18 +24,25 @@ public class SentenceManager : MonoBehaviour
 
         for (int i = 0; i < spotNum; i++)
         {
-            sumSentence += this.transform.GetChild(i).transform.childCount;
-
-            for (int j = 0; j < this.transform.GetChild(i).transform.childCount; j++)
+            if (i < transform.childCount)
             {
-                this.transform.GetChild(i).transform.GetChild(j).gameObject.SetActive(false);
-                sentenceList.Add(this.transform.GetChild(i).transform.GetChild(j).gameObject);
+                sumSentence += this.transform.GetChild(i).transform.childCount;
+
+                for (int j = 0; j < this.transform.GetChild(i).transform.childCount; j++)
+                {
+                    this.transform.GetChild(i).transform.GetChild(j).gameObject.SetActive(false);
+                    sentenceList.Add(this.transform.GetChild(i).transform.GetChild(j).gameObject);
+                }
+            }
+            else
+            {
+                break;
             }
         }
 
         int rand = Random.Range(0, sumSentence);
 
         sentenceList[rand].SetActive(true);
-        
+
     }
 }
