@@ -6,12 +6,14 @@ public class KeyFinalScript : MonoBehaviour
 {
     [SerializeField] BossState state;
     [SerializeField] WallCrash wall;
+    [SerializeField] GameObject bigRock;
 
     //外部から変更する変数
     public bool isGetKeyFlg { get; set; }
 
     private void Start()
     {
+        bigRock.SetActive(false);
         isGetKeyFlg = false;
     }
 
@@ -23,6 +25,7 @@ public class KeyFinalScript : MonoBehaviour
         //ボスを起こす
         state.getupFlg = true;
         wall.openFlg = true;
+        bigRock.SetActive(true);
         Destroy(gameObject);
 
     }
