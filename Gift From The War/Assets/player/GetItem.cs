@@ -72,7 +72,7 @@ public class GetItem : MonoBehaviour
             objName = hit.collider.gameObject.name;
             hitObj = hit.collider.gameObject;
 
-            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan")) return;   //触ったのがアイテムでなかったら処理しない
+            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan" || tagName == "Key")) return;   //触ったのがアイテムでなかったら処理しない
 
             closeItemFlg = true;
 
@@ -83,7 +83,7 @@ public class GetItem : MonoBehaviour
                 {
                     itemBlinking.SetActive();
                 }
-               
+
                 touchedItemFlg = true;
             }
 
@@ -166,6 +166,17 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.WriteFile();
             targetImage.enabled = true;
             AudioManager.Instance.PlaySE("GetRantan", isLoop: false);
+            return;
+        }
+
+        if (tagName == "Key")
+        {
+            KeyFinalScript key = hitObj.GetComponent<KeyFinalScript>();
+            if (key != null)
+            {
+                key.isGetKeyFlg = true;
+                targetImage.enabled = true;
+            }
             return;
         }
     }
