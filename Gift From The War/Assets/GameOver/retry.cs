@@ -26,9 +26,13 @@ public class retry : MonoBehaviour
             {
                 StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
             }
-            else
+            else if(SaveManager.Instance.nowSaveData.saveSpotNum < SaveManager.SaveSpotNum.s3p1)
             {
                 StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SecondStage"));
+            }
+            else
+            {
+                StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FinalStage"));
             }
 
             SaveManager.Instance.ReadFile();

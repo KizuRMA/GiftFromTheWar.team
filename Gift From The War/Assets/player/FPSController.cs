@@ -79,7 +79,7 @@ public class FPSController : MonoBehaviour
         dashFlg = false;
         CursorManager.Instance.cursorLock = true;
 
-        if (isDebug == false && !(SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.s1p5 && SceneManager.GetActiveScene().name == "SecondStage"))
+        if (isDebug == false && !(SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.s1p5 && SceneManager.GetActiveScene().name == "SecondStage") && !(SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.s2p5 && SceneManager.GetActiveScene().name == "FinalStage"))
         {
             CC.enabled = false;
             trans.position = SaveManager.Instance.nowSaveData.dataSpotPos;

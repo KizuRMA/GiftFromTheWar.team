@@ -24,19 +24,14 @@ public class SentenceManager : MonoBehaviour
 
         for (int i = 0; i < spotNum; i++)
         {
-            if (i < transform.childCount)
-            {
-                sumSentence += this.transform.GetChild(i).transform.childCount;
+            if (i >= transform.childCount) break;
 
-                for (int j = 0; j < this.transform.GetChild(i).transform.childCount; j++)
-                {
-                    this.transform.GetChild(i).transform.GetChild(j).gameObject.SetActive(false);
-                    sentenceList.Add(this.transform.GetChild(i).transform.GetChild(j).gameObject);
-                }
-            }
-            else
+            sumSentence += this.transform.GetChild(i).transform.childCount;
+
+            for (int j = 0; j < this.transform.GetChild(i).transform.childCount; j++)
             {
-                break;
+                this.transform.GetChild(i).transform.GetChild(j).gameObject.SetActive(false);
+                sentenceList.Add(this.transform.GetChild(i).transform.GetChild(j).gameObject);
             }
         }
 
