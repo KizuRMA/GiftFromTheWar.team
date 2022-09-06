@@ -123,7 +123,10 @@ public class GetItem : MonoBehaviour
             //âπÇçƒê∂
             AudioManager.Instance.PlaySE("GetWindBullet", isLoop: false);
 
-            gunAmmDocument.Open();
+            if (gunAmmDocument != null)
+            {
+                gunAmmDocument.Open();
+            }
             return;
         }
 
@@ -134,6 +137,11 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.WriteFile();
             cylinder.magnetAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
+
+            if (gunAmmDocument != null)
+            {
+                gunAmmDocument.Open();
+            }
             return;
         }
 
