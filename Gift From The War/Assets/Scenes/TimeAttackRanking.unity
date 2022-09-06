@@ -979,8 +979,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1170860180}
   m_HandleRect: {fileID: 1170860179}
   m_Direction: 2
-  m_Value: -0.00000014370781
-  m_Size: 0.62237877
+  m_Value: -0.0000005748314
+  m_Size: 0.6223788
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3225,10 +3225,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 693845139}
-        m_TargetAssemblyTypeName: Ranking_Text_Time, Assembly-CSharp
-        m_MethodName: InVokeGetData
-        m_Mode: 1
+      - m_Target: {fileID: 1444876322}
+        m_TargetAssemblyTypeName: ObjActiveOnOff, Assembly-CSharp
+        m_MethodName: ActiveOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3237,17 +3237,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1207804162}
-        m_TargetAssemblyTypeName: Ranking_Text, Assembly-CSharp
-        m_MethodName: InVokeGetData
-        m_Mode: 1
+      - m_Target: {fileID: 1444876322}
+        m_TargetAssemblyTypeName: ObjActiveOnOff, Assembly-CSharp
+        m_MethodName: ActiveOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!222 &768383124
 CanvasRenderer:
@@ -4291,7 +4291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 850, y: -137.64151}
+  m_AnchoredPosition: {x: 850, y: -137.6413}
   m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1067780536
@@ -4837,10 +4837,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 693845139}
-        m_TargetAssemblyTypeName: Ranking_Text_Time, Assembly-CSharp
-        m_MethodName: InVokeGetData
-        m_Mode: 1
+      - m_Target: {fileID: 1444876322}
+        m_TargetAssemblyTypeName: ObjActiveOnOff, Assembly-CSharp
+        m_MethodName: ActiveOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4849,17 +4849,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1207804162}
-        m_TargetAssemblyTypeName: Ranking_Text, Assembly-CSharp
-        m_MethodName: InVokeGetData
-        m_Mode: 1
+      - m_Target: {fileID: 1444876322}
+        m_TargetAssemblyTypeName: ObjActiveOnOff, Assembly-CSharp
+        m_MethodName: ActiveOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!222 &1182328276
 CanvasRenderer:
@@ -6124,6 +6124,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434537461}
   m_CullTransparentMesh: 1
+--- !u!1 &1444876321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1444876323}
+  - component: {fileID: 1444876322}
+  m_Layer: 0
+  m_Name: ContentActive
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1444876322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444876321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841182f70b0f16449b51223911c01775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameobject: {fileID: 1067780534}
+--- !u!4 &1444876323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444876321}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.7888227, y: -1.6078143, z: 2.759767}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449450140
 GameObject:
   m_ObjectHideFlags: 0
@@ -7299,10 +7344,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 693845139}
-        m_TargetAssemblyTypeName: Ranking_Text_Time, Assembly-CSharp
-        m_MethodName: InVokeGetData
-        m_Mode: 1
+      - m_Target: {fileID: 1444876322}
+        m_TargetAssemblyTypeName: ObjActiveOnOff, Assembly-CSharp
+        m_MethodName: ActiveOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7311,17 +7356,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1207804162}
-        m_TargetAssemblyTypeName: Ranking_Text, Assembly-CSharp
-        m_MethodName: InVokeGetData
-        m_Mode: 1
+      - m_Target: {fileID: 1444876322}
+        m_TargetAssemblyTypeName: ObjActiveOnOff, Assembly-CSharp
+        m_MethodName: ActiveOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!222 &1700810114
 CanvasRenderer:
@@ -8023,10 +8068,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 693845139}
-        m_TargetAssemblyTypeName: Ranking_Text_Time, Assembly-CSharp
-        m_MethodName: InVokeGetData
-        m_Mode: 1
+      - m_Target: {fileID: 1444876322}
+        m_TargetAssemblyTypeName: ObjActiveOnOff, Assembly-CSharp
+        m_MethodName: ActiveOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8035,17 +8080,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1207804162}
-        m_TargetAssemblyTypeName: Ranking_Text, Assembly-CSharp
-        m_MethodName: InVokeGetData
-        m_Mode: 1
+      - m_Target: {fileID: 1444876322}
+        m_TargetAssemblyTypeName: ObjActiveOnOff, Assembly-CSharp
+        m_MethodName: ActiveOnOff
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!222 &1914106900
 CanvasRenderer:

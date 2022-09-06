@@ -20,29 +20,18 @@ public class Ranking_Text_Time : MonoBehaviour
     private int index;
     private int sumIndex;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         //rank_time[0] = "aiueo";
         StartCoroutine(GetData());
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    StartCoroutine(GetData());
-        //}
-
         index = Obj.transform.GetSiblingIndex();
 
         for (int i = 0; i < 10; i++)
         {
-            //rank_time[i] = time[i].ToString(".0");
-
             //countTime‚©‚çŒo‰ßŽžŠÔ‚ðŽZo
             double countMinute;
             double countSecond;
@@ -56,7 +45,7 @@ public class Ranking_Text_Time : MonoBehaviour
         RankText.text = rank_time[index];
     }
 
-    public void InVokeGetData()
+    void OnEnable()
     {
         StartCoroutine(GetData());
     }
@@ -83,18 +72,9 @@ public class Ranking_Text_Time : MonoBehaviour
                 request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking4");
                 break;
         }
-
-        //UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking2");
         
         yield return request.SendWebRequest();
         var rankingData = RankingData.Deserialize(request.downloadHandler.text);
-
-        //foreach (RankingData i in rankingData)
-        //{
-        //    Debug.Log($"{i.UserName},{i.ClearTime}");
-            
-        //    rank_time[0] = i.UserName;
-        //}
 
         for(int i = 0; i < 10; i++)
         {

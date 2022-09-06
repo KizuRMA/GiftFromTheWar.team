@@ -20,28 +20,19 @@ public class Ranking_Text : MonoBehaviour
     private int index;
     private int RankingType;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(GetData());
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    StartCoroutine(GetData());
-        //}
-
         index = Obj.transform.GetSiblingIndex();
 
         RankText.text = rank_name[index];
     }
 
-    public void InVokeGetData()
+    void OnEnable()
     {
         StartCoroutine(GetData());
     }
@@ -69,16 +60,6 @@ public class Ranking_Text : MonoBehaviour
                 break;
 
         }
-        //UnityWebRequest request = UnityWebRequest.Get("https://gftw.soyoshigure.jp/get_data.php?TableName=GftWRanking2");
-        //yield return request.SendWebRequest();
-        //var rankingData = RankingData.Deserialize(request.downloadHandler.text);
-
-        //foreach (RankingData i in rankingData)
-        //{
-        //    Debug.Log($"{i.UserName},{i.ClearTime}");
-
-        //    rank_name[0] = i.UserName;
-        //}
 
         yield return request.SendWebRequest();
         var rankingData = RankingData.Deserialize(request.downloadHandler.text);
