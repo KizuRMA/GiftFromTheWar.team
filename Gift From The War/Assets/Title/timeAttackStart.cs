@@ -33,7 +33,6 @@ public class timeAttackStart : MonoBehaviour
         TimeAttackManager.Instance.timerStopFlg = false;
         TimeAttackManager.Instance.playerDiedFlg = false;
         TimeAttackManager.Instance.TimerReset();
-        TimeAttackManager.Instance.saveData = SaveManager.Instance.nowSaveData;
         SaveManager.Instance.Restart();
         SaveManager.Instance.WriteFile();
     }

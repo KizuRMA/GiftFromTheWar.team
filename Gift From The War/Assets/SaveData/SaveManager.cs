@@ -43,6 +43,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
     private string directoryName;
     private string fileSaveSpotName;
     private string path;
+    private string subPath;
 
     void Start()
     {
@@ -58,6 +59,20 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         if (!System.IO.File.Exists(path))
         {
             System.IO.File.Create(path);
+        }
+
+        directoryName = "binaryFolder";
+        fileSaveSpotName = "binaryDataSub.GftW";
+        subPath = directoryName + "/" + fileSaveSpotName;
+
+        if (!System.IO.Directory.Exists(directoryName))
+        {
+            System.IO.Directory.CreateDirectory(directoryName);
+        }
+
+        if (!System.IO.File.Exists(subPath))
+        {
+            System.IO.File.Create(subPath);
         }
 
         DontDestroyOnLoad(this);
@@ -89,6 +104,45 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         if ((!System.IO.Directory.Exists(directoryName)) || (!System.IO.File.Exists(path))) return;
 
         using (var writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
+        {
+            //èëÇ´çûÇﬁèàóù
+            writer.Write((uint)nowSaveData.saveSpotNum);
+            writer.Write((double)nowSaveData.dataSpotPos.x);
+            writer.Write((double)nowSaveData.dataSpotPos.y);
+            writer.Write((double)nowSaveData.dataSpotPos.z);
+            writer.Write((double)nowSaveData.goalPos.x);
+            writer.Write((double)nowSaveData.goalPos.y);
+            writer.Write((double)nowSaveData.goalPos.z);
+            writer.Write(nowSaveData.getGunFlg);
+            writer.Write(nowSaveData.getRantanFlg);
+            writer.Write(nowSaveData.getWindFlg);
+            writer.Write(nowSaveData.getMagnetFlg);
+            writer.Write(nowSaveData.getFireFlg);
+        }
+    }
+
+    public void ReadSubFile()
+    {
+        if ((!System.IO.Directory.Exists(directoryName)) || (!System.IO.File.Exists(subPath))) return;
+
+        using (var reader = new BinaryReader(new FileStream(subPath, FileMode.Open)))
+        {
+            nowSaveData.saveSpotNum = (SaveSpotNum)reader.ReadUInt32();
+            nowSaveData.dataSpotPos = new Vector3((float)reader.ReadDouble(), (float)reader.ReadDouble(), (float)reader.ReadDouble());
+            nowSaveData.goalPos = new Vector3((float)reader.ReadDouble(), (float)reader.ReadDouble(), (float)reader.ReadDouble());
+            nowSaveData.getGunFlg = reader.ReadBoolean();
+            nowSaveData.getRantanFlg = reader.ReadBoolean();
+            nowSaveData.getWindFlg = reader.ReadBoolean();
+            nowSaveData.getMagnetFlg = reader.ReadBoolean();
+            nowSaveData.getFireFlg = reader.ReadBoolean();
+        }
+    }
+
+    public void WriteSubFile()
+    {
+        if ((!System.IO.Directory.Exists(directoryName)) || (!System.IO.File.Exists(subPath))) return;
+
+        using (var writer = new BinaryWriter(new FileStream(subPath, FileMode.Create)))
         {
             //èëÇ´çûÇﬁèàóù
             writer.Write((uint)nowSaveData.saveSpotNum);

@@ -30,6 +30,9 @@ public class SaveSpotData : MonoBehaviour
         AudioManager.Instance.PlaySE("SaveSpot", isLoop: false, vol: 0.5f);
 
         SaveManager.Instance.WriteFile();
+
+        if (TimeAttackManager.Instance.timeAttackFlg) return;
+        SaveManager.Instance.WriteSubFile();
     }
 
     public SaveManager.SaveSpotNum GetSpotNum()

@@ -54,6 +54,8 @@ public class GetItem : MonoBehaviour
         cylinder.magnetAmmo.SetActive(magnetAmmunitionFlg);
         cylinder.fireAmmo.SetActive(fireAmmunitionFlg);
         bulletChange.HaveBulletAutoChange();
+
+        TimeAttackItem();
     }
 
     void Update()
@@ -83,7 +85,7 @@ public class GetItem : MonoBehaviour
                 {
                     itemBlinking.SetActive();
                 }
-               
+
                 touchedItemFlg = true;
             }
 
@@ -102,6 +104,7 @@ public class GetItem : MonoBehaviour
             gunObj.SetActive(true);
             SaveManager.Instance.nowSaveData.getGunFlg = true;
             SaveManager.Instance.WriteFile();
+            SaveManager.Instance.WriteSubFile();
             targetImage.enabled = true;
             bulletChange.HaveBulletAutoChange();
 
@@ -113,11 +116,12 @@ public class GetItem : MonoBehaviour
             return;
         }
 
-        if(objName == "WindAmmunition")
+        if (objName == "WindAmmunition")
         {
             windAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getWindFlg = true;
             SaveManager.Instance.WriteFile();
+            SaveManager.Instance.WriteSubFile();
             cylinder.windAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
             //âπÇçƒê∂
@@ -132,6 +136,7 @@ public class GetItem : MonoBehaviour
             magnetAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getMagnetFlg = true;
             SaveManager.Instance.WriteFile();
+            SaveManager.Instance.WriteSubFile();
             cylinder.magnetAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
             return;
@@ -142,18 +147,19 @@ public class GetItem : MonoBehaviour
             fireAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getFireFlg = true;
             SaveManager.Instance.WriteFile();
+            SaveManager.Instance.WriteSubFile();
             cylinder.fireAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
             return;
         }
 
-        if(tagName == "gimmickButton")
+        if (tagName == "gimmickButton")
         {
             HandButton handButton = hitObj.transform.GetComponent<HandButton>();
             if (handButton.changeFlg == false)
             {
                 handButton.changeFlg = true;
-                AudioManager.Instance.PlaySE("HandGimmickSE", hitObj, isLoop: false,vol:0.2f);
+                AudioManager.Instance.PlaySE("HandGimmickSE", hitObj, isLoop: false, vol: 0.2f);
             }
             return;
         }
@@ -164,9 +170,38 @@ public class GetItem : MonoBehaviour
             rantanObj.SetActive(true);
             SaveManager.Instance.nowSaveData.getRantanFlg = true;
             SaveManager.Instance.WriteFile();
+            SaveManager.Instance.WriteSubFile();
             targetImage.enabled = true;
             AudioManager.Instance.PlaySE("GetRantan", isLoop: false);
             return;
         }
+    }
+
+    private void TimeAttackItem()
+    {
+        if (!TimeAttackManager.Instance.timeAttackFlg) return;
+        if (!(TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.SECOND || TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.FINAL)) return;
+
+        gunObj.SetActive(true);
+        SaveManager.Instance.nowSaveData.getGunFlg = true;
+        targetImage.enabled = true;
+
+        windAmmunitionFlg = true;
+        SaveManager.Instance.nowSaveData.getWindFlg = true;
+        cylinder.windAmmo.SetActive(true);
+
+        rantanObj.SetActive(true);
+        SaveManager.Instance.nowSaveData.getRantanFlg = true;        
+        targetImage.enabled = true;
+
+        if (TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.FINAL)
+        {
+            magnetAmmunitionFlg = true;
+            SaveManager.Instance.nowSaveData.getMagnetFlg = true;
+            cylinder.magnetAmmo.SetActive(true);            
+        }
+
+        bulletChange.HaveBulletAutoChange();
+        SaveManager.Instance.WriteFile();
     }
 }

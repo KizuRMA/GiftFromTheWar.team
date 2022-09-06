@@ -10,5 +10,6 @@ public class nextScene : MonoBehaviour
         StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
         SaveManager.Instance.Restart();
         SaveManager.Instance.WriteFile();
+        SaveManager.Instance.WriteSubFile();
     }
 }

@@ -87,8 +87,6 @@ public class playerDied : MonoBehaviour
             //タイムアタック関係
             if (TimeAttackManager.Instance.timeAttackFlg)
             {
-                SaveManager.Instance.nowSaveData = TimeAttackManager.Instance.saveData;
-                SaveManager.Instance.WriteFile();
                 TimeAttackManager.Instance.timerStopFlg = true;
                 TimeAttackManager.Instance.timerStartFlg = false;
                 TimeAttackManager.Instance.playerDiedFlg = true;
