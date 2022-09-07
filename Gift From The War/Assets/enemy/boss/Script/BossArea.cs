@@ -10,7 +10,7 @@ public class BossArea : MonoBehaviour
     {
         if (other.gameObject.tag == "Boss")
         {
-            state.attackStart = true;
+            state.attackFlg = true;
         }
     }
 }

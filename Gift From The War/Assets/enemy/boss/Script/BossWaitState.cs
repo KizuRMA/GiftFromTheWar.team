@@ -16,7 +16,7 @@ public class BossWaitState : State<BossState>
     public override void Execute()
     {
         agent.destination = owner.player.transform.position;
-        if (Input.GetKeyDown(KeyCode.Return) == true)
+        if (owner.attackFlg == true)
         {
             owner.ChangeState(e_BossState.Crash);
         }

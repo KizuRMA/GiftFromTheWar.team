@@ -15,9 +15,10 @@ public class BossSleepState : State<BossState>
 
     public override void Execute()
     {
-        if (Input.GetKeyDown(KeyCode.Return) == true)
+        if (owner.getupFlg == true)
         {
             owner.animator.SetTrigger("GetUp");
+            owner.animator.SetFloat("Speed", 0.6f);
         }
 
         //起きるアニメーションに切り替わったとき

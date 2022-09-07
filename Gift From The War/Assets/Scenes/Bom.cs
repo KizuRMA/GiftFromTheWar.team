@@ -18,7 +18,8 @@ public class Bom : MonoBehaviour
     {
         if (other.gameObject.tag != "Boss") return;
 
-        GameObject game = Instantiate(prefab, transform);
+        GameObject game = Instantiate(prefab, transform.position,transform.rotation);
+        game.transform.localScale = transform.localScale;
         Destroy(gameObject);
     }
 }

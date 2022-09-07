@@ -29,7 +29,7 @@ public class CageMetalScript : MonoBehaviour
             rd.AddTorque(vect, ForceMode.Impulse);
         }
 
-        gameObject.AddComponent<NotSeeObjectDelete>();
+        Destroy(gameObject,5.0f);
     }
 
     private void OnTriggerStay(Collider other)
@@ -54,6 +54,6 @@ public class CageMetalScript : MonoBehaviour
             rd.AddTorque(vect, ForceMode.Impulse);
         }
 
-        gameObject.AddComponent<NotSeeObjectDelete>();
+        Destroy(gameObject, 5.0f);
     }
 }

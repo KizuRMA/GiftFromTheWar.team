@@ -74,7 +74,7 @@ public class GetItem : MonoBehaviour
             objName = hit.collider.gameObject.name;
             hitObj = hit.collider.gameObject;
 
-            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan")) return;   //触ったのがアイテムでなかったら処理しない
+            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan" || tagName == "Key")) return;   //触ったのがアイテムでなかったら処理しない
 
             closeItemFlg = true;
 
@@ -127,7 +127,10 @@ public class GetItem : MonoBehaviour
             //音を再生
             AudioManager.Instance.PlaySE("GetWindBullet", isLoop: false);
 
-            gunAmmDocument.Open();
+            if (gunAmmDocument != null)
+            {
+                gunAmmDocument.Open();
+            }
             return;
         }
 
@@ -139,6 +142,11 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.WriteSubFile();
             cylinder.magnetAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
+
+            if (gunAmmDocument != null)
+            {
+                gunAmmDocument.Open();
+            }
             return;
         }
 
@@ -173,6 +181,17 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.WriteSubFile();
             targetImage.enabled = true;
             AudioManager.Instance.PlaySE("GetRantan", isLoop: false);
+            return;
+        }
+
+        if (tagName == "Key")
+        {
+            KeyFinalScript key = hitObj.GetComponent<KeyFinalScript>();
+            if (key != null)
+            {
+                key.isGetKeyFlg = true;
+                targetImage.enabled = true;
+            }
             return;
         }
     }

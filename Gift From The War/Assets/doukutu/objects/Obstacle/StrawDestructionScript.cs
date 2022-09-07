@@ -16,7 +16,7 @@ public class StrawDestructionScript : MonoBehaviour
             //ChildObjects[i].AddComponent<Rigidbody>();
             //ChildObjects[i].GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             //ChildObjects[i].AddComponent<BoxCollider>();
-            ChildObjects[i].AddComponent<NotSeeObjectDelete>();
+            Destroy(ChildObjects[i],5.0f);
             //ChildObjects[i].GetComponent<MeshCollider>().convex = true;
             //ChildObjects[i].GetComponent<BoxCollider>().convex = true;
         }

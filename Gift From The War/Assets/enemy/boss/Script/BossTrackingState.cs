@@ -8,7 +8,7 @@ public class BossTrackingState : State<BossState>
 
     public override void Enter()
     {
-        if (owner.attackStart == true)
+        if (owner.attackFlg == true)
         {
             //追いかけるターゲットを設定
             owner.agent.destination = owner.wayPoint.wayPoints[owner.currentWaypointIndex].position;
@@ -17,7 +17,7 @@ public class BossTrackingState : State<BossState>
 
     public override void Execute()
     {
-        if (owner.attackStart == false)
+        if (owner.attackFlg == false)
         {
             //追いかけるターゲットを設定
             owner.agent.destination = owner.player.transform.position;
