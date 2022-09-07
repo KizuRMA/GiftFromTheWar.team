@@ -24,9 +24,9 @@ public class BossTrackingState : State<BossState>
                 corner = corner2;
             }
 
-            if (dis >= 20.0f)
+            if (dis >= 25.0f)
             {
-                owner.agent.speed = owner.trackingSpeed + 2.0f;
+                owner.agent.speed = owner.trackingSpeed + 1.5f;
             }
             else
             {
