@@ -158,6 +158,11 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.WriteSubFile();
             cylinder.fireAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
+
+            if (gunAmmDocument != null)
+            {
+                gunAmmDocument.Open();
+            }
             return;
         }
 
@@ -210,14 +215,14 @@ public class GetItem : MonoBehaviour
         cylinder.windAmmo.SetActive(true);
 
         rantanObj.SetActive(true);
-        SaveManager.Instance.nowSaveData.getRantanFlg = true;        
+        SaveManager.Instance.nowSaveData.getRantanFlg = true;
         targetImage.enabled = true;
 
         if (TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.FINAL)
         {
             magnetAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getMagnetFlg = true;
-            cylinder.magnetAmmo.SetActive(true);            
+            cylinder.magnetAmmo.SetActive(true);
         }
 
         bulletChange.HaveBulletAutoChange();
