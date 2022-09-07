@@ -22,11 +22,6 @@ public class BloomSet : MonoBehaviour
 
     void Update()
     {
-        //右クリック
-        if (Input.GetMouseButton(1))
-        {
-            bloomFlg = true;
-        }
 
         if(bloomFlg)
         {

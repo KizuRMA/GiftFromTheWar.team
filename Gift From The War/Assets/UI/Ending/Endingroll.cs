@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Endingroll : MonoBehaviour
 {
@@ -48,14 +49,16 @@ public class Endingroll : MonoBehaviour
             }
             
 
-            Staffrollposition.y += speed;
+            Staffrollposition.y += speed * Time.deltaTime;
             rectTransform.anchoredPosition = Staffrollposition;
         }
         else
         {
             if (!onceFlg && Input.GetKey(KeyCode.Space))
             {
-                StartCoroutine(LoadManager.Instance.LoadScene("Scenes/GameTitleScene"));
+                //Debug.Log("‚Æ‚¨‚½‚æ");
+                //StartCoroutine(LoadManager.Instance.LoadScene("Scenes/GameTitleScene"));
+                SceneManager.LoadScene("Scenes/GameTitleScene");
                 onceFlg = true;
             }
         }

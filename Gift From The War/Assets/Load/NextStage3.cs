@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class NextStage3 : MonoBehaviour
 {
     private bool nextStageFlg;
-    [SerializeField]private BloomSet bloomSet;
+    [SerializeField] private BloomSet bloomSet;
 
     void Start()
     {
@@ -18,14 +18,14 @@ public class NextStage3 : MonoBehaviour
     {
         if (bloomSet.finishFlg)
         {
-            if (LoadManager.Instance != null)
-                StartCoroutine(LoadManager.Instance.LoadScene("Scenes/EndingScene"));
+            Debug.Log("ホワイトアウト完了");
+            SceneManager.LoadScene("Scenes/EndingScene");
         }
     }
 
     public void BloomSetting()
     {
-        
+
     }
 
 
