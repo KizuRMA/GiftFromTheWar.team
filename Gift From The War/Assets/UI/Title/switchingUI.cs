@@ -4,62 +4,62 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class switchingUI : MonoBehaviour
+public class SwitchingUI : MonoBehaviour
 {
     public List<CanvasGroup> canvasGroups;
     public float durationTime;
-    private CanvasGroup nowCanvas;
+    public float firstDelay;
     private int nowIndex;
-
-    // Start is called before the first frame update
 
     void Start()
     {
         nowIndex = 0;
 
-        if (canvasGroups.Count >= 1)
-        {
-            nowCanvas = canvasGroups[nowIndex];
-        }
-
-
         foreach (var _canvasGroups in canvasGroups)
         {
             _canvasGroups.gameObject.SetActive(false);
+            _canvasGroups.alpha = 0.0f;
+            _canvasGroups.blocksRaycasts = false;
         }
 
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AppFirstUI()
     {
-        
+        nowIndex = 0;
+        //最初のUIを表示させる
+        canvasGroups[nowIndex].gameObject.SetActive(true);
+        canvasGroups[nowIndex].DOFade(endValue: 1f, duration: durationTime).SetEase(Ease.OutCubic).SetDelay(firstDelay).OnComplete(() => OnRayCast()).Play();
     }
-
     public void NextIndex()
     {
+        //今のUIを無効にし、次のUIを有効、表示させる
+        canvasGroups[nowIndex].gameObject.SetActive(false);
         nowIndex += 1;
+        canvasGroups[nowIndex].gameObject.SetActive(true);
+        canvasGroups[nowIndex].DOFade(endValue: 1f, duration: durationTime).SetEase(Ease.OutCubic).OnComplete(() => OnRayCast()).Play();
+    }
+    private void OnRayCast()
+    {
+        canvasGroups[nowIndex].blocksRaycasts = true;
     }
 
+    public void CloseUI()
+    {
+        //現在表示されているUIを閉じる
+        canvasGroups[nowIndex].blocksRaycasts = false;//誤操作予防の為先に切る
+        canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic).Play();
+        canvasGroups[nowIndex].gameObject.SetActive(false);
+
+    }
     public void NextUI()
     {
-        //切り替えアニメーション
-        for(int i = 1; i < canvasGroups.Count; i++)
-        {
-            canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic).OnComplete(() => NextIndex()).Play();
-            canvasGroups[nowIndex].DOFade(endValue: 1f, duration: durationTime).SetEase(Ease.OutCubic).Play();
-        }
-        //canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic).OnComplete(() => NextIndex()).Play();
-        //canvasGroups[nowIndex].DOFade(endValue: 1f, duration: durationTime).SetEase(Ease.OutCubic).Play();
-        //.OnComplete(() => SystemSetting.Instance.topPriorityUI = false).Play();
-        //パネルアニメーション
-        //var sequence = DOTween.Sequence()
-        //    .Append(canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic))
-        //    .Join(ImageTransform.DOScale(endValue: new Vector3(ImageSizeDelta.x, ImageSizeDelta.y, ImageSizeDelta.z), duration: upDuration).SetEase(upEaseType))
-        //    .AppendCallback(() => OnRayCast())
-        //    .Play();
 
+        if(canvasGroups.Count > nowIndex + 1)
+        {
+            canvasGroups[nowIndex].blocksRaycasts = false;//誤操作予防の為先に切る
+            canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic).OnComplete(() => NextIndex()).Play();
+        }
 
     }
 }

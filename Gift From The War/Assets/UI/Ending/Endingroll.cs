@@ -7,46 +7,57 @@ public class Endingroll : MonoBehaviour
     Vector3 Staffrollposition;
     public RectTransform rectTransform;
     public float Endpos;
+
     [SerializeField]
+    private float defaultSpeed;
+
     private float speed;
 
     [SerializeField]
     private bool spaceSkip = true;
 
+    private bool onceFlg = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         Staffrollposition = rectTransform.anchoredPosition;
-
-
+        speed = defaultSpeed;
+        onceFlg = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
         if (rectTransform.anchoredPosition.y < Endpos)
         {
-            
-
-            if(spaceSkip)//スペースキーでスキップ可能な場合
+            if(spaceSkip)
             {
-                if (Input.GetKeyDown(KeyCode.R))
+                if (Input.GetKey(KeyCode.Space))
                 {
-                    Staffrollposition.y += speed * 2.5f;
+                    speed = defaultSpeed * 3.0f;
                 }
-                else
+
+                if (Input.GetKeyUp(KeyCode.Space))
                 {
-                    Staffrollposition.y += speed;
+                    speed = defaultSpeed;
                 }
             }
             else
             {
-                Staffrollposition.y += speed;
+                speed = defaultSpeed;
             }
             
+
+            Staffrollposition.y += speed;
             rectTransform.anchoredPosition = Staffrollposition;
+        }
+        else
+        {
+            if (!onceFlg && Input.GetKey(KeyCode.Space))
+            {
+                StartCoroutine(LoadManager.Instance.LoadScene("Scenes/GameTitleScene"));
+                onceFlg = true;
+            }
         }
 
     }
