@@ -24,6 +24,7 @@ public class TextController : MonoBehaviour
 	private Text _uiText;
 
 	Scenario scenario;
+	Layer layer;
 
 	//	文字の表示が完了しているかどうか
 	public bool IsCompleteDisplayText
@@ -57,11 +58,13 @@ public class TextController : MonoBehaviour
     {
 		//	シナリオクラス
 		scenario = GameObject.Find("ScenarioManager").GetComponent<Scenario>();
+		layer = GameObject.Find("ScenarioManager").GetComponent<Layer>();
+
 	}
-    
+
 	void Update()
 	{
-		if (currentText != null)
+		if (currentText != null&&!layer.showFlg)
 		{
 			//表示文字数が前回の表示文字数と異なるならテキストを更新する
 			int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * currentText.Length);

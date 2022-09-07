@@ -40,7 +40,6 @@ public class StoryManager : MonoBehaviour
             scenario.OpenCommand();
             hitFlg = false;
             talkIcon.SetActive(false);
-            Debug.Log("Hit");
         }
     }
 

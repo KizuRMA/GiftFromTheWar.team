@@ -9,42 +9,18 @@ public class Command : MonoBehaviour
     public enum CommandMode
     {
         CommandPanel,
-        TextPanel,
-        TextPanel1,
-        TextPanel2,
     }
-
 
     private CommandMode currentCommand;
     //　シナリオスクリプト
     private Scenario scenario;
-
-    //　コマンドパネル
-    private GameObject commandPanel;
     //  テキストパネル
     private GameObject textPanel;
-
-    //　コマンドパネルのCanvasGroup
-    private CanvasGroup commandPanelCanvasGroup;
-
     //　テキストパネルのCanvasGroup
     private CanvasGroup textPanelCanvasGroup;
-
-    //　キャラクター選択のボタンのプレハブ
-    [SerializeField]
-    private GameObject textButtonPrefab = null;
-
-    //　パーティーステータス
-    [SerializeField]
-    private PartyStatus partyStatus = null;
-
-    [SerializeField]
-    private ButtonStatus[] buttonStatus = null;
-
     //　最後に選択していたゲームオブジェクトをスタック
     private Stack<GameObject> selectedGameObjectStack = new Stack<GameObject>();
 
-    public string[] scenarios;
     private void Awake()
     {
         //　コマンド画面を開く処理をしているScenarioを取得
@@ -54,27 +30,16 @@ public class Command : MonoBehaviour
         currentCommand = CommandMode.CommandPanel;
 
         //　パネル系
-        commandPanel = transform.Find("CommandPanel").gameObject;
         textPanel = transform.Find("TextPanel").gameObject;
 
         //　CanvasGroup
-        commandPanelCanvasGroup = commandPanel.GetComponent<CanvasGroup>();
         textPanelCanvasGroup = textPanel.GetComponent<CanvasGroup>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //ボタンのプレハブからインスタンス生成
-        GameObject[] textButtonIns = new GameObject[3];
-
-        for (int i = 0; i < partyStatus.GetButtonStatus().Count; i++)
-        {
-            textButtonIns[i] = Instantiate<GameObject>(textButtonPrefab, commandPanel.transform);
-            textButtonIns[i].GetComponentInChildren<Text>().text = buttonStatus[i].GetButtonName();
-            textButtonIns[i].GetComponentInChildren<Text>().name = "Text" + i;
-            textButtonIns[i].name = "Button" + i;
-        }
+       
     }
 
     // Update is called once per frame
@@ -90,49 +55,26 @@ public class Command : MonoBehaviour
                 gameObject.SetActive(false);
                 //　ステータスキャラクター選択またはステータス表示時
             }
-            else if (currentCommand == CommandMode.TextPanel)
-            {
-                textPanelCanvasGroup.interactable = false;
-                textPanel.SetActive(false);
-
-                //　前のパネルで選択していたゲームオブジェクトを選択
-                EventSystem.current.SetSelectedGameObject(selectedGameObjectStack.Pop());
-                commandPanelCanvasGroup.interactable = true;
-                commandPanel.SetActive(true);
-                ScenarioManager.Instance.backPanelFlg = true;
-
-                currentCommand = CommandMode.CommandPanel;
-            }
         }
 
         // ネジ君に話しかけた回数によってテキストの内容を変更する
 
-        switch (ScenarioManager.Instance.talkCount)
+        switch(ScenarioManager.Instance.talkCount)
         {
-            case 0:
-                scenarios = ScenarioManager.Instance.UpdateLines("Scenario1");
-                ScenarioManager.Instance.storyNum = 0;
-                break;
             case 1:
-                scenarios = ScenarioManager.Instance.UpdateLines("Scenario2");
-                ScenarioManager.Instance.storyNum = 1;
+                ScenarioManager.Instance.UpdateLines("Scenario2");
                 break;
             case 2:
-                scenarios = ScenarioManager.Instance.UpdateLines("Scenario3");
-                ScenarioManager.Instance.storyNum = 2;
+                ScenarioManager.Instance.UpdateLines("Scenario3");
                 break;
             case 3:
-                scenarios = ScenarioManager.Instance.UpdateLines("Scenario4");
-                ScenarioManager.Instance.storyNum = 3;
+                ScenarioManager.Instance.UpdateLines("Scenario4");
                 break;
             case 4:
-                scenarios = ScenarioManager.Instance.UpdateLines("Scenario5");
-                ScenarioManager.Instance.storyNum = 4;
+                ScenarioManager.Instance.UpdateLines("Scenario5");
                 break;
-
         }
-        // テキストを更新する
-        ScenarioManager.Instance.TextUpdate(scenarios);
+
     }
 
 
@@ -140,38 +82,10 @@ public class Command : MonoBehaviour
     {
         //　現在のコマンドの初期化
         currentCommand = CommandMode.CommandPanel;
-        //commandPanel.SetActive(true);
+
         textPanel.SetActive(true);
-
-
-        //　コマンドメニュー表示時に他のパネルは非表示にする
-       //textPanel.SetActive(false);
 
         selectedGameObjectStack.Clear();
-
-       //commandPanelCanvasGroup.interactable = true;
-       //textPanelCanvasGroup.interactable = false;
-       textPanelCanvasGroup.interactable = true;
-
-    }
-
-    //　選択したコマンドで処理分け
-    public void SelectCommand(string command)
-    {
-        if (command == "Button")
-        {
-            currentCommand = CommandMode.TextPanel;
-            //　UIのオン・オフや選択アイコンの設定
-            commandPanel.SetActive(false);
-
-            commandPanelCanvasGroup.interactable = false;
-            selectedGameObjectStack.Push(EventSystem.current.currentSelectedGameObject);
-        }
-
-        //　階層を一番最後に並べ替え
-        textPanel.transform.SetAsLastSibling();
-        textPanel.SetActive(true);
         textPanelCanvasGroup.interactable = true;
-        EventSystem.current.SetSelectedGameObject(textPanel.transform.GetChild(0).gameObject);
     }
 }
