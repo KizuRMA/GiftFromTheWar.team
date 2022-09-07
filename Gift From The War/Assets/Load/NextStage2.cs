@@ -23,9 +23,9 @@ public class NextStage2 : MonoBehaviour
         if (nextStageFlg) return;
         nextStageFlg = true;
 
-        if (AchievementManager.Instance != null && !AchievementManager.Instance.nowAchievementData.badData && !TimeAttackManager.Instance.timeAttackFlg)
+        if (AchievementManager.Instance != null && !AchievementManager.Instance.nowAchievementData.dogData && !TimeAttackManager.Instance.timeAttackFlg)
         {
-            AchievementManager.Instance.nowAchievementData.badData = true;
+            AchievementManager.Instance.nowAchievementData.dogData = true;
             AchievementManager.Instance.WriteFile();
         }
 
