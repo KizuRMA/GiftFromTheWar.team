@@ -26,6 +26,7 @@ public class GetItem : MonoBehaviour
     private string objName;
     private GameObject hitObj;
     [SerializeField] private GameObject rantanObj;
+    [SerializeField] private GameObject keyObj;
     public bool windAmmunitionFlg { get; set; }
     public bool magnetAmmunitionFlg { get; set; }
     public bool fireAmmunitionFlg { get; set; }
@@ -191,7 +192,10 @@ public class GetItem : MonoBehaviour
 
         if (tagName == "Key")
         {
+            if (keyObj == null) return;
+            keyObj.SetActive(true);
             KeyFinalScript key = hitObj.GetComponent<KeyFinalScript>();
+
             if (key != null)
             {
                 key.isGetKeyFlg = true;
