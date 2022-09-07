@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
 public class NextStage3 : MonoBehaviour
@@ -17,6 +18,12 @@ public class NextStage3 : MonoBehaviour
 
     }
 
+    public void BloomSetting()
+    {
+        
+    }
+
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag != "Player") return;
@@ -31,8 +38,11 @@ public class NextStage3 : MonoBehaviour
 
         if (!TimeAttackManager.Instance.timeAttackFlg)
         {
+            //if()
             if(LoadManager.Instance != null)
-            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FinalStage"));
+            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/EndingScene"));
+
+
         }
         else
         {
