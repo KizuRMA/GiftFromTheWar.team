@@ -37,13 +37,25 @@ public class switchingUI : MonoBehaviour
         
     }
 
+    public void NextIndex()
+    {
+        nowIndex += 1;
+    }
+
     public void NextUI()
     {
         //切り替えアニメーション
-        canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic).SetUpdate(true).Play();
+        for(int i = 1; i < canvasGroups.Count; i++)
+        {
+            canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic).OnComplete(() => NextIndex()).Play();
+            canvasGroups[nowIndex].DOFade(endValue: 1f, duration: durationTime).SetEase(Ease.OutCubic).Play();
+        }
+        //canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic).OnComplete(() => NextIndex()).Play();
+        //canvasGroups[nowIndex].DOFade(endValue: 1f, duration: durationTime).SetEase(Ease.OutCubic).Play();
+        //.OnComplete(() => SystemSetting.Instance.topPriorityUI = false).Play();
         //パネルアニメーション
         //var sequence = DOTween.Sequence()
-        //    .Append(PanelCanvasGroup.DOFade(endValue: 1f, duration: upDuration))
+        //    .Append(canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic))
         //    .Join(ImageTransform.DOScale(endValue: new Vector3(ImageSizeDelta.x, ImageSizeDelta.y, ImageSizeDelta.z), duration: upDuration).SetEase(upEaseType))
         //    .AppendCallback(() => OnRayCast())
         //    .Play();
