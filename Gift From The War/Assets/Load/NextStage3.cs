@@ -18,16 +18,9 @@ public class NextStage3 : MonoBehaviour
     {
         if (bloomSet.finishFlg)
         {
-            Debug.Log("ホワイトアウト完了");
             SceneManager.LoadScene("Scenes/EndingScene");
         }
     }
-
-    public void BloomSetting()
-    {
-
-    }
-
 
     private void OnTriggerStay(Collider other)
     {
@@ -43,10 +36,7 @@ public class NextStage3 : MonoBehaviour
 
         if (!TimeAttackManager.Instance.timeAttackFlg)
         {
-            Debug.Log("クリア地点だよ");
-
             bloomSet.bloomFlg = true;
-
         }
         else
         {
