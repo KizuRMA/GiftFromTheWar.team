@@ -11,6 +11,8 @@ public class BossArea : MonoBehaviour
         if (other.gameObject.tag == "Boss")
         {
             state.attackFlg = true;
+            state.trackingSpeed = 2.5f;
+            state.agent.speed = state.trackingSpeed;
         }
     }
 }
