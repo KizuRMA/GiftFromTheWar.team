@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8039,8 +8039,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 4.113295
+  m_Center: {x: 6.1526525e-16, y: 0, z: 0.29329538}
 --- !u!114 &589422385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8053,6 +8053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a89e58ca6776bde43bd45f8ebedf8a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloomSet: {fileID: 1729858417}
 --- !u!1001 &590729766
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21509,6 +21510,7 @@ GameObject:
   - component: {fileID: 1729858416}
   - component: {fileID: 1729858415}
   - component: {fileID: 1729858414}
+  - component: {fileID: 1729858417}
   m_Layer: 10
   m_Name: Post-process Volume
   m_TagString: Untagged
@@ -21561,6 +21563,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1729858417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729858413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d63dab6d9fc23f4496cb2290a69a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloomFlg: 0
+  finishFlg: 0
 --- !u!1001 &1730144177
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class NextStage3 : MonoBehaviour
 {
     private bool nextStageFlg;
+    [SerializeField]private BloomSet bloomSet;
 
     void Start()
     {
@@ -15,7 +16,11 @@ public class NextStage3 : MonoBehaviour
 
     void Update()
     {
-
+        if (bloomSet.finishFlg)
+        {
+            if (LoadManager.Instance != null)
+                StartCoroutine(LoadManager.Instance.LoadScene("Scenes/EndingScene"));
+        }
     }
 
     public void BloomSetting()
@@ -38,10 +43,9 @@ public class NextStage3 : MonoBehaviour
 
         if (!TimeAttackManager.Instance.timeAttackFlg)
         {
-            //if()
-            if(LoadManager.Instance != null)
-            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/EndingScene"));
+            Debug.Log("クリア地点だよ");
 
+            bloomSet.bloomFlg = true;
 
         }
         else

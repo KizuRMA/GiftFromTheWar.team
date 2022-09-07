@@ -1,48 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class BloomSet : MonoBehaviour
 {
     Bloom bloom;
 
+    public bool bloomFlg;
+    public bool finishFlg;
+    private float speed = 0;
+    private float value;
+
     // Start is called before the first frame update
     void Start()
     {
-        
         bloom = ScriptableObject.CreateInstance<Bloom>();
+        bloomFlg = false;
+        finishFlg = false;
     }
 
     void Update()
     {
-
-        //左クリック
-        if (Input.GetMouseButton(0))
-        {
-            set();
-        }
         //右クリック
         if (Input.GetMouseButton(1))
         {
-            setback();
+            bloomFlg = true;
+        }
+
+        if(bloomFlg)
+        {
+            speed += Time.deltaTime;
+            value = Mathf.Lerp(1, 100, speed);
+
+            bloom.enabled.Override(true);
+            //変更したい項目に任意の数値を渡す
+            bloom.intensity.Override(value);
+            bloom.softKnee.Override(1.0f);
+            //QuickVolume（PostProcessのレイヤー番号,Priority,効果）
+            PostProcessManager.instance.QuickVolume(gameObject.layer, 1, bloom);
+        }
+
+        if(value >= 100)
+        {
+            finishFlg = true;
         }
     }
-    //発光（強）関数
-    private void set()
-    {
-        //書き換えOK
-        bloom.enabled.Override(true);
-        //変更したい項目に任意の数値を渡す
-        bloom.intensity.Override(100f);
-        //QuickVolume（PostProcessのレイヤー番号,Priority,効果）
-        PostProcessManager.instance.QuickVolume(gameObject.layer, 1, bloom);
-    }
-    //発光（弱）関数（略）
-    private void setback()
-    {
-        bloom.enabled.Override(true);
-        bloom.intensity.Override(1f);
-        PostProcessManager.instance.QuickVolume(gameObject.layer, 1, bloom);
-    }
+
 }
