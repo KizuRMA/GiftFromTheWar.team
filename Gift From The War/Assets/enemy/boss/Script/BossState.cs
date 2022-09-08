@@ -88,7 +88,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         float targetDis = Vector3.Distance(_nowPos, agent.destination);
 
         // 目的地点までの距離(remainingDistance)が目的地の手前までの距離(stoppingDistance)以下になったら
-        if (targetDis <= 0.1f)
+        if (targetDis <= 2.0f)
         {
             // 目的地の番号を１更新（右辺を剰余演算子にすることで目的地をループさせれる）
             currentWaypointIndex = (currentWaypointIndex + 1) % wayPoint.wayPoints.Count;
