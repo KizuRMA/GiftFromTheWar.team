@@ -21,11 +21,12 @@ public class NeziKunPrefabs : MonoBehaviour
     //  ネジ君のインスタンス生成
     private GameObject[] neziKunIns;
 
+    //　会話可能な相手
+    private GameObject conversationPartner;
+
     // Start is called before the first frame update
     void Start()
     {
-        ScenarioManager.Instance.neziKunNum = prefabNum;
-
         neziKunIns = new GameObject[ScenarioManager.Instance.talkCount+prefabNum];
 
         // 指定された位置にネジ君を配置
@@ -58,7 +59,7 @@ public class NeziKunPrefabs : MonoBehaviour
                 neziKunIns[2].SetActive(true);
                 break;
             case 3:
-              
+
                 break;
             case 4:
                 neziKunIns[3].SetActive(false);
@@ -69,9 +70,10 @@ public class NeziKunPrefabs : MonoBehaviour
                 break;
         }
 
-        if(ScenarioManager.Instance.talkCount==3&&prefabNum==3)
+        if (ScenarioManager.Instance.talkCount == 3 && prefabNum == 3)
         {
             neziKunIns[2].SetActive(false);
         }
     }
+
 }

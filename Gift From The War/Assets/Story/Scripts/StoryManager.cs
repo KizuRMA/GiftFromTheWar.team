@@ -56,17 +56,17 @@ public class StoryManager : MonoBehaviour
         {
             //  衝突しているオブジェクトの各情報を取得
             objName = hit.collider.gameObject.tag;
-            neziKun = hit.collider.gameObject;
 
             //  衝突しているオブジェクトがネジ君だったら
             if (objName == "Nezi")
             {
+                neziKun = hit.collider.gameObject;
+
                 // スペースキーで会話ウィンドウ表示
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     hitFlg = true;
                 }
-
                 talkIcon.SetActive(true);
             }
         }
@@ -75,4 +75,7 @@ public class StoryManager : MonoBehaviour
             talkIcon.SetActive(false);
         }
     }
+
+
+   
 }
