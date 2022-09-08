@@ -18,11 +18,8 @@ public class StoryManager : MonoBehaviour
 
     public GameObject neziKun;
 
-    //  コマンドオブジェクト参照用
-    [SerializeField] GameObject image;
-
     // 話しかける時のアイコン用
-    [SerializeField] GameObject talkIcon;
+    [SerializeField] public GameObject talkIcon;
 
     Scenario scenario;
 
@@ -30,8 +27,6 @@ public class StoryManager : MonoBehaviour
     void Start()
     {
         scenario = GameObject.Find("ScenarioManager").GetComponent<Scenario>();
-        //  コマンド画面を閉じておく
-        image.SetActive(false);
         talkIcon.SetActive(false);
     }
 
@@ -39,6 +34,13 @@ public class StoryManager : MonoBehaviour
     void Update()
     {
         Ray();
+
+        if(hitFlg==true)
+        {
+            scenario.OpenCommand();
+            hitFlg = false;
+            talkIcon.SetActive(false);
+        }
     }
 
     //レイ判定
@@ -59,14 +61,13 @@ public class StoryManager : MonoBehaviour
             //  衝突しているオブジェクトがネジ君だったら
             if (objName == "Nezi")
             {
-                // クリックで会話ウィンドウ表示
+                // スペースキーで会話ウィンドウ表示
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     hitFlg = true;
                 }
 
                 talkIcon.SetActive(true);
-
             }
         }
         else

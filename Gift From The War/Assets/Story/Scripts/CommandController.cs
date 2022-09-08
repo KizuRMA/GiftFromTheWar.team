@@ -8,8 +8,8 @@ public class CommandController : SingletonMonoBehaviour<CommandController>
 	// 文字を解析しながら呼び出すコマンド
 	private readonly List<ICommand> m_commandList = new List<ICommand>()
 	{
-		//new CommandUpdateImage(),	// name=オブジェクト名 image=イメージ名 
-		//new CommandJumpNextScenario(),	// fileName=シナリオ名
+		new CommandUpdateImage(),	// name=オブジェクト名 image=イメージ名 
+		new CommandJampNextScenario(),	// fileName=シナリオ名
 	};
 
 	// 文字の表示が完了したタイミングで呼ばれる処理

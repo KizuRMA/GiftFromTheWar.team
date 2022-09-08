@@ -8,6 +8,7 @@ using System.Text;
 public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 {
     public int storyNum=0;
+    public int neziKunNum = 0;
     public string[] loadFileName=null;
 
     //  前のパネルに戻るかどうか
@@ -20,26 +21,36 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     private string[] scenarios;
 
     //  現在の行番号
-    private int currentLine = 0;
+    public int currentLine = 0;
 
     private bool isCallPreload = false;
 
     //
     private TextController textController;
     private CommandController commandController;
+    private Layer layer;
 
     private Scenario scenario;
 
     public int talkCount;
 
     //  次のテキストに更新するためにtextControllerに依頼する
-    public void RequestNextLine(string fileName,string[] _scenarios)
-    {
-        fileName = _scenarios[currentLine];
-        
-        textController.SetNextLine(CommandProcess(fileName));
-        currentLine++;
+    //public void RequestNextLine(string fileName,string[] _scenarios)
+    //{
+    //    fileName = _scenarios[currentLine];
 
+    //    textController.SetNextLine(CommandProcess(fileName));
+    //    currentLine++;
+
+    //    isCallPreload = false;
+    //}
+
+    public void RequestNextLine()
+    {
+        var currentText = scenarios[currentLine];
+
+        textController.SetNextLine(CommandProcess(currentText));
+        currentLine++;
         isCallPreload = false;
     }
 
@@ -54,7 +65,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             enabled = false;
             return null;
         }
-
 
         scenarios = scenarioText.text.Split(new string[] { "@br" }, System.StringSplitOptions.None);
         return scenarios;  
@@ -94,11 +104,17 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
         textController = GetComponent<TextController>();
         commandController = GetComponent<CommandController>();
         scenario = GetComponent<Scenario>();
+        layer = GetComponent<Layer>();
+
+        UpdateLines(loadFileName[0]);
+        RequestNextLine();
     }
 
     // Update is called once per frame
     void Update()
     {
+        TextUpdate();
+
         //  前のパネルに戻る
         if (backPanelFlg)
         {
@@ -119,8 +135,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
         }
     }
 
-    //  テキストを更新する
-    public void TextUpdate(string[] scenarios)
+    public void TextUpdate()
     {
         if (!scenario.scenarioFlg) return;
 
@@ -135,9 +150,9 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
                     isCallPreload = true;
                 }
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0)&&layer.showFlg==false)
                 {
-                    RequestNextLine(loadFileName[storyNum], scenarios);
+                    RequestNextLine();
                 }
             }
             else
