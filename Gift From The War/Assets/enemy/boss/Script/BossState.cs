@@ -254,5 +254,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
             target.Damage(10.0f);
         }
+
+
     }
 }
