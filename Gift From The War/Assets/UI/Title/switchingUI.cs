@@ -55,7 +55,7 @@ public class SwitchingUI : MonoBehaviour
     public void NextUI()
     {
 
-        if(canvasGroups.Count > nowIndex + 1)
+        if (canvasGroups.Count > nowIndex + 1)
         {
             canvasGroups[nowIndex].blocksRaycasts = false;//Œë‘€ì—\–h‚Ìˆ×æ‚ÉØ‚é
             canvasGroups[nowIndex].DOFade(endValue: 0f, duration: durationTime).SetEase(Ease.OutCubic).OnComplete(() => NextIndex()).Play();
