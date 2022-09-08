@@ -15,6 +15,15 @@ public class BossStunState : State<BossState>
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("Stun") == false) switchAnime = false;
 
         owner.agent.isStopped = true;
+
+        if (owner.keyObj != null)
+        {
+            //鍵を取ってない状態でボスがダメージを受けた時
+            if (owner.keyObj.isGetKeyFlg == false)
+            {
+                owner.keyObj.KeyTakeFunction();
+            }
+        }
     }
 
     public override void Execute()

@@ -22,11 +22,14 @@ public class KeyFinalScript : MonoBehaviour
         //Œ®‚ªæ‚ç‚ê‚Ä‚¢‚È‚¢ê‡
         if (isGetKeyFlg == false) return;
 
-        //ƒ{ƒX‚ğ‹N‚±‚·
+        KeyTakeFunction();
+        Destroy(gameObject);
+    }
+
+    public void KeyTakeFunction()
+    {
         state.getupFlg = true;
         wall.openFlg = true;
         bigRock.SetActive(true);
-        Destroy(gameObject);
-
     }
 }

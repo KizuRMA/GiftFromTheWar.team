@@ -27,6 +27,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     [SerializeField] public float attackIntervalSecond = 1;
     [SerializeField] public float attackRate = 70;
     [SerializeField] public float life;
+    [SerializeField] public KeyFinalScript keyObj;
 
     [System.NonSerialized] public int currentWaypointIndex;
     [System.NonSerialized] public GameObject generatedGrenade;
@@ -81,6 +82,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
             IsCurrentState(e_BossState.Crash) == true||
             IsCurrentState(e_BossState.Sleep) == true) return;
         if (attackFlg == false) return;
+        if (currentWaypointIndex == wayPoint.wayPoints.Count - 1) return;
 
         Vector3 _nowPos = new Vector3(transform.position.x, agent.destination.y, transform.position.z);
         float targetDis = Vector3.Distance(_nowPos, agent.destination);
@@ -252,5 +254,14 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
 
             target.Damage(10.0f);
         }
+
+        if (other.gameObject.tag == "Bat")
+        {
+            var target = other.transform.GetComponent<EnemyInterface>();
+            if (null == target) return;
+
+            target.Damage(5);
+        }
+
     }
 }
