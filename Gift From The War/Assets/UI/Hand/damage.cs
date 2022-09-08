@@ -62,6 +62,6 @@ public class damage : MonoBehaviour
 
     void Damage()
     {
-        redImage.color = new Color(0.5f, 0, 0, 0.5f);
+        redImage.color = new Color(0.5f, 0, 0, 0.8f);
     }
 }
