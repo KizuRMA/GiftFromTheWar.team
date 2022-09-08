@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
 public class NextStage3 : MonoBehaviour
 {
     private bool nextStageFlg;
+    [SerializeField] private BloomSet bloomSet;
 
     void Start()
     {
@@ -14,7 +16,10 @@ public class NextStage3 : MonoBehaviour
 
     void Update()
     {
-
+        if (bloomSet.finishFlg)
+        {
+            SceneManager.LoadScene("Scenes/EndingScene");
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -63,8 +68,7 @@ public class NextStage3 : MonoBehaviour
 
         if (!TimeAttackManager.Instance.timeAttackFlg)
         {
-            if(LoadManager.Instance != null)
-            StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FinalStage"));
+            bloomSet.bloomFlg = true;
         }
         else
         {
