@@ -255,6 +255,13 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
             target.Damage(10.0f);
         }
 
+        if (other.gameObject.tag == "Bat")
+        {
+            var target = other.transform.GetComponent<EnemyInterface>();
+            if (null == target) return;
+
+            target.Damage(5);
+        }
 
     }
 }
