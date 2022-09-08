@@ -27,6 +27,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     [SerializeField] public float attackIntervalSecond = 1;
     [SerializeField] public float attackRate = 70;
     [SerializeField] public float life;
+    [SerializeField] public KeyFinalScript keyObj;
 
     [System.NonSerialized] public int currentWaypointIndex;
     [System.NonSerialized] public GameObject generatedGrenade;

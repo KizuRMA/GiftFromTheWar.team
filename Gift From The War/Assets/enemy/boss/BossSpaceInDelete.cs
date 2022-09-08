@@ -10,4 +10,13 @@ public class BossSpaceInDelete : MonoBehaviour
 
         transform.gameObject.SetActive(false);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != "Boss") return;
+
+        transform.gameObject.SetActive(false);
+    }
+
+
 }
