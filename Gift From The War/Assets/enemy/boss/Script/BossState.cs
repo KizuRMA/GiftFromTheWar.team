@@ -82,6 +82,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
             IsCurrentState(e_BossState.Crash) == true||
             IsCurrentState(e_BossState.Sleep) == true) return;
         if (attackFlg == false) return;
+        if (currentWaypointIndex == wayPoint.wayPoints.Count - 1) return;
 
         Vector3 _nowPos = new Vector3(transform.position.x, agent.destination.y, transform.position.z);
         float targetDis = Vector3.Distance(_nowPos, agent.destination);
