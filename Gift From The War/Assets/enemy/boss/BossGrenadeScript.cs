@@ -4,28 +4,14 @@ using UnityEngine;
 
 public class BossGrenadeScript : MonoBehaviour
 {
-    [SerializeField] public float expRange;
     [SerializeField] public GameObject expParticle;
-    [SerializeField] public float damage;
+    [SerializeField] public GameObject expRangeObj;
+
 
     private void OnCollisionEnter(Collision _collision)
     {
-        if (_collision.gameObject.tag == "Player" || _collision.gameObject.tag == "cave")
-        {
-            GameObject _player = GameObject.Find("player");
-
-            float dis = Vector3.Distance(_player.transform.position, transform.position);
-
-            if (dis <= expRange)
-            {
-                var target = _player.transform.GetComponent<playerAbnormalcondition>();
-                if (null == target) return;
-
-                target.Damage(damage);
-            }
-        }
-
         Instantiate(expParticle, transform.position,transform.rotation);
+        Destroy(Instantiate(expRangeObj, transform.position,transform.rotation),1.0f);
         Destroy(gameObject);
     }
 }

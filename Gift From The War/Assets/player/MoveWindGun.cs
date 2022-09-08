@@ -71,7 +71,7 @@ public class MoveWindGun : MonoBehaviour
 
     void Update()
     {
-        if (scenario == null) return;
+        //if (scenario == null) return;
 
         if (!getItem.windAmmunitionFlg) return; //弾を拾ってなかったら処理しない
         if (Time.timeScale <= 0f) return;
@@ -83,7 +83,7 @@ public class MoveWindGun : MonoBehaviour
         if (ladder.touchLadderFlg) return;
 
         // ネジ君と会話中は処理しない
-        if (scenario.scenarioFlg) return;
+        //if (scenario.scenarioFlg) return;
 
         KnowViewpoint();
 

@@ -36,6 +36,7 @@ public class PatrolBatManager : BaseEnemyManager
     protected override void EnemyReSpawn()
     {
         if (numberEnemies <= transform.childCount + numberRespawnPlan) return;
+        if (respawnPos == null) return;
 
         //“G‚ðƒŠƒXƒ|[ƒ“‚³‚¹‚é
         StartCoroutine(RespawnCoroutine());
@@ -60,6 +61,8 @@ public class PatrolBatManager : BaseEnemyManager
 
     public IEnumerator RespawnCoroutine()
     {
+        
+        
         RespawnPlanCounter(1);
 
         yield return new WaitForSeconds(respawnInterval);
