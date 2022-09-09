@@ -105,7 +105,12 @@ public class GetItem : MonoBehaviour
             gunObj.SetActive(true);
             SaveManager.Instance.nowSaveData.getGunFlg = true;
             SaveManager.Instance.WriteFile();
-            SaveManager.Instance.WriteSubFile();
+
+            if (!TimeAttackManager.Instance.timeAttackFlg)
+            {
+                SaveManager.Instance.WriteSubFile();
+            }
+
             targetImage.enabled = true;
             bulletChange.HaveBulletAutoChange();
 
@@ -122,7 +127,12 @@ public class GetItem : MonoBehaviour
             windAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getWindFlg = true;
             SaveManager.Instance.WriteFile();
-            SaveManager.Instance.WriteSubFile();
+
+            if (!TimeAttackManager.Instance.timeAttackFlg)
+            {
+                SaveManager.Instance.WriteSubFile();
+            }
+
             cylinder.windAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
             //âπÇçƒê∂
@@ -140,7 +150,12 @@ public class GetItem : MonoBehaviour
             magnetAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getMagnetFlg = true;
             SaveManager.Instance.WriteFile();
-            SaveManager.Instance.WriteSubFile();
+
+            if (!TimeAttackManager.Instance.timeAttackFlg)
+            {
+                SaveManager.Instance.WriteSubFile();
+            }
+
             cylinder.magnetAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
 
@@ -156,7 +171,12 @@ public class GetItem : MonoBehaviour
             fireAmmunitionFlg = true;
             SaveManager.Instance.nowSaveData.getFireFlg = true;
             SaveManager.Instance.WriteFile();
-            SaveManager.Instance.WriteSubFile();
+
+            if (!TimeAttackManager.Instance.timeAttackFlg)
+            {
+                SaveManager.Instance.WriteSubFile();
+            }
+
             cylinder.fireAmmo.SetActive(true);
             bulletChange.HaveBulletAutoChange();
 
@@ -184,7 +204,12 @@ public class GetItem : MonoBehaviour
             rantanObj.SetActive(true);
             SaveManager.Instance.nowSaveData.getRantanFlg = true;
             SaveManager.Instance.WriteFile();
-            SaveManager.Instance.WriteSubFile();
+
+            if (!TimeAttackManager.Instance.timeAttackFlg)
+            {
+                SaveManager.Instance.WriteSubFile();
+            }
+
             targetImage.enabled = true;
             AudioManager.Instance.PlaySE("GetRantan", isLoop: false);
             return;
