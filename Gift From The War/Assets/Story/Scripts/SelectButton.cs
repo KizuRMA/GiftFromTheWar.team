@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SelectButton : MonoBehaviour
 {
-
     Layer layer;
 
     // Start is called before the first frame update
@@ -19,9 +18,22 @@ public class SelectButton : MonoBehaviour
         
     }
 
-    public void Buttton()
+    public void Buttton(string command)
     {
-        layer.ClosePanel();
-        ScenarioManager.Instance.RequestNextLine();
+        if (command == "Root1")
+        {
+            layer.ClosePanel();
+            ScenarioManager.Instance.RequestNextLine();
+        }
+        else if (command == "Root2")
+        {
+            layer.ClosePanel();
+          
+            ScenarioManager.Instance.UpdateLines("Scenario1-1");
+            ScenarioManager.Instance.currentLine=0;
+
+            ScenarioManager.Instance.RequestNextLine();
+
+        }
     }
 }

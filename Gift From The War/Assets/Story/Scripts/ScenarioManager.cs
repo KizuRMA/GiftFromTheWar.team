@@ -7,12 +7,7 @@ using System.Text;
 [RequireComponent(typeof(TextController))]
 public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
 {
-    public int storyNum=0;
-    public int neziKunNum = 0;
-    public string[] loadFileName=null;
-
-    //  前のパネルに戻るかどうか
-    public bool backPanelFlg = false;
+    public string[] loadFileName = null;
 
     //  文章を読み終わっているかどうか
     public bool endFlg=false;
@@ -33,17 +28,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     private Scenario scenario;
 
     public int talkCount;
-
-    //  次のテキストに更新するためにtextControllerに依頼する
-    //public void RequestNextLine(string fileName,string[] _scenarios)
-    //{
-    //    fileName = _scenarios[currentLine];
-
-    //    textController.SetNextLine(CommandProcess(fileName));
-    //    currentLine++;
-
-    //    isCallPreload = false;
-    //}
 
     public void RequestNextLine()
     {
@@ -114,14 +98,6 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     void Update()
     {
         TextUpdate();
-
-        //  前のパネルに戻る
-        if (backPanelFlg)
-        {
-            //  行番号をリセット
-            currentLine = 0;
-            backPanelFlg = false;
-        }
     }
     //  文章を読み終わっていたらウィンドウを削除する
     private void ResetText()

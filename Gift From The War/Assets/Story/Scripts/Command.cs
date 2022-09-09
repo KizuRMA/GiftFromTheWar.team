@@ -53,6 +53,7 @@ public class Command : MonoBehaviour
             {
                 scenario.ExitCommand();
                 gameObject.SetActive(false);
+                ScenarioManager.Instance.currentLine = 0;
                 //　ステータスキャラクター選択またはステータス表示時
             }
         }

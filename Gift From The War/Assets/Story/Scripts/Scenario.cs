@@ -9,9 +9,6 @@ public class Scenario : MonoBehaviour
     //  コマンドオブジェクト参照用
     [SerializeField] GameObject image;
 
-    // 話しかけた回数
-    public int talkCount = 0;
-
     public bool scenarioFlg = false;
 
     private void Awake()

@@ -10,7 +10,6 @@ public class Layer : MonoBehaviour
     private CanvasGroup panelCanvasGroup;
 
     public bool showFlg = false;
-
     private void Awake()
     {
         panelCanvasGroup = Panel.GetComponent<CanvasGroup>();
