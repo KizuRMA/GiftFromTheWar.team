@@ -14,7 +14,7 @@ public class DogManager : BaseEnemyManager
     [SerializeField] public List<Transform> respawnPos = null;
     [SerializeField] public List<Transform> startPosList = null;
     [SerializeField] public HandGimmick gimmick = null;
-    [SerializeField] public Transform warpPos;
+    [SerializeField] public Transform warpPos = null;
 
 
     public List<GameObject> dogs = null;
