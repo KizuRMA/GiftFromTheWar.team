@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class SwitchingUI : MonoBehaviour
+public class switchingUI : MonoBehaviour
 {
     public List<CanvasGroup> canvasGroups;
     public float durationTime;

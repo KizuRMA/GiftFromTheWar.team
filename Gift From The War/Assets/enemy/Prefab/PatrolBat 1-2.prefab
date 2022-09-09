@@ -15749,6 +15749,7 @@ GameObject:
   - component: {fileID: 7633474436373209132}
   - component: {fileID: 2933752446757361108}
   - component: {fileID: 7672354043792272825}
+  - component: {fileID: 5741346955982676199}
   m_Layer: 12
   m_Name: PatrolBat 1-2
   m_TagString: Bat
@@ -16092,6 +16093,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onLavaDamage:
+    m_PersistentCalls:
+      m_Calls: []
   onExpDamge:
     m_PersistentCalls:
       m_Calls:
@@ -16137,6 +16141,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5741346955982676199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3761730428720006244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &3855876412409980896
 GameObject:
   m_ObjectHideFlags: 0

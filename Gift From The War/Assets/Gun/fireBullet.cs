@@ -16,7 +16,8 @@ public class fireBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "dogAgent" || other.gameObject.tag == "Detector") return;
+        if (other.gameObject.tag == "dogAgent" || other.gameObject.tag == "Detector" || other.gameObject.tag == "Untagged") return;
+        Debug.Log(other.gameObject.tag);
 
         Destroy(this.gameObject);
     }

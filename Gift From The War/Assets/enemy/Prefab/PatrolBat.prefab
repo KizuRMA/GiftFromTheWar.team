@@ -30815,6 +30815,7 @@ GameObject:
   - component: {fileID: 3565330764647121169}
   - component: {fileID: 2642777052994766310}
   - component: {fileID: 3285979037847351533}
+  - component: {fileID: 2697449582084064512}
   m_Layer: 12
   m_Name: PatrolBat
   m_TagString: Bat
@@ -31030,15 +31031,16 @@ MonoBehaviour:
   bat: {fileID: 6211447565224858190}
   animator: {fileID: 1551916534331525006}
   wayPoint: {fileID: 0}
-  raycastLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
   prefab: {fileID: 9120972987868471649, guid: 27afa9fb83e21d74da036374cb40f53c, type: 3}
   attackCollider: {fileID: 288108598442293953}
   windBladeParticle: {fileID: 3719638909804525330, guid: 7c477e8d7ea22a047b379b159452c336, type: 3}
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
   trackingSpeed: 4
   moveWayPointSpeed: 2.2
   reactionDis: 20
+  trackingAnimSpeed: 0
   forwardAngle: 20
   height: 0.8
   hightRatio: 0.4
@@ -31156,6 +31158,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onLavaDamage:
+    m_PersistentCalls:
+      m_Calls: []
   onExpDamge:
     m_PersistentCalls:
       m_Calls:
@@ -31201,6 +31206,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2697449582084064512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6211447565224858190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6522960604625668383
 GameObject:
   m_ObjectHideFlags: 0

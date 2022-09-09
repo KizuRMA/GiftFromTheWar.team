@@ -13,7 +13,7 @@ public class magnetBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "dogAgent" || other.gameObject.tag == "Detector") return; //“–‚½‚Á‚½‚Ì‚ªdogAgent‚¾‚Á‚½‚çˆ—‚µ‚È‚¢
+        if (other.gameObject.tag == "dogAgent" || other.gameObject.tag == "Detector" || other.gameObject.tag == "Untagged") return; //“–‚½‚Á‚½‚Ì‚ªdogAgent‚¾‚Á‚½‚çˆ—‚µ‚È‚¢
 
         if (other.gameObject.tag == "metal" || other.gameObject.tag == "Dog1" || other.gameObject.tag == "Bat" || other.gameObject.tag == "gimmickButton")
         {
