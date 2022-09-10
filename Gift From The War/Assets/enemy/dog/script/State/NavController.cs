@@ -93,8 +93,6 @@ public class NavController : MonoBehaviour
             }
         }
 
-        return;
-
         // ˆÚ“®•ûŒü‚Æ‘¬“x‚ğZo
         _move = _target - transform.position;
         _move.y = 0f;
