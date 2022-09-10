@@ -2,26 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemysInfo : MonoBehaviour
+public class DogChaseBGM : MonoBehaviour
 {
-    [SerializeField] private string BGMName;
-    [SerializeField] private float BGMVol;
-    [SerializeField] private List<e_EnemyType> enemyType = null;
     [SerializeField] private List<EnemyManager> list = null;
 
     private void Update()
     {
-        bool isChase = false;
-
-        foreach(var info in enemyType)
-        {
-            if (IsEnemysChasing(info) == true) isChase = true;
-        }
-        
-        if (isChase)
+        if (IsEnemysChasing(e_EnemyType.Dog) == true)
         {
             AudioManager.Instance.PlaySE("Heartbeat");
-            AudioManager.Instance.PlayBGM(BGMName, vol: BGMVol);
+            AudioManager.Instance.PlayBGM("FANTASY-04", vol: 0.3f);
         }
         else
         {

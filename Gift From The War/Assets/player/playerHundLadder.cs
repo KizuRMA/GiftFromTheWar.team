@@ -80,8 +80,6 @@ public class playerHundLadder : MonoBehaviour
 
         if (MoveBeforeFinishFlg())
         {
-            Debug.Log("ab");
-
             ClimbLadder();
 
             DescendLadder();

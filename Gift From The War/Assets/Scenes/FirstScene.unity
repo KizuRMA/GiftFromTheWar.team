@@ -8667,6 +8667,14 @@ PrefabInstance:
       value: EnemysInfo
       objectReference: {fileID: 0}
     - target: {fileID: 223994819128039302, guid: 26ede2f02b66fa741af7e31af967b623, type: 3}
+      propertyPath: BGMVol
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 223994819128039302, guid: 26ede2f02b66fa741af7e31af967b623, type: 3}
+      propertyPath: BGMName
+      value: FANTASY-04
+      objectReference: {fileID: 0}
+    - target: {fileID: 223994819128039302, guid: 26ede2f02b66fa741af7e31af967b623, type: 3}
       propertyPath: list.Array.data[0]
       value: 
       objectReference: {fileID: 2023260603}
@@ -8674,6 +8682,14 @@ PrefabInstance:
       propertyPath: list.Array.data[1]
       value: 
       objectReference: {fileID: 348372922}
+    - target: {fileID: 223994819128039302, guid: 26ede2f02b66fa741af7e31af967b623, type: 3}
+      propertyPath: enemyType.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 223994819128039302, guid: 26ede2f02b66fa741af7e31af967b623, type: 3}
+      propertyPath: enemyType.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 223994819128039303, guid: 26ede2f02b66fa741af7e31af967b623, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -28609,7 +28625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1707568935
 Transform:
   m_ObjectHideFlags: 0
@@ -34185,7 +34201,7 @@ MonoBehaviour:
   turnSpeed: 750
   minX: -60
   maxX: 60
-  isDebug: 0
+  isDebug: 1
   useUI: 0
 --- !u!143 &2017324120
 CharacterController:
@@ -34300,7 +34316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1284577509}
-  isDebug: 0
+  isDebug: 1
   isAuto: 0
 --- !u!1001 &2017876306
 PrefabInstance:
