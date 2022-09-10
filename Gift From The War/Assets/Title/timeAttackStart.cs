@@ -13,21 +13,21 @@ public class timeAttackStart : MonoBehaviour
             TimeAttackManager.Instance.nowStage = thisStageNum;
         }
 
-        switch ((int)TimeAttackManager.Instance.nowStage)
+        switch (TimeAttackManager.Instance.nowStage)
         {
-            case 0:
+            case TimeAttackManager.selectStage.FIRST:
                 StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
                 break;
 
-            case 1:
+            case TimeAttackManager.selectStage.SECOND:
                 StartCoroutine(LoadManager.Instance.LoadScene("Scenes/SecondStage"));
                 break;
 
-            case 2:
+            case TimeAttackManager.selectStage.FINAL:
                 StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FinalStage"));
                 break;
 
-            case 3:
+            case TimeAttackManager.selectStage.ALL:
                 StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FirstScene"));
                 break;
         }
