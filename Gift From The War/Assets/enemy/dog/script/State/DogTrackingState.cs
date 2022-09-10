@@ -57,8 +57,6 @@ public class DogTrackingState : State<DogState>
 
     public override void Execute()
     {
-
-
         owner.animator.SetFloat("MoveSpeed", 1.0f);
         agent.destination = owner.player.transform.position;
 
@@ -76,7 +74,6 @@ public class DogTrackingState : State<DogState>
         }
 
         navController.Move(navMeshPath, dis / 20.0f);
-        owner.transform.position = new Vector3(owner.transform.position.x, agent.destination.y, owner.transform.position.z);
 
         //çUåÇÇ∑ÇÈèåè
         if (IsPossibleToAttack())

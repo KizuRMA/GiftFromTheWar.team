@@ -23,6 +23,15 @@ public class PatrolBatManager : BaseEnemyManager
 
     private void Start()
     {
+        //子オブジェクトを全て取得する
+        GameObject[] _ChildObjects = GetChildObjects();
+
+        //配置されている最大数を調べて記録する
+        for (int i = 0; i < _ChildObjects.Length; i++)
+        {
+            EnemyCounter();
+        }
+
         wayPointIndexMax = wayPointLists.wayPoints.Count;
         SetWayPointRoot();
         ResetPriority();
@@ -35,7 +44,7 @@ public class PatrolBatManager : BaseEnemyManager
 
     protected override void EnemyReSpawn()
     {
-        if (numberEnemies <= transform.childCount + numberRespawnPlan) return;
+        if (enemyMax <= transform.childCount + respawnPlan) return;
         if (respawnPos == null) return;
 
         //敵をリスポーンさせる

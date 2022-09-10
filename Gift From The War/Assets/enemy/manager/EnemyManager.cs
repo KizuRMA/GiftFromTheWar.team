@@ -39,13 +39,13 @@ public class EnemyManager : MonoBehaviour
                 SwitchManager(info.enemyType);
                 info.EnemySpawn(enemy.spawnPosLists[i].position);
                 info.EnemyInfo(this);
-                manager.EnemyCounter();
                 game.transform.parent = manager.transform;
             }
         }
     }
 
-    public void SwitchManager(e_EnemyType _type)
+    //ˆø”‚ÌType‚É‰‚¶‚Ämanager•Ï”‚Ì’†g‚ğØ‚è‘Ö‚¦‚é
+    public void SwitchManager(e_EnemyType _type) 
     {
         switch (_type)
         {

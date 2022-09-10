@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class BatManager : BaseEnemyManager
 {
+    private void Start()
+    {
+        //子オブジェクトを全て取得する
+        GameObject[] _ChildObjects = GetChildObjects();
+
+        //配置されている最大数を調べて記録する
+        for (int i = 0; i < _ChildObjects.Length; i++)
+        {
+            EnemyCounter();
+        }
+    }
+
     protected override bool IsChasing()
     {
         //子オブジェクトを全て取得する

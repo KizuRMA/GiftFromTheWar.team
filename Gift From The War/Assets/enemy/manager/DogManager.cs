@@ -5,9 +5,7 @@ using UnityEngine.AI;
 
 public class DogManager : BaseEnemyManager
 {
-    //子の配列番号と、ゲームオブジェクトのMAPリストを使用
-    private List<GameObject> objects = new List<GameObject>();
-    private Dictionary<string, int> agentTypeIdDict = new Dictionary<string, int>();
+   
 
     [SerializeField] public GameObject prefab = null;
     [SerializeField] public float respawnInterval;
@@ -16,7 +14,11 @@ public class DogManager : BaseEnemyManager
     [SerializeField] public HandGimmick gimmick = null;
     [SerializeField] public Transform warpPos = null;
 
+    //子の配列番号と、ゲームオブジェクトのMAPリストを使用
+    private List<GameObject> objects = new List<GameObject>();
+    private Dictionary<string, int> agentTypeIdDict = new Dictionary<string, int>();
 
+    //生存しているすべての犬を管理する
     public List<GameObject> dogs = null;
 
     bool isResetPriority;
@@ -24,12 +26,22 @@ public class DogManager : BaseEnemyManager
 
     EnemyManager owner;
 
+    public bool IsRespawn
+    {
+        get
+        {
+            return enemyMax > (dogs.Count + respawnPlan);
+        }
+    }
+
     private void Awake()
     {
         owner = transform.parent.GetComponent<EnemyManager>();
 
         warpFlg = false;
         isResetPriority = false;
+
+        //NavMeshのAgentの種類を可変長配列に記録する
         for (var i = 0; i < NavMesh.GetSettingsCount(); i++)
         {
             var id = NavMesh.GetSettingsByIndex(i).agentTypeID;
@@ -37,18 +49,18 @@ public class DogManager : BaseEnemyManager
             agentTypeIdDict.Add(name, id);
         }
 
-        //既に子オブジェクトに犬が配置されている時
-        GameObject[] _ChildObjects = GetChildObjects();
-        EnemyManager _manager = transform.parent.GetComponent<EnemyManager>();
+        //==========================================================
+        // 犬が生成される前から配置されている犬に必要な情報を入れる
+        //==========================================================
 
-        for (int i = 0; i < transform.childCount; i++)
+        GameObject[] _ChildObjects = GetChildObjects();
+
+        for (int i = 0; i < _ChildObjects.Length; i++)
         {
-            GameObject game = _ChildObjects[i];
-            EnemyInterface info = game.GetComponent<EnemyInterface>();
-            _manager.SwitchManager(info.enemyType);
-            info.EnemyInfo(_manager);
-            EnemyCounter();
-            game.transform.parent = transform;
+            //敵の基本情報
+            EnemyInterface info = _ChildObjects[i].GetComponent<EnemyInterface>();
+            owner.SwitchManager(info.enemyType);
+            info.EnemyInfo(owner);
         }
     }
 
@@ -57,10 +69,11 @@ public class DogManager : BaseEnemyManager
         //子オブジェクトを全て取得する
         GameObject[] _ChildObjects = GetChildObjects();
 
-        //追跡している犬を検索
-        for (int i = 0; i < transform.childCount; i++)
+        //配置されている最大数を調べて記録する
+        for (int i = 0; i < _ChildObjects.Length; i++)
         {
             dogs.Add(_ChildObjects[i]);
+            EnemyCounter();
         }
     }
 
@@ -81,7 +94,7 @@ public class DogManager : BaseEnemyManager
         {
             NavMeshAgent navMesh = dogs[i].GetComponent<NavMeshAgent>();
 
-            switch (i % 3)
+            switch (i % 2)
             {
                 case 0:
                     navMesh.agentTypeID = agentTypeIdDict["DogAgent"];
@@ -89,16 +102,13 @@ public class DogManager : BaseEnemyManager
                 case 1:
                     navMesh.agentTypeID = agentTypeIdDict["DogAgent2"];
                     break;
-                case 2:
-                    break;
             }
         }
     }
 
     protected override void EnemyReSpawn()
     {
-
-        //敵配列を消す
+        //配列を消す
         for (int i = 0; i < dogs.Count; i++)
         {
             if (dogs[i] == null)
@@ -107,7 +117,7 @@ public class DogManager : BaseEnemyManager
             }
         }
 
-        if (numberEnemies <= dogs.Count + numberRespawnPlan) return;
+        if (!IsRespawn) return;
 
         //敵をリスポーンさせる
         StartCoroutine(RespawnCoroutine());
@@ -115,12 +125,9 @@ public class DogManager : BaseEnemyManager
 
     public void ResetPriority()
     {
-        //子オブジェクトを全て取得する
-        GameObject[] _ChildObjects = GetChildObjects();
-
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        for (int i = 0; i < dogs.Count; i++)
         {
-            NavMeshAgent _agent = _ChildObjects[i].GetComponent<NavMeshAgent>();
+            NavMeshAgent _agent = dogs[i].GetComponent<NavMeshAgent>();
             if (_agent == null) continue;
 
             _agent.avoidancePriority = 50;
@@ -130,12 +137,9 @@ public class DogManager : BaseEnemyManager
 
     protected override bool IsChasing()
     {
-        //子オブジェクトを全て取得する
-        GameObject[] _ChildObjects = GetChildObjects();
-
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        for (int i = 0; i < dogs.Count; i++)
         {
-            DogState _state = _ChildObjects[i].GetComponent<DogState>();
+            DogState _state = dogs[i].GetComponent<DogState>();
             if (_state == null) continue;
 
             if (_state.IsChasing() == true)
@@ -155,6 +159,7 @@ public class DogManager : BaseEnemyManager
         GameObject game = Instantiate(prefab);
         EnemyInterface info = game.GetComponent<EnemyInterface>();
 
+        //プレイヤーから最も遠いリスポーン地点を調べる
         int _respawnIndex = 0;
         float _maxDis = 0;
         Vector3 _playerPos = owner.player.transform.position;
@@ -184,12 +189,9 @@ public class DogManager : BaseEnemyManager
 
     private void ResetStartPos()
     {
-        //子オブジェクトを全て取得する
-        GameObject[] _ChildObjects = GetChildObjects();
-
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        for (int i = 0; i < dogs.Count; i++)
         {
-            DogState _state = _ChildObjects[i].GetComponent<DogState>();
+            DogState _state = dogs[i].GetComponent<DogState>();
             if (_state == null || startPosList[i] == null) continue;
 
             _state.SetStartPos(startPosList[i].transform.position);
@@ -264,14 +266,12 @@ public class DogManager : BaseEnemyManager
     {
         if (other.gameObject.tag != "Player" || warpPos == null || warpFlg == true) return;
 
-
-
         for (int i = 0; i < dogs.Count; i++)
         {
             DogState _state = dogs[i].GetComponent<DogState>();
             if (_state == null) continue;
 
-            Transform playerTrans = GameObject.Find("player").transform;
+            Transform playerTrans = owner.player.transform;
 
             float dist = Vector2.Distance(new Vector2(_state.transform.position.x, _state.transform.position.z),
                 new Vector2(playerTrans.position.x, playerTrans.position.z));
@@ -285,48 +285,4 @@ public class DogManager : BaseEnemyManager
         }
 
     }
-
-    //private bool ButtonGimmickChange(ref HandButton gimmickButton, ref HandButton dogButton) //GimmickDoorに犬のボタンをセットする関数
-    //{
-    //    //ボタンをセットした:True　しない:False
-
-    //    if (gimmickButton == null)
-    //    {
-    //        gimmick.HandButtonChange(ref gimmickButton,ref dogButton);
-    //        return true;
-    //    }
-    //    else
-    //    {
-    //        //親Objがある　かつ　ボタンがおされている時はセットし直さない
-    //        if (gimmickButton.transform.parent != null && gimmickButton.changeFlg == true) return false;
-    //        if (gimmick.button1 == null || gimmick.button2 == null || gimmick.button3 == null) return false;
-
-    //        int count = 0;
-    //        int buttonMax = 3;
-
-    //        //生存していて、ボタンを背負っている犬が
-    //        for (int i = 0; i < dogs.Count; i++)
-    //        {
-    //            if (dogs[i] == null) continue;
-
-    //            DogState _state = dogs[i].GetComponent<DogState>();
-    //            if (_state == null) continue;
-
-    //            HandButton _button = dogs[i].transform.Find("DogButton 1").GetComponent<HandButton>();
-
-    //            if (_state.IsAlive == true && _button != null)
-    //            {
-    //                count++;
-    //            }
-    //        }
-
-    //        if (count < buttonMax) return false;
-
-    //        gimmick.HandButtonChange(ref gimmickButton, ref dogButton);
-
-    //        true;
-    //    }
-    //}
-
-
 }

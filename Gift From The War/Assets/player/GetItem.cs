@@ -185,7 +185,7 @@ public class GetItem : MonoBehaviour
             SaveManager.Instance.nowSaveData.getRantanFlg = true;
             SaveManager.Instance.WriteFile();
             SaveManager.Instance.WriteSubFile();
-            targetImage.enabled = true;
+            //targetImage.enabled = true;
             AudioManager.Instance.PlaySE("GetRantan", isLoop: false);
             return;
         }
@@ -199,7 +199,7 @@ public class GetItem : MonoBehaviour
             if (key != null)
             {
                 key.isGetKeyFlg = true;
-                targetImage.enabled = true;
+                //targetImage.enabled = true;
             }
             return;
         }
@@ -212,7 +212,7 @@ public class GetItem : MonoBehaviour
 
         gunObj.SetActive(true);
         SaveManager.Instance.nowSaveData.getGunFlg = true;
-        targetImage.enabled = true;
+        //targetImage.enabled = true;
 
         windAmmunitionFlg = true;
         SaveManager.Instance.nowSaveData.getWindFlg = true;
@@ -220,7 +220,7 @@ public class GetItem : MonoBehaviour
 
         rantanObj.SetActive(true);
         SaveManager.Instance.nowSaveData.getRantanFlg = true;
-        targetImage.enabled = true;
+        //targetImage.enabled = true;
 
         if (TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.FINAL)
         {
