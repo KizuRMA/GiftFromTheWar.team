@@ -13,6 +13,7 @@ public class GetItem : MonoBehaviour
     [SerializeField] private UIBlinking itemBlinking;
     [SerializeField] private DocumentOpen gunDocument;
     [SerializeField] private DocumentOpen gunAmmDocument;
+    [SerializeField] private BossBGM bossBGM = null;
 
     private bulletChange bulletChange;
 
@@ -219,6 +220,11 @@ public class GetItem : MonoBehaviour
             if (keyObj == null) return;
             keyObj.SetActive(true);
             KeyFinalScript key = hitObj.GetComponent<KeyFinalScript>();
+
+            if (bossBGM != null)
+            {
+                StartCoroutine(bossBGM.BGMPlay());
+            }
 
             if (key != null)
             {
