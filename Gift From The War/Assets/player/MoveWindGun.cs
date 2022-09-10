@@ -83,7 +83,7 @@ public class MoveWindGun : MonoBehaviour
         if (ladder.touchLadderFlg) return;
 
         // ネジ君と会話中は処理しない
-        //if (scenario.scenarioFlg) return;
+        if (scenario!=null&&scenario.scenarioFlg) return;
 
         KnowViewpoint();
 
