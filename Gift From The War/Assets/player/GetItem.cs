@@ -210,7 +210,6 @@ public class GetItem : MonoBehaviour
                 SaveManager.Instance.WriteSubFile();
             }
 
-            targetImage.enabled = true;
             AudioManager.Instance.PlaySE("GetRantan", isLoop: false);
             return;
         }
@@ -224,7 +223,6 @@ public class GetItem : MonoBehaviour
             if (key != null)
             {
                 key.isGetKeyFlg = true;
-                targetImage.enabled = true;
             }
             return;
         }
@@ -245,7 +243,6 @@ public class GetItem : MonoBehaviour
 
         rantanObj.SetActive(true);
         SaveManager.Instance.nowSaveData.getRantanFlg = true;
-        targetImage.enabled = true;
 
         if (TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.FINAL)
         {
