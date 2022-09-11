@@ -103,6 +103,8 @@ public class magnetChain : ShootParent
 
     private void Shot() //’e‚ğ‘Å‚Âˆ—
     {
+        AudioManager.Instance.PlaySE("¥Î”­Ë", false, vol : 0.5f);
+
         energyAmount.GetSetNowAmount = useEnergy;
         energyAmount.useDeltaTime = false;
 
@@ -144,6 +146,8 @@ public class magnetChain : ShootParent
 
     private void PlayerMove()   //ƒvƒŒƒCƒ„[‚ÌˆÚ“®
     {
+        AudioManager.Instance.PlaySE("—nÚ", vol: 0.7f);
+
         moveVec = shotPos - trans.position; //ˆÚ“®•ûŒüZo
         moveVec.y = gravity.groundHitFlg && moveVec.y < 0 ? 0 : moveVec.y;
 
@@ -180,6 +184,8 @@ public class magnetChain : ShootParent
 
     private void Relieve()   //‰ğœˆ—
     {
+        AudioManager.Instance.StopSE("—nÚ");
+
         nowMoveSpeed = 0;
         metalFlg = false;
         moveFinishFlg = false;

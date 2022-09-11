@@ -104,6 +104,8 @@ public class magnet : ShootParent
 
     private void Shot() //’e‚ğ‘Å‚Âˆ—
     {
+        AudioManager.Instance.PlaySE("¥Î”­Ë", false, vol: 0.5f);
+
         energyAmount.GetSetNowAmount = useEnergy;
         energyAmount.useDeltaTime = false;
 
@@ -148,6 +150,8 @@ public class magnet : ShootParent
 
             ColliderInit();
         }
+
+        AudioManager.Instance.PlaySE("—nÚ", vol: 0.7f);
 
         ReturnMiddle();
         EraseInertia();
@@ -257,6 +261,8 @@ public class magnet : ShootParent
         //‰ğœ‚·‚éˆ—
         if (Input.GetMouseButtonDown(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
         {
+            AudioManager.Instance.StopSE("—nÚ");
+
             magnetFlg = false;
             metal.transform.parent = null;
             AddInertia();
