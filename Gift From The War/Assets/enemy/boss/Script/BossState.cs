@@ -32,12 +32,18 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     [System.NonSerialized] public int currentWaypointIndex;
     [System.NonSerialized] public GameObject generatedGrenade;
     [System.NonSerialized] public bool attackFlg;
-    [System.NonSerialized] public bool getupFlg;
+    [System.NonSerialized] public bool getupFlg; 
+    [System.NonSerialized] public GameObject footstepsObj;
 
     private Vector3 throwTargetPos;
     private float attackTimeCounter = 0;
     private Vector3 destination;
 
+    public float DistanceXZ(Vector3 src, Vector3 dst)
+    {
+        src.y = dst.y;
+        return Vector3.Distance(src, dst);
+    }
     void Start()
     {
         stateMachine = new StateMachine<BossState>();
@@ -58,10 +64,12 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         getupFlg = false;
         currentWaypointIndex = 0;
         agent.speed = trackingSpeed;
+        footstepsObj = new GameObject("footsteps");
     }
 
     protected override void Update()
     {
+        footstepsObj.transform.position = transform.position;
         destination = agent.destination;
         base.Update();
 
@@ -84,11 +92,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         if (attackFlg == false) return;
         if (currentWaypointIndex == wayPoint.wayPoints.Count - 1) return;
 
-        Vector3 _nowPos = new Vector3(transform.position.x, agent.destination.y, transform.position.z);
-        float targetDis = Vector3.Distance(_nowPos, agent.destination);
-
-        // 目的地点までの距離(remainingDistance)が目的地の手前までの距離(stoppingDistance)以下になったら
-        if (targetDis <= 2.0f)
+        if (DistanceXZ(transform.position,wayPoint.wayPoints[currentWaypointIndex].position) <= 0.2f)
         {
             // 目的地の番号を１更新（右辺を剰余演算子にすることで目的地をループさせれる）
             currentWaypointIndex = (currentWaypointIndex + 1) % wayPoint.wayPoints.Count;

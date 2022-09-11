@@ -5,6 +5,7 @@ using UnityEngine;
 public class fireBulletHit : MonoBehaviour
 {
     private Transform trans;
+    public GameObject targetImageObj = null;
 
     [SerializeField] private float scaleSpeed;
     [SerializeField] private float scaleFirst;
@@ -21,6 +22,7 @@ public class fireBulletHit : MonoBehaviour
     {
         trans = transform;
         nowScale = scaleFirst;
+        AudioManager.Instance.PlaySE("BulletExp", gameObject, isLoop: false);
     }
 
     void Update()
@@ -41,6 +43,11 @@ public class fireBulletHit : MonoBehaviour
             if (enemyInter != null)
             {
                 enemyInter.ExpDamage(1,transform.position);
+
+                if (targetImageObj != null)
+                {
+                    targetImageObj.GetComponent<TargetSetting>().HitAnime();
+                }
             }
         }
     }

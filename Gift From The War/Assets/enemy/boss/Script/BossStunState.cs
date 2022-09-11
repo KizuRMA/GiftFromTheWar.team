@@ -24,6 +24,15 @@ public class BossStunState : State<BossState>
                 owner.keyObj.KeyTakeFunction();
             }
         }
+
+        AudioManager.Instance.PlaySE("BossGroaning", owner.gameObject, isLoop: false, vol: 1);
+
+        AudioSource audio = owner.footstepsObj.GetComponent<AudioSource>();
+
+        if (audio != null)
+        {
+            audio.Stop();
+        }
     }
 
     public override void Execute()
@@ -47,6 +56,13 @@ public class BossStunState : State<BossState>
         owner.agent.isStopped = false;
         //owner.agent.updatePosition = true;
         owner.WarpPosition(owner.transform.position);
+
+        AudioSource audio = owner.footstepsObj.GetComponent<AudioSource>();
+
+        if (audio != null)
+        {
+            audio.Play();
+        }
     }
 
     void CheckSwitchAnime()

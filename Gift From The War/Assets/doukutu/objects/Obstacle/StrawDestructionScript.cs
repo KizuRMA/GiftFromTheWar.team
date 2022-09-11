@@ -8,6 +8,7 @@ public class StrawDestructionScript : MonoBehaviour
 
     private void Awake()
     {
+        AudioManager.Instance.PlaySE("WallDestroy", gameObject, isLoop: false);
         ChildObjects = new GameObject[gameObject.transform.childCount];
 
         for (int i = 0; i < gameObject.transform.childCount; i++)

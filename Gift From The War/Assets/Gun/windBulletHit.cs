@@ -49,7 +49,7 @@ public class windBulletHit : MonoBehaviour
 
             if (targetImageObj != null)
             {
-                targetImageObj.GetComponent<TargetSetting>().HitAnime();
+Å@                targetImageObj.GetComponent<TargetSetting>().HitAnime();
             }
         }
 
