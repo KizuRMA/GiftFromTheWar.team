@@ -102,6 +102,9 @@ public class fireGun : ShootParent
         Destroy(bullet[0]);
 
         explosionEffectList.Add((GameObject)Instantiate(explosionEffect, explosionPos, Quaternion.identity));
-        explosionHitList.Add((GameObject)Instantiate(explosionHit, explosionPos, Quaternion.identity));
+
+        GameObject game = Instantiate(explosionHit, explosionPos, Quaternion.identity);
+        game.transform.GetComponent<fireBulletHit>().targetImageObj = targetImage;
+        explosionHitList.Add(game);
     }
 }
