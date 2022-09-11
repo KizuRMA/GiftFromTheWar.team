@@ -22,6 +22,7 @@ public class fireBulletHit : MonoBehaviour
     {
         trans = transform;
         nowScale = scaleFirst;
+        AudioManager.Instance.PlaySE("BulletExp", gameObject, isLoop: false);
     }
 
     void Update()

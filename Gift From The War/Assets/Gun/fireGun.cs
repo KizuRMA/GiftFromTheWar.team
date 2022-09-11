@@ -77,6 +77,7 @@ public class fireGun : ShootParent
         BulletVecter();
 
         CreateBullet();
+        AudioManager.Instance.PlaySE("FIreBulletShot", gameObject, isLoop: false);
     }
 
     private void BulletVecter() //’e‚ÌŒü‚«‚ðŒˆ‚ß‚é
@@ -106,5 +107,7 @@ public class fireGun : ShootParent
         GameObject game = Instantiate(explosionHit, explosionPos, Quaternion.identity);
         game.transform.GetComponent<fireBulletHit>().targetImageObj = targetImage;
         explosionHitList.Add(game);
+
+        AudioManager.Instance.PlaySE("BulletExp", gameObject, isLoop: false);
     }
 }
