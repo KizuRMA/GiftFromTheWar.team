@@ -24,6 +24,8 @@ public class BossStunState : State<BossState>
                 owner.keyObj.KeyTakeFunction();
             }
         }
+
+        AudioManager.Instance.PlaySE("BossGroaning", owner.gameObject, isLoop: false, vol: 1);
     }
 
     public override void Execute()
