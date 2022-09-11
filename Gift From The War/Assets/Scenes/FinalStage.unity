@@ -19913,8 +19913,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1297712553}
   - component: {fileID: 1297712555}
-  - component: {fileID: 1297712554}
   - component: {fileID: 1297712556}
+  - component: {fileID: 1297712557}
   m_Layer: 0
   m_Name: ClearPos
   m_TagString: Untagged
@@ -19930,26 +19930,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297712552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -42.5, y: 0.9, z: 174.8}
+  m_LocalPosition: {x: -42.5, y: 1.72, z: 175.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 144063723}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1297712554
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297712552}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 4.113295
-  m_Center: {x: 6.1526525e-16, y: 0, z: 0.29329538}
 --- !u!114 &1297712555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19979,6 +19966,19 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 1
   m_AffectedAgents: ffffffff
+--- !u!65 &1297712557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297712552}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 22, y: 9.62, z: 4.72}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1297769489 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6475144795153612797, guid: 5bc5f128dd7040b4ebb27fb99cedf0b4, type: 3}
