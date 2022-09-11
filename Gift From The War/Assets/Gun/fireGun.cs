@@ -107,7 +107,5 @@ public class fireGun : ShootParent
         GameObject game = Instantiate(explosionHit, explosionPos, Quaternion.identity);
         game.transform.GetComponent<fireBulletHit>().targetImageObj = targetImage;
         explosionHitList.Add(game);
-
-        AudioManager.Instance.PlaySE("BulletExp", gameObject, isLoop: false);
     }
 }

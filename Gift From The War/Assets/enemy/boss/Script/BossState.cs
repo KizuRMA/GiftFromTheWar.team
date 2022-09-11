@@ -32,7 +32,8 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     [System.NonSerialized] public int currentWaypointIndex;
     [System.NonSerialized] public GameObject generatedGrenade;
     [System.NonSerialized] public bool attackFlg;
-    [System.NonSerialized] public bool getupFlg;
+    [System.NonSerialized] public bool getupFlg; 
+    [System.NonSerialized] public GameObject footstepsObj;
 
     private Vector3 throwTargetPos;
     private float attackTimeCounter = 0;
@@ -63,10 +64,12 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         getupFlg = false;
         currentWaypointIndex = 0;
         agent.speed = trackingSpeed;
+        footstepsObj = new GameObject("footsteps");
     }
 
     protected override void Update()
     {
+        footstepsObj.transform.position = transform.position;
         destination = agent.destination;
         base.Update();
 

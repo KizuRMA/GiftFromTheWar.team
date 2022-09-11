@@ -44,7 +44,6 @@ public class windBulletHit : MonoBehaviour
 
         if (_collider.gameObject.tag == "Bat")
         {
-
             var target = _collider.transform.GetComponent<EnemyInterface>();
             target.Damage(1);
 
