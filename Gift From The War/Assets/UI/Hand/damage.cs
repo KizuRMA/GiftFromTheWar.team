@@ -58,6 +58,10 @@ public class damage : MonoBehaviour
             float _weight = (Mathf.Sin(ang) + 1.0f) / 2;
             volume.weight = _weight + 0.1f;
         }
+        else
+        {
+            volume.weight = 0;
+        }
     }
 
     void Damage()

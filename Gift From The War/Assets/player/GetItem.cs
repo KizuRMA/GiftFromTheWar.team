@@ -14,6 +14,7 @@ public class GetItem : MonoBehaviour
     [SerializeField] private DocumentOpen gunDocument;
     [SerializeField] private DocumentOpen gunAmmDocument;
     [SerializeField] private BossBGM bossBGM = null;
+    [SerializeField] private RecoveryKid recoveryKid;
 
     private bulletChange bulletChange;
 
@@ -76,7 +77,7 @@ public class GetItem : MonoBehaviour
             objName = hit.collider.gameObject.name;
             hitObj = hit.collider.gameObject;
 
-            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan" || tagName == "Key")) return;   //触ったのがアイテムでなかったら処理しない
+            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan" || tagName == "Key" || tagName == "RecoveryKid")) return;   //触ったのがアイテムでなかったら処理しない
 
             closeItemFlg = true;
 
@@ -230,6 +231,14 @@ public class GetItem : MonoBehaviour
             {
                 key.isGetKeyFlg = true;
             }
+            return;
+        }
+
+        if(tagName == "RecoveryKid")
+        {
+            recoveryKid.effectOnFlg = true;
+            recoveryKid.effectPos = hitObj.gameObject.transform.position;
+            Destroy(hitObj.gameObject);            
             return;
         }
     }
