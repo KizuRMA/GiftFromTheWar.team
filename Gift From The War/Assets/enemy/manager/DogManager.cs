@@ -23,6 +23,7 @@ public class DogManager : BaseEnemyManager
 
     bool isResetPriority;
     bool warpFlg;
+    int warpCount = 0;
 
     EnemyManager owner;
 
@@ -267,7 +268,7 @@ public class DogManager : BaseEnemyManager
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "Player" || warpPos == null || warpFlg == true) return;
+        if (other.gameObject.tag != "Player" || warpPos == null || warpCount >= 2) return;
 
         for (int i = 0; i < dogs.Count; i++)
         {
@@ -283,8 +284,10 @@ public class DogManager : BaseEnemyManager
                 dist >= 20.0f)
             {
                 _state.WarpPosition(warpPos.position);
-                warpFlg = true;
+                warpCount++;
             }
+
+            if (warpCount >= 2) return;
         }
 
     }

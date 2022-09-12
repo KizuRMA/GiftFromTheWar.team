@@ -82,7 +82,7 @@ public class DogTrackingState : State<DogState>
 
         bool hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, owner.caveLayer);
 
-        controller.Move(-(Vector3.up) * 0.1f);
+        controller.Move((Physics.gravity * Time.deltaTime));
         if (hit == true && _raycastHit.distance <= 0.5f)
         {
             navController.Move(navMeshPath, dis / 20.0f);
