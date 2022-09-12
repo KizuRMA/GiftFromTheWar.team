@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class magnet : ShootParent
 {
@@ -11,9 +12,12 @@ public class magnet : ShootParent
     private bulletChange bulletChange;
     [SerializeField] private GetItem getItem;
     private magnetChain magnetChain;
+    [SerializeField] private Image magnetTarget;
+    [SerializeField] private float targetDis;
 
     //弾の発射
     private bool shotFlg;                       //発射可能
+    private bool changeTargetFlg = false;
 
     //磁石の処理
     public GameObject metal { get; set; }           //くっついた金属
@@ -85,6 +89,8 @@ public class magnet : ShootParent
             energyAmount.GetSetNowAmount = 0;
         }
 
+        MagnetGuid();
+
         //発射キーを押したら
         if (Input.GetMouseButtonDown(1))
         {
@@ -100,6 +106,40 @@ public class magnet : ShootParent
         }
 
         CatchMetal();
+    }
+
+    private void MagnetGuid()   //磁石が使えるかどうか
+    {
+        //プレイヤーの前にレイ判定を飛ばし、オブジェクトとの距離を求める。
+        Ray ray = new Ray(camTrans.position, camTrans.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, targetDis))
+        {
+            if (hit.transform.gameObject.tag == "metal")
+            {
+                if (!changeTargetFlg)
+                {
+                    changeTargetFlg = true;
+                    magnetTarget.color += new Color(0, 0, 100, 0);
+                }
+            }
+            else
+            {
+                if (changeTargetFlg)
+                {
+                    changeTargetFlg = false;
+                    magnetTarget.color += new Color(0, 0, -100, 0);
+                }
+            }
+        }
+        else
+        {
+            if (changeTargetFlg)
+            {
+                changeTargetFlg = false;
+                magnetTarget.color += new Color(0, 0, -100, 0);
+            }
+        }
     }
 
     private void Shot() //弾を打つ処理

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class magnetChain : ShootParent
 {
     //ゲームオブジェクトやスクリプト
     [SerializeField] private Transform playerTrans;
     [SerializeField] private GameObject bulletLineEffect;
+    [SerializeField] private Image magnetTarget;
+    [SerializeField] private float targetDis;
     private GameObject bulletLinePos;
     private bulletChange bulletChange;
     private magnet magnet;
@@ -18,6 +21,7 @@ public class magnetChain : ShootParent
 
     //弾の発射
     private bool shotFlg;                       //発射可能
+    private bool changeTargetFlg = false;
 
     //移動処理
     public bool metalFlg { get; set; }              //金属にくっついたフラグ
@@ -83,6 +87,8 @@ public class magnetChain : ShootParent
             energyAmount.GetSetNowAmount = 0;
         }
 
+        MagnetGuid();
+
         //発射キーを押したら
         if (Input.GetMouseButtonDown(0))
         {
@@ -100,6 +106,41 @@ public class magnetChain : ShootParent
 
         MagnetChain();
     }
+
+    private void MagnetGuid()   //磁石が使えるかどうか
+    {
+        //プレイヤーの前にレイ判定を飛ばし、オブジェクトとの距離を求める。
+        Ray ray = new Ray(camTrans.position, camTrans.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, targetDis))
+        {
+            if (hit.transform.gameObject.tag == "metal" || hit.transform.gameObject.tag == "fixedMetal")
+            {
+                if (!changeTargetFlg)
+                {
+                    changeTargetFlg = true;
+                    magnetTarget.color += new Color(0, -100, -100, 0);
+                }
+            }
+            else
+            {
+                if (changeTargetFlg)
+                {
+                    changeTargetFlg = false;
+                    magnetTarget.color += new Color(0, 100, 100, 0);
+                }
+            }
+        }
+        else
+        {
+            if (changeTargetFlg)
+            {
+                changeTargetFlg = false;
+                magnetTarget.color += new Color(0, 100, 100, 0);
+            }
+        }
+    }
+
 
     private void Shot() //弾を打つ処理
     {
