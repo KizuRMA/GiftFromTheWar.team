@@ -25,6 +25,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     [SerializeField] public GameObject dog;
     [SerializeField] public Animator animator;
     [SerializeField] public GameObject button = null;
+    [SerializeField] public LayerMask caveLayer;
 
     [Header("犬のステータスパラメータ")]
     [TooltipAttribute("捜索する時の速度"), SerializeField] public float SearchSpeed;
