@@ -32,7 +32,7 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
     [System.NonSerialized] public int currentWaypointIndex;
     [System.NonSerialized] public GameObject generatedGrenade;
     [System.NonSerialized] public bool attackFlg;
-    [System.NonSerialized] public bool getupFlg; 
+    [System.NonSerialized] public bool getupFlg;
     [System.NonSerialized] public GameObject footstepsObj;
 
     private Vector3 throwTargetPos;
