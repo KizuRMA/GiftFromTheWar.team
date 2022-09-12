@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class DogManager : BaseEnemyManager
 {
-   
+
 
     [SerializeField] public GameObject prefab = null;
     [SerializeField] public float respawnInterval;
@@ -111,7 +111,10 @@ public class DogManager : BaseEnemyManager
         //îzóÒÇè¡Ç∑
         for (int i = 0; i < dogs.Count; i++)
         {
-            if (dogs[i] == null)
+            DogState _state = dogs[i].GetComponent<DogState>();
+            if (_state == null) continue;
+
+            if (_state.IsCurrentState(e_DogState.BlowedAway) == true)
             {
                 dogs.RemoveAt(i);
             }
