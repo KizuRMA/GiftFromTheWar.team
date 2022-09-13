@@ -37,7 +37,6 @@ public class BatCapsuleScript : MonoBehaviour
     // Update is called once per frame
     public Vector3 MoveDirction()
     {
-
         AngleDir[] targetDir = new AngleDir[colList.Count];
         float[] angle = new float[colList.Count];
 
@@ -103,7 +102,7 @@ public class BatCapsuleScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //èﬂì˚êŒÇæÇ¡ÇΩèÍçá
-        if (other.gameObject.tag == "stalactite")
+        if (other.gameObject.tag == "stalactite" || other.gameObject.tag == "fixedMetal")
         {
             if (colList.Count <= 0)
             {

@@ -20,7 +20,7 @@ public class WingFoldState : BaseState
     private RaycastHit hit;
     private GameObject player;
     private NavMeshAgent agent;
-    private GameObject childGameObject;
+    [SerializeField] private GameObject capsuleObj = null;
     private bool nextAnime;
     private bool navmeshOnFlg;
     private float frame;
@@ -37,7 +37,6 @@ public class WingFoldState : BaseState
     {
         myController = GetComponent<BatController>();
         agent = GetComponent<NavMeshAgent>();
-        childGameObject = transform.Find("Capsule").gameObject;
     }
 
     // Start is called before the first frame update
@@ -51,10 +50,10 @@ public class WingFoldState : BaseState
         untilLaunch = 0;
         distance = 0;
         defaltHight = 0;
-        frame = 20;
+        frame = 1;
 
-        childGameObject.GetComponent<CapsuleCollider>().enabled = true;
-        childGameObject.GetComponent<BatCapsuleScript>().Start();
+        capsuleObj.GetComponent<CapsuleCollider>().enabled = true;
+        capsuleObj.GetComponent<BatCapsuleScript>().Start();
 
         ChangeUltrasound(GetComponent<SmallUltrasound>());
 
@@ -158,14 +157,14 @@ public class WingFoldState : BaseState
     private void ActionSearch()
     {
         //カプセルコライダーの処理が停止している場合は開始する
-        CapsuleCollider capsule = childGameObject.GetComponent<CapsuleCollider>();
+        CapsuleCollider capsule = capsuleObj.GetComponent<CapsuleCollider>();
         if (capsule.enabled == false) capsule.enabled = true;
 
         //指定のフレーム分数える
-        frame--;
+        frame -= Time.deltaTime;
         if (frame > 0) return;
 
-        BatCapsuleScript _batCapsule = childGameObject.GetComponent<BatCapsuleScript>();
+        BatCapsuleScript _batCapsule = capsuleObj.GetComponent<BatCapsuleScript>();
 
         if (_batCapsule.colList.Count <= 0)
         {
@@ -197,11 +196,13 @@ public class WingFoldState : BaseState
             nowAction = e_Action.move;
             navmeshOnFlg = true;
         }
+
+
     }
 
     private void ActionMove()
     {
-        BatCapsuleScript _batCapsule = childGameObject.GetComponent<BatCapsuleScript>();
+        BatCapsuleScript _batCapsule = capsuleObj.GetComponent<BatCapsuleScript>();
 
         Vector3 _myPos = transform.position;
         Vector3 _targetPos = agent.destination;
@@ -238,7 +239,7 @@ public class WingFoldState : BaseState
                 nextAnime = true;
             }
 
-            childGameObject.GetComponent<CapsuleCollider>().enabled = false;
+            capsuleObj.GetComponent<CapsuleCollider>().enabled = false;
 
             if (_targetDistance <= 0.001f)
             {
