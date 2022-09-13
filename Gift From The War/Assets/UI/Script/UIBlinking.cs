@@ -112,7 +112,7 @@ public class UIBlinking : MonoBehaviour
     {
         if (key == KeyCode.None || IsShow == false) return;
 
-        if (Input.GetKeyDown(key) || IsPressKeyCord == true)    //非表示にする場合
+        if (Input.GetKey(key) || IsPressKeyCord == true)    //非表示にする場合
         {
             //スタートとエンドを変更する
             NonShow();
