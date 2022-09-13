@@ -52,7 +52,7 @@ public class MoveWindGun : MonoBehaviour
         playerStartDown = transform.GetComponent<PlayerStartDown>();
 
         GameObject _game = GameObject.Find("ScenarioManager");
-        if (_game != null)
+        if (ScenarioManager.Instance != null && _game != null)
         {
             scenario = _game.GetComponent<Scenario>(); ;
         }
@@ -81,6 +81,7 @@ public class MoveWindGun : MonoBehaviour
 
         if (died.diedFlg) return;
         if (ladder.touchLadderFlg) return;
+
 
         // ネジ君と会話中は処理しない
         if (scenario!=null&&scenario.scenarioFlg) return;
