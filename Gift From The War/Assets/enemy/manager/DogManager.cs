@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class DogManager : BaseEnemyManager
 {
-   
+
 
     [SerializeField] public GameObject prefab = null;
     [SerializeField] public float respawnInterval;
@@ -22,7 +24,7 @@ public class DogManager : BaseEnemyManager
     public List<GameObject> dogs = null;
 
     bool isResetPriority;
-    bool warpFlg;
+    int warpCount = 0;
 
     EnemyManager owner;
 
@@ -30,15 +32,13 @@ public class DogManager : BaseEnemyManager
     {
         get
         {
-            return enemyMax > (dogs.Count + respawnPlan);
+            return (dogs.Count + respawnPlan) < enemyMax;
         }
     }
 
     private void Awake()
     {
         owner = transform.parent.GetComponent<EnemyManager>();
-
-        warpFlg = false;
         isResetPriority = false;
 
         //NavMesh‚ÌAgent‚Ìí—Ş‚ğ‰Â•Ï’·”z—ñ‚É‹L˜^‚·‚é
@@ -108,12 +108,28 @@ public class DogManager : BaseEnemyManager
 
     protected override void EnemyReSpawn()
     {
+        int[] deleteNum = new int[dogs.Count];
+        Array.Fill(deleteNum, -1);
+
         //”z—ñ‚ğÁ‚·
         for (int i = 0; i < dogs.Count; i++)
         {
-            if (dogs[i] == null)
+            DogState _state = dogs[i].GetComponent<DogState>();
+            if (_state == null) continue;
+
+            if (_state.IsCurrentState(e_DogState.BlowedAway) == true)
             {
-                dogs.RemoveAt(i);
+                deleteNum[i] = i;
+            }
+        }
+
+        foreach (var array in deleteNum)
+        {
+            if (array >= deleteNum.Length) break;
+
+            if (array != -1)
+            {
+                dogs.RemoveAt(array);
             }
         }
 
@@ -264,7 +280,7 @@ public class DogManager : BaseEnemyManager
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "Player" || warpPos == null || warpFlg == true) return;
+        if (other.gameObject.tag != "Player" || warpPos == null || warpCount >= 2) return;
 
         for (int i = 0; i < dogs.Count; i++)
         {
@@ -280,8 +296,10 @@ public class DogManager : BaseEnemyManager
                 dist >= 20.0f)
             {
                 _state.WarpPosition(warpPos.position);
-                warpFlg = true;
+                warpCount++;
             }
+
+            if (warpCount >= 2) return;
         }
 
     }

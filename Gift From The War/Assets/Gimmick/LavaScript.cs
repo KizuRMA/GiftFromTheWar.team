@@ -6,7 +6,7 @@ public class LavaScript : MonoBehaviour
 {
     public bool playerDebug;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //å¢
         if (other.gameObject.tag == "Dog1")
@@ -16,7 +16,7 @@ public class LavaScript : MonoBehaviour
         }
 
         //ÉvÉåÉCÉÑÅ[
-       if (other.gameObject.tag == "Player" && playerDebug == false)
+        if (other.gameObject.tag == "Player" && playerDebug == false)
         {
             var target = other.transform.GetComponent<playerAbnormalcondition>();
             if (null == target) return;
@@ -31,6 +31,5 @@ public class LavaScript : MonoBehaviour
 
         //âπÇñ¬ÇÁÇ∑
         AudioManager.Instance.PlaySE("BurnLava", gameObject, isLoop: false);
-
     }
 }

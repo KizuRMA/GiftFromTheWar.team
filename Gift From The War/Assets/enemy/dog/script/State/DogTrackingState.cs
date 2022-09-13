@@ -73,7 +73,20 @@ public class DogTrackingState : State<DogState>
             corner = corner2;
         }
 
-        navController.Move(navMeshPath, dis / 20.0f);
+        //“–‚½‚è”»’è
+        Vector3 _firePos = owner.transform.position;
+
+        //ƒŒƒC”»’è
+        Ray _ray = new Ray(_firePos, -Vector3.up);
+        RaycastHit _raycastHit;
+
+        bool hit = Physics.Raycast(_ray, out _raycastHit, 1000.0f, owner.caveLayer);
+
+        controller.Move((Physics.gravity * Time.deltaTime));
+        if (hit == true && _raycastHit.distance <= 0.5f)
+        {
+            navController.Move(navMeshPath, dis / 20.0f);
+        }
 
         //UŒ‚‚·‚éðŒ
         if (IsPossibleToAttack())
