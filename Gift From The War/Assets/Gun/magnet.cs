@@ -115,7 +115,7 @@ public class magnet : ShootParent
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, targetDis))
         {
-            if (hit.transform.gameObject.tag == "metal")
+            if (hit.transform.gameObject.tag == "metal" || hit.transform.gameObject.tag == "gimmickButton")
             {
                 if (!changeTargetFlg)
                 {

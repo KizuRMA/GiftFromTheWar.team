@@ -13,6 +13,7 @@ public class RecoveryKid : MonoBehaviour
     void Start()
     {
         effectOnFlg = false;
+        recoveryEffectList = new List<GameObject>();
     }
 
     void Update()
