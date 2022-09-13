@@ -94,7 +94,7 @@ public class batMove : BaseState
     {
         playerAbnormalcondition abnormalcondition = myController.player.GetComponent<playerAbnormalcondition>();
 
-        //主人公がハウリング状態の時
+        //プレイヤーがハウリング状態の時
         if (abnormalcondition.IsHowling() == true)
         {
             Animator animator = GetComponent<Animator>();
