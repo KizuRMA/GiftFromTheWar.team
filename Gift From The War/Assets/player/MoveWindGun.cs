@@ -52,7 +52,7 @@ public class MoveWindGun : MonoBehaviour
         playerStartDown = transform.GetComponent<PlayerStartDown>();
 
         GameObject _game = GameObject.Find("ScenarioManager");
-        if (ScenarioManager.Instance != null && _game != null)
+        if (_game != null)
         {
             scenario = _game.GetComponent<Scenario>(); ;
         }
