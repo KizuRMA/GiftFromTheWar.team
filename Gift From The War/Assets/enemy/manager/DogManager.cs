@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,7 +24,6 @@ public class DogManager : BaseEnemyManager
     public List<GameObject> dogs = null;
 
     bool isResetPriority;
-    bool warpFlg;
     int warpCount = 0;
 
     EnemyManager owner;
@@ -31,15 +32,13 @@ public class DogManager : BaseEnemyManager
     {
         get
         {
-            return enemyMax > (dogs.Count + respawnPlan);
+            return (dogs.Count + respawnPlan) < enemyMax;
         }
     }
 
     private void Awake()
     {
         owner = transform.parent.GetComponent<EnemyManager>();
-
-        warpFlg = false;
         isResetPriority = false;
 
         //NavMesh‚ÌAgent‚Ìí—Ş‚ğ‰Â•Ï’·”z—ñ‚É‹L˜^‚·‚é
@@ -109,6 +108,9 @@ public class DogManager : BaseEnemyManager
 
     protected override void EnemyReSpawn()
     {
+        int[] deleteNum = new int[dogs.Count];
+        Array.Fill(deleteNum, -1);
+
         //”z—ñ‚ğÁ‚·
         for (int i = 0; i < dogs.Count; i++)
         {
@@ -117,7 +119,17 @@ public class DogManager : BaseEnemyManager
 
             if (_state.IsCurrentState(e_DogState.BlowedAway) == true)
             {
-                dogs.RemoveAt(i);
+                deleteNum[i] = i;
+            }
+        }
+
+        foreach (var array in deleteNum)
+        {
+            if (array >= deleteNum.Length) break;
+
+            if (array != -1)
+            {
+                dogs.RemoveAt(array);
             }
         }
 
