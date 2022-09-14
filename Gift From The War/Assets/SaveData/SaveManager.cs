@@ -14,6 +14,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         s1p3,
         s1p4,
         s1p5,
+        s1p6,
         s2p1,
         s2p2,
         s2p3,
