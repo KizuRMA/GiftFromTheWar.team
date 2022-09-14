@@ -31,7 +31,7 @@ public class MoveNavMeshLink : MonoBehaviour
     // Update is called once per frame
     IEnumerator MoveNormalSpeed(NavMeshAgent agent)
     {
-        while (true)
+        while (!IsEnd)
         {
             // OffmeshLink‚Éæ‚é‚Ü‚Å•’Ê‚ÉˆÚ“®
             yield return new WaitWhile(() => agent.isOnOffMeshLink == false);

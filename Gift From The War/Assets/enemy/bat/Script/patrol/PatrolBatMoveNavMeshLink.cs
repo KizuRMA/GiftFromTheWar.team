@@ -28,7 +28,7 @@ public class PatrolBatMoveNavMeshLink : MonoBehaviour
     // Update is called once per frame
     IEnumerator MoveNormalSpeed(NavMeshAgent agent)
     {
-        while (true)
+        while (!IsEnd)
         {
             if (IsEnd == true) continue;
 
