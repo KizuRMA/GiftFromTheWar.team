@@ -31,16 +31,14 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
 
     public AchievementData nowAchievementData;
 
-    private string directoryName;
-    private string fileSaveSpotName;
+    private string directoryName = "binaryFolder";
+    private string fileSaveSpotName = "binaryAchiveData.GftW";
     private string path;
 
     public bool achievementJudgeStartFlg;
 
     void Start()
     {
-        directoryName = "binaryFolder";
-        fileSaveSpotName = "binaryAchiveData.GftW";
         path = directoryName + "/" + fileSaveSpotName;
 
         if (!System.IO.Directory.Exists(directoryName))

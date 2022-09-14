@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 /// <summary>
 /// BGMとSEの管理をするマネージャ。シングルトン。
@@ -47,6 +48,10 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     //全AudioClipを保持
     private Dictionary<string, AudioClip> _bgmDic, _seDic;
 
+    private string directoryName = "binaryFolder";
+    private string fileSaveSpotName = "Setting.GftW";
+    private string path;
+
     //=================================================================================
     //初期化
     //=================================================================================
@@ -60,6 +65,27 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
             return;
         }
 
+        //セーブデータ関係
+        path = directoryName + "/" + fileSaveSpotName;
+
+        if (!System.IO.Directory.Exists(directoryName))
+        {
+            System.IO.Directory.CreateDirectory(directoryName);
+        }
+
+        if (!System.IO.File.Exists(path))
+        {
+            System.IO.File.Create(path);
+
+            _BGMVolSetting = BGM_VOLUME_DEFULT;
+            _SEVolSetting = SE_VOLUME_DEFULT;
+
+            StartCoroutine(FirstWrite());
+        }
+        else
+        {
+            ReadFile();
+        }
 
         DontDestroyOnLoad(this.gameObject);
 
@@ -337,6 +363,37 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     public float GetSEVolume()
     {
         return _SEVolSetting;
+    }
+
+    //セーブデータ関係
+    public void ReadFile()
+    {
+        if ((!System.IO.Directory.Exists(directoryName)) || (!System.IO.File.Exists(path))) return;
+
+        using (var reader = new BinaryReader(new FileStream(path, FileMode.Open)))
+        {
+            _BGMVolSetting = (float)reader.ReadDouble();
+            _SEVolSetting = (float)reader.ReadDouble();
+        }
+    }
+
+    public void WriteFile()
+    {
+        if ((!System.IO.Directory.Exists(directoryName)) || (!System.IO.File.Exists(path))) return;
+
+        using (var writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
+        {
+            //書き込む処理
+            writer.Write((double)_BGMVolSetting);
+            writer.Write((double)_SEVolSetting);
+        }
+    }
+
+    private IEnumerator FirstWrite()
+    {
+        yield return new WaitForSeconds(1);
+
+        WriteFile();
     }
 
 }
