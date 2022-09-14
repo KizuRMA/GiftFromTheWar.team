@@ -23,17 +23,18 @@ public class ButtonAnimeTest : UIBehaviour, IPointerEnterHandler, IPointerExitHa
     //マウスがボタンの上に来たら
     public void OnPointerEnter(PointerEventData eventData)
     {
+        AudioManager.Instance.PlaySE("カーソル移動8", isLoop: false);
         FillImage.DOFillAmount(endValue: 1f, duration: 0.25f).SetEase(Ease.OutCubic).Play();
         emiOnEvent.Invoke();
-        AudioManager.Instance.PlaySE("カーソル移動8", isLoop: false);
     }
 
     //マウスがボタンにかぶっていなかったら
     public void OnPointerExit(PointerEventData eventData)
     {
+        AudioManager.Instance.StopSE("カーソル移動8");
         FillImage.DOFillAmount(endValue: 0f, duration: 0.25f).SetEase(Ease.OutCubic).Play();
         emiOffEvent.Invoke();
-        AudioManager.Instance.StopSE("カーソル移動8");
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
