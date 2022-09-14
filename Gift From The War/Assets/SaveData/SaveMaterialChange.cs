@@ -12,10 +12,12 @@ public class SaveMaterialChange : MonoBehaviour
     private SaveManager.SaveSpotNum nowSpotNum;
     private bool cameFlg = false;   //通ったことがあるか
     private bool effectFlg = false;
+    private List<GameObject> effectList;
 
     void Start()
     {
         spotNum = this.transform.parent.parent.GetChild(0).gameObject.GetComponent<SaveSpotData>().GetSpotNum();
+        effectList = new List<GameObject>();
     }
 
     void Update()
@@ -30,7 +32,16 @@ public class SaveMaterialChange : MonoBehaviour
 
             if (effectFlg) return;
             Vector3 pos = new Vector3(transform.position.x, transform.position.y + hight, transform.position.z);
-            Instantiate(saveEffect, pos, Quaternion.identity);
+
+            //前のエフェクト削除
+            if (effectList.Count > 0)
+            {
+                Destroy(effectList[0]);
+                effectList.RemoveAt(0);
+            }
+
+            //エフェクト再生
+            effectList.Add(Instantiate(saveEffect, pos, Quaternion.identity));
             effectFlg = true;
 
             return;
