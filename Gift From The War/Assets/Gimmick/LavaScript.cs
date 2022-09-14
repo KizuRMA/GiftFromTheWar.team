@@ -8,6 +8,8 @@ public class LavaScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (!(other.gameObject.tag == "Dog1" || other.gameObject.tag == "Player" || other.gameObject.tag == "gimmickButton")) return;
+
         //Œ¢
         if (other.gameObject.tag == "Dog1")
         {
