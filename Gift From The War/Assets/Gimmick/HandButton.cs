@@ -40,6 +40,7 @@ public class HandButton : MonoBehaviour
         if (gimmick == null)
         {
             this.transform.GetChild(1).GetComponent<MeshRenderer>().material = stopGimmickButtonMat;
+            pointLight.color = new Color(0, 0, 0, 0.5f);
         }
         else
         {
