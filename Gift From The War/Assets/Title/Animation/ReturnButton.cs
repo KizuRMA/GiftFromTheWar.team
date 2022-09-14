@@ -15,18 +15,30 @@ public class ReturnButton : MonoBehaviour, IPointerClickHandler
     {
     }
 
+    private void RaycastOnOff()
+    {
+        if(CanvasGroup.blocksRaycasts)
+        {
+            CanvasGroup.blocksRaycasts = false;
+        }
+        else
+        {
+            CanvasGroup.blocksRaycasts = true;
+        }
+    }
+
     //戻るボタンを出現させる
     public void AppButton()
     {
         CanvasGroup.DOFade(endValue: 1f, duration: 0.2f).SetDelay(3.5f);
-        CanvasGroup.blocksRaycasts = true;
+        Invoke("RaycastOnOff", 4.0f);
     }
 
     //戻るボタンを消す
     public void DeleteButton()
     {
+        RaycastOnOff();
         CanvasGroup.DOFade(endValue: 0f, duration: 0.2f);
-        CanvasGroup.blocksRaycasts = false;
     }
 
     //ボタンが押されたら
