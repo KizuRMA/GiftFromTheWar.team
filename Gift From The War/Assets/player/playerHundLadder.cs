@@ -253,11 +253,17 @@ public class playerHundLadder : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))    //ã‚éˆ—
         {
+            AudioManager.Instance.PlaySE("‚Í‚µ‚²");
             climbVec = ladderQuaX * new Vector3(0, climbSpeed, 0);
         }
         else if (Input.GetKey(KeyCode.S))    //‰º‚ª‚éˆ—
         {
+            AudioManager.Instance.PlaySE("‚Í‚µ‚²");
             climbVec = ladderQuaX * new Vector3(0, -climbSpeed, 0);
+        }
+        else
+        {
+            AudioManager.Instance.StopSE("‚Í‚µ‚²");
         }
 
         playerCC.Move(climbVec * Time.deltaTime);
@@ -266,6 +272,8 @@ public class playerHundLadder : MonoBehaviour
     public void DescendLadder()    //’òq‚ğ~‚è‚éˆ—
     {
         if (!playerCC.isGrounded) return;
+
+        AudioManager.Instance.StopSE("‚Í‚µ‚²");
 
         if (Input.GetKey(KeyCode.S))
         {
@@ -277,6 +285,8 @@ public class playerHundLadder : MonoBehaviour
     {
         //ˆê”Ôã‚Ü‚Å“o‚Á‚Ä‚È‚©‚Á‚½‚çAˆ—‚ğ‚µ‚È‚¢
         if (playerTrans.position.y < ladderEndPos.y) return;
+
+        AudioManager.Instance.StopSE("‚Í‚µ‚²");
 
         //’òq‚ÌŒü‚«‚ğZo
         Vector3 climbVec = Vector3.zero;
