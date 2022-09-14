@@ -1934,7 +1934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &112785501
 Transform:
   m_ObjectHideFlags: 0
@@ -12448,6 +12448,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1871539148}
     m_Modifications:
+    - target: {fileID: 1082630291799215699, guid: a6d5e5a79dd56014c89f0b78e93f536f, type: 3}
+      propertyPath: subTrans
+      value: 
+      objectReference: {fileID: 3506824525133964145}
     - target: {fileID: 3589147707785602191, guid: a6d5e5a79dd56014c89f0b78e93f536f, type: 3}
       propertyPath: m_Name
       value: DogButton 1 (2)
@@ -13196,6 +13200,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1871539148}
     m_Modifications:
+    - target: {fileID: 1082630291799215699, guid: a6d5e5a79dd56014c89f0b78e93f536f, type: 3}
+      propertyPath: subTrans
+      value: 
+      objectReference: {fileID: 7803831000130292123}
     - target: {fileID: 1082630291799215699, guid: a6d5e5a79dd56014c89f0b78e93f536f, type: 3}
       propertyPath: onGimmickButtonMat
       value: 
@@ -14145,6 +14153,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1871539148}
     m_Modifications:
+    - target: {fileID: 1082630291799215699, guid: a6d5e5a79dd56014c89f0b78e93f536f, type: 3}
+      propertyPath: subTrans
+      value: 
+      objectReference: {fileID: 314381972120678551}
     - target: {fileID: 3589147707785602191, guid: a6d5e5a79dd56014c89f0b78e93f536f, type: 3}
       propertyPath: m_Name
       value: DogButton 1 (1)
@@ -24073,6 +24085,9 @@ Transform:
   - {fileID: 1075752663}
   - {fileID: 1147036709}
   - {fileID: 1018190992}
+  - {fileID: 7803831000130292123}
+  - {fileID: 314381972120678551}
+  - {fileID: 3506824525133964145}
   m_Father: {fileID: 274789581}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 86.42, z: 0}
@@ -27970,6 +27985,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2216095588651847164, guid: 96790bd04b6e13448bf83eb97b718c25, type: 3}
   m_PrefabInstance: {fileID: 2140068179}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &314381972120678551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087399478395824685}
+  m_LocalRotation: {x: 0.49106443, y: 0.5087787, z: -0.49310285, w: 0.5068033}
+  m_LocalPosition: {x: 26.881, y: -0.461, z: 114.37}
+  m_LocalScale: {x: 0.10666402, y: 0.10666402, z: 0.10666402}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1871539148}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 88.2, y: 90, z: -0.23}
+--- !u!1 &1087399478395824685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 314381972120678551}
+  m_Layer: 0
+  m_Name: DogButton 1 (4)
+  m_TagString: gimmickButton
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1001 &2036820723427222478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28066,6 +28112,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59dea670179f34f479895315a44aa8eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &3506824525133964145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4314851962790918603}
+  m_LocalRotation: {x: 0.15292044, y: -0.7352562, z: 0.63622534, w: 0.17672306}
+  m_LocalPosition: {x: 33.635, y: -0.603, z: 115.771}
+  m_LocalScale: {x: 0.10666402, y: 0.10666402, z: 0.10666402}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1871539148}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 81.74, y: -152.97, z: 0}
+--- !u!1 &4314851962790918603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3506824525133964145}
+  m_Layer: 0
+  m_Name: DogButton 1 (5)
+  m_TagString: gimmickButton
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!1 &7423927104317870881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7803831000130292123}
+  m_Layer: 0
+  m_Name: DogButton 1 (3)
+  m_TagString: gimmickButton
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7803831000130292123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7423927104317870881}
+  m_LocalRotation: {x: 0.4265325, y: 0.563977, z: -0.563977, w: 0.4265325}
+  m_LocalPosition: {x: 28.331, y: -0.5, z: 101.49}
+  m_LocalScale: {x: 0.10666402, y: 0.10666402, z: 0.10666402}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1871539148}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 90, y: 195.8, z: 90}
 --- !u!1001 &8853090869081736395
 PrefabInstance:
   m_ObjectHideFlags: 0

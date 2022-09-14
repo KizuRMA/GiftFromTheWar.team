@@ -12,6 +12,7 @@ public class HandButton : MonoBehaviour
     [SerializeField] Color onGimmcickColor = new Color(1, 1, 1, 1);
     [SerializeField] Color offGimmcikColor = new Color(1, 1, 1, 1);
     [SerializeField] Color clearGimmickColor = new Color(1, 1, 1, 1);
+    [SerializeField] Transform subTrans = null;
 
 
     public HandGimmick gimmick = null;
@@ -23,6 +24,13 @@ public class HandButton : MonoBehaviour
     {
         changeFlg = false;
         clearFlg = false;
+
+        if (subTrans != null && SaveManager.Instance.nowSaveData.getGunFlg == false)
+        {
+            transform.position = subTrans.position;
+            transform.rotation = subTrans.rotation;
+            transform.localScale = subTrans.localScale;
+        }
     }
 
     void Update()
