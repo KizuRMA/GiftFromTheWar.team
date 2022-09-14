@@ -81,6 +81,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
 
     void Update()
     {
+
     }
 
     public void ReadFile()
