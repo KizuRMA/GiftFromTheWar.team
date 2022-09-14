@@ -10,6 +10,14 @@ public class BatMoveWayPointsState : State<BatPatrolState>
     private NavMeshAgent agent;
     private int currentWaypointIndex;
 
+    public bool IsRouteChenge
+    {
+        get
+        {
+            return wayPoint != owner.wayPoint;
+        }
+    }
+
     public override void Enter()
     {
         owner.animator.SetInteger("trans", 0);
@@ -18,42 +26,24 @@ public class BatMoveWayPointsState : State<BatPatrolState>
         agent = owner.agent;
         owner.agent.speed = owner.moveWayPointSpeed;
 
-        Vector3 _batPos = owner.bat.transform.position;
-        float _minDistance = float.MaxValue;
-
-        NavMeshPath navMeshPath = new NavMeshPath();
-
-        //現在地から最も近いWayPointをターゲット座標にする
-        foreach (var _wayPoint in wayPoint.wayPoints)
-        {
-            agent.CalculatePath(_wayPoint.position, navMeshPath);
-            float dis = 0.0f;
-
-            Vector3 corner = _batPos;
-            for (int i = 0; i < navMeshPath.corners.Length; i++)
-            {
-                Vector3 corner2 = navMeshPath.corners[i];
-                dis += Vector3.Distance(corner, corner2);
-                corner = corner2;
-            }
-
-            if (dis < _minDistance)
-            {
-                _minDistance = dis;
-                currentWaypointIndex = wayPoint.wayPoints.IndexOf(_wayPoint);
-            }
-        }
-
+        //最も近いWayPointの添え字を入れる
+        currentWaypointIndex = NearestWayPointIndex();
         owner.agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
+
         owner.ChangeUltrasound(e_UltrasoundState.Large);
     }
 
     public override void Execute()
     {
+        if (IsRouteChenge == true)
+        {
+            RouteChange();
+        }
+
         Vector3 _nowPos = new Vector3(owner.bat.transform.position.x, agent.destination.y, owner.bat.transform.position.z);
         float targetDis = Vector3.Distance(_nowPos, agent.destination);
 
-        // 目的地点までの距離(remainingDistance)が目的地の手前までの距離(stoppingDistance)以下になったら
+        //目的地まで距離が近い場合
         if (targetDis <= 0.1f)
         {
             // 目的地の番号を１更新（右辺を剰余演算子にすることで目的地をループさせれる）
@@ -72,6 +62,7 @@ public class BatMoveWayPointsState : State<BatPatrolState>
             return;
         }
 
+        //超音波を発射しているか？
         if (owner.currentUltrasound == null) return;
 
         if (owner.currentUltrasound.CheckHit() == true)
@@ -98,5 +89,44 @@ public class BatMoveWayPointsState : State<BatPatrolState>
     {
         owner.untilLaunch = 0;
         owner.currentUltrasound.Start();
+    }
+
+    private void RouteChange()
+    {
+        wayPoint = owner.wayPoint;
+        currentWaypointIndex = NearestWayPointIndex();
+        owner.agent.destination = wayPoint.wayPoints[currentWaypointIndex].position;
+    }
+
+    private int NearestWayPointIndex()
+    {
+        Vector3 _batPos = owner.bat.transform.position;
+        float _minDistance = float.MaxValue;
+        int _index = 0;
+
+        NavMeshPath navMeshPath = new NavMeshPath();
+
+        //現在地から最も近いWayPointをターゲット座標にする
+        foreach (var _wayPoint in wayPoint.wayPoints)
+        {
+            agent.CalculatePath(_wayPoint.position, navMeshPath);
+            float dis = 0.0f;
+
+            Vector3 corner = _batPos;
+            for (int i = 0; i < navMeshPath.corners.Length; i++)
+            {
+                Vector3 corner2 = navMeshPath.corners[i];
+                dis += Vector3.Distance(corner, corner2);
+                corner = corner2;
+            }
+
+            if (dis < _minDistance)
+            {
+                _minDistance = dis;
+                _index = wayPoint.wayPoints.IndexOf(_wayPoint);
+            }
+        }
+
+        return _index;
     }
 }
