@@ -13,7 +13,7 @@ public class SystemSetting : SingletonMonoBehaviour<SystemSetting>
 
     [SerializeField] int FrameRate = 60;
     [System.NonSerialized]public bool topPriorityUI; //Å—Dæ‚Å•\¦‚·‚éUI‚ª—LŒø‚©–³Œø
-    [System.NonSerialized]public e_PauseType pauseType; 
+    [System.NonSerialized]public e_PauseType pauseType;
 
     private void Start()
     {
@@ -26,11 +26,12 @@ public class SystemSetting : SingletonMonoBehaviour<SystemSetting>
 
     private void Update()
     {
-        
+
     }
 
     public void Pause(e_PauseType _type)
     {
+        if (pauseType != e_PauseType.None) return;
         pauseType = _type;
         Time.timeScale = 0;  // ŠÔ’â~
     }

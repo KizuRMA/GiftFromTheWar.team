@@ -97,6 +97,10 @@ public class DocumentOpen : MonoBehaviour
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
 
+        //現在行っているアニメーションを削除
+        image.rectTransform.DOKill();
+        showCanvas.DOKill();
+        backGroundImage.DOKill();
 
         //アニメーション実行
         showCanvas.DOFade(0f,0.5f).SetEase(Ease.InQuart).SetUpdate(true).Play();
