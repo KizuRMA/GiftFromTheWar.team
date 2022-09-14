@@ -10,19 +10,16 @@ public class NeziKunManager : MonoBehaviour
     [SerializeField] public List<Transform> parentList= new List<Transform>();
 
     //スポーンリスト
-    [SerializeField] private List<NeziKunSpawnList> list = null;
+    [SerializeField] private List<NeziKunSpawn> list = null;
 
     private int parentCount=0;
     private void Awake()
     {
         foreach (var neziKunList in list)
         {
-            //スポーン地点
-            NeziKunSpawn neziKuns = neziKunList.spawnLists[0];
-
             //指定した位置にネジ君生成
-            GameObject game = Instantiate(neziKuns.spawnType);
-            game.transform.position = neziKuns.spawnPos.transform.position;
+            GameObject game = Instantiate(neziKunList.neziKun);
+            game.transform.position = neziKunList.spawn.position;
 
             //親子関係設定
             game.transform.parent = parentList[parentCount];
@@ -49,7 +46,9 @@ public class NeziKunManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       switch(ScenarioManager.Instance.talkCount)
+        if (ScenarioManager.Instance == null) return;
+
+        switch (ScenarioManager.Instance.talkCount)
         {
             case 1:
                 list[0].gameObject.SetActive(false);
@@ -58,8 +57,9 @@ public class NeziKunManager : MonoBehaviour
             case 2:
                 list[1].gameObject.SetActive(false);
                 break;
-
         }
+
+
     }
 
 }

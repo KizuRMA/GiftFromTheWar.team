@@ -40,6 +40,7 @@ public class Scenario : MonoBehaviour
         ScenarioManager.Instance.talkCount++;
 
         CursorManager.Instance.cursorLock = true;
+        ScenarioData.Instance.WriteFile();
 
         scenarioFlg = false;
         ScenarioManager.Instance.endFlg = false;

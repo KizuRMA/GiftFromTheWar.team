@@ -25,7 +25,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     private CommandController commandController;
     private Layer layer;
 
-    private Scenario scenario;
+    private PlayerTalk scenario;
 
     public int talkCount;
 
@@ -83,12 +83,14 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this);
+       // DontDestroyOnLoad(this);
 
         textController = GetComponent<TextController>();
         commandController = GetComponent<CommandController>();
-        scenario = GetComponent<Scenario>();
+        scenario = GetComponent<PlayerTalk>();
         layer = GetComponent<Layer>();
+
+        talkCount = ScenarioData.Instance.saveData.talkCount;
 
         UpdateLines(loadFileName[0]);
         RequestNextLine();
@@ -109,11 +111,20 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             //  行番号をリセット
             currentLine = 0;
         }
+
+        if(endFlg)
+        {
+            scenario.EndTalk();
+            talkCount++;
+            ScenarioData.Instance.saveData.talkCount = talkCount;
+            ScenarioData.Instance.WriteFile();
+            endFlg = false;
+        }
     }
 
     public void TextUpdate()
     {
-        if (!scenario.scenarioFlg) return;
+        if (!scenario.iconFlg) return;
 
         // 文字の表示が完了してるならクリック時に次の行を表示する
         if (textController.IsCompleteDisplayText)

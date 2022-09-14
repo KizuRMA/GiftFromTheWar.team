@@ -6,15 +6,20 @@ using System.IO;
 
 public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
 {
+    public struct SaveData
+    {
+        public int talkCount;
+    }
+
+    public SaveData saveData;
+
     private string filePath;
-
-    //
-
-
 
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(this);
+
         filePath = Application.dataPath + @"\Story\Binary\ScenarioData";
 
         if(!File.Exists(filePath))
@@ -35,7 +40,7 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
         //デバッグ用
         if(Input.GetKeyDown(KeyCode.K))
         {
-            ScenarioManager.Instance.talkCount = 0;
+            saveData.talkCount = 0;
             WriteFile();
         }
     }
@@ -45,9 +50,10 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
     public void ReadFile()
     {
         if (!File.Exists(filePath)) return;
+
         using(var reader =new BinaryReader(new FileStream(filePath,FileMode.Open)))
         {
-            ScenarioManager.Instance.talkCount = reader.ReadInt32();
+            saveData.talkCount = reader.ReadInt32();
         }
     }
 
@@ -55,10 +61,10 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
     public void WriteFile()
     {
         if (!File.Exists(filePath)) return;
-        using(var writer =new BinaryWriter(new FileStream(filePath,FileMode.Create)))
-        {
-            writer.Write(ScenarioManager.Instance.talkCount);
 
+        using (var writer =new BinaryWriter(new FileStream(filePath,FileMode.Create)))
+        {
+            writer.Write(saveData.talkCount);
         }
     }
 }

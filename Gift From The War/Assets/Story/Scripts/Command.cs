@@ -24,7 +24,7 @@ public class Command : MonoBehaviour
     private void Awake()
     {
         //　コマンド画面を開く処理をしているScenarioを取得
-        scenario = GameObject.Find("ScenarioManager").GetComponent<Scenario>();
+        //scenario = GameObject.Find("Player").GetComponent<Scenario>();
 
         //　現在のコマンドを初期化
         currentCommand = CommandMode.CommandPanel;
@@ -51,7 +51,7 @@ public class Command : MonoBehaviour
             //　コマンド選択画面時
             if (currentCommand == CommandMode.CommandPanel)
             {
-                scenario.ExitCommand();
+               // scenario.ExitCommand();
                 gameObject.SetActive(false);
                 ScenarioManager.Instance.currentLine = 0;
                 //　ステータスキャラクター選択またはステータス表示時

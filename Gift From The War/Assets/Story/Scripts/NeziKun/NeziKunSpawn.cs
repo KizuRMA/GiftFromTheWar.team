@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class NeziKunSpawn : MonoBehaviour
 {
-    [SerializeField] public GameObject spawnType;
-    [SerializeField] public Transform spawnPos;
+    [SerializeField] public Transform spawn ;
+    [SerializeField] public GameObject neziKun;
 }

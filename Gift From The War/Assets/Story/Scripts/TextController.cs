@@ -23,7 +23,7 @@ public class TextController : MonoBehaviour
 	[SerializeField]
 	private Text _uiText;
 
-	Scenario scenario;
+	PlayerTalk scenario;
 	Layer layer;
 
 	//	文字の表示が完了しているかどうか
@@ -57,7 +57,7 @@ public class TextController : MonoBehaviour
     private void Awake()
     {
 		//	シナリオクラス
-		scenario = GameObject.Find("ScenarioManager").GetComponent<Scenario>();
+		scenario = GameObject.Find("ScenarioManager").GetComponent<PlayerTalk>();
 		layer = GameObject.Find("ScenarioManager").GetComponent<Layer>();
 
 	}
@@ -77,7 +77,7 @@ public class TextController : MonoBehaviour
 		}
 
 		// シナリオを読み始める時のテキストに変更する
-		if(scenario.scenarioFlg==false)
+		if(scenario.iconFlg==false)
         {
 			_uiText.text ="左クリックでストーリーを読む";
         }
