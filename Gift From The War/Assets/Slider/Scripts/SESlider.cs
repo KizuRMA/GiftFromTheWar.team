@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SESlider : MonoBehaviour
 {
     private Slider slider;
+    private float past;
 
     void Start()
     {
@@ -13,6 +14,8 @@ public class SESlider : MonoBehaviour
 
         //スライダー現在値の設定
         slider.value = AudioManager.Instance.GetSEVolume();
+
+        past = slider.value;
 
     }
 
@@ -23,6 +26,10 @@ public class SESlider : MonoBehaviour
             slider.value = AudioManager.Instance.GetSEVolume();
         }
 
+        if (past == slider.value) return;
+
+        past = slider.value;
         AudioManager.Instance.ChangeSEVolume(slider.value);
+        AudioManager.Instance.WriteFile();
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BGMSlider : MonoBehaviour
 {
     private Slider slider;
+    private float past;
 
     void Start()
     {
@@ -14,6 +15,8 @@ public class BGMSlider : MonoBehaviour
 
         //スライダー現在値の設定
         slider.value = AudioManager.Instance.GetBGMVolume();
+
+        past = slider.value;
 
     }
 
@@ -24,6 +27,10 @@ public class BGMSlider : MonoBehaviour
             slider.value = AudioManager.Instance.GetBGMVolume();
         }
 
+        if (past == slider.value) return;
+
+        past = slider.value;
         AudioManager.Instance.ChangeBGMVolume(slider.value);
+        AudioManager.Instance.WriteFile();
     }
 }
