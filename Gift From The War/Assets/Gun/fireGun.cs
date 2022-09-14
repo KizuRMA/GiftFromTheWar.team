@@ -35,7 +35,7 @@ public class fireGun : ShootParent
 
         BulletVecter();
         //エネルギーが必要量あれば
-        shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
+        shotFlg = energyAmount.GetSetNowAmount > 0.7f;
 
         //発射キーを押したら
         if (Input.GetKeyDown(KeyCode.Mouse0))

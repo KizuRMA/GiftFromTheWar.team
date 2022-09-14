@@ -79,7 +79,7 @@ public class magnetChain : ShootParent
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_magnet || bulletChange.cylinder.isChanging == true) return; //今の弾の種類が対応してなかったら
 
         //エネルギーが必要量あれば
-        shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
+        shotFlg = energyAmount.GetSetNowAmount > 0.7f;
 
         if (useEnergy0)  //エネルギー消費量を0にする
         {

@@ -37,7 +37,7 @@ public class shooting : ShootParent
         BulletVecter();
 
         //エネルギーが必要量あれば
-        shotableFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
+        shotableFlg = energyAmount.GetSetNowAmount > 0.7f;
 
         shotFlg = false;
 
