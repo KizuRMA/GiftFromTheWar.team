@@ -89,21 +89,7 @@ public class DogManager : BaseEnemyManager
         //敵リスポーン
         EnemyReSpawn();
 
-        //現在管理している敵のAgentTypeを変更する
-        for (int i = 0; i < dogs.Count; i++)
-        {
-            NavMeshAgent navMesh = dogs[i].GetComponent<NavMeshAgent>();
-
-            switch (i % 2)
-            {
-                case 0:
-                    navMesh.agentTypeID = agentTypeIdDict["DogAgent"];
-                    break;
-                case 1:
-                    navMesh.agentTypeID = agentTypeIdDict["DogAgent2"];
-                    break;
-            }
-        }
+        ResetAgentType();
     }
 
     protected override void EnemyReSpawn()
@@ -302,5 +288,61 @@ public class DogManager : BaseEnemyManager
             if (warpCount >= 2) return;
         }
 
+    }
+
+    private void ResetAgentType()
+    {
+        List<GameObject> trackList = new();
+        List<GameObject> searchList = new();
+
+
+        //現在管理している敵のAgentTypeを変更する
+        for (int i = 0; i < dogs.Count; i++)
+        {
+            DogState _state = dogs[i].GetComponent<DogState>();
+            if (_state == null) continue;
+
+            if (_state.IsChasing() == true)
+            {
+                trackList.Add(dogs[i]);
+            }
+            else
+            {
+                searchList.Add(dogs[i]);
+            }
+        }
+
+        for (int i = 0; i < trackList.Count; i++)
+        {
+            NavMeshAgent navMesh = trackList[i].GetComponent<NavMeshAgent>();
+
+            switch (i % 2)
+            {
+                case 0:
+                    navMesh.agentTypeID = agentTypeIdDict["DogAgent"];
+                    break;
+                case 1:
+                    navMesh.agentTypeID = agentTypeIdDict["DogAgent2"];
+                    break;
+            }
+        }
+
+        for (int i = 0; i < searchList.Count; i++)
+        {
+            NavMeshAgent navMesh = searchList[i].GetComponent<NavMeshAgent>();
+
+            switch (i % 2)
+            {
+                case 0:
+                    navMesh.agentTypeID = agentTypeIdDict["DogAgent"];
+                    break;
+                case 1:
+                    navMesh.agentTypeID = agentTypeIdDict["DogAgent2"];
+                    break;
+            }
+        }
+
+        trackList.Clear();
+        searchList.Clear();
     }
 }

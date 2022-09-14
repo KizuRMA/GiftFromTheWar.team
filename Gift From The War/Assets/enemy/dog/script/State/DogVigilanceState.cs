@@ -16,10 +16,11 @@ public class DogVigilanceState : State<DogState>
 
         //ステートマシン側の切り替えが完了していないため変数を用意する
         switchAnime = true;
+        owner.watch = false;
         range = 7.0f;
         visibility = 50.0f;
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("metarig_action_Vigilance") == false) switchAnime = false;
-       
+
         owner.agent.isStopped = true;
         owner.agent.destination = owner.dog.transform.position;
     }
@@ -51,6 +52,7 @@ public class DogVigilanceState : State<DogState>
     public override void Exit()
     {
         owner.agent.isStopped = false;
+        owner.watch = false;
         owner.StartCoroutine(CoolDownCoroutine());
     }
 
@@ -71,6 +73,8 @@ public class DogVigilanceState : State<DogState>
 
     public bool CheckVisibility()
     {
+        if (owner.watch == false) return false;
+
         Transform _dogTrans = owner.dog.transform;
 
         Vector3 _playerPos = owner.player.transform.position;

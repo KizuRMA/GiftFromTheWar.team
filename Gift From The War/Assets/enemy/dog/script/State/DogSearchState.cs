@@ -34,14 +34,12 @@ public class DogSearchState : State<DogState>
         {
             owner.StartCoroutine(TargetCoroutine());
         }
-       
+
         if (owner.canVigilance == true && dis <= 5.0f)
         {
             owner.ChangeState(e_DogState.Vigilance);
             return;
         }
-
-      
     }
 
     public override void Exit()
@@ -52,7 +50,7 @@ public class DogSearchState : State<DogState>
     private IEnumerator TargetCoroutine()
     {
         canSetFlg = false;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
 
         for (int i = arrayMax - 1; i > 0; i--)
         {

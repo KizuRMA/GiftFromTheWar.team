@@ -37,6 +37,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
 
     [System.NonSerialized] public Vector3 hypocenter;
     [System.NonSerialized] public bool canVigilance;
+    [System.NonSerialized] public bool watch;    //Ž‹Šo‚Ì”»’è
     [System.NonSerialized] public DogAttackFunction info;
     [System.NonSerialized] public DogTerritory territory;
 
@@ -65,8 +66,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         ChangeState(e_DogState.Wait);
 
         canVigilance = true;
-
-
+        watch = false;
     }
 
     protected override void Update()
@@ -151,5 +151,9 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     public void SetStartPos(Vector3 _startPos)
     {
         startPos = _startPos;
+    }
+    public void OnWatch()
+    {
+        watch = true;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DogMagnetCatchState : State<DogState>
 {
@@ -76,6 +77,12 @@ public class DogMagnetCatchState : State<DogState>
         owner.agent.updateUpAxis = true;
 
         owner.agent.Warp(owner.dog.transform.position);
+        if(NavMesh.SamplePosition(owner.dog.transform.position, out NavMeshHit navMeshHit, 10, NavMesh.AllAreas))
+        {
+            owner.agent.Warp(navMeshHit.position);
+        }
+
+
 
         rd.isKinematic = true;
         rd.constraints = RigidbodyConstraints.None;
