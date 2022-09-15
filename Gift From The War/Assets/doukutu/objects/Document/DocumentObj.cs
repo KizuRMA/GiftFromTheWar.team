@@ -5,13 +5,13 @@ using UnityEngine;
 public class DocumentObj : MonoBehaviour
 {
     [SerializeField] public DocumentOpen document;
-    [SerializeField] public BoxCollider collider;
+    [SerializeField] public BoxCollider boxCollider;
     float coolTime;
 
     private void Start()
     {
         coolTime = 0;
-        collider.enabled = true;
+        boxCollider.enabled = true;
     }
 
     public void DocumentOpen()
@@ -19,7 +19,7 @@ public class DocumentObj : MonoBehaviour
         if (document == null || coolTime > 0) return;
         document.Open();
         coolTime = 1;
-        collider.enabled = false;
+        boxCollider.enabled = false;
     }
 
     private void Update()
@@ -29,7 +29,7 @@ public class DocumentObj : MonoBehaviour
         if (coolTime <= 0)
         {
             coolTime = 0;
-            collider.enabled = true;
+            boxCollider.enabled = true;
         }
     }
 
