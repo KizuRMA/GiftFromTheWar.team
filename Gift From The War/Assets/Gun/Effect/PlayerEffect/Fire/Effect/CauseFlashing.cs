@@ -8,6 +8,7 @@ public class CauseFlashing : MonoBehaviour
     [SerializeField] private float beforeFlashTime;
     private float flashOnTime;
     [SerializeField]private float flashOffTime;
+    [SerializeField] private GameObject causeDesEffect;
     private bool flashFlg;
 
     void Start()
@@ -44,7 +45,12 @@ public class CauseFlashing : MonoBehaviour
 
         cause.SetActive(false);
 
-        flashOnTime /= 2.0f ;
+        flashOnTime /= 1.5f ;
         flashFlg = false;
+    }
+
+    private void OnDestroy()
+    {
+        Instantiate(causeDesEffect, this.transform.position, this.transform.rotation);
     }
 }
