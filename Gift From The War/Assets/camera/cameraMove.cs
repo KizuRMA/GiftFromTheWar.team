@@ -103,13 +103,13 @@ public class cameraMove : MonoBehaviour
         if (downFlg == true) return;
         downFlg = true;
         trans.DOKill();
-        trans.DOLocalMoveY(-downDis, 1.2f);
+        trans.DOLocalMoveY(-downDis, 0.9f);
     }
 
     public void StandUp()
     {
         if (downFlg == false) return;
         trans.DOKill();
-        trans.DOLocalMoveY(0.4f, 0.7f).OnComplete(() => downFlg = false);
+        trans.DOLocalMoveY(0.4f, 0.6f).OnComplete(() => downFlg = false);
     }
 }
