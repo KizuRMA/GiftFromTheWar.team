@@ -13,6 +13,10 @@ public class DocumentOpen : MonoBehaviour
     private Image image;
     private CanvasGroup showCanvas;
 
+    [Header("必要なら設定する項目(設定しなくてもいい)")]
+    [SerializeField] private float backGroundAlpha = 0.5f;
+    [SerializeField] private float backGroundAlphaSpeed = 0.25f;
+
     private bool openFlg { get; set; }
     private int imageIndex;
 
@@ -73,10 +77,10 @@ public class DocumentOpen : MonoBehaviour
         canvasGroup.blocksRaycasts = true;
 
         //アニメーション実行
-        image.rectTransform.DOLocalMoveY(0f, 1.5f).SetEase(Ease.OutQuart).SetUpdate(true).OnComplete(() => canvasGroup.DOFade(1.0f, 0.5f).SetUpdate(true).Play()).Play();
-        image.rectTransform.DOLocalMoveY(0f, 1.5f).SetEase(Ease.OutQuart).SetUpdate(true).Play();
-        showCanvas.DOFade(1f,1.0f).SetEase(Ease.InQuart).SetUpdate(true).Play();
-        backGroundImage.DOFade(0.5f,0.25f).SetEase(Ease.InQuart).SetUpdate(true).Play();
+        image.rectTransform.DOLocalMoveY(0f, backGroundAlphaSpeed + 1.25f).SetEase(Ease.OutQuart).SetUpdate(true).OnComplete(() => canvasGroup.DOFade(1.0f, 0.5f).SetUpdate(true).Play()).Play();
+        image.rectTransform.DOLocalMoveY(0f, backGroundAlphaSpeed + 1.25f).SetEase(Ease.OutQuart).SetUpdate(true).Play();
+        showCanvas.DOFade(1f, backGroundAlphaSpeed + 0.75f).SetEase(Ease.InQuart).SetUpdate(true).Play();
+        backGroundImage.DOFade(backGroundAlpha, 0.25f).SetEase(Ease.InQuart).SetUpdate(true).Play();
         openFlg = true;
 
         UpdateText();
