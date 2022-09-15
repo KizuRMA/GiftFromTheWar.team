@@ -9,6 +9,7 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
     public struct SaveData
     {
         public int talkCount;
+        public int neziKunCount;
     }
 
     public SaveData saveData;
@@ -41,6 +42,8 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
         if(Input.GetKeyDown(KeyCode.K))
         {
             saveData.talkCount = 0;
+            saveData.neziKunCount = 0;
+
             WriteFile();
         }
     }
@@ -54,7 +57,14 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
         using(var reader =new BinaryReader(new FileStream(filePath,FileMode.Open)))
         {
             saveData.talkCount = reader.ReadInt32();
+            saveData.neziKunCount = reader.ReadInt32();
         }
+
+        if(ScenarioManager.Instance!=null&&ScenarioManager.Instance.talkCount==0)
+        {
+            ScenarioManager.Instance.UpdateLines("Scenario1");
+        }
+
     }
 
     //ÉtÉ@ÉCÉãèëÇ´çûÇ› 
@@ -62,9 +72,28 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
     {
         if (!File.Exists(filePath)) return;
 
+        if(saveData.talkCount==0)
+        {
+            saveData.talkCount = 0;
+        }
+
         using (var writer =new BinaryWriter(new FileStream(filePath,FileMode.Create)))
         {
-            writer.Write(saveData.talkCount);
+            if(saveData.neziKunCount>0)
+            {
+                writer.Write(saveData.talkCount-1);
+                writer.Write(saveData.neziKunCount-1);
+
+            }
+
+            if (saveData.neziKunCount==0)
+            {
+                saveData.neziKunCount = 0;
+
+                writer.Write(saveData.talkCount);
+                writer.Write(saveData.neziKunCount);
+
+            }
         }
     }
 }

@@ -74,6 +74,9 @@ public class Command : MonoBehaviour
             case 4:
                 ScenarioManager.Instance.UpdateLines("Scenario5");
                 break;
+            case 5:
+                ScenarioManager.Instance.UpdateLines("Scenario6");
+                break;
         }
 
     }

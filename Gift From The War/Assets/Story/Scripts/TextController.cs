@@ -57,9 +57,8 @@ public class TextController : MonoBehaviour
     private void Awake()
     {
 		//	シナリオクラス
-		scenario = GameObject.Find("ScenarioManager").GetComponent<PlayerTalk>();
-		layer = GameObject.Find("ScenarioManager").GetComponent<Layer>();
-
+		scenario = GetComponent<PlayerTalk>();
+		layer = GetComponent<Layer>();
 	}
 
 	void Update()
@@ -77,7 +76,7 @@ public class TextController : MonoBehaviour
 		}
 
 		// シナリオを読み始める時のテキストに変更する
-		if(scenario.iconFlg==false)
+		if(scenario.talkFlg == false)
         {
 			_uiText.text ="左クリックでストーリーを読む";
         }
