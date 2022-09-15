@@ -48,17 +48,7 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
 
         if (!System.IO.File.Exists(path))
         {
-            System.IO.File.Create(path);
-
-            nowAchievementData.badData = false;
-            nowAchievementData.dogData = false;
-            nowAchievementData.bossData = false;
-            nowAchievementData.noGunFlg = false;
-            nowAchievementData.noWindFlg = false;
-            nowAchievementData.noMagnetFlg = false;
-            nowAchievementData.noFireFlg = false;
-            nowAchievementData.timeAttackAFlg = false;
-            StartCoroutine(FirstWrite());
+            NewFile();
         }
         else
         {
@@ -77,6 +67,21 @@ public class AchievementManager : SingletonMonoBehaviour<AchievementManager>
         }
 
         if (!achievementJudgeStartFlg) return;
+    }
+
+    public void NewFile()
+    {
+        System.IO.File.Create(path);
+
+        nowAchievementData.badData = false;
+        nowAchievementData.dogData = false;
+        nowAchievementData.bossData = false;
+        nowAchievementData.noGunFlg = false;
+        nowAchievementData.noWindFlg = false;
+        nowAchievementData.noMagnetFlg = false;
+        nowAchievementData.noFireFlg = false;
+        nowAchievementData.timeAttackAFlg = false;
+        StartCoroutine(FirstWrite());
     }
 
     public void ReadFile()
