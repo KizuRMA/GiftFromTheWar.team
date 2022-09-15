@@ -81,7 +81,7 @@ public class magnet : ShootParent
         if (bulletChange.nowBulletType != bulletChange.bulletType.e_magnet || bulletChange.cylinder.isChanging == true) return; //今の弾の種類が対応してなかったら
 
         //エネルギーが必要量あれば
-        shotFlg = energyAmount.GetSetNowAmount > (1.0f - useEnergy);
+        shotFlg = energyAmount.GetSetNowAmount > 0.7f;
 
         //エネルギーを使用しないときは0にする
         if (!Input.GetMouseButtonDown(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)

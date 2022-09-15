@@ -16,8 +16,13 @@ public class cameraMove : MonoBehaviour
     [SerializeField] private float maxPosY;     //カメラの最大移動位置
     [SerializeField] private float dashRaito;   //走った時の倍率
 
+    //頭下げる処理
+    [SerializeField] private float downDis;
+    private bool downFlg;
+
     void Start()
     {
+        downFlg = true;
         trans = transform;
     }
 
@@ -33,6 +38,8 @@ public class cameraMove : MonoBehaviour
         }
 
         trans.localPosition = firstPos + new Vector3(0.0f, posY, 0.0f);
+
+        WalkDown();
     }
 
     private void Move() //カメラの上下移動
@@ -79,6 +86,14 @@ public class cameraMove : MonoBehaviour
             //ブレを防止する
             posY = 0;
             upDown = 1;
+        }
+    }
+
+    private void WalkDown() //歩きでしゃがむ処理
+    {
+        if(!fpsC.dashFlg)
+        {
+            trans.localPosition += new Vector3(0, -downDis, 0);
         }
     }
 }
