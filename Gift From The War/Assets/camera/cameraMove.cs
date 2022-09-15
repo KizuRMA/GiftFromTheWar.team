@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class cameraMove : MonoBehaviour
 {
@@ -22,12 +23,14 @@ public class cameraMove : MonoBehaviour
 
     void Start()
     {
-        downFlg = true;
+        downFlg = false;
         trans = transform;
     }
 
     void Update()
     {
+        if (downFlg == true) return;
+
         if (fpsC.moveFlg)
         {
             Move();
@@ -38,8 +41,6 @@ public class cameraMove : MonoBehaviour
         }
 
         trans.localPosition = firstPos + new Vector3(0.0f, posY, 0.0f);
-
-        WalkDown();
     }
 
     private void Move() //カメラの上下移動
@@ -68,6 +69,8 @@ public class cameraMove : MonoBehaviour
 
     private void Return()   //カメラが所定の位置に戻る
     {
+        //if (downFlg == true) return;
+
         bool returnFlg = Mathf.Abs(posY) > upDownSpeed * Time.deltaTime;    //所定の位置に戻る必要があるか
         if (returnFlg)
         {
@@ -89,11 +92,24 @@ public class cameraMove : MonoBehaviour
         }
     }
 
-    private void WalkDown() //歩きでしゃがむ処理
+    public void Getup()
     {
-        if(!fpsC.dashFlg)
-        {
-            trans.localPosition += new Vector3(0, -downDis, 0);
-        }
+        downFlg = false;
+    }
+
+
+    public void Crouch()
+    {
+        if (downFlg == true) return;
+        downFlg = true;
+        trans.DOKill();
+        trans.DOLocalMoveY(-downDis, 1.2f);
+    }
+
+    public void StandUp()
+    {
+        if (downFlg == false) return;
+        trans.DOKill();
+        trans.DOLocalMoveY(0.4f, 0.7f).OnComplete(() => downFlg = false);
     }
 }
