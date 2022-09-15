@@ -69,6 +69,8 @@ public class GetItem : MonoBehaviour
 
     private void Ray()
     {
+        if (SystemSetting.Instance.pauseType == SystemSetting.e_PauseType.Document) return;
+
         Ray ray = new Ray(camTrans.position, camTrans.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, handDis))
@@ -77,7 +79,7 @@ public class GetItem : MonoBehaviour
             objName = hit.collider.gameObject.name;
             hitObj = hit.collider.gameObject;
 
-            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan" || tagName == "Key" || tagName == "RecoveryKid")) return;   //触ったのがアイテムでなかったら処理しない
+            if (!(tagName == "gun" || tagName == "ammunition" || tagName == "gimmickButton" || tagName == "Rantan" || tagName == "Key" || tagName == "RecoveryKid" || tagName == "Document")) return;   //触ったのがアイテムでなかったら処理しない
 
             closeItemFlg = true;
 
@@ -238,7 +240,16 @@ public class GetItem : MonoBehaviour
         {
             recoveryKid.effectOnFlg = true;
             recoveryKid.effectPos = hitObj.gameObject.transform.position;
-            Destroy(hitObj.gameObject);            
+            Destroy(hitObj.gameObject);
+            return;
+        }
+
+        if (tagName == "Document")
+        {
+            DocumentObj _obj = hitObj.transform.GetComponent<DocumentObj>();
+            if (_obj == null) return;
+            _obj.DocumentOpen();
+
             return;
         }
     }

@@ -32,6 +32,11 @@ public class hand : MonoBehaviour
         {
             image.enabled = false;
         }
+
+        if (SystemSetting.Instance.pauseType == SystemSetting.e_PauseType.Document)
+        {
+            image.enabled = false;
+        }
     }
 
     public bool GetHandFlg()
