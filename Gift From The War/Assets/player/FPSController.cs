@@ -77,10 +77,6 @@ public class FPSController : MonoBehaviour
         nowMoveSpeed = walkSpeed;
         moveFlg = false;
         dashFlg = true;
-        //if (SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.none)
-        //{
-        //    dashFlg = false;
-        //}
 
         CursorManager.Instance.cursorLock = true;
 
@@ -232,6 +228,12 @@ public class FPSController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             dashFlg = !dashFlg;
+
+            cameraMove move = cam.GetComponent<cameraMove>();
+            if (dashFlg)
+                move.StandUp();
+            else
+                move.Crouch();
         }
     }
 
