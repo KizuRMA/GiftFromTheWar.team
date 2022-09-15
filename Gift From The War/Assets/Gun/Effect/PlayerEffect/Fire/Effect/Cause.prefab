@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2485593427570519066}
   - component: {fileID: 8119933213143209335}
+  - component: {fileID: 6472821798702613403}
   m_Layer: 0
   m_Name: Cause
   m_TagString: Untagged
@@ -49,6 +50,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6472821798702613403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2485593427570519067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0e4ba760f0c914a8e648072ad926cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cause: {fileID: 8865748443255575293}
+  beforeFlashTime: 0.5
+  flashOffTime: 0.05
+  causeDesEffect: {fileID: 8393808128369847909, guid: 74e9e238c5fd6f7428c4dd501d40a13f, type: 3}
 --- !u!1 &8865748443255575293
 GameObject:
   m_ObjectHideFlags: 0
@@ -3946,9 +3963,9 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 0
-    ratio: 0
-    light: {fileID: 0}
+    enabled: 1
+    ratio: 1
+    light: {fileID: 6977675330447635636, guid: 4243e37f20ad43d42b53d8f39b25a7eb, type: 3}
     randomDistribution: 1
     color: 1
     range: 1
