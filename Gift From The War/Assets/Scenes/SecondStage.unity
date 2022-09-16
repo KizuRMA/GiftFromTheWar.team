@@ -1934,7 +1934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &112785501
 Transform:
   m_ObjectHideFlags: 0
@@ -7364,7 +7364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ea0c0a338af2e459bc02bca10c5f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorLock: 0
   handCursor: {fileID: 2800000, guid: b79997c3738392043b6a038bbeb3ce65, type: 3}
 --- !u!1 &657614335
 GameObject:
@@ -25888,7 +25887,7 @@ MonoBehaviour:
   turnSpeed: 750
   minX: -60
   maxX: 60
-  isDebug: 0
+  isDebug: 1
   useUI: 0
 --- !u!143 &1969035456
 CharacterController:
@@ -29122,20 +29121,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9115690961030596862, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
       propertyPath: m_VoxelSize
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9115690961030596862, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: d5e797850f0acd3479c5b052be092400, type: 2}
+    - target: {fileID: 9115690961030596862, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
+      propertyPath: m_UseGeometry
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115690961030596862, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
+      propertyPath: m_OverrideTileSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115690961030596862, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9115690961030596863, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
       propertyPath: m_VoxelSize
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9115690961030596863, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: 7f4aeda84a4d99440add51ca121a3250, type: 2}
+    - target: {fileID: 9115690961030596863, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
+      propertyPath: m_UseGeometry
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115690961030596863, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9115690961107385191, guid: 88f92e93d52828240b6722af4e8108c0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -0.000011095529

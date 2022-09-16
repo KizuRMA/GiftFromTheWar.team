@@ -16,10 +16,14 @@ public class fireBulletHit : MonoBehaviour
     [SerializeField] private float movePowerBase;
     [SerializeField] private float movePowerMax;
     [SerializeField] private float movePowerMin;
+    [SerializeField] private float hitTime;
     private float movePower;
+    private float time;
+
 
     void Start()
     {
+        time = 0;
         trans = transform;
         nowScale = scaleFirst;
         AudioManager.Instance.PlaySE("BulletExp", gameObject, isLoop: false);
@@ -27,6 +31,8 @@ public class fireBulletHit : MonoBehaviour
 
     void Update()
     {
+        time += Time.deltaTime;
+
         nowScale += scaleSpeed * Time.deltaTime;
 
         nowScale = nowScale > scaleMax ? scaleMax : nowScale;
@@ -36,6 +42,8 @@ public class fireBulletHit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (time >= hitTime) return;
+
         if (other.gameObject.tag == "Bat" || other.gameObject.tag == "Dog1" || other.gameObject.tag == "Boss")
         {
             var enemyInter = other.GetComponent<EnemyInterface>();
