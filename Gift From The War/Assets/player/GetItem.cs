@@ -222,6 +222,7 @@ public class GetItem : MonoBehaviour
         {
             if (keyObj == null) return;
             keyObj.SetActive(true);
+            gunObj.SetActive(false);
             KeyFinalScript key = hitObj.GetComponent<KeyFinalScript>();
 
             if (bossBGM != null)
