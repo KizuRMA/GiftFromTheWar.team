@@ -21,9 +21,7 @@ public class RecoveryKid : MonoBehaviour
         if(effectOnFlg)
         {
             effectOnFlg = false;
-            Transform trans = recoveryEffect.transform;
-            trans.position = effectPos;
-            recoveryEffectList.Add((GameObject)Instantiate(recoveryEffect, trans));
+            recoveryEffectList.Add((GameObject)Instantiate(recoveryEffect, effectPos,transform.rotation));
 
             HP.life = 3;
 

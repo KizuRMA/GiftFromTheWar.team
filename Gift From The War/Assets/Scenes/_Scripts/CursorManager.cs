@@ -23,7 +23,7 @@ public class CursorManager : SingletonMonoBehaviour<CursorManager>
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
-        else if (!cursorLock)
+        else
         {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
