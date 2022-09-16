@@ -25,6 +25,7 @@ public class Scenario : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale <= 0) return;
         //  コマンド画面終了
         EndCommand();
     }
@@ -39,7 +40,7 @@ public class Scenario : MonoBehaviour
 
         ScenarioManager.Instance.talkCount++;
 
-        CursorManager.Instance.cursorLock = true;
+        CursorManager.Instance.SetCursorLock(true);
         ScenarioData.Instance.WriteFile();
 
         scenarioFlg = false;
@@ -50,7 +51,7 @@ public class Scenario : MonoBehaviour
     public void ExitCommand()
     {
         EventSystem.current.SetSelectedGameObject(null);
-        CursorManager.Instance.cursorLock = true;
+        CursorManager.Instance.SetCursorLock(true);
 
         scenarioFlg = false;
 
@@ -60,7 +61,7 @@ public class Scenario : MonoBehaviour
     public void OpenCommand()
     {
         image.SetActive(true);
-        CursorManager.Instance.cursorLock = false;
+        CursorManager.Instance.SetCursorLock(false);
         scenarioFlg = true;
     }
 }

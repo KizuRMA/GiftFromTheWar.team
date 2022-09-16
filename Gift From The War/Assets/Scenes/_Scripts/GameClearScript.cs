@@ -12,7 +12,7 @@ public class GameClearScript : MonoBehaviour
     void Start()
     {
         time = 0;
-        CursorManager.Instance.cursorLock = false;
+        CursorManager.Instance.SetCursorLock(false);
     }
 
     void Update()

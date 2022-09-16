@@ -57,7 +57,7 @@ public class Endingroll : MonoBehaviour
             if (!onceFlg && Input.GetKey(KeyCode.Space))
             {
                 //Debug.Log("‚Æ‚¨‚½‚æ");
-                CursorManager.Instance.cursorLock = false;
+                CursorManager.Instance.SetCursorLock(false);
                 StartCoroutine(LoadManager.Instance.LoadScene("Scenes/TitleScene"));
                 //SceneManager.LoadScene("Scenes/GameTitleScene");
                 onceFlg = true;

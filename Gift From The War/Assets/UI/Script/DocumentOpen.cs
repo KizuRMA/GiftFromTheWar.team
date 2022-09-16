@@ -70,7 +70,7 @@ public class DocumentOpen : MonoBehaviour
         //時間を停止する
         SystemSetting.Instance.Pause(SystemSetting.e_PauseType.Document);
 
-        CursorManager.Instance.cursorLock = false;
+        CursorManager.Instance.SetCursorLock(false);
 
         //ボタンを有効にする
         canvasGroup.interactable = true;
@@ -96,8 +96,7 @@ public class DocumentOpen : MonoBehaviour
         //時間を再開する
         SystemSetting.Instance.Resume();
 
-        CursorManager.Instance.cursorLock = true;
-        Cursor.visible = false;
+        CursorManager.Instance.SetCursorLock(true);
 
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

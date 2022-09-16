@@ -21335,6 +21335,8 @@ MonoBehaviour:
   backGroundImage: {fileID: 412906018}
   canvasGroup: {fileID: 360030315}
   pageNumberText: {fileID: 556219283}
+  backGroundAlpha: 0.5
+  backGroundAlphaSpeed: 0.25
 --- !u!1001 &1242480786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22032,7 +22034,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ea0c0a338af2e459bc02bca10c5f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorLock: 0
   handCursor: {fileID: 2800000, guid: b79997c3738392043b6a038bbeb3ce65, type: 3}
 --- !u!4 &1283275265
 Transform:
@@ -22784,6 +22785,8 @@ MonoBehaviour:
   backGroundImage: {fileID: 2049298832}
   canvasGroup: {fileID: 400917127}
   pageNumberText: {fileID: 1018812295}
+  backGroundAlpha: 0.5
+  backGroundAlphaSpeed: 0.25
 --- !u!1001 &1330279288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24386,10 +24389,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6625cf651aa908544bc335b7bffff79c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neziKun: {fileID: 6454227858400984307, guid: 2b6f59e45968a0143a7746d0d67432e7, type: 3}
-  neziKunGroup: {fileID: 1424891804}
-  spawnList: []
-  prefabNum: 1
+  parentList: []
+  list: []
 --- !u!4 &1424891804
 Transform:
   m_ObjectHideFlags: 0
@@ -29910,7 +29911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1707568935
 Transform:
   m_ObjectHideFlags: 0

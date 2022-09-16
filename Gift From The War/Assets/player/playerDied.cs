@@ -160,7 +160,7 @@ public class playerDied : MonoBehaviour
     {
         yield return new WaitForSeconds(sceneCoolTime);  //クールタイム分待つ
 
-        CursorManager.Instance.cursorLock = false;
+        CursorManager.Instance.SetCursorLock(false);
 
         SceneManager.LoadScene("GameOverScene");
     }

@@ -7,7 +7,7 @@ public class TimeAttackCursor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CursorManager.Instance.cursorLock = false;
+        CursorManager.Instance.SetCursorLock(false);
     }
 
     // Update is called once per frame
