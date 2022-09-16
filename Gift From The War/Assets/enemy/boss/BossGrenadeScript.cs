@@ -10,13 +10,14 @@ public class BossGrenadeScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision _collision)
     {
-       
-        Instantiate(expParticle, transform.position,transform.rotation);
 
-
+        Instantiate(expParticle, transform.position, transform.rotation);
         GameObject game = Instantiate(expRangeObj, transform.position, transform.rotation);
-        Destroy(game,3.0f);
-        AudioManager.Instance.PlaySE("Grenade", game, isLoop: false, vol: 1);
+        Destroy(game,1.0f);
+        GameObject soundObj = new GameObject();
+        soundObj.transform.position = game.transform.position;
+        AudioManager.Instance.PlaySE("Grenade", soundObj, isLoop: false, vol: 1);
         Destroy(gameObject);
+        Destroy(soundObj,3.0f);
     }
 }
