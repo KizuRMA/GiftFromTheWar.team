@@ -73,6 +73,7 @@ public class MoveWindGun : MonoBehaviour
     {
         //if (scenario == null) return;
 
+        if (!getItem.gunFlg) return;    //e‚ğE‚Á‚Ä‚¢‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
         if (!getItem.windAmmunitionFlg) return; //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
         if (Time.timeScale <= 0f) return;
         if (playerStartDown != null && playerStartDown.isAuto == true) return;

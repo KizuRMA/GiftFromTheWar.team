@@ -70,6 +70,7 @@ public class magnetChain : ShootParent
 
     void Update()
     {
+        if (!getItem.gunFlg) return;    //e‚ğE‚Á‚Ä‚¢‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
         if (!getItem.magnetAmmunitionFlg) return;   //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
 
         if (magnet.metal != null) return;   //‚·‚Å‚É•Ê‚Ì¥Î‚ğ‘Å‚Á‚Ä‚¢‚½‚çˆ—‚µ‚È‚¢

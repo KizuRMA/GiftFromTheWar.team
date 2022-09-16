@@ -9,6 +9,7 @@ public class KeyGimmick : MonoBehaviour
     [SerializeField] private GameObject playerKeyObj;
     [SerializeField] private GameObject keyObj;
     [SerializeField] private GameObject gunObj;
+    [SerializeField] private GetItem getItem;
 
     private bool openFlg;
 
@@ -81,6 +82,7 @@ public class KeyGimmick : MonoBehaviour
             playerKeyObj.SetActive(false);
             keyObj.SetActive(true);
             gunObj.SetActive(true);
+            getItem.gunFlg = true;
         }
     }
 }

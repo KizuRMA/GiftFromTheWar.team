@@ -9,13 +9,11 @@ public class AchiveDelete : MonoBehaviour
     private string fileSaveSpotName = "binaryAchiveData.GftW";
     private string path;
 
-    // Start is called before the first frame update
     void Start()
     {
         path = directoryName + "/" + fileSaveSpotName;
     }
 
-    // Update is called once per frame
     void Update()
     {
         

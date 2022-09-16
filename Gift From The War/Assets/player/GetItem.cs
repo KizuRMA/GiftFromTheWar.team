@@ -29,6 +29,7 @@ public class GetItem : MonoBehaviour
     private GameObject hitObj;
     [SerializeField] private GameObject rantanObj;
     [SerializeField] private GameObject keyObj;
+    public bool gunFlg { get; set; }
     public bool windAmmunitionFlg { get; set; }
     public bool magnetAmmunitionFlg { get; set; }
     public bool fireAmmunitionFlg { get; set; }
@@ -49,6 +50,7 @@ public class GetItem : MonoBehaviour
         closeItemFlg = false;
         tagName = null;
 
+        gunFlg = SaveManager.Instance.nowSaveData.getGunFlg;
         windAmmunitionFlg = SaveManager.Instance.nowSaveData.getWindFlg;
         magnetAmmunitionFlg = SaveManager.Instance.nowSaveData.getMagnetFlg;
         fireAmmunitionFlg = SaveManager.Instance.nowSaveData.getFireFlg;
@@ -106,6 +108,7 @@ public class GetItem : MonoBehaviour
     {
         if (tagName == "gun")
         {
+            gunFlg = true;
             gunObj.SetActive(true);
             SaveManager.Instance.nowSaveData.getGunFlg = true;
             SaveManager.Instance.WriteFile();
@@ -223,6 +226,7 @@ public class GetItem : MonoBehaviour
             if (keyObj == null) return;
             keyObj.SetActive(true);
             gunObj.SetActive(false);
+            gunFlg = false;
             KeyFinalScript key = hitObj.GetComponent<KeyFinalScript>();
 
             if (bossBGM != null)
@@ -261,6 +265,7 @@ public class GetItem : MonoBehaviour
         if (!(TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.SECOND || TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.FINAL)) return;
 
         gunObj.SetActive(true);
+        gunFlg = true;
         SaveManager.Instance.nowSaveData.getGunFlg = true;
         targetImage.enabled = true;
 

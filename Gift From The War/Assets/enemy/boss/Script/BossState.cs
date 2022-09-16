@@ -76,6 +76,12 @@ public class BossState : StatefulObjectBase<BossState, e_BossState>
         //目的地の更新は常時処理する
         DestinationUpdate();
 
+        //ボスの足音
+        if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+        {
+            AudioManager.Instance.PlaySE("BossFootsteps", this.footstepsObj,30, isLoop: true, vol: 0.5f);
+        }
+
         //攻撃するか確認
         if (IsAttack() == true)
         {

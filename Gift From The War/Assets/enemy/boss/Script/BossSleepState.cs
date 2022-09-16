@@ -42,7 +42,6 @@ public class BossSleepState : State<BossState>
         if (owner.animator.GetCurrentAnimatorStateInfo(0).IsName("Walk") &&
             owner.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
-            AudioManager.Instance.PlaySE("BossFootsteps", owner.footstepsObj, isLoop: true, vol: 0.5f);
             owner.ChangeState(e_BossState.Wait);
         }
     }

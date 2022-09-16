@@ -28,6 +28,7 @@ public class shooting : ShootParent
 
     void Update()
     {
+        if (!getItem.gunFlg) return;    //e‚ğE‚Á‚Ä‚¢‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
         if (!getItem.windAmmunitionFlg) return; //’e‚ğE‚Á‚Ä‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
 
         MoveBullet();
