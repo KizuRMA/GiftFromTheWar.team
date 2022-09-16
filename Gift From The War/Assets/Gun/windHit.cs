@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class windHit : MonoBehaviour
 {
-    private Transform trans;
     [SerializeField] private float movePowerBase;
     [SerializeField] private float movePowerMax;
     [SerializeField] private float movePowerMin;
@@ -12,7 +11,7 @@ public class windHit : MonoBehaviour
 
     void Start()
     {
-        trans = transform;
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -21,7 +20,7 @@ public class windHit : MonoBehaviour
 
         if (RD == null || RD.isKinematic) return;   //動かないオブジェクトだったら処理しない
 
-        Vector3 moveVec = RD.gameObject.transform.position - trans.position;    //移動方向を算出
+        Vector3 moveVec = RD.gameObject.transform.position - transform.position;    //移動方向を算出
 
         //移動する力の計算
         movePower = movePowerBase - moveVec.magnitude;

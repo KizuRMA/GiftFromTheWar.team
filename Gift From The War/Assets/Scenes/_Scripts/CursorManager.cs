@@ -21,6 +21,7 @@ public class CursorManager : SingletonMonoBehaviour<CursorManager>
             if (Cursor.lockState == CursorLockMode.None)
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
         else if (!cursorLock)
@@ -28,6 +29,7 @@ public class CursorManager : SingletonMonoBehaviour<CursorManager>
             if (Cursor.lockState == CursorLockMode.Locked)
             {
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
     }

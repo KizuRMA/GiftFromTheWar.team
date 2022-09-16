@@ -97,6 +97,7 @@ public class DocumentOpen : MonoBehaviour
         SystemSetting.Instance.Resume();
 
         CursorManager.Instance.cursorLock = true;
+        Cursor.visible = false;
 
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
