@@ -29,6 +29,8 @@ public class SaveSpotData : MonoBehaviour
 
         AudioManager.Instance.PlaySE("SaveSpot", isLoop: false, vol: 0.5f);
 
+        other.GetComponent<playerAbnormalcondition>().life = 3;
+
         SaveManager.Instance.WriteFile();
 
         if (TimeAttackManager.Instance.timeAttackFlg) return;

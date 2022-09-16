@@ -1934,7 +1934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &112785501
 Transform:
   m_ObjectHideFlags: 0
@@ -1954,7 +1954,7 @@ Transform:
   - {fileID: 95587181}
   - {fileID: 1141498282}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &114979854
 PrefabInstance:
@@ -19807,7 +19807,7 @@ Transform:
   m_Children:
   - {fileID: 290800654}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1566756434
 PrefabInstance:
@@ -20967,13 +20967,29 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8706966600819074665, guid: 1bc6fb10798e1fc4db2890372620daff, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706966600819074665, guid: 1bc6fb10798e1fc4db2890372620daff, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: 8e5af8b6501a24d46b8fdbea5ea3350a, type: 2}
+    - target: {fileID: 8706966600819074665, guid: 1bc6fb10798e1fc4db2890372620daff, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706966600819074666, guid: 1bc6fb10798e1fc4db2890372620daff, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8706966600819074666, guid: 1bc6fb10798e1fc4db2890372620daff, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: 0b130c713e61d244c911f0de305a7f2a, type: 2}
+    - target: {fileID: 8706966600819074666, guid: 1bc6fb10798e1fc4db2890372620daff, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc6fb10798e1fc4db2890372620daff, type: 3}
 --- !u!114 &1641086273 stripped
@@ -23950,7 +23966,7 @@ Transform:
   - {fileID: 195299805}
   - {fileID: 407196801}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1824513186
 PrefabInstance:
@@ -25911,7 +25927,7 @@ MonoBehaviour:
   turnSpeed: 750
   minX: -60
   maxX: 60
-  isDebug: 1
+  isDebug: 0
   useUI: 0
 --- !u!143 &1969035456
 CharacterController:
@@ -27480,7 +27496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 895062899872067128, guid: dc5db32ccab82334b86016c39f584392, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 895062899872067128, guid: dc5db32ccab82334b86016c39f584392, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27500,15 +27516,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 895062899872067128, guid: dc5db32ccab82334b86016c39f584392, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 895062899872067128, guid: dc5db32ccab82334b86016c39f584392, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 895062899872067128, guid: dc5db32ccab82334b86016c39f584392, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 895062899872067128, guid: dc5db32ccab82334b86016c39f584392, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -28626,13 +28642,29 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2036820724930058622, guid: afbd6f6d7cad65141897279509c7db60, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2036820724930058622, guid: afbd6f6d7cad65141897279509c7db60, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: 3804d80fee136744eafad7bd6e12d154, type: 2}
+    - target: {fileID: 2036820724930058622, guid: afbd6f6d7cad65141897279509c7db60, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2036820724930058623, guid: afbd6f6d7cad65141897279509c7db60, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2036820724930058623, guid: afbd6f6d7cad65141897279509c7db60, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: 362b0c9ca2bc14043a5b55e7f527f106, type: 2}
+    - target: {fileID: 2036820724930058623, guid: afbd6f6d7cad65141897279509c7db60, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afbd6f6d7cad65141897279509c7db60, type: 3}
 --- !u!114 &2036820723427222479 stripped
@@ -28780,13 +28812,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 706243992}
     - target: {fileID: 8853090869449288016, guid: d7cbbbc0199804941815cbb9cb572aa3, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853090869449288016, guid: d7cbbbc0199804941815cbb9cb572aa3, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: bed5d2d4e8c668d42a270a49f4e5233f, type: 2}
+    - target: {fileID: 8853090869449288016, guid: d7cbbbc0199804941815cbb9cb572aa3, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853090869449288017, guid: d7cbbbc0199804941815cbb9cb572aa3, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8853090869449288017, guid: d7cbbbc0199804941815cbb9cb572aa3, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: b5c17b4133afe634ab4840b44bbb9451, type: 2}
+    - target: {fileID: 8853090869449288017, guid: d7cbbbc0199804941815cbb9cb572aa3, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8853090869449288019, guid: d7cbbbc0199804941815cbb9cb572aa3, type: 3}
       propertyPath: m_Layer
       value: 2
