@@ -30,7 +30,10 @@ public class damage : MonoBehaviour
     {
         if (abnormalcondition.life != pastPlayerLife)
         {
-            Damage();
+            if (abnormalcondition.life < pastPlayerLife)
+            {
+                Damage();
+            }
             pastPlayerLife = abnormalcondition.life;
         }
 
