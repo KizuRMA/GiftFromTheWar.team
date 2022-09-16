@@ -39,7 +39,7 @@ public class NextStage2 : MonoBehaviour
             TimeAttackManager.Instance.timerStopFlg = true;
             TimeAttackManager.Instance.timerStartFlg = false;
             TimeAttackManager.Instance.TimerHide();
-            CursorManager.Instance.cursorLock = false;
+            CursorManager.Instance.SetCursorLock(false);
             SceneManager.LoadScene("TimeAttackResult");
         }
     }

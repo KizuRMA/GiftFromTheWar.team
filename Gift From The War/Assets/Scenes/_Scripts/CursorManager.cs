@@ -5,7 +5,7 @@ using UnityEngine;
 public class CursorManager : SingletonMonoBehaviour<CursorManager>
 {
     //カーソルロック
-    public bool cursorLock = false;
+    private bool cursorLock = false;
     public Texture2D handCursor;
     private void Start()
     {
@@ -22,6 +22,7 @@ public class CursorManager : SingletonMonoBehaviour<CursorManager>
             {
                 Cursor.lockState = CursorLockMode.Locked;
             }
+            Cursor.visible = false;
         }
         else
         {
@@ -29,11 +30,17 @@ public class CursorManager : SingletonMonoBehaviour<CursorManager>
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+            Cursor.visible = true;
         }
     }
 
     void ChangeCursor()
     {
         //Cursor.SetCursor(handCursor, Vector2.zero, CursorMode.Auto);
+    }
+
+    public void SetCursorLock(bool _auth)
+    {
+        cursorLock = _auth;
     }
 }

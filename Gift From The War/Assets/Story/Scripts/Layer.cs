@@ -32,7 +32,7 @@ public class Layer : MonoBehaviour
 
        if(showFlg)
         {
-            CursorManager.Instance.cursorLock = false;
+            CursorManager.Instance.SetCursorLock(false);
         }
     }
 

@@ -78,7 +78,7 @@ public class FPSController : MonoBehaviour
         moveFlg = false;
         dashFlg = true;
 
-        CursorManager.Instance.cursorLock = true;
+        CursorManager.Instance.SetCursorLock(true);
 
         if (isDebug == false && !(SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.s1p6 && SceneManager.GetActiveScene().name == "SecondStage") && !(SaveManager.Instance.nowSaveData.saveSpotNum == SaveManager.SaveSpotNum.s2p5 && SceneManager.GetActiveScene().name == "FinalStage"))
         {
@@ -93,8 +93,6 @@ public class FPSController : MonoBehaviour
     {
         if (Time.timeScale <= 0f)return;
         if (playerStartDown != null && playerStartDown.isAuto == true) return;
-
-        UpdateCursorLock();
 
         if (ladder.touchLadderFlg || died.diedFlg || magnetChain.metalFlg || scenario != null && scenario.scenarioFlg)  //プレイヤーの移動無効化
         {
@@ -130,17 +128,6 @@ public class FPSController : MonoBehaviour
     //--------------------------------------------------------------------
     //自作関数
     //--------------------------------------------------------------------
-    private void UpdateCursorLock()  //カーソル表示切り替え
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            CursorManager.Instance.cursorLock = false;
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            CursorManager.Instance.cursorLock = true;
-        }
-    }
 
     private void AssignTmpRot()    //計算するために回転量を保持する
     {

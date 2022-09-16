@@ -51,14 +51,14 @@ public class Menu : MonoBehaviour
     {
         SystemSetting.Instance.Pause(SystemSetting.e_PauseType.Select); // ŠÔ’â~
         image.SetActive(true);
-        CursorManager.Instance.cursorLock = false;
+        CursorManager.Instance.SetCursorLock(false);
     }
 
     private void Resume()
     {
         SystemSetting.Instance.Resume();  // ÄŠJ
         image.SetActive(false);
-        CursorManager.Instance.cursorLock = true;
+        CursorManager.Instance.SetCursorLock(true);
 
         foreach (var lists in list)
         {
@@ -72,7 +72,7 @@ public class Menu : MonoBehaviour
         StartCoroutine(LoadManager.Instance.LoadScene("Scenes/TitleScene"));
         pauseFlg = false;
         image.SetActive(false);
-        CursorManager.Instance.cursorLock = false;
+        CursorManager.Instance.SetCursorLock(false);
 
         if (TimeAttackManager.Instance.timerStartFlg) TimeAttackManager.Instance.TimerFinish();
     }
@@ -82,7 +82,7 @@ public class Menu : MonoBehaviour
         Resume();
         image.SetActive(false);
         pauseFlg = false;
-        CursorManager.Instance.cursorLock = true;
+        CursorManager.Instance.SetCursorLock(true);
     }
 
     //ƒQ[ƒ€I—¹
