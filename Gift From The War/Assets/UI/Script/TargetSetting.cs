@@ -9,6 +9,7 @@ public class TargetSetting : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private Image hitImage;
     [SerializeField] private hand Hand;
+    [SerializeField] private GameObject gun;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class TargetSetting : MonoBehaviour
 
     void Update()
     {
-        if(SaveManager.Instance.nowSaveData.getGunFlg)
+        if(gun.activeSelf == true)
         {
             image.enabled = true;
         }

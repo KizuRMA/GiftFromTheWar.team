@@ -27,6 +27,7 @@ public class NextStage3 : MonoBehaviour
         if (other.gameObject.tag != "Player") return;
         if (nextStageFlg) return;
         nextStageFlg = true;
+        other.GetComponent<playerAbnormalcondition>().life = 3;
 
         if (AchievementManager.Instance != null && !TimeAttackManager.Instance.timeAttackFlg)
         {

@@ -127,6 +127,8 @@ public class DocumentOpen : MonoBehaviour
         showCanvas = images[imageIndex].GetComponent<CanvasGroup>();
         image.gameObject.SetActive(true);
 
+        AudioManager.Instance.PlaySE("TurnThePage", isLoop: false);
+
         UpdateText();
     }
 
@@ -138,6 +140,8 @@ public class DocumentOpen : MonoBehaviour
         image = images[imageIndex];
         showCanvas = images[imageIndex].GetComponent<CanvasGroup>();
         image.gameObject.SetActive(true);
+
+        AudioManager.Instance.PlaySE("TurnThePage", isLoop: false);
 
         UpdateText();
     }

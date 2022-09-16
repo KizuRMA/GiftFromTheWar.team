@@ -22,6 +22,11 @@ public class Midpoint : MonoBehaviour
             image.enabled = true;
         }
 
+        if (target.enabled == false)
+        {
+            image.enabled = true;
+        }
+
         if (Hand.GetHandFlg() || target.enabled == true || SystemSetting.Instance.topPriorityUI == true)
         {
             image.enabled = false;
