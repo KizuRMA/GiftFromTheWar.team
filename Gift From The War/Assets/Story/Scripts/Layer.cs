@@ -9,7 +9,7 @@ public class Layer : MonoBehaviour
 
     private CanvasGroup panelCanvasGroup;
 
-    public bool showFlg = false;
+    [System.NonSerialized] public bool showFlg = false;
     private void Awake()
     {
         panelCanvasGroup = Panel.GetComponent<CanvasGroup>();

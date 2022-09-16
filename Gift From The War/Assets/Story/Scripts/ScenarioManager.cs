@@ -10,13 +10,10 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     public string[] loadFileName = null;
 
     //  文章を読み終わっているかどうか
-    public bool endFlg=false;
+    [System.NonSerialized] public bool endFlg=false;
 
     //  シナリオを格納する
     private string[] scenarios;
-
-    //  現在の行番号
-    public int currentLine = 0;
 
     private bool isCallPreload = false;
 
@@ -25,9 +22,15 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     private CommandController commandController;
     private Layer layer;
 
-    private Scenario scenario;
+    private PlayerTalk scenario;
 
-    public int talkCount;
+    private NeziKunManager neziKun;
+
+    //インスペクターからは触れないようにしておく
+    [System.NonSerialized] public int talkCount;
+    [System.NonSerialized] public int neziKunCount;
+    //  現在の行番号
+    [System.NonSerialized] public int currentLine = 0;
 
     public void RequestNextLine()
     {
@@ -83,12 +86,18 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this);
+       // DontDestroyOnLoad(this);
 
         textController = GetComponent<TextController>();
         commandController = GetComponent<CommandController>();
-        scenario = GetComponent<Scenario>();
+        scenario = GetComponent<PlayerTalk>();
         layer = GetComponent<Layer>();
+
+        neziKunCount = ScenarioData.Instance.saveData.neziKunCount;
+        talkCount = ScenarioData.Instance.saveData.talkCount;
+
+        GameObject game = GameObject.Find("NeziKunManager");
+        neziKun=game.GetComponent<NeziKunManager>();
 
         UpdateLines(loadFileName[0]);
         RequestNextLine();
@@ -97,24 +106,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     // Update is called once per frame
     void Update()
     {
-        TextUpdate();
-    }
-    //  文章を読み終わっていたらウィンドウを削除する
-    private void ResetText()
-    {
-        //  左クリック
-        if (Input.GetMouseButtonDown(0))
-        {
-            endFlg = true;
-            //  行番号をリセット
-            currentLine = 0;
-        }
-    }
-
-    public void TextUpdate()
-    {
-        if (!scenario.scenarioFlg) return;
-
+        if (!scenario.talkFlg) return;
         // 文字の表示が完了してるならクリック時に次の行を表示する
         if (textController.IsCompleteDisplayText)
         {
@@ -126,7 +118,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
                     isCallPreload = true;
                 }
 
-                if (Input.GetMouseButtonDown(0)&&layer.showFlg==false)
+                if (Input.GetMouseButtonDown(0) && layer.showFlg == false)
                 {
                     RequestNextLine();
                 }
@@ -146,6 +138,31 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             {
                 textController.ForceCompleteDisplayText();
             }
+        }
+
+
+        if (endFlg)
+        {
+            talkCount++;
+            neziKunCount++;
+
+            neziKun.Spawn();
+            ScenarioData.Instance.saveData.talkCount = talkCount;
+            ScenarioData.Instance.saveData.neziKunCount = neziKunCount;
+
+            ScenarioData.Instance.WriteFile();
+            endFlg = false;
+        }
+    }
+    //  文章を読み終わっていたらウィンドウを削除する
+    private void ResetText()
+    {
+        //  左クリック
+        if (Input.GetMouseButtonDown(0))
+        {
+            scenario.EndTalk();
+            //  行番号をリセット
+            currentLine = 0;
         }
     }
 
