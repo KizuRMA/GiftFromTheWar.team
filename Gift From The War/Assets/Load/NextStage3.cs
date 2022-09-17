@@ -74,7 +74,7 @@ public class NextStage3 : MonoBehaviour
         else
         {
             //タイムアタックのアチーブメント
-            if (!AchievementManager.Instance.nowAchievementData.timeAttackAFlg && TimeAttackManager.Instance.countTime <= 1800.0f)
+            if (!AchievementManager.Instance.nowAchievementData.timeAttackAFlg && TimeAttackManager.Instance.nowStage == TimeAttackManager.selectStage.ALL && TimeAttackManager.Instance.countTime <= 1800.0f)
             {
                 AchievementManager.Instance.nowAchievementData.timeAttackAFlg = true;
                 AchievementManager.Instance.WriteFile();
