@@ -13,6 +13,7 @@ public enum e_DogState
     MagnetCatch,
     BlowedAway,
     Wait,
+    Falter,
 }
 
 public class DogState : StatefulObjectBase<DogState, e_DogState>
@@ -60,6 +61,7 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         stateList.Add(new DogMagnetCatchState(this));
         stateList.Add(new DogBlowedAwayState(this));
         stateList.Add(new DogWaitState(this));
+        stateList.Add(new DogFalterState(this));
 
         stateMachine = new StateMachine<DogState>();
 
@@ -109,6 +111,11 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
         ChangeState(e_DogState.BlowedAway);
     }
 
+    public void FalterDamge(int _damage)
+    {
+        ChangeState(e_DogState.Falter);
+    }
+
     public void ExplosionHit(int _damage, Vector3 _hypocenter)
     {
         if (IsAlive == false) return;
@@ -141,7 +148,8 @@ public class DogState : StatefulObjectBase<DogState, e_DogState>
     {
         if (IsCurrentState(e_DogState.Attack) ||
             IsCurrentState(e_DogState.Tracking) ||
-            IsCurrentState(e_DogState.MagnetCatch))
+            IsCurrentState(e_DogState.MagnetCatch) ||
+            IsCurrentState(e_DogState.Falter))
         {
             return true;
         }

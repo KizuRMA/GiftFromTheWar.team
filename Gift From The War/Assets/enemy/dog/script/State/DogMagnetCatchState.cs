@@ -82,8 +82,6 @@ public class DogMagnetCatchState : State<DogState>
             owner.agent.Warp(navMeshHit.position);
         }
 
-
-
         rd.isKinematic = true;
         rd.constraints = RigidbodyConstraints.None;
     }

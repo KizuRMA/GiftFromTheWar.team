@@ -30,8 +30,16 @@ public class TargetSetting : MonoBehaviour
         }
     }
 
-    public void HitAnime()
+    public void HitAnime(Color? color = null)
     {
+        if (color != null)
+        {
+            hitImage.color = new Color(color.Value.r, color.Value.g, color.Value.b, color.Value.a);
+        }
+        else
+        {
+            hitImage.color = Color.red;
+        }
         hitImage.DOFade(1f, 0.1f).OnComplete(() => hitImage.DOFade(0f, 0.5f).SetEase(Ease.InQuart).SetUpdate(true).Play()).SetEase(Ease.InQuart).SetUpdate(true).Play();
     }
 }

@@ -21,9 +21,13 @@ public class windBulletHit : MonoBehaviour
 
         Destroy(this.gameObject);
 
-        if (other.tag != "Bat") return;
-
         if (other.gameObject.tag == "Bat")
+        {
+            var target = other.transform.GetComponent<EnemyInterface>();
+            target.Damage(1);
+        }
+
+        if (other.gameObject.tag == "Dog1")
         {
             var target = other.transform.GetComponent<EnemyInterface>();
             target.Damage(1);
@@ -40,8 +44,6 @@ public class windBulletHit : MonoBehaviour
 
         Destroy(this.gameObject);
 
-        if (_collider.tag != "Bat") return;
-
         if (_collider.gameObject.tag == "Bat")
         {
             var target = _collider.transform.GetComponent<EnemyInterface>();
@@ -49,8 +51,19 @@ public class windBulletHit : MonoBehaviour
 
             if (targetImageObj != null)
             {
-Å@                targetImageObj.GetComponent<TargetSetting>().HitAnime();
+Å@              targetImageObj.GetComponent<TargetSetting>().HitAnime();
             }
+        }
+
+        if (_collider.gameObject.tag == "Dog1")
+        {
+            var target = _collider.transform.GetComponent<EnemyInterface>();
+
+            if (targetImageObj != null)
+            {
+                targetImageObj.GetComponent<TargetSetting>().HitAnime(new Color(0.9921569f, 0.6321112f, 0,1));
+            }
+            target.Damage(1);
         }
 
         return;

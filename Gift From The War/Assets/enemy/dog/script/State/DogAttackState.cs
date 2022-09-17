@@ -62,6 +62,10 @@ public class DogAttackState : State<DogState>
         owner.agent.updateRotation = true;
 
         owner.agent.Warp(owner.dog.transform.position);
+        if (NavMesh.SamplePosition(owner.dog.transform.position, out NavMeshHit navMeshHit, 10, NavMesh.AllAreas))
+        {
+            owner.agent.Warp(navMeshHit.position);
+        }
 
         rd.constraints = RigidbodyConstraints.None;
         rd.isKinematic = true;
