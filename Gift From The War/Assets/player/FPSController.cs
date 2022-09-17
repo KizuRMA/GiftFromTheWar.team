@@ -87,6 +87,8 @@ public class FPSController : MonoBehaviour
             CC.transform.position = SaveManager.Instance.nowSaveData.dataSpotPos;
             CC.enabled = true;
         }
+
+        Debug.Log(SceneManager.GetActiveScene().name);
     }
 
     void Update()

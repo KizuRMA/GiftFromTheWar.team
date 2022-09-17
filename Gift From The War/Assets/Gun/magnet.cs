@@ -87,7 +87,10 @@ public class magnet : ShootParent
         //エネルギーを使用しないときは0にする
         if (!Input.GetMouseButtonDown(1) || energyAmount.GetSetNowAmount <= 0 || cameraOverFlg)
         {
-            energyAmount.GetSetNowAmount = 0;
+            if (!magnetChain.useEnergy0)
+            {
+                energyAmount.GetSetNowAmount = 0;
+            }
         }
 
         MagnetGuid();

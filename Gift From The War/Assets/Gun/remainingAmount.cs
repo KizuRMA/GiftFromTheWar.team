@@ -15,6 +15,7 @@ public class remainingAmount : MonoBehaviour
     [SerializeField] private Material matFire;
     [SerializeField] private Material matFireMax;
     [SerializeField] private bulletChange bulletChange;
+    [SerializeField] private shooting shoot;
 
     //エネルギー残量の表示
     private float nowRemainingEnergy;           //今の残量
@@ -42,7 +43,7 @@ public class remainingAmount : MonoBehaviour
 
     void Update()
     {
-        if (useEnergy == 0) //エネルギー消費がなかったら
+        if (useEnergy == 0 || useEnergy == -1) //エネルギー消費がなかったら
         {
             NoUseEnergy();
         }
@@ -92,7 +93,13 @@ public class remainingAmount : MonoBehaviour
         }
         else
         {
+            Debug.Log("useEnergy" + useEnergy + ":" + nowRemainingEnergy);
             trans.localPosition += new Vector3(0, 0, (useEnergy * allRemainingEnergy - allRemainingEnergy));
+
+            if(shoot.shotFlg)
+            {
+                shoot.shotFlg = false;
+            }
         }
     }
 
