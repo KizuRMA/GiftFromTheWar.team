@@ -44,7 +44,7 @@ public class fireBulletHit : MonoBehaviour
     {
         if (time >= hitTime) return;
 
-        if (other.gameObject.tag == "Bat" || other.gameObject.tag == "Dog1" || other.gameObject.tag == "Boss")
+        if (other.gameObject.tag == "Bat" || other.gameObject.tag == "Dog1")
         {
             var enemyInter = other.GetComponent<EnemyInterface>();
 
@@ -55,6 +55,21 @@ public class fireBulletHit : MonoBehaviour
                 if (targetImageObj != null)
                 {
                     targetImageObj.GetComponent<TargetSetting>().HitAnime();
+                }
+            }
+        }
+
+        if (other.gameObject.tag == "Boss")
+        {
+            var enemyInter = other.GetComponent<EnemyInterface>();
+
+            if (enemyInter != null)
+            {
+                enemyInter.ExpDamage(1, transform.position);
+
+                if (targetImageObj != null)
+                {
+                    targetImageObj.GetComponent<TargetSetting>().HitAnime(new Color(0.9921569f, 0.6321112f, 0, 1));
                 }
             }
         }
