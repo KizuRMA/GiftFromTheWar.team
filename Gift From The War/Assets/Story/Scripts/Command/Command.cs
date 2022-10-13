@@ -55,24 +55,33 @@ public class Command : MonoBehaviour
 
         // ネジ君に話しかけた回数によってテキストの内容を変更する
         if(ScenarioManager.Instance!=null)
-        switch(ScenarioManager.Instance.talkCount)
-        {
-            case 1:
-                ScenarioManager.Instance.UpdateLines("Scenario2");
-                break;
-            case 2:
-                ScenarioManager.Instance.UpdateLines("Scenario3");
-                break;
-            case 3:
-                ScenarioManager.Instance.UpdateLines("Scenario4");
-                break;
-            case 4:
-                ScenarioManager.Instance.UpdateLines("Scenario5");
-                break;
-            case 5:
-                ScenarioManager.Instance.UpdateLines("Scenario6");
-                break;
-        }
+            switch (ScenarioManager.Instance.talkCount)
+            {
+                case 1:
+                    ScenarioManager.Instance.UpdateLines("Scenario2");
+                    break;
+                case 2:
+                    ScenarioManager.Instance.UpdateLines("Scenario3");
+                    break;
+                case 3:
+                    ScenarioManager.Instance.UpdateLines("Scenario4");
+                    break;
+                case 4:
+                    ScenarioManager.Instance.UpdateLines("Scenario5");
+                    break;
+                case 5:
+                    ScenarioManager.Instance.UpdateLines("Scenario6");
+                    break;
+                case 6:
+                    ScenarioManager.Instance.UpdateLines("Scenario7");
+                    break;
+                case 7:
+                    ScenarioManager.Instance.UpdateLines("Scenario8");
+                    break;
+                case 8:
+                    ScenarioManager.Instance.UpdateLines("Scenario9");
+                    break;
+            }
 
     }
 

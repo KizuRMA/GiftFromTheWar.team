@@ -11,5 +11,11 @@ public class nextScene : MonoBehaviour
         SaveManager.Instance.Restart();
         SaveManager.Instance.WriteFile();
         SaveManager.Instance.WriteSubFile();
+
+        //ストーリー
+        ScenarioData.Instance.saveData.neziKunCount = 0;
+        ScenarioData.Instance.saveData.talkCount = 0;
+        ScenarioData.Instance.WriteFile();
+
     }
 }

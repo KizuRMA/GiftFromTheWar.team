@@ -1156,6 +1156,7 @@ Transform:
   m_Children:
   - {fileID: 227047850}
   - {fileID: 1295886467}
+  - {fileID: 1278327362}
   m_Father: {fileID: 1695826124}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11250,6 +11251,9 @@ MonoBehaviour:
   - Scenario4
   - Scenario5
   - Scenario6
+  - Scenario7
+  - Scenario8
+  - Scenario9
   neziKun: {fileID: 1695826123}
 --- !u!114 &607775184
 MonoBehaviour:
@@ -15722,6 +15726,37 @@ RectTransform:
   m_AnchoredPosition: {x: 469.4812, y: -181.05153}
   m_SizeDelta: {x: -1356.8187, y: -1011.039}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &856115752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 856115753}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &856115753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856115752}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 18.6, y: 1.91, z: 92.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1278327362}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &856493620
 GameObject:
   m_ObjectHideFlags: 0
@@ -22993,6 +23028,53 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 1
   m_AffectedAgents: ffffffff
+--- !u!1 &1278327360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1278327362}
+  - component: {fileID: 1278327361}
+  m_Layer: 0
+  m_Name: NeziKun3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1278327361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278327360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e46f405fedbc5b499b33ff730dd2b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawn: {fileID: 856115753}
+  neziKun: {fileID: 6454227858400984307, guid: 2b6f59e45968a0143a7746d0d67432e7, type: 3}
+--- !u!4 &1278327362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278327360}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.9062443, y: -2.1654067, z: -1.1494217}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 856115753}
+  m_Father: {fileID: 73408616}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1278417077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30133,9 +30215,11 @@ MonoBehaviour:
   parentList:
   - {fileID: 227047850}
   - {fileID: 1295886467}
+  - {fileID: 1278327362}
   list:
   - {fileID: 227047849}
   - {fileID: 1295886466}
+  - {fileID: 1278327361}
 --- !u!4 &1695826124
 Transform:
   m_ObjectHideFlags: 0
