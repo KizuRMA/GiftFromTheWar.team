@@ -1883,6 +1883,7 @@ MonoBehaviour:
   upDownSpeed: 0.3
   maxPosY: 0.08
   dashRaito: 1.5
+  downDis: 0
 --- !u!81 &132006901
 AudioListener:
   m_ObjectHideFlags: 0
@@ -21982,6 +21983,8 @@ MonoBehaviour:
   backGroundImage: {fileID: 412906018}
   canvasGroup: {fileID: 360030315}
   pageNumberText: {fileID: 556219283}
+  backGroundAlpha: 0.5
+  backGroundAlphaSpeed: 0.25
 --- !u!1001 &1242480786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23337,6 +23340,8 @@ MonoBehaviour:
   backGroundImage: {fileID: 2049298832}
   canvasGroup: {fileID: 400917127}
   pageNumberText: {fileID: 1018812295}
+  backGroundAlpha: 0.5
+  backGroundAlphaSpeed: 0.25
 --- !u!1001 &1330279288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35594,6 +35599,7 @@ MonoBehaviour:
   - Scenario4
   - Scenario5
   - Scenario6
+  neziKun: {fileID: 1362522652}
 --- !u!114 &1982927848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35667,6 +35673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTrans: {fileID: 132006898}
   handDis: 1.5
+  playerTalk: {fileID: 1982927852}
 --- !u!1001 &1987018901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36538,6 +36545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ladderHund: {fileID: 1563126510}
   cam: {fileID: 132006897}
+  playerTalk: {fileID: 1982927852}
   walkSpeed: 2
   dashSpeedRaito: 1.8
   sensityvity: 3

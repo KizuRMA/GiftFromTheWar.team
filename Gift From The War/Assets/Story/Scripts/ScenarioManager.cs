@@ -21,14 +21,14 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
     private TextController textController;
     private CommandController commandController;
     private Layer layer;
-
     private PlayerTalk scenario;
 
-    private NeziKunManager neziKun;
+   [SerializeField] private NeziKunManager neziKun;
 
     //インスペクターからは触れないようにしておく
     [System.NonSerialized] public int talkCount;
     [System.NonSerialized] public int neziKunCount;
+   
     //  現在の行番号
     [System.NonSerialized] public int currentLine = 0;
 
@@ -93,11 +93,18 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
         scenario = GetComponent<PlayerTalk>();
         layer = GetComponent<Layer>();
 
+        if(ScenarioData.Instance!=null)
+        {
+            ScenarioData.Instance.ReadFile();
+        }
+
         neziKunCount = ScenarioData.Instance.saveData.neziKunCount;
         talkCount = ScenarioData.Instance.saveData.talkCount;
 
-        GameObject game = GameObject.Find("NeziKunManager");
-        neziKun=game.GetComponent<NeziKunManager>();
+        if (talkCount==0)
+        {
+            UpdateLines("Scenario1");
+        }
 
         UpdateLines(loadFileName[0]);
         RequestNextLine();
@@ -150,6 +157,7 @@ public class ScenarioManager : SingletonMonoBehaviour<ScenarioManager>
             ScenarioData.Instance.saveData.talkCount = talkCount;
             ScenarioData.Instance.saveData.neziKunCount = neziKunCount;
 
+            Debug.Log("nezi=" + neziKunCount);
             ScenarioData.Instance.WriteFile();
             endFlg = false;
         }

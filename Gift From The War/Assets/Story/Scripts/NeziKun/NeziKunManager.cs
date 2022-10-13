@@ -11,43 +11,63 @@ public class NeziKunManager : MonoBehaviour
 
     //スポーンリスト
     [SerializeField] private List<NeziKunSpawn> list = null;
- 
+
+    [System.NonSerialized] public int maxCount;
+
     // Start is called before the first frame update
     void Start()
-    {
-        int index = ScenarioData.Instance.saveData.neziKunCount;
-
-        for (int i = index; i < list.Count; i++)
+    {   
+          if (ScenarioData.Instance != null&&ScenarioData.Instance.enable)
         {
-            //指定した位置にネジ君生成
-            GameObject game = Instantiate(list[i].neziKun);
-            game.transform.position = list[i].spawn.position;
+            maxCount = list.Count;
 
-            //親子関係設定
-            game.transform.parent = parentList[i];
-            game.name = "NeziKun" + i;
-        }
+            ScenarioData.Instance.saveData.maxCount = maxCount;
+            //ScenarioData.Instance.WriteFile();
+
+            int index = ScenarioData.Instance.saveData.neziKunCount;
 
 
-        for (int i = index + 1; i < list.Count; i++)
-        {
-            list[i].gameObject.SetActive(false);
+
+
+            for (int i = index; i < list.Count; i++)
+            {
+                //指定した位置にネジ君生成
+                GameObject game = Instantiate(list[i].neziKun);
+                game.transform.position = list[i].spawn.position;
+
+                //親子関係設定
+                game.transform.parent = parentList[i];
+                game.name = "NeziKun" + i;
+            }
+
+
+            for (int i = index + 1; i < list.Count; i++)
+            {
+                list[i].gameObject.SetActive(false);
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+       if(ScenarioData.Instance!=null&&ScenarioData.Instance.enable == false)
+        {
+            enabled = false;
+            Debug.Log("False");
+        }
     }
 
     public void Spawn()
     {
-        int index = ScenarioManager.Instance.neziKunCount;
-
-        if (index < list.Count)
+        if (ScenarioManager.Instance != null)
         {
-            list[index].gameObject.SetActive(true);
+            int index = ScenarioManager.Instance.neziKunCount;
+
+            if (index < list.Count)
+            {
+                list[index].gameObject.SetActive(true);
+            }
         }
     }
 }

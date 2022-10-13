@@ -14,7 +14,7 @@ public class TalkCollision : MonoBehaviour
     //  衝突したオブジェクトの情報を保持しておく
     private GameObject hitObj;
 
-    PlayerTalk playerTalk;
+   [SerializeField] private PlayerTalk playerTalk;
 
     // Start is called before the first frame update
     void Start()

@@ -33,6 +33,14 @@ public class NextStage2 : MonoBehaviour
         {
             if(LoadManager.Instance != null)
             StartCoroutine(LoadManager.Instance.LoadScene("Scenes/FinalStage"));
+
+            // ストーリー
+            if (ScenarioData.Instance != null && ScenarioData.Instance.saveData.neziKunCount == ScenarioData.Instance.saveData.maxCount)
+            {
+                ScenarioData.Instance.saveData.neziKunCount = 0;
+                ScenarioData.Instance.WriteFile();
+                Debug.Log("" + ScenarioData.Instance.saveData.neziKunCount);
+            }
         }
         else
         {

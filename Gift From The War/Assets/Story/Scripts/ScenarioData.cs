@@ -10,7 +10,10 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
     {
         public int talkCount;
         public int neziKunCount;
+        public int maxCount;
     }
+
+   [System.NonSerialized] public bool enable=true;
 
     public SaveData saveData;
 
@@ -43,6 +46,7 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
         {
             saveData.talkCount = 0;
             saveData.neziKunCount = 0;
+           // saveData.maxCount = 0;
 
             WriteFile();
         }
@@ -58,12 +62,13 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
         {
             saveData.talkCount = reader.ReadInt32();
             saveData.neziKunCount = reader.ReadInt32();
+            saveData.maxCount = reader.ReadInt32();
+
         }
 
-        if(ScenarioManager.Instance!=null&&ScenarioManager.Instance.talkCount==0)
-        {
-            ScenarioManager.Instance.UpdateLines("Scenario1");
-        }
+        Debug.Log("max=" + saveData.maxCount);
+        Debug.Log("nezi=" + saveData.neziKunCount);
+      //  Debug.Log("max=" + saveData.maxCount);
 
     }
 
@@ -83,7 +88,7 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
             {
                 writer.Write(saveData.talkCount-1);
                 writer.Write(saveData.neziKunCount-1);
-
+                writer.Write(saveData.maxCount);
             }
 
             if (saveData.neziKunCount==0)
@@ -92,8 +97,10 @@ public class ScenarioData : SingletonMonoBehaviour<ScenarioData>
 
                 writer.Write(saveData.talkCount);
                 writer.Write(saveData.neziKunCount);
-
+                writer.Write(saveData.maxCount);
             }
+
+            
         }
     }
 }

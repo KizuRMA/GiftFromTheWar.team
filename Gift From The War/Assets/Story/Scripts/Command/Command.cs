@@ -12,8 +12,6 @@ public class Command : MonoBehaviour
     }
 
     private CommandMode currentCommand;
-    //　シナリオスクリプト
-    private Scenario scenario;
     //  テキストパネル
     private GameObject textPanel;
     //　テキストパネルのCanvasGroup
@@ -23,9 +21,6 @@ public class Command : MonoBehaviour
 
     private void Awake()
     {
-        //　コマンド画面を開く処理をしているScenarioを取得
-        //scenario = GameObject.Find("Player").GetComponent<Scenario>();
-
         //　現在のコマンドを初期化
         currentCommand = CommandMode.CommandPanel;
 
@@ -59,7 +54,7 @@ public class Command : MonoBehaviour
         }
 
         // ネジ君に話しかけた回数によってテキストの内容を変更する
-
+        if(ScenarioManager.Instance!=null)
         switch(ScenarioManager.Instance.talkCount)
         {
             case 1:
